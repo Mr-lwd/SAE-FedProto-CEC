@@ -320,18 +320,6 @@ if __name__ == "__main__":
         "-dev", "--device", type=str, default="cuda", choices=["cpu", "cuda"]
     )
     parser.add_argument("-did", "--device_id", type=str, default="0")
-    # parser.add_argument(
-    #     "-data",
-    #     "--dataset",
-    #     type=str,
-    #     # default="MNIST_dir_0.1_imbalance_8",
-    #     default="MNIST_dir_0.1_imbalance_20",
-    #     # default="MNIST_pat_2_balance_8"
-    # )
-    # parser.add_argument("-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_20")
-
-    # parser.add_argument("-data", "--dataset", type=str, default="mnist")
-    # parser.add_argument("-data", "--dataset", type=str, default="Cifar10_dir_0.1_imbalance_8")
     parser.add_argument(
         "-data", "--dataset", type=str, default="Cifar10_dir_0.3_imbalance_20"
     )
@@ -346,7 +334,7 @@ if __name__ == "__main__":
         default=0.1,
         help="Local learning rate",
     )
-    parser.add_argument("-usche", "--use_scheduler", type=bool, default=False)
+    parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
     parser.add_argument("-gr", "--global_rounds", type=int, default=150)
@@ -357,12 +345,8 @@ if __name__ == "__main__":
         default=3,
         help="Multiple update steps in one local epoch.",
     )
-    # parser.add_argument("-algo", "--algorithm", type=str, default="FedProto_semi")
     parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
     # parser.add_argument("-algo", "--algorithm", type=str, default="FedTGP")
-    # parser.add_argument(
-    #     "-algo", "--algorithm", type=str, default="FedProto_cs_aftertrain"
-    # )
     parser.add_argument(
         "-jr",
         "--join_ratio",
@@ -438,54 +422,16 @@ if __name__ == "__main__":
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
 
-    # FedProto_Semi
-    parser.add_argument("-semu_lam", "--semi_local_train_lamma", type=int, default=3)
 
-    # FedProtoAsync
-    parser.add_argument(
-        "-async_buffer_length", "--async_buffer_length", type=int, default=1
-    )
-    parser.add_argument("-FedASync_alpha", "--FedASync_alpha", type=float, default=0.9)
-    parser.add_argument("-use_tau_zero", "--use_tau_zero", type=bool, default=False)
-    parser.add_argument("-tau_zero", "--tau_zero", type=float, default=9)
-
-    # agg_type 0--原始聚合方法平均 1--聚合时保留不更新的旧原型 2--聚合时保留不更新的旧原型+与旧原型平均
-    # FedProto_clientselect
+    # agg_type 0--原始聚合方法平均 1--按数据量平均
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
-    # 0--随机客户端选择 1--混合loss选择 2--单独model_loss选择 3--单独proto_loss选择
-    # 4--训练时统计|B_i|*根号下(1/|B_i|*混合loss^2)
-    # 5--训练时统计|B_i|*根号下(1/|B_i|*proto_loss^2)
-    # 6--训练时统计混合loss选择
-    # 7--训练时统计model_loss选择
-    # 8--训练时统计proto_loss选择
-    # 9--训练时统计混合loss * 1/t选择
-    # 10--训练时统计混合loss * 1/t * (η**α)选择
-    # 11--训练时统计|B_i|*根号下(1/|B_i|*混合loss^2)  * 1/t * (η**α)选择
-    # 12--局部proto和全局proto的L2范数 * 1/t * (η**α)选择
-    parser.add_argument("-cs_strategy", "--cs_strategy", type=int, default=0)
-    parser.add_argument("-balanceproto", "--balanceproto", type=int, default=0)
-    parser.add_argument("-use_focalLoss", "--use_focalLoss", type=int, default=0)
-    parser.add_argument(
-        "-each_epoch_update_proto", "--each_epoch_update_proto", type=int, default=0
-    )
     parser.add_argument("-glclassifier", "--glclassifier", type=int, default=1)
     parser.add_argument(
         "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
     )
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
-    
-    parser.add_argument("-rep_reloss", "--rep_reloss", type=int, default=0)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=True)
-    parser.add_argument("-use_smooth", "--use_smooth", type=int, default=0)
-    parser.add_argument(
-        "-contrastive_loss_fn", "--contrastive_loss_fn", type=int, default=0
-    )
-    # parser.add_argument("-add_layer", "--add_layer", type=int, default=1)
-
-    parser.add_argument("-entropy_alpha", "--entropy_alpha", type=int, default=0.1)
     
-    # 0.5 useful
-
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
     parser.add_argument("-glr", "--generator_learning_rate", type=float, default=0.005)
@@ -530,7 +476,7 @@ if __name__ == "__main__":
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
         
-    if args.use_scheduler:
+    if args.use_decay_scheduler:
             print("use scheduler lr decay")
 
     print("=" * 50)
@@ -538,23 +484,5 @@ if __name__ == "__main__":
         print(arg, "=", getattr(args, arg))
     print("=" * 50)
 
-    # if args.dataset == "mnist" or args.dataset == "fmnist":
-    #     generate_mnist('../dataset/mnist/', args.num_clients, 10, args.niid)
-    # elif args.dataset == "Cifar10" or args.dataset == "Cifar100":
-    #     generate_cifar10('../dataset/Cifar10/', args.num_clients, 10, args.niid)
-    # else:
-    #     generate_synthetic('../dataset/synthetic/', args.num_clients, 10, args.niid)
-
-    # with torch.profiler.profile(
-    #     activities=[
-    #         torch.profiler.ProfilerActivity.CPU,
-    #         torch.profiler.ProfilerActivity.CUDA],
-    #     profile_memory=True,
-    #     on_trace_ready=torch.profiler.tensorboard_trace_handler('./log')
-    #     ) as prof:
-    # with torch.autograd.profiler.profile(profile_memory=True) as prof:
     set_seed(42)
     run(args)
-
-    # print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=20))
-    # print(f"\nTotal time cost: {round(time.time()-total_start, 2)}s.")

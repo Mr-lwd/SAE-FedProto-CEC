@@ -15,6 +15,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
+
 class FedProto(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
@@ -32,14 +33,12 @@ class FedProto(Server):
         self.current_epoch = 0
 
     def train(self):
-
         for i in range(self.global_rounds + 1):
             s_t = time.time()
             self.selected_clients = self.select_clients()
             self.first_client_epoch_times = []
             self.global_protos_data = defaultdict(list)
             for client in self.selected_clients:
-                # client.train()
                 train_time, first_epochtime, client_protos_data = client.train(
                     glprotos_invol_dataset=self.glprotos_invol_dataset,
                     global_classifier=self.global_classifier,
@@ -107,21 +106,12 @@ class FedProto(Server):
             # uploaded_protos.append(protos)
             uploaded_protos.append({"client": client, "protos": protos})
 
-        global_protos, avg_global_protos, reverse_global_protos = (
-            self.proto_aggregation(uploaded_protos)
-        )
+        global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        # if self.agg_type == 4:
-        #     save_item(
-        #         avg_global_protos, self.role, "avg_global_protos", self.save_folder_name
-        #     )
-        # save_item(reverse_global_protos, self.role, "reverse_global_protos", self.save_folder_name)
 
     #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
     def proto_aggregation(self, local_protos_list):
         agg_protos_label = defaultdict(list)
-        avg_agg_protos_label = defaultdict(list)
-        reverse_agg_protos_label = defaultdict(list)
         if self.agg_type == 0:
             for local_protos in local_protos_list:
                 for label in local_protos["protos"].keys():
@@ -136,7 +126,7 @@ class FedProto(Server):
                 else:
                     agg_protos_label[label] = proto_list[0].data
 
-        elif self.agg_type == 3 or self.agg_type == 4:
+        elif self.agg_type == 1:
             for local_protos in local_protos_list:
                 for label in local_protos["protos"].keys():
                     agg_protos_label[label].append(
@@ -155,57 +145,25 @@ class FedProto(Server):
                         proto_list[0].data / self.glprotos_invol_dataset[label]
                     )
 
-        if self.agg_type == 4:
-            for local_protos in local_protos_list:
-                for label in local_protos["protos"].keys():
-                    avg_agg_protos_label[label].append(local_protos["protos"][label])
-
-            for [label, proto_list] in avg_agg_protos_label.items():
-                if len(proto_list) > 1:
-                    proto = 0 * proto_list[0].data
-                    for i in proto_list:
-                        proto += i.data
-                    avg_agg_protos_label[label] = proto / len(proto_list)
-                else:
-                    avg_agg_protos_label[label] = proto_list[0].data
-
-        # if self.args.balanceproto == 1:
-        #     for label in avg_agg_protos_label.keys():
-        #         # 初始化加权后的结果
-        #         agg_protos_label[label] = (
-        #             0.1 * avg_agg_protos_label[label] + 0.9 * agg_protos_label[label]
-        #         )
-        # if self.agg_type == 1: #保留旧原型
-        #     old_global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        #     if old_global_protos is not None:
-        #         for k in old_global_protos.keys():
-        #             if k not in agg_protos_label.keys():
-        #                 agg_protos_label[k] = old_global_protos[k]
-
         print("agg_protos_label", agg_protos_label.keys())
         if self.current_epoch % 10 == 0 and self.args.drawtsne is True:
             save_tsne_with_agg(
                 local_protos_list=local_protos_list,
                 agg_protos_label=agg_protos_label,
                 base_path="./tsneplot",
-                dataset=self.dataset,
-                algorithm=self.algorithm,
-                local_epochs=self.local_epochs,
+                dataset=self.args.dataset,
+                algorithm=self.args.algorithm,
+                local_epochs=self.args.local_epochs,
                 agg_type=self.args.agg_type,
                 glclassifier=self.args.glclassifier,
                 test_useglclassifier=self.args.test_useglclassifier,
                 gamma=self.args.gamma,
                 lamda=self.args.lamda,
                 lr_rate=self.args.local_learning_rate,
-                usche=self.args.use_scheduler,
-                balanceproto=self.args.balanceproto,
-                use_focalLoss=self.args.use_focalLoss,
-                # use_smooth=self.args.use_smooth,
-                # contrastive_loss_fn=self.args.contrastive_loss_fn,
-                # add_layer=self.args.add_layer,
+                usche=self.args.use_decay_scheduler,
                 current_epoch=self.current_epoch,
             )
-        return agg_protos_label, avg_agg_protos_label, reverse_agg_protos_label
+        return agg_protos_label
 
     def train_global_classifier(self):
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)

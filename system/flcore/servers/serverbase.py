@@ -69,12 +69,11 @@ class Server(object):
         self.all_clients_time_cost = 0
         self.only_train_time = 0
         self.feature_dim = args.feature_dim
+        
         self.total_counts = defaultdict(int)
         self.invol_labels_with_clients = defaultdict(set)
-        self.glprotos_invol_clients = defaultdict(set)
         self.glprotos_invol_dataset = defaultdict(int)
         self.agg_type = args.agg_type
-        self.cs_strategy = args.cs_strategy
         self.evaluate_time = 0
         self.tot_train_samples = 0
         self.current_epoch = 0
@@ -116,59 +115,16 @@ class Server(object):
         if return_all_clients is True:
             return self.clients
 
-        if self.cs_strategy == 0:
-            if self.random_join_ratio:
-                self.current_num_join_clients = np.random.choice(
-                    range(self.num_join_clients, self.num_clients + 1), 1, replace=False
-                )[0]
-            else:
-                self.current_num_join_clients = self.num_join_clients
-            selected_clients = list(
-                np.random.choice(
-                    self.clients, self.current_num_join_clients, replace=False
-                )
-            )
-
-            return selected_clients
-        elif self.cs_strategy == 1:
-            # Sort by local_total_loss in descending order and select the top n clients
-            sorted_clients = sorted(
-                client_losses, key=lambda x: x["local_total_loss"], reverse=True
-            )
-            # print("self.cs_strategy", self.cs_strategy)
-            # print(sorted_clients)
-            # exit(0)
-        elif self.cs_strategy == 2:
-            # Sort by local_model_loss in descending order and select the top n clients
-            sorted_clients = sorted(
-                client_losses, key=lambda x: x["local_model_loss"], reverse=True
-            )
-        elif self.cs_strategy == 3:
-            # Sort by local_proto_loss in descending order and select the top n clients
-            sorted_clients = sorted(
-                client_losses, key=lambda x: x["local_proto_loss"], reverse=True
-            )
-        else:  # self.cs_strategy >= 4:
-            sorted_clients = sorted(
-                client_losses, key=lambda x: x["scores"], reverse=True
-            )
-            # Calculate the average of client losses scores
-            # avg_score = sum(item["scores"] for item in client_losses) / len(client_losses)
-
-            # Filter clients with scores greater than the average
-            # filtered_clients = [item for item in client_losses if item["scores"] > avg_score]
-
-            # Sort the filtered clients in descending order by scores
-            # sorted_clients = sorted(filtered_clients, key=lambda x: x["scores"], reverse=True)
-
-        #         else:  # self.cs_strategy >= 4:
-        #             sorted_clients = sorted(
-        #                 client_losses, key=lambda x: x["scores"], reverse=True
-        #             )
-
-        selected_clients = [
-            item["client"] for item in sorted_clients[: self.current_num_join_clients]
-        ]
+        if self.random_join_ratio:
+            self.current_num_join_clients = np.random.choice(
+                range(self.num_join_clients, self.num_clients + 1), 1, replace=False
+            )[0]
+        else:
+            self.current_num_join_clients = self.num_join_clients
+        selected_clients = list(
+            np.random.choice(self.clients, self.current_num_join_clients, replace=False)
+        )
+        return selected_clients
 
         return selected_clients
 
