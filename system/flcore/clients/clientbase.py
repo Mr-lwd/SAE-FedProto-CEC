@@ -34,7 +34,6 @@ class Client(object):
         self.batch_size = args.batch_size
         self.learning_rate = args.local_learning_rate
         self.local_epochs = args.local_epochs
-        self.cs_strategy = args.cs_strategy
         self.args = args
         self.involve_count = 0
 
@@ -53,11 +52,10 @@ class Client(object):
         self.label_counts = defaultdict(int)
         self.entropy = 0
         self.initLabels()
-        self.entropy_alpha = args.entropy_alpha
         self.trans_delay_simulate = args.trans_delay_simulate
         self.sleep_time = random.randint(1, 10)
-        self.receive_buffer = {}
-        self.cshared_protos = {}
+        self.receive_buffer = None
+        
 
     def load_train_data(self, batch_size=None, num_workers=4):
         if batch_size == None:
@@ -165,31 +163,15 @@ class Client(object):
         print("id", self.id)
         print("self.label_counts", self.label_counts)
         print("entropy", entropy)
-
-    # def get_next_train_batch(self):
-    #     try:
-    #         # Samples a new batch for persionalizing
-    #         (x, y) = next(self.iter_trainloader)
-    #     except StopIteration:
-    #         # restart the generator if the previous generator is exhausted.
-    #         self.iter_trainloader = iter(self.trainloader)
-    #         (x, y) = next(self.iter_trainloader)
-
-    #     if type(x) == type([]):
-    #         x = x[0]
-    #     x = x.to(self.device)
-    #     y = y.to(self.device)
-
-    #     return x, y
+        
     def send_to_edgeserver(self, edgeserver):
-        edgeserver.receive_from_client(
-            client_id=self.id, cshared_protos=copy.deepcopy(self.cshared_protos)
-        )
+        edgeserver.receive_from_client(client_id= self.id,
+                                        cshared_state_dict = copy.deepcopy(self.model.shared_layers.state_dict())
+                                        )
         return None
 
-    def receive_from_edgeserver(self, eshared_protos):
-        # client
-        self.receive_buffer = eshared_protos
+    def receive_from_edgeserver(self, shared_state_dict):
+        self.receiver_buffer = shared_state_dict
         return None
 
     def sync_with_edgeserver(self):
@@ -197,11 +179,9 @@ class Client(object):
         The global has already been stored in the buffer
         :return: None
         """
-        self.cshared_protos = self.receive_buffer
-        # self.model.shared_layers.load_protos(self.receiver_buffer)
-        # self.model.update_model(self.receiver_buffer)
+        # self.model.shared_layers.load_state_dict(self.receiver_buffer)
+        self.model.update_model(self.receiver_buffer)
         return None
-
 
 def save_item(item, role, item_name, item_path=None):
     if not os.path.exists(item_path):

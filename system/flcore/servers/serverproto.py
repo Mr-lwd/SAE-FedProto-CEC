@@ -1,6 +1,8 @@
 import time
 import numpy as np
+
 from flcore.clients.clientproto import clientProto
+from flcore.edges.edgeproto import Edge_FedProto
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
 from utils.data_utils import read_client_data
@@ -9,6 +11,7 @@ from collections import defaultdict
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import os
+import copy
 from matplotlib.colors import ListedColormap
 from sklearn import preprocessing
 import torch
@@ -19,66 +22,45 @@ from torch.utils.data import DataLoader, TensorDataset
 class FedProto(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
-
+        self.glprotos_invol_dataset = defaultdict(int)
+        self.global_protos_data = defaultdict(list)
+        
         # select slow clients
         self.set_slow_clients()
+        # 初始化所有客户端
         self.set_clients(clientProto)
+        # 初始化所有边缘服务器
+        self.set_edges(Edge_FedProto)
+        
+        self.refresh_cloudserver()
+
         self.compute_glprotos_invol_dataset()
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
 
-        # self.load_model()
         self.Budget = []
-        self.num_classes = args.num_classes
         self.current_epoch = 0
+        
 
     def train(self):
-        for i in range(self.global_rounds + 1):
+        for i in range(self.global_rounds + 1): #总论次
             s_t = time.time()
-            self.selected_clients = self.select_clients()
-            self.first_client_epoch_times = []
-            self.global_protos_data = defaultdict(list)
-            for client in self.selected_clients:
-                train_time, first_epochtime, client_protos_data = client.train(
-                    glprotos_invol_dataset=self.glprotos_invol_dataset,
-                    global_classifier=self.global_classifier,
-                    global_epoch=i,
-                )
-
-                for label, proto_list in client_protos_data.items():
-                    self.global_protos_data[label].extend(proto_list)
-
-                self.all_clients_time_cost += first_epochtime
-                self.only_train_time += train_time
-                self.first_client_epoch_times.append({"time": first_epochtime})
-            longest_time_client = self.find_longest_time_client(
-                self.first_client_epoch_times
-            )
-            self.parallel_time_cost += longest_time_client["time"]
-            print("parallel_time_cost:", self.parallel_time_cost)
-            print("only_train_time:", self.only_train_time)
-            print("all_clients_time_cost:", self.all_clients_time_cost)
-            # threads = [Thread(target=client.train)
-            #            for client in self.selected_clients]
-            # [t.start() for t in threads]
-            # [t.join() for t in threads]
-            # self.average_global_classifier()
-            if self.args.glclassifier == 1:
-                glclassifier_time_start = time.perf_counter()
-                self.train_global_classifier()
-                glclassifier_time_end = time.perf_counter()
-                print(
-                    "train glclassifier time:",
-                    glclassifier_time_end - glclassifier_time_start,
-                )
+            self.selected_edges = self.select_edges()
+            self.refresh_cloudserver()
+            [self.edge_register(edge=edge) for edge in self.edges]
+            for edge_epoch in range(self.edge_epochs): #边缘轮次
+                # self.global_protos_data = defaultdict(list)
+                for i, edge in enumerate(self.edges): # 遍历所有边缘服务器
+                    edge.train(self.clients)
+                    
             self.receive_protos()
-
             self.Budget.append(time.time() - s_t)
             print("-" * 50, self.Budget[-1])
             #             self.all_clients_time_cost += self.Budget[-1]
             self.current_epoch += 1
+                
             if i % self.eval_gap == 0:
-                print(f"\n-------------Round number: {i}-------------")
+                print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
                 self.evaluate()
 
@@ -96,15 +78,16 @@ class FedProto(Server):
         self.save_results()
 
     def receive_protos(self):
-        assert len(self.selected_clients) > 0
+        assert len(self.selected_edges) > 0
 
         self.uploaded_ids = []
         uploaded_protos = []
-        for client in self.selected_clients:
-            self.uploaded_ids.append(client.id)
-            protos = load_item(client.role, "protos", client.save_folder_name)
-            # uploaded_protos.append(protos)
-            uploaded_protos.append({"client": client, "protos": protos})
+        for edge in self.selected_edges:
+            for id in edge.selected_cids:
+                self.uploaded_ids.append(id)
+                protos = load_item(self.clients[id].role, "protos", self.clients[id].save_folder_name)
+                # uploaded_protos.append(protos)
+                uploaded_protos.append({"client": self.clients[id], "protos": protos})
 
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
@@ -165,6 +148,7 @@ class FedProto(Server):
             )
         return agg_protos_label
 
+
     def train_global_classifier(self):
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
 
@@ -182,19 +166,11 @@ class FedProto(Server):
         criterion = nn.CrossEntropyLoss()
         optimizer = torch.optim.Adam(self.global_classifier.parameters(), lr=0.001)
 
-        # noise = torch.normal(mean=mean, std=std_dev, size=features[0].shape)
-        # 转换为 Tensor
-        # print("features",features[0])
-        # exit(0)
-        # features = torch.tensor(features)  # shape: (N, 512)
-        # 在特征向量上叠加噪声
-        # features = features + noise
-
         features = torch.stack(
             [torch.tensor(feature) for feature in features]
         )  # 将每个特征向量转换为张量，并堆叠成一个 Tensor
 
-        labels = torch.tensor(labels)  # shape: (N,)
+        labels = torch.tensor(labels)
 
         # 确保 features 和 labels 都在正确的设备上
         features = features.to(self.device)
@@ -204,7 +180,7 @@ class FedProto(Server):
         data_loader = DataLoader(dataset, batch_size=1024, shuffle=True)
 
         # 训练过程
-        epochs = 20
+        epochs = 10
         print("train_global_classifier")
         for epoch in range(epochs):
             self.global_classifier.to(self.device)
@@ -242,41 +218,37 @@ class FedProto(Server):
         accuracy = 100 * correct / total
         print("global classifier accuracy:", accuracy)
 
-    def average_global_classifier(self):
-        num_clients = len(self.clients)
+    def refresh_cloudserver(self):
+        self.receiver_buffer.clear()
+        # del self.id_registration[:]
+        self.id_registration.clear()
+        self.sample_registration.clear()
+        return None
 
-        # 初始化全局分类器参数
-        global_weight = None
-        global_bias = None
-        total_data_size = self.tot_train_samples
-        # print("total_data_size", total_data_size)
+    def edge_register(self, edge):
+        self.id_registration.append(edge.id)
+        self.sample_registration[edge.id] = edge.all_trainsample_num
+        return None
 
+    def receive_from_edge(self, edge_id, eshared_protos):
+        self.receiver_buffer[edge_id] = eshared_protos
+        return None
+
+    def aggregate_protos(self):
+        # received_dict = [dict for dict in self.receiver_buffer.values()]
+        # sample_num = [snum for snum in self.sample_registration.values()]
+        # self.shared_protos = average_weights(w=received_dict,
+        #                                          s_num=sample_num)
+        return None
+
+    def send_to_edge(self, edge):
+        edge.receive_from_cloudserver(copy.deepcopy(self.shared_protos))
+        return None
+    
+    def compute_glprotos_invol_dataset(self):
         for client in self.clients:
-            # 获取最后一层分类器
-            model = load_item(client.role, "model", client.save_folder_name)
-            classifier = model.head  # 假设分类器存储在 head 属性中
-            assert isinstance(classifier, nn.Linear), "分类器必须是 nn.Linear 类型。"
-
-            # 获取权重和偏置
-            weight = classifier.weight.data
-            bias = classifier.bias.data
-
-            # 按数据量计算权重加权
-            client_weight_contribution = client.train_samples / total_data_size
-            # client_weight_contribution = 1 / num_clients
-            if global_weight is None:
-                global_weight = weight * client_weight_contribution
-                global_bias = bias * client_weight_contribution
-            else:
-                global_weight += weight * client_weight_contribution
-                global_bias += bias * client_weight_contribution
-        # print("global_weight",global_weight)
-        # print("global_bias",global_bias)
-        self.global_classifier.weight.data = global_weight
-        self.global_classifier.bias.data = global_bias
-        # 返回全局分类器的权重和偏置
-        return global_weight, global_bias
-
+            for key in client.label_counts.keys():
+                self.glprotos_invol_dataset[key] += client.label_counts[key]
 
 def save_tsne_with_agg(
     local_protos_list,

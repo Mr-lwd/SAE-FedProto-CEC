@@ -9,10 +9,6 @@ import logging
 import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
-from flcore.servers.serverproto_semi import FedProto_semi
-from flcore.servers.serverproto_async import FedProto_async
-from flcore.servers.serverproto_clientselect import FedProto_clientselect
-from flcore.servers.serverproto_cs_aftertrain import FedProto_cs_aftertrain
 from flcore.servers.servergen import FedGen
 from flcore.servers.serverdistill import FedDistill
 from flcore.servers.serverlg import LG_FedAvg
@@ -320,29 +316,33 @@ if __name__ == "__main__":
         "-dev", "--device", type=str, default="cuda", choices=["cpu", "cuda"]
     )
     parser.add_argument("-did", "--device_id", type=str, default="0")
-    parser.add_argument(
-        "-data", "--dataset", type=str, default="Cifar10_dir_0.3_imbalance_20"
-    )
+    parser.add_argument("-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_20")
+    # parser.add_argument(
+    #     "-data", "--dataset", type=str, default="Cifar10_dir_0.3_imbalance_20"
+    # )
     parser.add_argument("-nb", "--num_classes", type=int, default=10)
-    # parser.add_argument("-m", "--model_family", type=str, default="HCNNs8")
-    parser.add_argument("-m", "--model_family", type=str, default="HtM10")
+    parser.add_argument("-m", "--model_family", type=str, default="HCNNs8")
+    # parser.add_argument("-m", "--model_family", type=str, default="HtM10")
     parser.add_argument("-lbs", "--batch_size", type=int, default=256)
     parser.add_argument(
         "-lr",
         "--local_learning_rate",
         type=float,
-        default=0.1,
+        default=0.05,
         help="Local learning rate",
     )
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=150)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=100)
+    parser.add_argument(
+        "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
+    )
     parser.add_argument(
         "-ls",
         "--local_epochs",
         type=int,
-        default=3,
+        default=1,
         help="Multiple update steps in one local epoch.",
     )
     parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
@@ -363,8 +363,12 @@ if __name__ == "__main__":
         help="Random ratio of clients per round",
     )
     parser.add_argument(
-        "-nc", "--num_clients", type=int, default=20, help="Total number of clients"
+        "-nc", "--num_clients", type=int, default=6, help="Total number of clients"
     )
+    parser.add_argument(
+        "-ne", "--num_edges", type=int, default=2, help="Total number of edges"
+    )
+
     parser.add_argument(
         "-pv", "--prev", type=int, default=0, help="Previous Running times"
     )
@@ -421,16 +425,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
-
-
     # agg_type 0--原始聚合方法平均 1--按数据量平均
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
-    parser.add_argument("-glclassifier", "--glclassifier", type=int, default=1)
+    parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
     parser.add_argument(
-        "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
+        "-test_useglclassifier", "--test_useglclassifier", type=int, default=0
     )
-    parser.add_argument("-gamma", "--gamma", type=float, default=1)
-    parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=True)
+    parser.add_argument("-gamma", "--gamma", type=float, default=0)
+    parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=False)
     
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)

@@ -20,10 +20,13 @@ class Server(object):
         self.dataset = args.dataset
         self.num_classes = args.num_classes
         self.global_rounds = args.global_rounds
+        self.edge_epochs = args.edge_epochs
         self.local_epochs = args.local_epochs
         self.batch_size = args.batch_size
         self.learning_rate = args.local_learning_rate
         self.num_clients = args.num_clients
+        self.num_edges = args.num_edges
+        self.clients_per_edge = int(args.num_clients / args.num_edges)
         self.join_ratio = args.join_ratio
         self.random_join_ratio = args.random_join_ratio
         self.num_join_clients = int(self.num_clients * self.join_ratio)
@@ -46,10 +49,20 @@ class Server(object):
         self.save_folder_name = args.save_folder_name_full
         self.agg_by_dataset_dis = args.agg_by_dataset_dis
 
+        self.selected_edges = []
+
         self.clients = []
         self.selected_clients = []
         self.train_slow_clients = []
         self.send_slow_clients = []
+
+        self.edges = []
+        self.p_edge = [] # 每个服务器上的边缘服务器数据量比例
+        self.id_registration = []
+        self.sample_registration = {}
+        self.receiver_buffer = {}
+        self.shared_state_dict = {}
+        self.clock = []
 
         self.uploaded_weights = []
         self.uploaded_ids = []
@@ -69,18 +82,19 @@ class Server(object):
         self.all_clients_time_cost = 0
         self.only_train_time = 0
         self.feature_dim = args.feature_dim
-        
+
         self.total_counts = defaultdict(int)
         self.invol_labels_with_clients = defaultdict(set)
-        self.glprotos_invol_dataset = defaultdict(int)
+        
         self.agg_type = args.agg_type
         self.evaluate_time = 0
         self.tot_train_samples = 0
         self.current_epoch = 0
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
-        self.global_protos_data = defaultdict(list)
+        
 
     def set_clients(self, clientObj):
+        # 加载数据集
         for i, train_slow, send_slow in zip(
             range(self.num_clients), self.train_slow_clients, self.send_slow_clients
         ):
@@ -97,6 +111,29 @@ class Server(object):
             )
             self.clients.append(client)
 
+    # 只实现FedProto
+    def set_edges(self, edgeObj):
+        cids = np.arange(self.num_clients)
+        for i in range(self.num_edges):
+            # Randomly select clients and assign them
+            selected_cids = np.random.choice(cids, self.clients_per_edge, replace=False)
+            cids = list(set(cids) - set(selected_cids))
+            self.edges.append(edgeObj(args=self.args, id=i, cids=selected_cids))
+            [self.edges[i].client_register(self.clients[cid]) for cid in selected_cids]
+            self.edges[i].all_trainsample_num = sum(
+                self.edges[i].sample_registration.values()
+            )
+            self.edges[i].p_clients = [
+                sample / float(self.edges[i].all_trainsample_num)
+                for sample in list(self.edges[i].sample_registration.values())
+            ]
+            self.edges[i].refresh_edgeserver()
+        [self.edge_register(edge=edge) for edge in self.edges]
+        self.p_edge = [
+            sample / sum(self.sample_registration.values())
+            for sample in list(self.sample_registration.values())
+        ]
+
     # random select slow clients
     def select_slow_clients(self, slow_rate):
         slow_clients = [False for i in range(self.num_clients)]
@@ -110,6 +147,10 @@ class Server(object):
     def set_slow_clients(self):
         self.train_slow_clients = self.select_slow_clients(self.train_slow_rate)
         self.send_slow_clients = self.select_slow_clients(self.send_slow_rate)
+
+    def select_edges(self, return_all_edges=True):
+        if return_all_edges is True:
+            return self.edges
 
     def select_clients(self, client_losses=[], return_all_clients=False):
         if return_all_clients is True:
@@ -126,7 +167,6 @@ class Server(object):
         )
         return selected_clients
 
-        return selected_clients
 
     def send_parameters(self):
         assert len(self.clients) > 0
@@ -238,21 +278,6 @@ class Server(object):
         ids = [c.id for c in self.clients]
         return ids, num_samples, tot_regular_correct, tot_proto_correct
 
-    # def test_metrics(self):
-    #     num_samples = []
-    #     tot_correct = []
-    #     tot_auc = []
-    #     for c in self.clients:
-    #         ct, ns, auc = c.test_metrics()
-    #         tot_correct.append(ct * 1.0)
-    #         print(f"Client {c.id}: Acc: {ct*1.0/ns}, AUC: {auc}")
-    #         tot_auc.append(auc * ns)
-    #         num_samples.append(ns)
-
-    #     ids = [c.id for c in self.clients]
-
-    #     return ids, num_samples, tot_correct, tot_auc
-
     def train_metrics(self):
         num_samples = []
         losses = []
@@ -297,34 +322,6 @@ class Server(object):
             self.rs_test_acc.append(regular_acc)
         else:
             acc.append(regular_acc)
-
-    # evaluate selected clients
-    # def evaluate(self, acc=None, loss=None):
-    #     stats = self.test_metrics()
-    #     # stats_train = self.train_metrics()
-
-    #     test_acc = sum(stats[2]) * 1.0 / sum(stats[1])
-    #     # test_auc = sum(stats[3]) * 1.0 / sum(stats[1])
-    #     # train_loss = sum(stats_train[2])*1.0 / sum(stats_train[1])
-    #     accs = [a / n for a, n in zip(stats[2], stats[1])]
-    #     # aucs = [a / n for a, n in zip(stats[3], stats[1])]
-
-    #     if acc == None:
-    #         self.rs_test_acc.append(test_acc)
-    #     else:
-    #         acc.append(test_acc)
-
-    #     # if loss == None:
-    #     #     self.rs_train_loss.append(train_loss)
-    #     # else:
-    #     #     loss.append(train_loss)
-
-    #     # print("Averaged Train Loss: {:.4f}".format(train_loss))
-    #     print("Averaged Test Accurancy: {:.4f}".format(test_acc))
-    #     # print("Averaged Test AUC: {:.4f}".format(test_auc))
-    #     # self.print_(test_acc, train_acc, train_loss)
-    #     print("Std Test Accurancy: {:.4f}".format(np.std(accs)))
-    #     # print("Std Test AUC: {:.4f}".format(np.std(aucs)))
 
     def print_(self, test_acc, test_auc, train_loss):
         print("Average Test Accurancy: {:.4f}".format(test_acc))
@@ -374,11 +371,8 @@ class Server(object):
             for label, count in local_agg.label_counts.items():
                 self.total_counts[label] += count
 
-    def compute_glprotos_invol_dataset(self):
-        for client in self.clients:
-            for key in client.label_counts.keys():
-                self.glprotos_invol_dataset[key] += client.label_counts[key]
 
+                
     def refresh_cloudserver(self):
         self.receiver_buffer.clear()
         del self.id_registration[:]
@@ -390,17 +384,17 @@ class Server(object):
         self.sample_registration[edge.id] = edge.all_trainsample_num
         return None
 
-    def receive_from_edge(self, edge_id, eshared_protos):
-        self.receiver_buffer[edge_id] = eshared_protos
+    def receive_from_edge(self, edge_id, eshared_state_dict):
+        self.receiver_buffer[edge_id] = eshared_state_dict
         return None
 
-    def aggregate_protos(self):
-        # received_dict = [dict for dict in self.receiver_buffer.values()]
-        # sample_num = [snum for snum in self.sample_registration.values()]
-        # self.shared_protos = average_weights(w=received_dict,
-        #                                          s_num=sample_num)
+    def aggregate(self, args):
+        received_dict = [dict for dict in self.receiver_buffer.values()]
+        sample_num = [snum for snum in self.sample_registration.values()]
+        self.shared_state_dict = average_weights(w=received_dict,
+                                                 s_num=sample_num)
         return None
 
     def send_to_edge(self, edge):
-        edge.receive_from_cloudserver(copy.deepcopy(self.shared_protos))
+        edge.receive_from_cloudserver(copy.deepcopy(self.shared_state_dict))
         return None
