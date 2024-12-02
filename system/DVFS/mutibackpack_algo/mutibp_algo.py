@@ -80,6 +80,7 @@ def main():
     extracted_data_file = "extracted_data.json"
     objects = create_objects_from_json(extracted_data_file)
 
+    # test
     max_time = (
         max_frequency_time * 7 - max_frequency_time + 200
     )  # Backpacks' total time capacity

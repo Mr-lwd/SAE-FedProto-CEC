@@ -33,6 +33,26 @@ class Edge_FedProto(Edge):
         self.eshared_protos_global = None
         self.eshared_protos_local = None
 
+
+    def train(self, clients):
+        print(f"Edge {self.id} begin training")
+        self.refresh_edgeserver()
+        selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
+        self.join_clients = selected_cnum # 记录本轮参与训练的客户端数量
+        self.selected_cids = np.random.choice(
+            self.cids, selected_cnum, replace=False, p=self.p_clients
+        )
+        for selected_cid in self.selected_cids:
+            self.client_register(clients[selected_cid])
+        for selected_cid in self.selected_cids:
+            self.send_to_client(clients[selected_cid])
+            clients[selected_cid].sync_with_edgeserver()
+            clients[selected_cid].train()
+            # clients[selected_cid].send_to_edgeserver(self)
+        # edge_loss[i] = client_loss
+        # edge_sample[i] = sum(self.sample_registration.values())
+        # self.aggregate()
+        
     def refresh_edgeserver(self):
         self.receiver_buffer.clear()
         self.id_registration.clear()
@@ -73,22 +93,3 @@ class Edge_FedProto(Edge):
     def receive_from_cloudserver(self, cloud_shared_protos):
         self.eshared_protos_global = cloud_shared_protos
         return None
-
-    def train(self, clients):
-        print("Edge.id begin training", self.id)
-        self.refresh_edgeserver()
-        selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
-        # selected_cnum = max(int(clients_per_edge * args.frac),1)
-        self.selected_cids = np.random.choice(
-            self.cids, selected_cnum, replace=False, p=self.p_clients
-        )
-        for selected_cid in self.selected_cids:
-            self.client_register(clients[selected_cid])
-        for selected_cid in self.selected_cids:
-            self.send_to_client(clients[selected_cid])
-            clients[selected_cid].sync_with_edgeserver()
-            clients[selected_cid].train()
-            # clients[selected_cid].send_to_edgeserver(self)
-        # edge_loss[i] = client_loss
-        # edge_sample[i] = sum(self.sample_registration.values())
-        # self.aggregate()

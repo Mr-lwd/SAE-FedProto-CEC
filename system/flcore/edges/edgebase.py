@@ -39,6 +39,7 @@ class Edge():
         self.p_clients = [] # 每个边缘服务器上的客户端数据量比例
         self.selected_cids = [] # 每轮选择的客户端id
         self.clients_per_edge = int(args.num_clients / args.num_edges)
+        self.join_clients = 0
 
     def refresh_edgeserver(self):
         self.receiver_buffer.clear()

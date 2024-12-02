@@ -425,7 +425,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
-    # agg_type 0--原始聚合方法平均 1--按数据量平均
+    # agg_type 0--按类平均原型聚合 1--按数据量平均
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
     parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
     parser.add_argument(

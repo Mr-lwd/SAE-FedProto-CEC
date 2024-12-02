@@ -97,8 +97,6 @@ class clientProto(Client):
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
             client_classifier.load_state_dict(g_classifier.state_dict())
             print("g_classifier test_metrics")
-            # model.head.weight.data = g_classifier.weight.data
-            # model.head.bias.data = g_classifier.bias.data
         model = model.to(self.device)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()

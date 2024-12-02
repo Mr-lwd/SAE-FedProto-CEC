@@ -24,14 +24,14 @@ class FedProto(Server):
         super().__init__(args, times)
         self.glprotos_invol_dataset = defaultdict(int)
         self.global_protos_data = defaultdict(list)
-        
+
         # select slow clients
         self.set_slow_clients()
         # 初始化所有客户端
         self.set_clients(clientProto)
         # 初始化所有边缘服务器
         self.set_edges(Edge_FedProto)
-        
+
         self.refresh_cloudserver()
 
         self.compute_glprotos_invol_dataset()
@@ -40,25 +40,25 @@ class FedProto(Server):
 
         self.Budget = []
         self.current_epoch = 0
-        
 
     def train(self):
-        for i in range(self.global_rounds + 1): #总论次
+        for i in range(self.global_rounds + 1):  # 总论次
             s_t = time.time()
             self.selected_edges = self.select_edges()
             self.refresh_cloudserver()
             [self.edge_register(edge=edge) for edge in self.edges]
-            for edge_epoch in range(self.edge_epochs): #边缘轮次
-                # self.global_protos_data = defaultdict(list)
-                for i, edge in enumerate(self.edges): # 遍历所有边缘服务器
+            for j, edge in enumerate(self.edges):  # 遍历所有边缘服务器
+                # self.send_to_edge(edge)
+                for edge_epoch in range(self.edge_epochs):  # 边缘轮次
                     edge.train(self.clients)
-                    
+
+            #已经计算完所有延迟， 直接从本地读取
             self.receive_protos()
             self.Budget.append(time.time() - s_t)
             print("-" * 50, self.Budget[-1])
             #             self.all_clients_time_cost += self.Budget[-1]
             self.current_epoch += 1
-                
+
             if i % self.eval_gap == 0:
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
@@ -85,7 +85,9 @@ class FedProto(Server):
         for edge in self.selected_edges:
             for id in edge.selected_cids:
                 self.uploaded_ids.append(id)
-                protos = load_item(self.clients[id].role, "protos", self.clients[id].save_folder_name)
+                protos = load_item(
+                    self.clients[id].role, "protos", self.clients[id].save_folder_name
+                )
                 # uploaded_protos.append(protos)
                 uploaded_protos.append({"client": self.clients[id], "protos": protos})
 
@@ -129,7 +131,7 @@ class FedProto(Server):
                     )
 
         print("agg_protos_label", agg_protos_label.keys())
-        if self.current_epoch % 10 == 0 and self.args.drawtsne is True:
+        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
             save_tsne_with_agg(
                 local_protos_list=local_protos_list,
                 agg_protos_label=agg_protos_label,
@@ -147,7 +149,6 @@ class FedProto(Server):
                 current_epoch=self.current_epoch,
             )
         return agg_protos_label
-
 
     def train_global_classifier(self):
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
@@ -244,11 +245,12 @@ class FedProto(Server):
     def send_to_edge(self, edge):
         edge.receive_from_cloudserver(copy.deepcopy(self.shared_protos))
         return None
-    
+
     def compute_glprotos_invol_dataset(self):
         for client in self.clients:
             for key in client.label_counts.keys():
                 self.glprotos_invol_dataset[key] += client.label_counts[key]
+
 
 def save_tsne_with_agg(
     local_protos_list,
@@ -264,11 +266,6 @@ def save_tsne_with_agg(
     lamda,
     lr_rate,
     usche,
-    balanceproto,
-    use_focalLoss,
-    # contrastive_loss_fn,
-    # add_layer,
-    # use_smooth,
     current_epoch,
 ):
     """
