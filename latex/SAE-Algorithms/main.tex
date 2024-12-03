@@ -17,138 +17,137 @@
 
 This paper introduces various algorithms used in our research.
 
-
-\section{Symbol Table}
+\section{Asynchronous Baseline Algorithm}
 
 Below is a table of symbols used in the algorithms:
 
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{@{}lp{10cm}@{}}
         \toprule
-        \textbf{Symbol}                & \textbf{Description}                                                                                             \\
+        \textbf{Symbol}                       & \textbf{Description}                                                                                                                  \\
         \midrule
-        \( J \)                        & Number of classes                                                                                                \\
-        \( T \)                        & Global rounds                                                                                                    \\
-        \( E \)                        & Edge rounds                                                                                                      \\
-        \( K \)                        & Local epochs                                                                                                     \\
-        \( L \)                        & Number of edge servers                                                                                           \\
-        \( N \)                        & Number of clients in each edge server                                                                            \\
-        \( \mathcal{N}_j^l  \)         & Number of clients in edge $l$ containing class $j$ that have participated in aggregation                         \\
-        \( \mathcal{N}_j  \)           & Number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
+        \( J \)                               & Number of classes                                                                                                                     \\
+        \( T \)                               & Global rounds                                                                                                                         \\
+        \( E \)                               & Edge rounds                                                                                                                           \\
+        \( K \)                               & Local epochs                                                                                                                          \\
+        \( L \)                               & Number of edge servers                                                                                                                \\
+        \( B \)                               & The buffer of the cloud server with a static length                                                                                   \\
+        \( N^l \)                             & Number of clients in the $l$-th each edge server                                                                                      \\
+        \( D_{i,j} \)                         & A subset of the local dataset \(D_i\) of the $i$-th client, containing training instances of class $j$.                                        \\
+        \( \mathcal{N}_j^l  \)                & Number of clients in edge $l$ containing class $j$ that have participated in aggregation                                              \\
+        \( {\mathcal{N}_j^{l,\text{old}}}  \) & Last number of clients in edge $l$ containing class $j$ that have participated in aggregation                                         \\
+        % \( \mathcal{N}_j  \)           & Number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
+        % \( {\mathcal{N}_j}^{'}  \)           & Last number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
 
         % \( S^l \)        & Set of clients in the \( l \)-th edge server  \\ 
-        \( S^{l} \)                    & Set of clients participating in training in the \( l \)-th edge server                                           \\
-        \( \bar{C}_j \)                & Aggregated prototype of class $j$ in the cloud
-        edge server                                                                                                                                       \\
-        \( C^l_j \)                    & Aggregated prototype of class $j$ from the \( l \)-th edge server                                                \\
-        \( C^{l,old}_j \)              & Last version of aggregated prototype of class $j$ from the \( l \)-th edge server stored in the cloud server     \\
-        \( c^l_{i, j} \)               & Aggregated prototype of class $j$ from the client \(i\) in  the \( l \)-th edge server stored in the edge server \\
-        \( c_{i, j}^{l, \text{old}} \) & Last version of the aggregated prototype of class \( j \) from client \( i \) in the \( l \)-th edge server      \\
-        \( B \)                        & The buffer of client server with static length                                                                   \\
+        \( S^{l} \)                           & Set of clients participating in training in the \( l \)-th edge server                                                                \\
+        \( \bar{C}_j \)                       & Aggregated prototype of class $j$ in the cloud edge server                                                                            \\
+        \( C^l_j \)                           & Aggregated prototype of class $j$ from the \( l \)-th edge server                                                                     \\
+        \( C^{l,\text{old}}_j \)              & Last version of aggregated prototype of class $j$ from the \( l \)-th edge server stored in the cloud server                          \\
+        \( c^l_{i, j} \)                      & Aggregated prototype of class $j$ from the client \(i\) in  the \( l \)-th edge server                                                \\
+        \( c_{i, j}^{l, \text{old}} \)        & Last version of the aggregated prototype of class \( j \) from client \( i \) in the \( l \)-th edge server stored in the edge server \\
         \bottomrule
     \end{tabular}
     \caption{Symbol Table}
 \end{table}
 
-\section{Pseudo-Code}
 The following algorithm demonstrates how to calculate the factorial of a number.
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Hierarchical Federated Prototype Learning -Part 1}
     \begin{algorithmic}[1]
-        \State \textbf{Input: nothing}
-        \State \textbf{Output: nothing}
+        % \State \textbf{Input: nothing}
+        % \State \textbf{Output: nothing}
 
         \Procedure{cloud server executes}{}
-        \State Initialize weights for clients withheterogeneous models
-        \State All edge servers execute in parallel
+        \State Initialize global prototype set \( \bar{C}\) for all classes and weights for clients with heterogeneous models
+        \State All edge servers choose a set of clients $S^l$ and execute in parallel
         \For{$t = 1, \dots, T$}
         \State Clear the buffer \(B\)
 
         \While{The buffer is not full}
-        \State Receive aggregated prototypes \( C^l \) from one edge node
+        \State Receive a pair \( (C^l, \mathcal{N}^l) \) from one edge server
         \State Fill the buffer \(B\) with \( C^l \)
         \EndWhile
-        \State \( \bar{C} \gets \text{CloudAggregate}(B) \)
-        \State Send \( \bar{C} \) to \( S_{edge}^t \)
-        \State \( S_{edge}^t \) re-execute
+        \State \( \bar{C} \gets \text{CloudUpdate}(B) \)
+        \State Send \( \bar{C} \) to edge servers participating in the current global aggregation
+        \State These edge servers rechoose $S^l$ and re-execute
         \EndFor
         \EndProcedure
 
         \Procedure{edge server executes}{}
         \State Receive \( \bar{C} \) from the cloud server
-        \For{$e = 1, \dots, E$}r
+        \For{$e = 1, \dots, E$} \Comment{Edge rounds, E is static 1}
         \State Send \( \bar{C} \) to client \( i \in S^{l} \)
         \For{each client \( i \) in parallel}
-        \State \( c^l_i \gets \text{LocalUpdate}(i, \bar{C_i}) \)
+        \State \( c^l_i \gets \text{ClientUpdate}(i, \bar{C_i}) \)
         \EndFor
         \State \( C^l \gets \text{EdgeAggregate}(\{ c^l_i \}_{i \in S^{l}}) \)
-        \State \( \bar{C} \gets \text{EdgeUpdate}(\bar{C}, C^l) \)
+        \State \( \bar{C} \gets \text{EdgeUpdate}(\bar{C}, C^l) \) \Comment{Must know client distribution of all edges, not implement now}
         \EndFor
-        \State Send \( C^l \) to the cloud server
+        \State Send a pair \( (C^l, \mathcal{N}^l) \) to the cloud server
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
-\newpage  % 强制换页
+% \newpage  % 强制换页
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Hierarchical Federated Prototype Learning -Part 2}
     \begin{algorithmic}[1]
-        \Procedure{CloudAggregate}{buffer}
+        \Procedure{CloudUpdate}{buffer}
         \For{$j = 1, \dots, J$}
-        \State \( \bar{C}_{j}^{'} \gets \mathcal{N}_j \cdot\bar{C}_{j} \) \Comment{Extend the aggregated prototypes $\bar{C}$}
-        \EndFor
+        \State \( \hat{C}_{j} \gets \sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{old}}} \cdot\bar{C}_{j} \) \Comment{Extend the aggregated prototypes $\bar{C}$}
 
-        \For{$\bar{C}_{j}^{'} \in \bar{C}^{'}$}
-        \For{$C^l \in \text{buffer}$}
-        \If{$C^{l,old}_{j}$ is not empty}
-        \State \( \bar{C}_{j}^{'}  \gets \bar{C}_{j}^{'} -C^{l,old}_j + C^l_j \)
-        \Else
-        \State \( \bar{C}_{j}^{'}  \gets \bar{C}_{j}^{'} +C^l_j \)
-        \State \( \mathcal{N}_j \gets \mathcal{N}_j + 1 \)
+        \For{$(C^l, \mathcal{N}^l) \in \text{buffer}$}
+        \State \( \hat{C}_{j}  \gets \hat{C}_{j} + {\mathcal{N}_j^l} \cdot C^l_j \)
+        \If{$C^{l,\text{old}}_{j}$ is not empty}
+        \State \( \hat{C}_{j}  \gets \hat{C}_{j} - {\mathcal{N}_j^{l,\text{old}}} \cdot C_j^{l, \text{old}} \)
+        % \State \( \mathcal{N}_j \gets \mathcal{N}_j + 1 \)
         \EndIf
-        \State \( C^{l,old} \gets C^l \)
+        \State \( {\mathcal{N}_j^{l,\text{old}}} \gets \mathcal{N}_j^l \)
         \EndFor
+        \State \( \bar{C}_{j} \gets \frac{\hat{C}_{j}}{\sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{old}}}} \)
         \EndFor
-        \State \( \bar{C}_{j} \gets \frac{\bar{C}_{j}^{'}}{\mathcal{N}_j} \)
+        \State \( C^{l,\text{old}} \gets C^l \) for \( l \in B \)
+        % \State \( C^{l,old} \text{ remains unchanged for } l \notin B \)
         \State \Return \( \bar{C} \)
         \EndProcedure
 
         \Procedure{EdgeAggregate}{$l, \{ c^l_i \}_{i \in S^{l}}$}
         \For{$j = 1, \dots, J$}
-        \State \( {C^l_j}^{'} \gets \mathcal{N}^l_j \cdot C^l_{j} \)
-        \EndFor
-
-        \For{each ${C^l_{j}}^{'}$}
+        \State \( {\hat{C^l_j}} \gets \mathcal{N}^l_j \cdot C^l_{j} \)
         \For{each $c^l_i$}
-        \If{$c^{l,old}_{i,j}$ is not empty}
-        \State \( {C^l_j}^{'}  \gets {C^l_j}^{'} - c^{l,old}_{i,j} + c^l_{i,j} \)
+
+        \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} + c^l_{i,j} \)
+        \If{$c^{l,\text{old}}_{i,j}$ is not empty}
+        \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} - c^{l,\text{old}}_{i,j}\)
         \Else
-        \State \( {C^l_j}^{'}  \gets {C^l_j}^{'} +C^l_j \)
         \State \( \mathcal{N}_j^l \gets \mathcal{N}_j^l + 1 \)
         \EndIf
-        \State \( C^{l, old}_i \gets c^l_i \)
         \EndFor
+        \State \( {C^l_j} \gets \frac{{\hat{C^l_j}}}{\mathcal\mathcal{N}_j^l} \)
         \EndFor
-
-        \Return \( C^l \)
+        \State \( c^{l,\text{old}}_i \gets c^l_i \) for \( i \in S^l \)
+        % \State \( c^{l,old}_i \text{ remains unchanged for } i \notin S^l\)
+        \State \Return \( C^l \)
         \EndProcedure
 
-        \Procedure{LocalUpdate}{}
-        \State \Return \( C^l_i \)
+        \Procedure{ClientUpdate}{$i, \bar{C_i}$}
+        \For{$k=1, \dots, K$}
+        \For{batch (\(x,y\)) $\in$ \(D_i\)}
+        \State Compute client prototypes by Eq.?.
+        \State Compute loss by Eq.? using client prototypes.
+        \State Update client model according to the loss.
+        \EndFor
+        \EndFor
+        \State \Return \( c^l_i \)
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
-
-
-% \If{n = 0}
-%     \State \Return 1
-% \Else
-%     \State \Return n * \text{Factorial}(n-1)
-% \EndIf
+\section{Proposed Algorithm}
 
 
 
