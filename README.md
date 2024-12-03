@@ -3,4 +3,4 @@ Semi-Asynchronous Energy-Efficient Federated Prototype Learning for Client-Edge-
 
 
 1. 2024/12/1 Build the repository & Implement Fedproto in Client-Edge-Cloud Architecture.
-2. 2024/12/2 fix the communication problem. todo
+2. 2024/12/2 Write the Pseudo Code and Symbol Table.
