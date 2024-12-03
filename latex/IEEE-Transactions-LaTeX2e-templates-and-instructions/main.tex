@@ -1,0 +1,218 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amsfonts}
+% \usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{algpseudocode} % For more flexible 
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{graphicx}
+% \usepackage{booktabs} % For professional-quality tables
+\usepackage{cite}
+
+\usepackage{makecell}   % 支持更灵活的单元格对齐和内容换行
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+% updated with editorial comments 8/9/2021
+
+\begin{document}
+
+\title{Semi-Asynchronous Energy-Efficient Federated Prototype Learning for Client-Edge-Cloud Architectures}
+
+% \author{IEEE Publication Technology,~\IEEEmembership{Staff,~IEEE,}
+
+% The paper headers
+% \markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021}%
+% {Shell \MakeLowercase{\textit{et al.}}: A Sample Article Using IEEEtran.cls for IEEE Journals}
+
+% \IEEEpubid{0000--0000/00\$00.00~\copyright~2021 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+  Article submission, IEEE, IEEEtran, journal, \LaTeX, paper, template, typesetting.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{T}{his}
+
+\section{Related Work}
+
+\section{Motivation}
+
+\section{Method}
+\subsection{Proposed Algorithm}
+Below is a table of symbols used in the algorithms:
+
+\begin{table}[H]
+  \caption{Symbol Table}
+  \centering
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{|@{}m{1cm}<{\centering}|m{6.5cm}|}
+    % \toprule
+    \hline
+    \textbf{Symbol}                       & \textbf{Description}                                                                                                                  \\
+    % \midrule
+    \hline
+    \( J \)                               & Number of classes                                                                                                                     \\
+    \hline
+    \( T \)                               & Global communication rounds                                                                                                                         \\
+    \hline
+     \( E \)                               & Edge communication rounds                                                                                                                           \\
+    \hline
+     \( K \)                               & Local train epochs                                                                                                                          \\
+    \hline
+     \( L \)                               & Number of edge servers                                                                                                                \\
+    \hline
+     \( B \)                               & The buffer of the cloud server with a static length                                                                                   \\
+    \hline
+     \( N^l \)                             & Number of clients in the $l$-th each edge server                                                                                      \\
+    \hline
+   \( \mathcal{N}_j^l  \)                & Number of clients in edge $l$ containing class $j$ that have participated in aggregation                                              \\
+    \hline
+    \( {\mathcal{N}_j^{l,\text{prev}}}  \) & Previous number of clients in edge $l$ containing class $j$ that have participated in aggregation                                         \\
+    \hline
+    % \( \mathcal{N}_j  \)           & Number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
+    % \( {\mathcal{N}_j}^{'}  \)           & Previous number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
+
+    % \( S^l \)        & Set of clients in the \( l \)-th edge server  \\ 
+    \( S^{l} \)                           & Set of clients participating in training in the \( l \)-th edge server                                                                \\
+    \hline
+    \( \bar{C}_j \)                       & Aggregated prototype of class $j$ in the cloud edge server                                                                            \\
+    \hline
+    \( C^l_j \)                           & Aggregated prototype of class $j$ from the \( l \)-th edge server                                                                     \\
+    \hline
+    \( C^{l,\text{prev}}_j \)              & Previous version of aggregated prototype of class $j$ from the \( l \)-th edge server in the cloud server                          \\
+    \hline
+    \( c^l_{i, j} \)                      & Aggregated prototype of class $j$ from the client \(i\) in  the \( l \)-th edge server                                                \\
+    \hline
+    \( c_{i, j}^{l, \text{prev}} \)        & Previous version of the aggregated prototype of class \( j \) from client \( i \) in the \( l \)-th edge server in the edge server \\
+    \hline
+    \( D^l_{i,j} \)                         & A subset of the local dataset \(D^l_i\) of the $i$-th client in the $l$-th edge server, containing training instances of class $j$.                               \\
+    \hline
+    \( \mathcal{X}^l_i \) & The feature and label set of the $i$-th client in the $l$-th edge server, containing all features of $D_i$. \\
+    \hline
+    \( G^l \) & The global classifier in the $l$-th edge server. \\
+    % \bottomrule
+    \hline
+  \end{tabular}
+\end{table}
+
+The following algorithm demonstrates how to calculate the factorial of a number.
+
+\begin{algorithm}[H]
+  \caption{Hierarchical Federated Prototype Learning -Part 1}
+  \begin{algorithmic}[1]
+    % \State \textbf{Input: nothing}
+    % \State \textbf{Output: nothing}
+
+    \Procedure{cloud server executes}{}
+    % \State Initialize global prototype set \( \bar{C}\) for all classes and weights for clients with heterogeneous models.
+    \State Initialize weights for clients with heterogeneous models.
+    \State All edge servers execute in parallel.
+    \For{$t = 1, \dots, T$}
+    \State Clear the buffer \(B\)
+
+    \While{$B$ is not full} \Comment{Async process}
+    \State Receive a triple \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \) from one edge server.
+    \State Populate \( B \) with the received triple.
+    \EndWhile
+    \State \( \bar{C}, G \gets \text{CloudUpdate}(B) \)
+    \State Send \( \bar{C}, G \) to edge servers participating in the current global aggregation.
+    \State These edge servers re-execute.
+    \EndFor
+    \EndProcedure
+
+    \Procedure{edge server executes}{}
+    \State Receive \( \bar{C}, G \) from the cloud server
+    \State Choose a set of clients $S^l$ to train in parallel.
+    \For{$e = 1, \dots, E$} \Comment{E now is static 1}
+    \State Send \( \bar{C}, G \) to client \( i \in S^{l} \)
+    \For{each client \( i \) in parallel}
+    \State \( (c^l_i, \mathcal{X}^l_i) \gets \text{ClientUpdate}(i, \bar{C}, G) \)
+    \EndFor \Comment{Wait for all clients}
+    \State \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \gets \text{EdgeAggregate}(\{ (c^l_i, \mathcal{X}^l_i) \}_{i \in S^{l}}) \)
+    \State \( \bar{C} \gets \text{EdgeUpdate}(\bar{C}, C^l) \) \Comment{not used now}
+    \EndFor
+    \State Send a triple \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \) to the cloud server
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+% \newpage  % 强制换页
+
+\begin{algorithm}[H]
+  \caption{Hierarchical Federated Prototype Learning -Part 2}
+  \begin{algorithmic}[1]
+    \Procedure{CloudUpdate}{B}
+    \For{$j = 1, \dots, J$}
+    \State \( \hat{C}_{j} \gets \sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{prev}}} \cdot\bar{C}_{j} \) \Comment{Extend the aggregated prototypes $\bar{C}$}
+
+    \For{$(C^l, \mathcal{N}^l) \in B$}
+    \State \( \hat{C}_{j}  \gets \hat{C}_{j} + {\mathcal{N}_j^l} \cdot C^l_j \)
+    \If{$C^{l,\text{prev}}_{j}$ is not empty}
+    \State \( \hat{C}_{j}  \gets \hat{C}_{j} - {\mathcal{N}_j^{l,\text{prev}}} \cdot C_j^{l, \text{prev}} \)
+    % \State \( \mathcal{N}_j \gets \mathcal{N}_j + 1 \)
+    \EndIf
+    \State \( {\mathcal{N}_j^{l,\text{prev}}} \gets \mathcal{N}_j^l \)
+    \EndFor
+    \State \( \bar{C}_{j} \gets \frac{\hat{C}_{j}}{\sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{prev}}}} \)
+    \EndFor
+    \State \( C^{l,\text{prev}} \gets C^l \) for \( l \in B \)
+    \State \( \mathcal{X} \gets \bigcup_{l \in B} \mathcal{X}^l \)
+    \State Train the global classifier \( G \) by using \( \mathcal{X} \).
+    \State \Return \( \bar{C}, G \)
+    \EndProcedure
+
+    \Procedure{EdgeAggregate}{$l, \{ (c^l_i, \mathcal{X}^l_i) \}_{i \in S^{l}}$}
+    \For{$j = 1, \dots, J$}
+    \State \( {\hat{C^l_j}} \gets \mathcal{N}^l_j \cdot C^l_{j} \)
+    \For{each $c^l_i$}
+
+    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} + c^l_{i,j} \)
+    \If{$c^{l,\text{prev}}_{i,j}$ is not empty}
+    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} - c^{l,\text{prev}}_{i,j}\)
+    \Else
+    \State \( \mathcal{N}_j^l \gets \mathcal{N}_j^l + 1 \)
+    \EndIf
+    \EndFor
+    \State \( {C^l_j} \gets \frac{{\hat{C^l_j}}}{\mathcal{N}_j^l} \)
+    \EndFor
+    \State \( c^{l,\text{prev}}_i \gets c^l_i \) for \( i \in S^l \)
+    \State \( \mathcal{X}^l \gets \bigcup_{i \in S^l} \mathcal{X}^l_i \)
+
+    \State \Return \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \)
+    \EndProcedure
+
+    \Procedure{ClientUpdate}{$i, \bar{C}, G$}
+    \State Receive \( \bar{C}, G \) from the edge server
+    \For{$k=1, \dots, K$}
+    \State DVFS to be implemented...
+    \For{batch (\(x,y\)) $\in$ \(D_i\)}
+    \State Compute client prototypes by Eq.?.
+    \State Compute loss by Eq.? using client prototypes and the global classifier $G$.
+    \State Update client model according to the loss.
+    \EndFor
+    \State Store the features and labels of \(D_i\) in \( \mathcal{X}^l_i \).
+    \EndFor
+    \State \Return \( (c^l_i, \mathcal{X}^l_i) \)
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\section{Experiments}
+
+\section{Conclusion}
+
+
+\end{document}
+
+
