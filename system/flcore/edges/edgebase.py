@@ -28,6 +28,7 @@ class Edge():
         """
         self.args = args
         self.id = id
+        self.role = "Edge_" + str(self.id)
         self.cids = cids
         self.receiver_buffer = {}
         self.shared_state_dict = {}
@@ -40,6 +41,7 @@ class Edge():
         self.selected_cids = [] # 每轮选择的客户端id
         self.clients_per_edge = int(args.num_clients / args.num_edges)
         self.join_clients = 0
+        self.save_folder_name = args.save_folder_name_full
 
     def refresh_edgeserver(self):
         self.receiver_buffer.clear()

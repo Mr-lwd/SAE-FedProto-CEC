@@ -5,11 +5,6 @@ import numpy as np
 import time
 from flcore.clients.clientbase import Client, load_item, save_item
 from collections import defaultdict
-import random
-import os
-import torch.nn.functional as F
-from torch.nn.functional import normalize
-from torch.optim.lr_scheduler import StepLR
 
 class clientProto(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
@@ -20,13 +15,16 @@ class clientProto(Client):
         self.lamda = args.lamda
         self.cshared_protos_local = {}
         self.cshared_protos_global = None
+        self.featureAndlabels = None
 
     def train(self):
+        # self.sync_with_edgeserver()
         print("Client.id begin training", self.id)
-        start_time = time.perf_counter()
+        local_train_start_time = time.perf_counter()
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         model.train()
@@ -69,22 +67,25 @@ class clientProto(Client):
                 optimizer.step()
         if self.device == "cuda":
             torch.cuda.synchronize()
-        epoch_time = time.perf_counter() - start_time
+        local_train_time = time.perf_counter() - local_train_start_time
         local_model_loss = local_model_loss / len(trainloader)
         local_gl_loss = local_gl_loss / len(trainloader)
-        print("local_model_loss", local_model_loss)
-        print("local_gl_loss", local_gl_loss)
-        client_protos_data = copy.deepcopy(protos)
-        save_item(self.agg_func(protos), self.role, "protos", self.save_folder_name)
+        # print("local_model_loss", local_model_loss)
+        # print("local_gl_loss", local_gl_loss)\
+        agg_protos = self.agg_func(protos)
+        # print("agg_protos", agg_protos)
+        save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
+        save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
 
-        train_time = epoch_time
+        train_time = local_train_time
 
-        if self.trans_delay_simulate is True:
-            epoch_time += self.sleep_time * 2
+        # if self.trans_delay_simulate is True:
+        #     local_train_time = self.sleep_time * 2
         self.train_time_cost["num_rounds"] += 1
-        self.train_time_cost["total_cost"] += epoch_time
-        return train_time, epoch_time, client_protos_data
+        self.train_time_cost["total_cost"] += local_train_time
+        # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)
+        return self.id
 
     def test_metrics(self, g_classifier=None):
         testloader = self.load_test_data()
@@ -168,7 +169,7 @@ class clientProto(Client):
 
         train_num = 0
         losses = 0
-   
+
         with torch.no_grad():
             for x, y in trainloader:
                 if type(x) == type([]):
@@ -190,10 +191,10 @@ class clientProto(Client):
                     # 原型距离损失：计算 rep 与其他标签原型的距离
         return losses, train_num
 
-
     def send_to_edgeserver(self, edgeserver):
         edgeserver.receive_from_client(
-            client_id=self.id, cshared_protos_local=copy.deepcopy(self.cshared_protos_local)
+            client_id=self.id,
+            cshared_protos_local=copy.deepcopy(self.cshared_protos_local),
         )
         return None
 
@@ -209,7 +210,7 @@ class clientProto(Client):
         """
         self.cshared_protos_global = self.receive_buffer
         return None
-    
+
     # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205
     def agg_func(self, protos):
         """

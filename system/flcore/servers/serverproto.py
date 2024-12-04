@@ -5,6 +5,7 @@ from flcore.clients.clientproto import clientProto
 from flcore.edges.edgeproto import Edge_FedProto
 from flcore.servers.serverbase import Server
 from flcore.clients.clientbase import load_item, save_item
+from utils.func_utils import *
 from utils.data_utils import read_client_data
 from threading import Thread
 from collections import defaultdict
@@ -40,6 +41,7 @@ class FedProto(Server):
 
         self.Budget = []
         self.current_epoch = 0
+        self.buffer = []
 
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
@@ -49,11 +51,11 @@ class FedProto(Server):
             [self.edge_register(edge=edge) for edge in self.edges]
             for j, edge in enumerate(self.edges):  # 遍历所有边缘服务器
                 # self.send_to_edge(edge)
-                for edge_epoch in range(self.edge_epochs):  # 边缘轮次
-                    edge.train(self.clients)
+                edge.train(self.clients)
 
-            #已经计算完所有延迟， 直接从本地读取
-            self.receive_protos()
+            # 直接计算从id_registration读取id，读取triple
+            self.cloudUpdate()
+
             self.Budget.append(time.time() - s_t)
             print("-" * 50, self.Budget[-1])
             #             self.all_clients_time_cost += self.Budget[-1]
@@ -77,42 +79,58 @@ class FedProto(Server):
 
         self.save_results()
 
-    def receive_protos(self):
+    def cloudUpdate(self):
         assert len(self.selected_edges) > 0
 
         self.uploaded_ids = []
-        uploaded_protos = []
+        uploaded_protos = defaultdict(dict)
         for edge in self.selected_edges:
-            for id in edge.selected_cids:
-                self.uploaded_ids.append(id)
-                protos = load_item(
-                    self.clients[id].role, "protos", self.clients[id].save_folder_name
-                )
-                # uploaded_protos.append(protos)
-                uploaded_protos.append({"client": self.clients[id], "protos": protos})
+            id = edge.id
+            self.uploaded_ids.append(id)
+            protos = load_item(edge.role, "protos", self.save_folder_name)
+            prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
+            uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
 
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
     #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
-    def proto_aggregation(self, local_protos_list):
-        agg_protos_label = defaultdict(list)
+    def proto_aggregation(self, edge_protos_list):
+        agg_protos_label = defaultdict(default_tensor)
+        global_protos = load_item(self.role, "global_protos", self.save_folder_name)
         if self.agg_type == 0:
-            for local_protos in local_protos_list:
-                for label in local_protos["protos"].keys():
-                    agg_protos_label[label].append(local_protos["protos"][label])
+            for j in range(self.args.num_classes):
+                if global_protos is not None and j in global_protos.keys():
+                    for edge in self.edges:
+                        agg_protos_label[j] += edge.N_l_prev[j] * global_protos[j]
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
+                for id in self.id_registration:
+                    if (
+                        edge_protos_list[id]["protos"] is not None
+                        and j in edge_protos_list[id]["protos"].keys()
+                    ):
+                        agg_protos_label[j] += (
+                            self.edges[id].N_l[j] * edge_protos_list[id]["protos"][j]
+                        )
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
+                    if (
+                        edge_protos_list[id]["prev_protos"] is not None
+                        and j in edge_protos_list[id]["prev_protos"].keys()
+                    ):
+                        agg_protos_label[j] -= (
+                            self.edges[id].N_l_prev[j] * edge_protos_list[id]["prev_protos"][j]
+                        )
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
+                        
+                    self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
 
-            for [label, proto_list] in agg_protos_label.items():
-                if len(proto_list) > 1:
-                    proto = 0 * proto_list[0].data
-                    for i in proto_list:
-                        proto += i.data
-                    agg_protos_label[label] = proto / len(proto_list)
-                else:
-                    agg_protos_label[label] = proto_list[0].data
+                if agg_protos_label[j] is not None:
+                    agg_protos_label[j] = agg_protos_label[j] / sum(
+                        edge.N_l_prev[j] for edge in self.edges
+                    )
 
         elif self.agg_type == 1:
-            for local_protos in local_protos_list:
+            for local_protos in edge_protos_list:
                 for label in local_protos["protos"].keys():
                     agg_protos_label[label].append(
                         local_protos["protos"][label]
@@ -131,23 +149,32 @@ class FedProto(Server):
                     )
 
         print("agg_protos_label", agg_protos_label.keys())
-        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
-            save_tsne_with_agg(
-                local_protos_list=local_protos_list,
-                agg_protos_label=agg_protos_label,
-                base_path="./tsneplot",
-                dataset=self.args.dataset,
-                algorithm=self.args.algorithm,
-                local_epochs=self.args.local_epochs,
-                agg_type=self.args.agg_type,
-                glclassifier=self.args.glclassifier,
-                test_useglclassifier=self.args.test_useglclassifier,
-                gamma=self.args.gamma,
-                lamda=self.args.lamda,
-                lr_rate=self.args.local_learning_rate,
-                usche=self.args.use_decay_scheduler,
-                current_epoch=self.current_epoch,
-            )
+        
+        for id in self.id_registration:
+            if edge_protos_list[id] is not None:
+                save_item(
+                    edge_protos_list[id]["protos"],
+                    self.edges[id].role,
+                    "prev_protos",
+                    self.save_folder_name,
+                )
+        # if self.args.drawtsne is True and self.current_epoch % 10 == 0:
+        #     save_tsne_with_agg(
+        #         edge_protos_list=edge_protos_list,
+        #         agg_protos_label=agg_protos_label,
+        #         base_path="./tsneplot",
+        #         dataset=self.args.dataset,
+        #         algorithm=self.args.algorithm,
+        #         local_epochs=self.args.local_epochs,
+        #         agg_type=self.args.agg_type,
+        #         glclassifier=self.args.glclassifier,
+        #         test_useglclassifier=self.args.test_useglclassifier,
+        #         gamma=self.args.gamma,
+        #         lamda=self.args.lamda,
+        #         lr_rate=self.args.local_learning_rate,
+        #         usche=self.args.use_decay_scheduler,
+        #         current_epoch=self.current_epoch,
+        #     )
         return agg_protos_label
 
     def train_global_classifier(self):
@@ -253,7 +280,7 @@ class FedProto(Server):
 
 
 def save_tsne_with_agg(
-    local_protos_list,
+    edge_protos_list,
     agg_protos_label,
     base_path,
     dataset,
@@ -285,7 +312,7 @@ def save_tsne_with_agg(
         label_types.append("Global")  # 标记为全局原型
 
     # 收集本地原型数据
-    for local_protos in local_protos_list:
+    for local_protos in edge_protos_list:
         for label, proto in local_protos["protos"].items():
             all_features.append(proto.cpu().detach().numpy())
             all_labels.append(label)

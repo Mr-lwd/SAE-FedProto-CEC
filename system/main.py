@@ -229,18 +229,6 @@ def run(args):
         elif args.algorithm == "FedProto":
             server = FedProto(args, i)
 
-        elif args.algorithm == "FedProto_semi":
-            server = FedProto_semi(args, i)
-
-        elif args.algorithm == "FedProto_async":
-            server = FedProto_async(args, i)
-
-        elif args.algorithm == "FedProto_clientselect":
-            server = FedProto_clientselect(args, i)
-
-        elif args.algorithm == "FedProto_cs_aftertrain":
-            server = FedProto_cs_aftertrain(args, i)
-
         elif args.algorithm == "FedGen":
             server = FedGen(args, i)
 
@@ -306,7 +294,8 @@ def set_seed(seed: int = 42) -> None:
 
 if __name__ == "__main__":
     total_start = time.time()
-
+    num_edges = 2
+    
     parser = argparse.ArgumentParser()
     # general
     parser.add_argument(
@@ -316,7 +305,9 @@ if __name__ == "__main__":
         "-dev", "--device", type=str, default="cuda", choices=["cpu", "cuda"]
     )
     parser.add_argument("-did", "--device_id", type=str, default="0")
-    parser.add_argument("-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_20")
+    parser.add_argument(
+        "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_20"
+    )
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="Cifar10_dir_0.3_imbalance_20"
     # )
@@ -334,7 +325,7 @@ if __name__ == "__main__":
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=100)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=10)
     parser.add_argument(
         "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
     )
@@ -363,10 +354,10 @@ if __name__ == "__main__":
         help="Random ratio of clients per round",
     )
     parser.add_argument(
-        "-nc", "--num_clients", type=int, default=6, help="Total number of clients"
+        "-nc", "--num_clients", type=int, default=20, help="Total number of clients"
     )
     parser.add_argument(
-        "-ne", "--num_edges", type=int, default=2, help="Total number of edges"
+        "-ne", "--num_edges", type=int, default=num_edges, help="Total number of edges"
     )
 
     parser.add_argument(
@@ -427,13 +418,16 @@ if __name__ == "__main__":
     )
     # agg_type 0--按类平均原型聚合 1--按数据量平均
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
+
+    # FedSAE
+    parser.add_argument("-bs", "--buffersize", type=int, default=num_edges) #与边缘数量相等则等价于全同步
     parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
     parser.add_argument(
         "-test_useglclassifier", "--test_useglclassifier", type=int, default=0
     )
     parser.add_argument("-gamma", "--gamma", type=float, default=0)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=False)
-    
+
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
     parser.add_argument("-glr", "--generator_learning_rate", type=float, default=0.005)
@@ -477,9 +471,9 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
-        
+
     if args.use_decay_scheduler:
-            print("use scheduler lr decay")
+        print("use scheduler lr decay")
 
     print("=" * 50)
     for arg in vars(args):
