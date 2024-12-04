@@ -106,16 +106,10 @@ class Edge_FedProto(Edge):
     def edgeAggregate(self, clients):
         # 直接从当前轮次参与的客户端id读取聚合后原型和{clientid: {label: [feature], ...}, ...} Set
         edgeProtos = load_item(self.role, "protos", self.save_folder_name)
-        # print("edgeProtos load", edgeProtos)
         clientProtos = {
             id: load_item(clients[id].role, "protos", self.save_folder_name)
             for id in self.id_registration
         }
-        # for id in self.id_registration:
-        #     print(f"client {id} protos")
-        #     for j in range(self.args.num_classes):
-        #         if clientProtos is not None and j in clientProtos[id].keys():
-        #             print(f"protos {j}", clientProtos[id][j][0])
 
         clientProtos_prev = {
             id: load_item(clients[id].role, "prev_protos", self.save_folder_name)
@@ -138,11 +132,8 @@ class Edge_FedProto(Edge):
                     else:
                         self.N_l[j] += 1
             if self.N_l[j] != 0:
-                # print(f"before division {j}", edgeProtos[j][0])
                 edgeProtos[j] = edgeProtos[j] / self.N_l[j]  # 平均
-                # print(f"after division {j}", edgeProtos[j][0])
-        # print("edgeProtos to save", edgeProtos)
-        # exit()
+
         save_item(edgeProtos, self.role, "protos", self.save_folder_name)
 
         for id in self.id_registration:

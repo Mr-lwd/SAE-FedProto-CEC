@@ -325,7 +325,7 @@ if __name__ == "__main__":
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=10)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=40)
     parser.add_argument(
         "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
     )
@@ -342,8 +342,8 @@ if __name__ == "__main__":
         "-jr",
         "--join_ratio",
         type=float,
-        default=1.0,
-        # default=0.5,
+        # default=1.0,
+        default=0.5,
         help="Ratio of clients per round",
     )
     parser.add_argument(
