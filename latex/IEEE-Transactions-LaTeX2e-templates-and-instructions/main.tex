@@ -38,7 +38,7 @@
 \end{abstract}
 
 \begin{IEEEkeywords}
-  Article submission, IEEE, IEEEtran, journal, \LaTeX, paper, template, typesetting.
+  Federated Prototype Learning, Hierarchical Architecture, Heterogeneous Models, Asynchronous Communication, Energy Efficiency
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -167,7 +167,8 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \State \( \bar{C}_{j} \gets \frac{\hat{C}_{j}}{\sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{prev}}}} \)
     \EndFor
     \State \( C^{l,\text{prev}} \gets C^l \) for \( l \in B \)
-    \State \( \mathcal{X} \gets \bigcup_{l \in B} \mathcal{X}^l \)
+    \State \( \mathcal{X}^{l,cloud} \gets \mathcal{X}^l \) for \(l \in B \)
+    \State \( \mathcal{X} \gets \bigcup_{l \in L} \mathcal{X}^{l,cloud} \)
     \State Train the global classifier \( G \) by using \( \mathcal{X} \).
     \State \Return \( \bar{C}, G \)
     \EndProcedure
@@ -187,7 +188,8 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \State \( {C^l_j} \gets \frac{{\hat{C^l_j}}}{\mathcal{N}_j^l} \)
     \EndFor
     \State \( c^{l,\text{prev}}_i \gets c^l_i \) for \( i \in S^l \)
-    \State \( \mathcal{X}^l \gets \bigcup_{i \in S^l} \mathcal{X}^l_i \)
+    \State \( \mathcal{X}^{l,edge}_i \gets  \mathcal{X}^l_i \) for \( i \in S^l \)
+    \State \( \mathcal{X}^l \gets \bigcup_{i \in N^l} \mathcal{X}^{l,edge}_i \)
 
     \State \Return \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \)
     \EndProcedure
