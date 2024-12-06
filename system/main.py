@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import torch
 import argparse
 import os
@@ -9,6 +10,7 @@ import logging
 import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
+from flcore.servers.serverSAE import FedSAE
 from flcore.servers.servergen import FedGen
 from flcore.servers.serverdistill import FedDistill
 from flcore.servers.serverlg import LG_FedAvg
@@ -228,6 +230,9 @@ def run(args):
 
         elif args.algorithm == "FedProto":
             server = FedProto(args, i)
+            
+        elif args.algorithm == "FedSAE":
+            server = FedSAE(args, i)
 
         elif args.algorithm == "FedGen":
             server = FedGen(args, i)
@@ -325,7 +330,7 @@ if __name__ == "__main__":
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=80)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=120)
     parser.add_argument(
         "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
     )
@@ -333,17 +338,17 @@ if __name__ == "__main__":
         "-ls",
         "--local_epochs",
         type=int,
-        default=1,
+        default=3,
         help="Multiple update steps in one local epoch.",
     )
-    parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
-    # parser.add_argument("-algo", "--algorithm", type=str, default="FedTGP")
+    # parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
+    parser.add_argument("-algo", "--algorithm", type=str, default="FedSAE")
     parser.add_argument(
         "-jr",
         "--join_ratio",
         type=float,
         default=1.0,
-        # default=0.5,
+        # default=0.8,
         help="Ratio of clients per round",
     )
     parser.add_argument(
@@ -417,12 +422,12 @@ if __name__ == "__main__":
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
 
     # FedSAE
-    parser.add_argument("-bs", "--buffersize", type=int, default=2) #与边缘数量相等则等价于全同步
-    parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
+    parser.add_argument("-bs", "--buffersize", type=int, default=1) #与边缘数量相等则等价于全同步
+    # parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
     parser.add_argument(
-        "-test_useglclassifier", "--test_useglclassifier", type=int, default=0
+        "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
     )
-    parser.add_argument("-gamma", "--gamma", type=float, default=0)
+    parser.add_argument("-gamma", "--gamma", type=float, default=1.0)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=False)
 
     # FedGen

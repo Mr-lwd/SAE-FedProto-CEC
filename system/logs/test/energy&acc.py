@@ -31,7 +31,10 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 # 定义文件路径
 log_files = [
    "./log_async_buffer=1.out",
-   "./log_async_buffer=2.out"
+   "./log_async_buffer=2.out",
+   "./baseline_lamda_1_agg_0_lr_005.out",
+   "./epochs_3/SAE_gamma_1.0_buffer=2_joinrate_1.0.out",
+   "./epochs_3/SAE_gamma_1.0_buffer=1_joinrate_1.0.out"
 ]
 time_model_configs = [
     {

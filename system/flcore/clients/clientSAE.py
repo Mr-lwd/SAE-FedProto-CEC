@@ -8,7 +8,7 @@ from utils.func_utils import *
 from collections import defaultdict
 
 
-class clientProto(Client):
+class clientSAE(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
         super().__init__(args, id, train_samples, test_samples, **kwargs)
         torch.manual_seed(0)
@@ -17,8 +17,9 @@ class clientProto(Client):
         self.lamda = args.lamda
         self.cshared_protos_local = {}
         self.cshared_protos_global = None
+        self.featureAndlabels = None
         self.train_time = 0
-        self.trans_time  = 0
+        self.trans_time = 0
 
     def train(self):
         self.receive_from_edgeserver()
@@ -26,6 +27,10 @@ class clientProto(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
+        if glclassifier is not None:
+            for param in glclassifier.parameters():
+                param.requires_grad = False
         # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
@@ -34,11 +39,10 @@ class clientProto(Client):
         max_local_epochs = self.local_epochs
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
-            
+
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(max_local_epochs):
             local_model_loss = 0
-            local_gl_loss = 0
             protos = defaultdict(list)
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
@@ -51,7 +55,16 @@ class clientProto(Client):
                 rep = model.base(x)
                 rep = rep.squeeze(1)
                 output = model.head(rep)
-                loss = self.loss(output, y)
+                # loss = self.loss(output, y)
+                if glclassifier is not None:
+                    loss = self.loss(output, y) * (1 - self.args.gamma)
+                else:
+                    loss = self.loss(output, y)
+
+                if glclassifier is not None:
+                    global_outputs = glclassifier(rep)
+                    global_loss = self.loss(global_outputs, y) * self.args.gamma
+                    loss += global_loss
 
                 local_model_loss += loss
                 if global_protos is not None:
@@ -72,17 +85,18 @@ class clientProto(Client):
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
         local_model_loss = local_model_loss / len(trainloader)
-        local_gl_loss = local_gl_loss / len(trainloader)
-        # print("local_model_loss", local_model_loss)
-        # print("local_gl_loss", local_gl_loss)\
+        print("local_model_loss", local_model_loss.item())
         # 计算每个 512 维张量的大小（单位：字节）
         # 计算字典中所有张量的总大小（单位：字节）
+
+        # print(f"Tensor size: {all_bytes} bytes")
+
+        save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
 
         all_bytes = 0
         all_bytes += get_theory_bytes(protos)
         agg_protos = self.agg_func(protos)
         all_bytes += get_theory_bytes(agg_protos)
-        # print(f"Tensor size: {all_bytes} bytes")
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
 
@@ -97,11 +111,7 @@ class clientProto(Client):
     def test_metrics(self, g_classifier=None):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        if (
-            g_classifier is not None
-            and self.args.glclassifier == 1
-            and self.args.test_useglclassifier == 1
-        ):
+        if g_classifier is not None and self.args.test_useglclassifier == 1:
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
             client_classifier.load_state_dict(g_classifier.state_dict())
             print("g_classifier test_metrics")
@@ -204,12 +214,12 @@ class clientProto(Client):
             cshared_protos_local=copy.deepcopy(self.cshared_protos_local),
         )
         return None
-    
+
     def receive_from_edgeserver(self, eshared_protos_global=None):
         # client
         self.train_time = 0
         self.trans_time = 0
-        if self.trans_delay_simulate is True: 
+        if self.trans_delay_simulate is True:
             self.trans_time += self.trans_simu_time
         # self.receive_buffer = eshared_protos_global
         return None
