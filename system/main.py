@@ -325,7 +325,7 @@ if __name__ == "__main__":
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=40)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=80)
     parser.add_argument(
         "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
     )
@@ -342,8 +342,8 @@ if __name__ == "__main__":
         "-jr",
         "--join_ratio",
         type=float,
-        # default=1.0,
-        default=0.5,
+        default=1.0,
+        # default=0.5,
         help="Ratio of clients per round",
     )
     parser.add_argument(
@@ -411,16 +411,13 @@ if __name__ == "__main__":
     # FedProto
     parser.add_argument("-lam", "--lamda", type=float, default=2)
     parser.add_argument(
-        "-agg_by_dataset_dis", "--agg_by_dataset_dis", type=bool, default=False
-    )
-    parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
     # agg_type 0--按类平均原型聚合 1--按数据量平均
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
 
     # FedSAE
-    parser.add_argument("-bs", "--buffersize", type=int, default=num_edges) #与边缘数量相等则等价于全同步
+    parser.add_argument("-bs", "--buffersize", type=int, default=2) #与边缘数量相等则等价于全同步
     parser.add_argument("-glclassifier", "--glclassifier", type=int, default=0)
     parser.add_argument(
         "-test_useglclassifier", "--test_useglclassifier", type=int, default=0

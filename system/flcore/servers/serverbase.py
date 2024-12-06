@@ -47,7 +47,6 @@ class Server(object):
                 f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/"
             )
         self.save_folder_name = args.save_folder_name_full
-        self.agg_by_dataset_dis = args.agg_by_dataset_dis
 
         self.selected_edges = []
 
@@ -79,7 +78,6 @@ class Server(object):
 
         self.first_client_epoch_times = []
         self.parallel_time_cost = 0
-        self.all_clients_time_cost = 0
         self.only_train_time = 0
         self.feature_dim = args.feature_dim
 
@@ -91,6 +89,7 @@ class Server(object):
         self.tot_train_samples = 0
         self.current_epoch = 0
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
+        self.buffersize = args.buffersize
         
 
     def set_clients(self, clientObj):
@@ -128,7 +127,7 @@ class Server(object):
                 for sample in list(self.edges[i].sample_registration.values())
             ]
             self.edges[i].refresh_edgeserver()
-        [self.edge_register(edge=edge) for edge in self.edges]
+        # [self.edge_register(edge=edge) for edge in self.edges]
         self.p_edge = [
             sample / sum(self.sample_registration.values())
             for sample in list(self.sample_registration.values())

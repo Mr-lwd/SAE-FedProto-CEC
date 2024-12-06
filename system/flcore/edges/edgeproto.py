@@ -8,6 +8,7 @@
 
 from collections import defaultdict
 import copy
+import random
 from flcore.edges.edgebase import Edge
 from flcore.clients.clientbase import load_item, save_item
 from utils.func_utils import *
@@ -38,13 +39,16 @@ class Edge_FedProto(Edge):
         self.eshared_protos_local = None
         self.clients = None
         self.N_l = defaultdict(int)  # 初始化默认0
-        self.N_l_prev = defaultdict(int)  # 初始化默认0s
+        self.N_l_prev = defaultdict(int)  # 初始化默认0
+        self.eglobal_time = 0
+        self.etrain_time = 0
+        self.etrans_time = 0
+        self.eparallel_time = 0
+        self.etrans_simu_time = random.randint(10, 100)
         # Number of clients in edge l containing class j that have participated in aggregation
 
     def train(self, clients):
         print(f"Edge {self.id} begin training")
-        self.refresh_edgeserver()
-        # self.receive_from_cloudserver()
         selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
         self.join_clients = selected_cnum  # 记录本轮参与训练的客户端数量
         # Choose a set of clients S^l to train in parallel
@@ -53,19 +57,33 @@ class Edge_FedProto(Edge):
         )
         for selected_cid in self.selected_cids:
             self.client_register(clients[selected_cid])
-        for edge_epoch in range(self.args.edge_epochs):  # 边缘轮次
-            # self.send_to_client()
+
+        for edge_epoch in range(self.args.edge_epochs):  # 边缘轮次, ==1
+            eparallel_time_list = []
             for selected_cid in self.selected_cids:
                 # self.send_to_client(clients[selected_cid])
-                clients[selected_cid].train()
+                id, train_time, trans_time = clients[selected_cid].train()
+                self.etrain_time += train_time
+                eparallel_time_list.append((train_time + trans_time))
+
+            self.eparallel_time += max(eparallel_time_list)
 
             self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
+        self.eglobal_time += self.eparallel_time
+        if self.args.trans_delay_simulate is True:
+            self.etrans_time += self.etrans_simu_time
+            self.eglobal_time += self.etrans_time
+            
+
+        return self.eglobal_time, self.etrain_time, self.etrans_time
 
     def refresh_edgeserver(self):
+        self.etrain_time = 0
+        self.etrans_time = 0
+        self.eparallel_time = 0
         self.receiver_buffer.clear()
         self.id_registration.clear()
-        # del self.id_registration[:]
         self.sample_registration.clear()
 
         return None
@@ -89,7 +107,7 @@ class Edge_FedProto(Edge):
         # sample_num = [snum for snum in self.sample_registration.values()]
 
     def send_to_client(self, client):
-        client.receive_from_edgeserver(copy.deepcopy(self.eshared_protos_global))
+        # client.receive_from_edgeserver(copy.deepcopy(self.eshared_protos_global))
         return None
 
     def send_to_cloudserver(self, cloud):
@@ -99,8 +117,11 @@ class Edge_FedProto(Edge):
         )
         return None
 
-    def receive_from_cloudserver(self, cloud_shared_protos):
-        self.eshared_protos_global = cloud_shared_protos
+    def receive_from_cloudserver(self, cloud_shared_protos=None, global_time=0):
+        self.eglobal_time = global_time
+        if self.args.trans_delay_simulate is True:
+            self.etrans_time += self.etrans_simu_time
+        # self.eshared_protos_global = cloud_shared_protos
         return None
 
     def edgeAggregate(self, clients):
@@ -119,7 +140,7 @@ class Edge_FedProto(Edge):
         if edgeProtos is None:
             edgeProtos = defaultdict(default_tensor)
         for j in range(self.args.num_classes):
-            edgeProtos[j] = self.N_l[j] * edgeProtos[j]  # 第一轮次为0*512
+            edgeProtos[j] = self.N_l[j] * edgeProtos[j]  # 第一轮次为512dim 0向量
             assert len(edgeProtos[j]) == self.args.feature_dim
 
             for id in self.id_registration:

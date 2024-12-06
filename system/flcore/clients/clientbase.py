@@ -53,9 +53,8 @@ class Client(object):
         self.entropy = 0
         self.initLabels()
         self.trans_delay_simulate = args.trans_delay_simulate
-        self.sleep_time = random.randint(1, 10)
+        self.trans_simu_time = random.randint(1, 10)
         self.receive_buffer = None
-        
 
     def load_train_data(self, batch_size=None, num_workers=4):
         if batch_size == None:
@@ -163,11 +162,12 @@ class Client(object):
         print("id", self.id)
         print("self.label_counts", self.label_counts)
         print("entropy", entropy)
-        
+
     def send_to_edgeserver(self, edgeserver):
-        edgeserver.receive_from_client(client_id= self.id,
-                                        cshared_state_dict = copy.deepcopy(self.model.shared_layers.state_dict())
-                                        )
+        edgeserver.receive_from_client(
+            client_id=self.id,
+            cshared_state_dict=copy.deepcopy(self.model.shared_layers.state_dict()),
+        )
         return None
 
     def receive_from_edgeserver(self, shared_state_dict):
@@ -183,10 +183,23 @@ class Client(object):
         self.model.update_model(self.receiver_buffer)
         return None
 
+
 def save_item(item, role, item_name, item_path=None):
     if not os.path.exists(item_path):
         os.makedirs(item_path)
-    torch.save(item, os.path.join(item_path, role + "_" + item_name + ".pt"))
+    file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
+    torch.save(item, file_path)
+
+    # 查看保存后的文件大小（单位：字节）
+    # if item_name == "protos":
+    #     file_size = os.path.getsize(file_path)
+    #     print(f"Saved file size: {file_size} bytes")
+
+    #     # 如果你希望以 KB 或 MB 显示，可以做以下转换：
+    #     file_size_kb = file_size / 1024
+    #     file_size_mb = file_size_kb / 1024
+    #     print(f"File size: {file_size_kb:.2f} KB")
+    #     print(f"File size: {file_size_mb:.2f} MB")
 
 
 def load_item(role, item_name, item_path=None):

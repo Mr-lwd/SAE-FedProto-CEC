@@ -4,7 +4,9 @@ import torch.nn as nn
 import numpy as np
 import time
 from flcore.clients.clientbase import Client, load_item, save_item
+from utils.func_utils import *
 from collections import defaultdict
+
 
 class clientProto(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
@@ -16,11 +18,12 @@ class clientProto(Client):
         self.cshared_protos_local = {}
         self.cshared_protos_global = None
         self.featureAndlabels = None
+        self.train_time = 0
+        self.trans_time  = 0
 
     def train(self):
-        # self.sync_with_edgeserver()
+        self.receive_from_edgeserver()
         print("Client.id begin training", self.id)
-        local_train_start_time = time.perf_counter()
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
@@ -32,7 +35,8 @@ class clientProto(Client):
         max_local_epochs = self.local_epochs
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
-
+            
+        local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(max_local_epochs):
             local_model_loss = 0
             local_gl_loss = 0
@@ -72,20 +76,26 @@ class clientProto(Client):
         local_gl_loss = local_gl_loss / len(trainloader)
         # print("local_model_loss", local_model_loss)
         # print("local_gl_loss", local_gl_loss)\
+        # 计算每个 512 维张量的大小（单位：字节）
+        # 计算字典中所有张量的总大小（单位：字节）
+
+        all_bytes = 0
+        all_bytes += get_theory_bytes(protos)
         agg_protos = self.agg_func(protos)
-        # print("agg_protos", agg_protos)
+        all_bytes += get_theory_bytes(agg_protos)
+        # print(f"Tensor size: {all_bytes} bytes")
+        
         save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
 
-        train_time = local_train_time
-
-        # if self.trans_delay_simulate is True:
-        #     local_train_time = self.sleep_time * 2
+        self.train_time = local_train_time
+        if self.trans_delay_simulate is True:
+            self.trans_time += self.trans_simu_time
         self.train_time_cost["num_rounds"] += 1
         self.train_time_cost["total_cost"] += local_train_time
         # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)
-        return self.id
+        return self.id, self.train_time, self.trans_time
 
     def test_metrics(self, g_classifier=None):
         testloader = self.load_test_data()
@@ -197,10 +207,14 @@ class clientProto(Client):
             cshared_protos_local=copy.deepcopy(self.cshared_protos_local),
         )
         return None
-
-    def receive_from_edgeserver(self, eshared_protos_global):
+    
+    def receive_from_edgeserver(self, eshared_protos_global=None):
         # client
-        self.receive_buffer = eshared_protos_global
+        self.train_time = 0
+        self.trans_time = 0
+        if self.trans_delay_simulate is True: 
+            self.trans_time += self.trans_simu_time
+        # self.receive_buffer = eshared_protos_global
         return None
 
     def sync_with_edgeserver(self):
@@ -208,7 +222,7 @@ class clientProto(Client):
         The global has already been stored in the buffer
         :return: None
         """
-        self.cshared_protos_global = self.receive_buffer
+        # self.cshared_protos_global = self.receive_buffer
         return None
 
     # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205

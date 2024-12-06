@@ -33,8 +33,6 @@ class FedProto(Server):
         # 初始化所有边缘服务器
         self.set_edges(Edge_FedProto)
 
-        self.refresh_cloudserver()
-
         self.compute_glprotos_invol_dataset()
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
         print("Finished creating server and clients.")
@@ -42,22 +40,43 @@ class FedProto(Server):
         self.Budget = []
         self.current_epoch = 0
         self.buffer = []
-
+        self.global_time = 0
+        self.gtrain_time = 0
+        self.gtrans_time = 0
+        self.readyList = DynamicBuffer(self.num_edges)
+        self.tobetrained = DynamicBuffer(self.num_edges)
+        self.aggregation_buffer = DynamicBuffer(self.buffersize)
+        [self.edge_register(edge=edge) for edge in self.edges]
+        
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
-            s_t = time.time()
+            # s_t = time.time()
             self.selected_edges = self.select_edges()
             self.refresh_cloudserver()
-            [self.edge_register(edge=edge) for edge in self.edges]
-            for j, edge in enumerate(self.edges):  # 遍历所有边缘服务器
-                # self.send_to_edge(edge)
-                edge.train(self.clients)
-
+            # [self.edge_register(edge=edge) for edge in self.edges]
+            print("tobetrained:")
+            self.tobetrained.printTimeinfo()
+            for edge in self.tobetrained.buffer:
+                edge.refresh_edgeserver()
+                edge.receive_from_cloudserver(global_time=self.global_time)
+                eglobal_time, etrain_time, etrans_time = edge.train(self.clients)
+                self.gtrain_time += etrain_time
+                endTrainEdge = self.tobetrained.getbyid(edge.id)
+                self.readyList.add(endTrainEdge)
+            self.tobetrained.buffer = []
+            print("readyList:")
+            self.readyList.printTimeinfo()
+            self.trans_aggedges_from_readyList()
+            self.global_time = self.aggregation_buffer.buffer[-1].eglobal_time
             # 直接计算从id_registration读取id，读取triple
             self.cloudUpdate()
+            print("end Update")
+            self.push_aggclients_to_trainList()
 
-            self.Budget.append(time.time() - s_t)
-            print("-" * 50, self.Budget[-1])
+            print("server_global_time:", self.global_time)
+            print("only_train_time:", self.gtrain_time)
+            # self.Budget.append(time.time() - s_t)
+            # print("-" * 50, self.Budget[-1])
             #             self.all_clients_time_cost += self.Budget[-1]
             self.current_epoch += 1
 
@@ -75,22 +94,25 @@ class FedProto(Server):
         # self.print_(max(self.rs_test_acc), max(
         #     self.rs_train_acc), min(self.rs_train_loss))
         print(max(self.rs_test_acc))
-        print(sum(self.Budget[1:]) / len(self.Budget[1:]))
+        # print(sum(self.Budget[1:]) / len(self.Budget[1:]))
 
         self.save_results()
 
     def cloudUpdate(self):
         assert len(self.selected_edges) > 0
-
+        assert len(self.aggregation_buffer.buffer) > 0
+        print("aggregation_buffer:")
+        self.aggregation_buffer.printTimeinfo()
         self.uploaded_ids = []
         uploaded_protos = defaultdict(dict)
-        for edge in self.selected_edges:
+        for edge in self.aggregation_buffer.buffer:
+            # for edge in self.selected_edges:
             id = edge.id
             self.uploaded_ids.append(id)
             protos = load_item(edge.role, "protos", self.save_folder_name)
             prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
             uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-
+            
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
@@ -104,7 +126,7 @@ class FedProto(Server):
                     for edge in self.edges:
                         agg_protos_label[j] += edge.N_l_prev[j] * global_protos[j]
                         assert len(agg_protos_label[j]) == self.args.feature_dim
-                for id in self.id_registration:
+                for id in edge_protos_list.keys():
                     if (
                         edge_protos_list[id]["protos"] is not None
                         and j in edge_protos_list[id]["protos"].keys()
@@ -118,10 +140,11 @@ class FedProto(Server):
                         and j in edge_protos_list[id]["prev_protos"].keys()
                     ):
                         agg_protos_label[j] -= (
-                            self.edges[id].N_l_prev[j] * edge_protos_list[id]["prev_protos"][j]
+                            self.edges[id].N_l_prev[j]
+                            * edge_protos_list[id]["prev_protos"][j]
                         )
                         assert len(agg_protos_label[j]) == self.args.feature_dim
-                        
+
                     self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
 
                 if agg_protos_label[j] is not None:
@@ -129,28 +152,27 @@ class FedProto(Server):
                         edge.N_l_prev[j] for edge in self.edges
                     )
 
-        elif self.agg_type == 1:
-            for local_protos in edge_protos_list:
-                for label in local_protos["protos"].keys():
-                    agg_protos_label[label].append(
-                        local_protos["protos"][label]
-                        * local_protos["client"].label_counts[label]
-                    )
+        # elif self.agg_type == 1:
+        #     for local_protos in edge_protos_list:
+        #         for label in local_protos["protos"].keys():
+        #             agg_protos_label[label].append(
+        #                 local_protos["protos"][label]
+        #                 * local_protos["client"].label_counts[label]
+        #             )
 
-            for [label, proto_list] in agg_protos_label.items():
-                if len(proto_list) > 1:
-                    proto = 0 * proto_list[0].data
-                    for i in proto_list:
-                        proto += i.data
-                    agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-                else:
-                    agg_protos_label[label] = (
-                        proto_list[0].data / self.glprotos_invol_dataset[label]
-                    )
+        #     for [label, proto_list] in agg_protos_label.items():
+        #         if len(proto_list) > 1:
+        #             proto = 0 * proto_list[0].data
+        #             for i in proto_list:
+        #                 proto += i.data
+        #             agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+        #         else:
+        #             agg_protos_label[label] = (
+        #                 proto_list[0].data / self.glprotos_invol_dataset[label]
+        #             )
 
         print("agg_protos_label", agg_protos_label.keys())
-        
-        for id in self.id_registration:
+        for id in edge_protos_list.keys():
             if edge_protos_list[id] is not None:
                 save_item(
                     edge_protos_list[id]["protos"],
@@ -254,6 +276,7 @@ class FedProto(Server):
         return None
 
     def edge_register(self, edge):
+        self.tobetrained.add(edge)
         self.id_registration.append(edge.id)
         self.sample_registration[edge.id] = edge.all_trainsample_num
         return None
@@ -277,6 +300,18 @@ class FedProto(Server):
         for client in self.clients:
             for key in client.label_counts.keys():
                 self.glprotos_invol_dataset[key] += client.label_counts[key]
+
+    def trans_aggedges_from_readyList(self):
+        while (
+            len(self.aggregation_buffer.buffer) < self.aggregation_buffer.max_length
+            and len(self.readyList.buffer) > 0
+        ):
+            # for step in range(self.async_buffer_length):
+            self.aggregation_buffer.add(self.readyList.buffer.pop(0))
+
+    def push_aggclients_to_trainList(self):
+        while len(self.aggregation_buffer.buffer) > 0:
+            self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
 
 
 def save_tsne_with_agg(
@@ -389,3 +424,51 @@ def save_tsne_with_agg(
     plt.ylabel("t-SNE Dimension 2")
     plt.savefig(save_path)
     plt.close()
+
+
+class DynamicBuffer:
+    def __init__(self, max_length):
+        self.buffer = []  # 初始化空缓冲区
+        self.max_length = max_length  # 设置最大长度
+
+    def add(self, edge):
+        # 检查edge_id是否已存在
+        if any(existing_edge.id == edge.id for existing_edge in self.buffer):
+            print(f"edge with ID {edge.edge_id} already exists in the buffer.")
+            exit(0)
+
+        if len(self.buffer) < self.max_length:
+            # 使用插入排序的方式插入
+            index = 0
+            while (
+                index < len(self.buffer)
+                and self.buffer[index].eglobal_time < edge.eglobal_time
+            ):
+                index += 1
+            self.buffer.insert(index, edge)  # 按照global_time插入
+        else:
+            print("Buffer is full, cannot add more objects.")  # 缓冲区已满
+
+    def getbyid(self, edge_id):
+        for index, edge in enumerate(self.buffer):
+            if edge.id == edge_id:  # 匹配edge_id
+                return self.buffer[index]  # 返回匹配的对象
+        print("Edge with ID {} not found.".format(edge_id))  # 未找到该edge_id
+
+    def removebyid(self, edge_id):
+        for index, edge in enumerate(self.buffer):
+            if edge.id == edge_id:  # 匹配edge_id
+                return self.buffer.pop(index)  # 移除匹配的对象
+        print("Edge with ID {} not found.".format(edge_id))  # 未找到该edge_id
+
+    def get_buffer(self):
+        return self.buffer
+
+    def transfer_edge_from(self, other_buffer):
+        if other_buffer.buffer:  # 检查另一个缓冲区是否为空
+            obj = other_buffer.remove()  # 从另一个缓冲区移除对象
+            self.add(obj)  # 尝试添加到当前缓冲区
+
+    def printTimeinfo(self):
+        for edge in self.buffer:
+            print(f"ID: {edge.id}")
