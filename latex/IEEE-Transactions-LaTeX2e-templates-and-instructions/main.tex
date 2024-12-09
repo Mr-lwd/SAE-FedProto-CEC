@@ -49,9 +49,7 @@
 \section{Motivation}
 
 \section{Method}
-\subsection{Proposed Algorithm}
-Below is a table of symbols used in the algorithms:
-
+\subsection{Proposed Algorithm New Version}
 \begin{table}[H]
   \caption{Symbol Table}
   \centering
@@ -74,11 +72,13 @@ Below is a table of symbols used in the algorithms:
     \hline
      \( B \)                               & The buffer of the cloud server with a static length                                                                                   \\
     \hline
-     \( N^l \)                             & Number of clients in the $l$-th each edge server                                                                                      \\
+     \( N^l \)                             & The number of clients on the $l$-th each edge server                                                                                      \\
     \hline
-   \( \mathcal{N}_j^l  \)                & Number of clients in edge $l$ containing class $j$ that have participated in aggregation                                              \\
+    \(\mathcal{N}_j^l\) & The number of instances belonging to class \( j \) on edge \( l \) that have already participated in computation                                           \\
     \hline
-    \( {\mathcal{N}_j^{l,\text{prev}}}  \) & Previous number of clients in edge $l$ containing class $j$ that have participated in aggregation                                         \\
+    \( {\mathcal{N}_j^{l,\text{prev}}}  \) & Previous number of instances belonging to class \( j \) on edge that have already participated in computation $l$                               \\
+    \hline
+    \(\mathcal{N}_j^{l, i}\) & The number of instances belonging to class \( j \) on client \( i \) on edge \( l \) \\ 
     \hline
     % \( \mathcal{N}_j  \)           & Number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
     % \( {\mathcal{N}_j}^{'}  \)           & Previous number of edge servers $l$ containing class $j$ that have participated in aggregation                            \\
@@ -122,7 +122,7 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \State Clear the buffer \(B\)
 
     \While{$B$ is not full} \Comment{Async process}
-    \State Receive a triple \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \) from one edge server.
+    \State Receive a triple \( (C^l, \mathcal{N}^l) \) from one edge server.
     \State Populate \( B \) with the received triple.
     \EndWhile
     \State \( \bar{C}, G \gets \text{CloudUpdate}(B) \)
@@ -137,12 +137,12 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \For{$e = 1, \dots, E$} \Comment{E now is static 1}
     \State Send \( \bar{C}, G \) to client \( i \in S^{l} \)
     \For{each client \( i \) in parallel}
-    \State \( (c^l_i, \mathcal{X}^l_i) \gets \text{ClientUpdate}(i, \bar{C}, G) \)
+    \State \( c^l_i \gets \text{ClientUpdate}(i, \bar{C}, G) \)
     \EndFor \Comment{Wait for all clients}
-    \State \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \gets \text{EdgeAggregate}(\{ (c^l_i, \mathcal{X}^l_i) \}_{i \in S^{l}}) \)
+    \State \( (C^l, \mathcal{N}^l) \gets \text{EdgeAggregate}(\{ c^l_i \}_{i \in S^{l}}) \)
     \State \( \bar{C} \gets \text{EdgeUpdate}(\bar{C}, C^l) \) \Comment{not used now}
     \EndFor
-    \State Send a triple \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \) to the cloud server
+    \State Send a triple \( (C^l, \mathcal{N}^l) \) to the cloud server
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
@@ -167,31 +167,33 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \State \( \bar{C}_{j} \gets \frac{\hat{C}_{j}}{\sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{prev}}}} \)
     \EndFor
     \State \( C^{l,\text{prev}} \gets C^l \) for \( l \in B \)
-    \State \( \mathcal{X}^{l,cloud} \gets \mathcal{X}^l \) for \(l \in B \)
-    \State \( \mathcal{X} \gets \bigcup_{l \in L} \mathcal{X}^{l,cloud} \)
-    \State Train the global classifier \( G \) by using \( \mathcal{X} \).
+    \For{$j = 1, \dots, J$}
+    \State \(\mu_j \gets \bar{C}_j\)
+    \State \(\Sigma_j = \frac{1}{\mathcal{N}_j-1} \sum_{l=1}^{L} {\mathcal{N}_j^{l,\text{prev}}}(C^{l,\text{prev}} - \mu)(C^{l,\text{prev}} - \mu)^\top\)
+    \EndFor
+
+    \State Generate samples \(X \sim \mathcal{N}(\mu, \Sigma)\) using the multivariate normal distribution
+    \State Use the generated samples \(X\) to train the global classifier \( G \) 
     \State \Return \( \bar{C}, G \)
     \EndProcedure
 
-    \Procedure{EdgeAggregate}{$l, \{ (c^l_i, \mathcal{X}^l_i) \}_{i \in S^{l}}$}
+    \Procedure{EdgeAggregate}{$l, \{ c^l_i \}_{i \in S^{l}}$}
     \For{$j = 1, \dots, J$}
     \State \( {\hat{C^l_j}} \gets \mathcal{N}^l_j \cdot C^l_{j} \)
+    
     \For{each $c^l_i$}
-
-    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} + c^l_{i,j} \)
+    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} +  \mathcal{N}_j^{l, i} \cdot c^l_{i,j} \)
     \If{$c^{l,\text{prev}}_{i,j}$ is not empty}
-    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} - c^{l,\text{prev}}_{i,j}\)
+    \State \( {\hat{C^l_j}}  \gets {\hat{C^l_j}} - \mathcal{N}_j^{l, i} \cdot c^{l,\text{prev}}_{i,j}\)
     \Else
-    \State \( \mathcal{N}_j^l \gets \mathcal{N}_j^l + 1 \)
+    \State \( \mathcal{N}_j^l \gets \mathcal{N}_j^l + \mathcal{N}_j^{l, i} \)
     \EndIf
     \EndFor
     \State \( {C^l_j} \gets \frac{{\hat{C^l_j}}}{\mathcal{N}_j^l} \)
     \EndFor
     \State \( c^{l,\text{prev}}_i \gets c^l_i \) for \( i \in S^l \)
-    \State \( \mathcal{X}^{l,edge}_i \gets  \mathcal{X}^l_i \) for \( i \in S^l \)
-    \State \( \mathcal{X}^l \gets \bigcup_{i \in N^l} \mathcal{X}^{l,edge}_i \)
 
-    \State \Return \( (C^l, \mathcal{N}^l, \mathcal{X}^l) \)
+    \State \Return \( (C^l, \mathcal{N}^l) \)
     \EndProcedure
 
     \Procedure{ClientUpdate}{$i, \bar{C}, G$}
@@ -203,9 +205,8 @@ The following algorithm demonstrates how to calculate the factorial of a number.
     \State Compute loss by Eq.? using client prototypes and the global classifier $G$.
     \State Update client model according to the loss.
     \EndFor
-    \State Store the features and labels of \(D_i\) in \( \mathcal{X}^l_i \).
     \EndFor
-    \State \Return \( (c^l_i, \mathcal{X}^l_i) \)
+    \State \Return \( c^l_i \)
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
