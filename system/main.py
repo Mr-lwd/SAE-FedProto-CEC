@@ -332,7 +332,7 @@ if __name__ == "__main__":
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
     parser.add_argument("-ld", "--learning_rate_decay", type=bool, default=False)
     parser.add_argument("-ldg", "--learning_rate_decay_gamma", type=float, default=0.99)
-    parser.add_argument("-gr", "--global_rounds", type=int, default=80)
+    parser.add_argument("-gr", "--global_rounds", type=int, default=110)
     parser.add_argument(
         "-edge_epochs", "--edge_epochs", type=int, default=1, help="edge epoches"
     )
