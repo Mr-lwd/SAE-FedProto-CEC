@@ -1,0 +1,5921 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = Cifar10_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HtM10
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 100
+edge_epochs = 1
+local_epochs = 3
+algorithm = FedProto
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+lamda = 2
+trans_delay_simulate = False
+agg_type = 0
+buffersize = 5
+test_useglclassifier = 1
+gamma = 1
+drawtsne = True
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {3: 400, 7: 347, 1: 47, 4: 179, 6: 87, 8: 41, 0: 2, 9: 2, 5: 2, 2: 1})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {2: 855, 4: 327, 0: 5, 3: 3})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {6: 36, 5: 141, 8: 162, 9: 71, 4: 177, 2: 95, 0: 23, 1: 9, 7: 49, 3: 2})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {9: 347, 5: 394, 7: 415, 4: 88, 0: 3, 2: 15, 8: 32})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {3: 83, 2: 591, 5: 234, 8: 172, 4: 18, 7: 30, 0: 18, 1: 3})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {5: 565, 0: 841, 1: 70, 3: 35})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {3: 381, 6: 154, 8: 143, 1: 15, 9: 43, 0: 93, 4: 2, 7: 1, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {9: 1519, 4: 349, 7: 79, 3: 115, 0: 78, 2: 76, 5: 29, 1: 6, 6: 1})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {3: 83, 2: 115, 8: 161, 4: 425, 7: 92, 1: 15, 6: 5, 9: 10, 0: 4, 5: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {5: 7, 1: 64, 7: 286, 4: 95, 3: 14, 2: 80, 9: 28, 0: 7})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {8: 906, 0: 830, 4: 108, 5: 5, 2: 10, 6: 6, 1: 17, 3: 11})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {1: 227, 8: 208, 2: 238, 9: 48, 3: 16, 4: 1, 7: 8, 6: 2, 5: 2})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {6: 681, 1: 47, 0: 50, 4: 354, 3: 4, 2: 2, 5: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {6: 426, 4: 10, 0: 464, 3: 90, 2: 271, 1: 67})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {5: 746, 1: 509, 4: 104, 3: 17, 0: 30, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {4: 973, 2: 843, 1: 155, 0: 75, 3: 45})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {3: 448, 9: 202, 4: 43, 5: 71, 6: 120, 8: 77, 0: 8, 1: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {3: 84, 7: 978, 2: 130, 6: 42, 4: 48, 0: 8, 5: 9})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {0: 260, 1: 196, 4: 82, 5: 179, 3: 53, 8: 51, 7: 8, 6: 3, 2: 2})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 456, 8: 150, 3: 7, 9: 86, 2: 46, 6: 20, 5: 56, 7: 10})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {0: 218, 6: 242, 4: 48, 8: 358, 7: 24, 3: 362, 2: 17, 5: 6})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {3: 93, 0: 436, 1: 276, 4: 131, 8: 33, 2: 72, 5: 44, 9: 2, 6: 2})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {8: 459, 6: 159, 3: 97, 9: 131, 1: 82, 5: 64, 7: 22, 4: 2, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {2: 510, 1: 205, 0: 170, 3: 373})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {7: 407, 4: 111, 2: 21, 8: 68, 6: 231, 1: 151, 9: 44, 3: 19, 0: 4})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 336, 1: 353, 6: 83, 5: 197, 4: 100, 2: 11, 0: 2, 3: 29, 8: 3, 9: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {3: 116, 9: 885, 0: 276, 5: 59, 8: 57, 1: 18, 4: 3, 6: 2})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {6: 360, 9: 54, 4: 28, 1: 24, 5: 140, 2: 15, 3: 12})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {8: 31, 5: 486, 0: 87, 4: 71, 1: 148, 2: 2, 7: 29, 6: 12, 3: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {5: 380, 7: 932, 3: 54, 1: 46, 6: 48, 4: 10, 2: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {3: 724, 6: 555, 0: 95, 5: 89, 4: 8, 2: 19, 1: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {7: 52, 9: 201, 1: 130, 0: 185, 4: 61, 6: 65, 5: 41, 2: 12, 3: 7})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {5: 339, 6: 11, 8: 81, 9: 53, 2: 65, 3: 3, 0: 33, 1: 9, 7: 1})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {4: 82, 1: 688, 6: 249, 0: 10, 8: 63, 7: 39, 5: 32, 2: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {8: 782, 1: 196, 6: 180, 3: 124, 2: 5, 4: 26, 7: 25})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {2: 255, 9: 362, 8: 12, 7: 151, 3: 64, 0: 69, 6: 20, 1: 7, 4: 8})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {5: 152, 8: 159, 7: 10, 4: 109, 9: 83, 1: 70, 2: 15, 0: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {1: 171, 3: 58, 6: 519, 0: 116, 4: 82, 5: 16, 7: 10, 9: 20, 2: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {6: 156, 3: 111, 1: 29, 2: 125, 7: 141, 8: 27, 9: 20, 0: 6, 5: 29})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {9: 312, 3: 345, 8: 216, 4: 217, 0: 3, 7: 4, 5: 5, 1: 1, 2: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+tobetrained:
+ID: 9
+ID: 8
+ID: 7
+ID: 6
+ID: 5
+ID: 4
+ID: 3
+ID: 2
+ID: 1
+ID: 0
+Edge 9 begin training
+Server global_protos Not Found
+Client_5 protos Not Found
+Server global_protos Not Found
+Client_31 protos Not Found
+Server global_protos Not Found
+Client_13 protos Not Found
+Server global_protos Not Found
+Client_0 protos Not Found
+Edge_9 protos Not Found
+Client_5 prev_protos Not Found
+Client_31 prev_protos Not Found
+Client_13 prev_protos Not Found
+Client_0 prev_protos Not Found
+Edge 8 begin training
+Server global_protos Not Found
+Client_16 protos Not Found
+Server global_protos Not Found
+Client_1 protos Not Found
+Server global_protos Not Found
+Client_26 protos Not Found
+Server global_protos Not Found
+Client_36 protos Not Found
+Edge_8 protos Not Found
+Client_16 prev_protos Not Found
+Client_1 prev_protos Not Found
+Client_26 prev_protos Not Found
+Client_36 prev_protos Not Found
+Edge 7 begin training
+Server global_protos Not Found
+Client_24 protos Not Found
+Server global_protos Not Found
+Client_7 protos Not Found
+Server global_protos Not Found
+Client_27 protos Not Found
+Server global_protos Not Found
+Client_2 protos Not Found
+Edge_7 protos Not Found
+Client_24 prev_protos Not Found
+Client_7 prev_protos Not Found
+Client_27 prev_protos Not Found
+Client_2 prev_protos Not Found
+Edge 6 begin training
+Server global_protos Not Found
+Client_32 protos Not Found
+Server global_protos Not Found
+Client_38 protos Not Found
+Server global_protos Not Found
+Client_8 protos Not Found
+Server global_protos Not Found
+Client_23 protos Not Found
+Edge_6 protos Not Found
+Client_32 prev_protos Not Found
+Client_38 prev_protos Not Found
+Client_8 prev_protos Not Found
+Client_23 prev_protos Not Found
+Edge 5 begin training
+Server global_protos Not Found
+Client_9 protos Not Found
+Server global_protos Not Found
+Client_33 protos Not Found
+Server global_protos Not Found
+Client_29 protos Not Found
+Server global_protos Not Found
+Client_6 protos Not Found
+Edge_5 protos Not Found
+Client_9 prev_protos Not Found
+Client_33 prev_protos Not Found
+Client_29 prev_protos Not Found
+Client_6 prev_protos Not Found
+Edge 4 begin training
+Server global_protos Not Found
+Client_30 protos Not Found
+Server global_protos Not Found
+Client_10 protos Not Found
+Server global_protos Not Found
+Client_18 protos Not Found
+Server global_protos Not Found
+Client_17 protos Not Found
+Edge_4 protos Not Found
+Client_30 prev_protos Not Found
+Client_10 prev_protos Not Found
+Client_18 prev_protos Not Found
+Client_17 prev_protos Not Found
+Edge 3 begin training
+Server global_protos Not Found
+Client_14 protos Not Found
+Server global_protos Not Found
+Client_15 protos Not Found
+Server global_protos Not Found
+Client_39 protos Not Found
+Server global_protos Not Found
+Client_35 protos Not Found
+Edge_3 protos Not Found
+Client_14 prev_protos Not Found
+Client_15 prev_protos Not Found
+Client_39 prev_protos Not Found
+Client_35 prev_protos Not Found
+Edge 2 begin training
+Server global_protos Not Found
+Client_21 protos Not Found
+Server global_protos Not Found
+Client_3 protos Not Found
+Server global_protos Not Found
+Client_19 protos Not Found
+Server global_protos Not Found
+Client_11 protos Not Found
+Edge_2 protos Not Found
+Client_21 prev_protos Not Found
+Client_3 prev_protos Not Found
+Client_19 prev_protos Not Found
+Client_11 prev_protos Not Found
+Edge 1 begin training
+Server global_protos Not Found
+Client_12 protos Not Found
+Server global_protos Not Found
+Client_20 protos Not Found
+Server global_protos Not Found
+Client_22 protos Not Found
+Server global_protos Not Found
+Client_25 protos Not Found
+Edge_1 protos Not Found
+Client_12 prev_protos Not Found
+Client_20 prev_protos Not Found
+Client_22 prev_protos Not Found
+Client_25 prev_protos Not Found
+Edge 0 begin training
+Server global_protos Not Found
+Client_37 protos Not Found
+Server global_protos Not Found
+Client_34 protos Not Found
+Server global_protos Not Found
+Client_28 protos Not Found
+Server global_protos Not Found
+Client_4 protos Not Found
+Edge_0 protos Not Found
+Client_37 prev_protos Not Found
+Client_34 prev_protos Not Found
+Client_28 prev_protos Not Found
+Client_4 prev_protos Not Found
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge_0 prev_protos Not Found
+Edge_8 prev_protos Not Found
+Edge_2 prev_protos Not Found
+Edge_5 prev_protos Not Found
+Edge_1 prev_protos Not Found
+Edge_9 prev_protos Not Found
+Edge_4 prev_protos Not Found
+Edge_6 prev_protos Not Found
+Edge_3 prev_protos Not Found
+Edge_7 prev_protos Not Found
+Server global_protos Not Found
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 4.715358071029186
+only_train_time: 44.136375330388546
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.4637
+Averaged Test Accuracy (Prototype Model): 0.1193
+Std Test Accuracy (Regular Model): 0.1368
+Std Test Accuracy (Prototype Model): 0.1193
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 9.567562781274319
+only_train_time: 91.07511133700609
+
+-------------Global Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5293
+Averaged Test Accuracy (Prototype Model): 0.1931
+Std Test Accuracy (Regular Model): 0.1478
+Std Test Accuracy (Prototype Model): 0.1606
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 14.39502576738596
+only_train_time: 137.6660382449627
+
+-------------Global Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5696
+Averaged Test Accuracy (Prototype Model): 0.3398
+Std Test Accuracy (Regular Model): 0.1347
+Std Test Accuracy (Prototype Model): 0.2018
+tobetrained:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 8 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 19.308615148067474
+only_train_time: 184.32302305102348
+
+-------------Global Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5837
+Averaged Test Accuracy (Prototype Model): 0.4159
+Std Test Accuracy (Regular Model): 0.1283
+Std Test Accuracy (Prototype Model): 0.1926
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 24.17730998247862
+only_train_time: 230.85587748140097
+
+-------------Global Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6006
+Averaged Test Accuracy (Prototype Model): 0.4692
+Std Test Accuracy (Regular Model): 0.1256
+Std Test Accuracy (Prototype Model): 0.1646
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 29.044539161026478
+only_train_time: 277.6817099303007
+
+-------------Global Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6063
+Averaged Test Accuracy (Prototype Model): 0.4937
+Std Test Accuracy (Regular Model): 0.1180
+Std Test Accuracy (Prototype Model): 0.1625
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 33.89396554231644
+only_train_time: 324.23716436326504
+
+-------------Global Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6127
+Averaged Test Accuracy (Prototype Model): 0.5098
+Std Test Accuracy (Regular Model): 0.1221
+Std Test Accuracy (Prototype Model): 0.1482
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 38.681156277656555
+only_train_time: 370.5560709387064
+
+-------------Global Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6165
+Averaged Test Accuracy (Prototype Model): 0.5199
+Std Test Accuracy (Regular Model): 0.1263
+Std Test Accuracy (Prototype Model): 0.1499
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 43.56794285029173
+only_train_time: 417.0959681943059
+
+-------------Global Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6170
+Averaged Test Accuracy (Prototype Model): 0.5192
+Std Test Accuracy (Regular Model): 0.1082
+Std Test Accuracy (Prototype Model): 0.1343
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 48.383223086595535
+only_train_time: 463.64630322903395
+
+-------------Global Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6161
+Averaged Test Accuracy (Prototype Model): 0.5249
+Std Test Accuracy (Regular Model): 0.1037
+Std Test Accuracy (Prototype Model): 0.1266
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 53.24455664306879
+only_train_time: 510.24611066281796
+
+-------------Global Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6242
+Averaged Test Accuracy (Prototype Model): 0.5372
+Std Test Accuracy (Regular Model): 0.1040
+Std Test Accuracy (Prototype Model): 0.1217
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 58.09509736299515
+only_train_time: 556.8308921083808
+
+-------------Global Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6243
+Averaged Test Accuracy (Prototype Model): 0.5457
+Std Test Accuracy (Regular Model): 0.1057
+Std Test Accuracy (Prototype Model): 0.1245
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 63.03635924309492
+only_train_time: 603.7809249833226
+
+-------------Global Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6275
+Averaged Test Accuracy (Prototype Model): 0.5443
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1113
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 67.87812748551369
+only_train_time: 650.3350517377257
+
+-------------Global Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6234
+Averaged Test Accuracy (Prototype Model): 0.5457
+Std Test Accuracy (Regular Model): 0.0999
+Std Test Accuracy (Prototype Model): 0.1167
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 72.71267148852348
+only_train_time: 696.9562068581581
+
+-------------Global Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6302
+Averaged Test Accuracy (Prototype Model): 0.5547
+Std Test Accuracy (Regular Model): 0.1026
+Std Test Accuracy (Prototype Model): 0.1201
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 77.56296142935753
+only_train_time: 743.5604519471526
+
+-------------Global Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6316
+Averaged Test Accuracy (Prototype Model): 0.5534
+Std Test Accuracy (Regular Model): 0.1027
+Std Test Accuracy (Prototype Model): 0.1243
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 82.38394701480865
+only_train_time: 790.1525647640228
+
+-------------Global Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6324
+Averaged Test Accuracy (Prototype Model): 0.5626
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1171
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 87.20783057063818
+only_train_time: 836.5314460769296
+
+-------------Global Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6309
+Averaged Test Accuracy (Prototype Model): 0.5604
+Std Test Accuracy (Regular Model): 0.1060
+Std Test Accuracy (Prototype Model): 0.1207
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 92.12407733500004
+only_train_time: 883.1610876843333
+
+-------------Global Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6320
+Averaged Test Accuracy (Prototype Model): 0.5630
+Std Test Accuracy (Regular Model): 0.1044
+Std Test Accuracy (Prototype Model): 0.1182
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 96.96438186615705
+only_train_time: 929.8197439163923
+
+-------------Global Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6304
+Averaged Test Accuracy (Prototype Model): 0.5654
+Std Test Accuracy (Regular Model): 0.1041
+Std Test Accuracy (Prototype Model): 0.1152
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 101.77895478904247
+only_train_time: 976.2941397950053
+
+-------------Global Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6300
+Averaged Test Accuracy (Prototype Model): 0.5684
+Std Test Accuracy (Regular Model): 0.1040
+Std Test Accuracy (Prototype Model): 0.1147
+tobetrained:
+ID: 8
+ID: 0
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 8 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 106.56708505749702
+only_train_time: 1022.6371119618416
+
+-------------Global Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6332
+Averaged Test Accuracy (Prototype Model): 0.5696
+Std Test Accuracy (Regular Model): 0.1037
+Std Test Accuracy (Prototype Model): 0.1121
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 111.39034136384726
+only_train_time: 1069.2072969600558
+
+-------------Global Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6318
+Averaged Test Accuracy (Prototype Model): 0.5694
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1151
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 116.21111337095499
+only_train_time: 1115.5573049634695
+
+-------------Global Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6322
+Averaged Test Accuracy (Prototype Model): 0.5702
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1144
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 121.0538964420557
+only_train_time: 1162.0966746732593
+
+-------------Global Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6310
+Averaged Test Accuracy (Prototype Model): 0.5730
+Std Test Accuracy (Regular Model): 0.1058
+Std Test Accuracy (Prototype Model): 0.1118
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 125.98994465917349
+only_train_time: 1208.8569042757154
+
+-------------Global Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6329
+Averaged Test Accuracy (Prototype Model): 0.5722
+Std Test Accuracy (Regular Model): 0.1036
+Std Test Accuracy (Prototype Model): 0.1122
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 130.83463426679373
+only_train_time: 1255.5216915681958
+
+-------------Global Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6338
+Averaged Test Accuracy (Prototype Model): 0.5752
+Std Test Accuracy (Regular Model): 0.1046
+Std Test Accuracy (Prototype Model): 0.1107
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 135.68827357143164
+only_train_time: 1302.0022247582674
+
+-------------Global Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6326
+Averaged Test Accuracy (Prototype Model): 0.5753
+Std Test Accuracy (Regular Model): 0.1047
+Std Test Accuracy (Prototype Model): 0.1104
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 140.51071336120367
+only_train_time: 1348.7953322157264
+
+-------------Global Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6326
+Averaged Test Accuracy (Prototype Model): 0.5742
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1112
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 145.38374730944633
+only_train_time: 1395.504591435194
+
+-------------Global Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6334
+Averaged Test Accuracy (Prototype Model): 0.5748
+Std Test Accuracy (Regular Model): 0.1043
+Std Test Accuracy (Prototype Model): 0.1103
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 150.33082079142332
+only_train_time: 1442.3642007037997
+
+-------------Global Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6356
+Averaged Test Accuracy (Prototype Model): 0.5764
+Std Test Accuracy (Regular Model): 0.1042
+Std Test Accuracy (Prototype Model): 0.1101
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 155.25323452800512
+only_train_time: 1488.9976634681225
+
+-------------Global Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6306
+Averaged Test Accuracy (Prototype Model): 0.5730
+Std Test Accuracy (Regular Model): 0.1061
+Std Test Accuracy (Prototype Model): 0.1098
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 160.13474126905203
+only_train_time: 1535.7917026504874
+
+-------------Global Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6320
+Averaged Test Accuracy (Prototype Model): 0.5750
+Std Test Accuracy (Regular Model): 0.1049
+Std Test Accuracy (Prototype Model): 0.1106
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 164.97957979887724
+only_train_time: 1582.3730303496122
+
+-------------Global Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6306
+Averaged Test Accuracy (Prototype Model): 0.5766
+Std Test Accuracy (Regular Model): 0.1059
+Std Test Accuracy (Prototype Model): 0.1116
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 169.76058579981327
+only_train_time: 1628.8573160618544
+
+-------------Global Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6347
+Averaged Test Accuracy (Prototype Model): 0.5788
+Std Test Accuracy (Regular Model): 0.1038
+Std Test Accuracy (Prototype Model): 0.1107
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 174.62931656092405
+only_train_time: 1675.443908058107
+
+-------------Global Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6322
+Averaged Test Accuracy (Prototype Model): 0.5766
+Std Test Accuracy (Regular Model): 0.1026
+Std Test Accuracy (Prototype Model): 0.1098
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 179.4870336279273
+only_train_time: 1722.1692411080003
+
+-------------Global Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6344
+Averaged Test Accuracy (Prototype Model): 0.5818
+Std Test Accuracy (Regular Model): 0.1032
+Std Test Accuracy (Prototype Model): 0.1102
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 184.2781271636486
+only_train_time: 1768.7803814262152
+
+-------------Global Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6336
+Averaged Test Accuracy (Prototype Model): 0.5818
+Std Test Accuracy (Regular Model): 0.1036
+Std Test Accuracy (Prototype Model): 0.1112
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 189.23743817955256
+only_train_time: 1816.0982318222523
+
+-------------Global Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6333
+Averaged Test Accuracy (Prototype Model): 0.5798
+Std Test Accuracy (Regular Model): 0.1026
+Std Test Accuracy (Prototype Model): 0.1105
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 194.11917079240084
+only_train_time: 1863.0470235049725
+
+-------------Global Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6348
+Averaged Test Accuracy (Prototype Model): 0.5818
+Std Test Accuracy (Regular Model): 0.1039
+Std Test Accuracy (Prototype Model): 0.1104
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 198.9540839344263
+only_train_time: 1909.362795382738
+
+-------------Global Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6361
+Averaged Test Accuracy (Prototype Model): 0.5830
+Std Test Accuracy (Regular Model): 0.1032
+Std Test Accuracy (Prototype Model): 0.1107
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 203.6762489899993
+only_train_time: 1955.5341859385371
+
+-------------Global Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6340
+Averaged Test Accuracy (Prototype Model): 0.5843
+Std Test Accuracy (Regular Model): 0.1029
+Std Test Accuracy (Prototype Model): 0.1117
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 208.24051895737648
+only_train_time: 2000.107270412147
+
+-------------Global Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6345
+Averaged Test Accuracy (Prototype Model): 0.5826
+Std Test Accuracy (Regular Model): 0.1024
+Std Test Accuracy (Prototype Model): 0.1126
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 212.9608580097556
+only_train_time: 2044.8223009482026
+
+-------------Global Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6349
+Averaged Test Accuracy (Prototype Model): 0.5858
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1112
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 217.62103233486414
+only_train_time: 2089.952698044479
+
+-------------Global Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6350
+Averaged Test Accuracy (Prototype Model): 0.5871
+Std Test Accuracy (Regular Model): 0.1041
+Std Test Accuracy (Prototype Model): 0.1119
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 9
+ID: 1
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 9
+ID: 1
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 222.44069200754166
+only_train_time: 2135.603758610785
+
+-------------Global Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6339
+Averaged Test Accuracy (Prototype Model): 0.5869
+Std Test Accuracy (Regular Model): 0.1036
+Std Test Accuracy (Prototype Model): 0.1130
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 9
+ID: 1
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 227.32161643356085
+only_train_time: 2182.412135384977
+
+-------------Global Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6356
+Averaged Test Accuracy (Prototype Model): 0.5871
+Std Test Accuracy (Regular Model): 0.1034
+Std Test Accuracy (Prototype Model): 0.1128
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 232.12440248578787
+only_train_time: 2228.885878160596
+
+-------------Global Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6342
+Averaged Test Accuracy (Prototype Model): 0.5885
+Std Test Accuracy (Regular Model): 0.1038
+Std Test Accuracy (Prototype Model): 0.1120
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 236.9978155195713
+only_train_time: 2275.5186700746417
+
+-------------Global Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Test Accuracy (Prototype Model): 0.5887
+Std Test Accuracy (Regular Model): 0.1031
+Std Test Accuracy (Prototype Model): 0.1123
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 241.84721845388412
+only_train_time: 2322.029290676117
+
+-------------Global Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6342
+Averaged Test Accuracy (Prototype Model): 0.5883
+Std Test Accuracy (Regular Model): 0.1029
+Std Test Accuracy (Prototype Model): 0.1126
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 246.70115062594414
+only_train_time: 2368.7655750513077
+
+-------------Global Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6355
+Averaged Test Accuracy (Prototype Model): 0.5892
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1132
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 251.62122044712305
+only_train_time: 2415.5701183974743
+
+-------------Global Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6352
+Averaged Test Accuracy (Prototype Model): 0.5895
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1140
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 256.4675338938832
+only_train_time: 2462.307957313955
+
+-------------Global Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6348
+Averaged Test Accuracy (Prototype Model): 0.5899
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1120
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 261.2423874810338
+only_train_time: 2509.2123295143247
+
+-------------Global Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6346
+Averaged Test Accuracy (Prototype Model): 0.5909
+Std Test Accuracy (Regular Model): 0.1033
+Std Test Accuracy (Prototype Model): 0.1136
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 265.999795794487
+only_train_time: 2555.64526617527
+
+-------------Global Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6348
+Averaged Test Accuracy (Prototype Model): 0.5905
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1125
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 270.86682280898094
+only_train_time: 2602.138936050236
+
+-------------Global Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6358
+Averaged Test Accuracy (Prototype Model): 0.5909
+Std Test Accuracy (Regular Model): 0.1021
+Std Test Accuracy (Prototype Model): 0.1124
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 275.7172273695469
+only_train_time: 2649.0504507794976
+
+-------------Global Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6366
+Averaged Test Accuracy (Prototype Model): 0.5915
+Std Test Accuracy (Regular Model): 0.1025
+Std Test Accuracy (Prototype Model): 0.1128
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 280.5537360012531
+only_train_time: 2695.8413029685616
+
+-------------Global Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.5917
+Std Test Accuracy (Regular Model): 0.1021
+Std Test Accuracy (Prototype Model): 0.1126
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 285.3788685873151
+only_train_time: 2742.3399735093117
+
+-------------Global Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6368
+Averaged Test Accuracy (Prototype Model): 0.5926
+Std Test Accuracy (Regular Model): 0.1024
+Std Test Accuracy (Prototype Model): 0.1135
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 290.2159602344036
+only_train_time: 2788.949583016336
+
+-------------Global Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6365
+Averaged Test Accuracy (Prototype Model): 0.5923
+Std Test Accuracy (Regular Model): 0.1023
+Std Test Accuracy (Prototype Model): 0.1138
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 295.21105094999075
+only_train_time: 2835.808534398675
+
+-------------Global Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6367
+Averaged Test Accuracy (Prototype Model): 0.5931
+Std Test Accuracy (Regular Model): 0.1026
+Std Test Accuracy (Prototype Model): 0.1129
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 300.08129101991653
+only_train_time: 2882.39235329628
+
+-------------Global Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6361
+Averaged Test Accuracy (Prototype Model): 0.5939
+Std Test Accuracy (Regular Model): 0.1018
+Std Test Accuracy (Prototype Model): 0.1133
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 304.91909125447273
+only_train_time: 2929.4634046554565
+
+-------------Global Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Test Accuracy (Prototype Model): 0.5941
+Std Test Accuracy (Regular Model): 0.1020
+Std Test Accuracy (Prototype Model): 0.1134
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 309.8131000697613
+only_train_time: 2976.574225194752
+
+-------------Global Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.5949
+Std Test Accuracy (Regular Model): 0.1028
+Std Test Accuracy (Prototype Model): 0.1134
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 314.6872673854232
+only_train_time: 3023.4893800616264
+
+-------------Global Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6367
+Averaged Test Accuracy (Prototype Model): 0.5945
+Std Test Accuracy (Regular Model): 0.1024
+Std Test Accuracy (Prototype Model): 0.1136
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 319.5741845816374
+only_train_time: 3070.3420374020934
+
+-------------Global Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6357
+Averaged Test Accuracy (Prototype Model): 0.5939
+Std Test Accuracy (Regular Model): 0.1026
+Std Test Accuracy (Prototype Model): 0.1128
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 324.46781301498413
+only_train_time: 3117.327833019197
+
+-------------Global Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.5960
+Std Test Accuracy (Regular Model): 0.1018
+Std Test Accuracy (Prototype Model): 0.1133
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 329.3035599961877
+only_train_time: 3163.8671888560057
+
+-------------Global Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6376
+Averaged Test Accuracy (Prototype Model): 0.5967
+Std Test Accuracy (Regular Model): 0.1039
+Std Test Accuracy (Prototype Model): 0.1133
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 334.23481933027506
+only_train_time: 3210.3398412168026
+
+-------------Global Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6368
+Averaged Test Accuracy (Prototype Model): 0.5969
+Std Test Accuracy (Regular Model): 0.1037
+Std Test Accuracy (Prototype Model): 0.1145
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 339.10066371411085
+only_train_time: 3257.1021112948656
+
+-------------Global Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6365
+Averaged Test Accuracy (Prototype Model): 0.5979
+Std Test Accuracy (Regular Model): 0.1027
+Std Test Accuracy (Prototype Model): 0.1142
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 344.0901178047061
+only_train_time: 3303.585239879787
+
+-------------Global Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.5977
+Std Test Accuracy (Regular Model): 0.1038
+Std Test Accuracy (Prototype Model): 0.1138
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 348.9877340346575
+only_train_time: 3350.3510358035564
+
+-------------Global Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6366
+Averaged Test Accuracy (Prototype Model): 0.5977
+Std Test Accuracy (Regular Model): 0.1042
+Std Test Accuracy (Prototype Model): 0.1139
+tobetrained:
+ID: 0
+ID: 2
+ID: 8
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 353.8798204436898
+only_train_time: 3397.3270350918174
+
+-------------Global Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6365
+Averaged Test Accuracy (Prototype Model): 0.5973
+Std Test Accuracy (Regular Model): 0.1047
+Std Test Accuracy (Prototype Model): 0.1151
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 358.73335898667574
+only_train_time: 3444.128232218325
+
+-------------Global Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Test Accuracy (Prototype Model): 0.5975
+Std Test Accuracy (Regular Model): 0.1035
+Std Test Accuracy (Prototype Model): 0.1143
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 363.6179243698716
+only_train_time: 3490.8788908198476
+
+-------------Global Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6365
+Averaged Test Accuracy (Prototype Model): 0.5979
+Std Test Accuracy (Regular Model): 0.1040
+Std Test Accuracy (Prototype Model): 0.1137
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 368.5320791974664
+only_train_time: 3537.8140776753426
+
+-------------Global Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6366
+Averaged Test Accuracy (Prototype Model): 0.5978
+Std Test Accuracy (Regular Model): 0.1037
+Std Test Accuracy (Prototype Model): 0.1134
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 373.39112454652786
+only_train_time: 3584.4666565433145
+
+-------------Global Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.5973
+Std Test Accuracy (Regular Model): 0.1038
+Std Test Accuracy (Prototype Model): 0.1141
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 378.2417590916157
+only_train_time: 3631.2755528464913
+
+-------------Global Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Test Accuracy (Prototype Model): 0.5979
+Std Test Accuracy (Regular Model): 0.1053
+Std Test Accuracy (Prototype Model): 0.1143
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 383.08253363519907
+only_train_time: 3677.8654759153724
+
+-------------Global Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6369
+Averaged Test Accuracy (Prototype Model): 0.5976
+Std Test Accuracy (Regular Model): 0.1047
+Std Test Accuracy (Prototype Model): 0.1146
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 387.934597492218
+only_train_time: 3724.71774854511
+
+-------------Global Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6359
+Averaged Test Accuracy (Prototype Model): 0.5979
+Std Test Accuracy (Regular Model): 0.1053
+Std Test Accuracy (Prototype Model): 0.1145
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 392.83479538559914
+only_train_time: 3771.3074413836002
+
+-------------Global Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6368
+Averaged Test Accuracy (Prototype Model): 0.5982
+Std Test Accuracy (Regular Model): 0.1051
+Std Test Accuracy (Prototype Model): 0.1146
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 397.7154686897993
+only_train_time: 3817.9458104372025
+
+-------------Global Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Test Accuracy (Prototype Model): 0.5987
+Std Test Accuracy (Regular Model): 0.1055
+Std Test Accuracy (Prototype Model): 0.1154
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 402.525591135025
+only_train_time: 3864.64697971195
+
+-------------Global Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6368
+Averaged Test Accuracy (Prototype Model): 0.5981
+Std Test Accuracy (Regular Model): 0.1049
+Std Test Accuracy (Prototype Model): 0.1157
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 407.26132184267044
+only_train_time: 3911.2296738550067
+
+-------------Global Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6369
+Averaged Test Accuracy (Prototype Model): 0.5991
+Std Test Accuracy (Regular Model): 0.1053
+Std Test Accuracy (Prototype Model): 0.1140
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 412.1179260984063
+only_train_time: 3957.7628804147243
+
+-------------Global Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6363
+Averaged Test Accuracy (Prototype Model): 0.5994
+Std Test Accuracy (Regular Model): 0.1052
+Std Test Accuracy (Prototype Model): 0.1150
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 416.993239402771
+only_train_time: 4004.314144782722
+
+-------------Global Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6372
+Averaged Test Accuracy (Prototype Model): 0.5992
+Std Test Accuracy (Regular Model): 0.1051
+Std Test Accuracy (Prototype Model): 0.1145
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 421.87651124596596
+only_train_time: 4052.0584410130978
+
+-------------Global Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Test Accuracy (Prototype Model): 0.5995
+Std Test Accuracy (Regular Model): 0.1052
+Std Test Accuracy (Prototype Model): 0.1143
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 426.7197243049741
+only_train_time: 4098.924636594951
+
+-------------Global Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6365
+Averaged Test Accuracy (Prototype Model): 0.5993
+Std Test Accuracy (Regular Model): 0.1047
+Std Test Accuracy (Prototype Model): 0.1149
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 431.5334548205137
+only_train_time: 4145.716160699725
+
+-------------Global Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Test Accuracy (Prototype Model): 0.5994
+Std Test Accuracy (Regular Model): 0.1047
+Std Test Accuracy (Prototype Model): 0.1152
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 436.3301821425557
+only_train_time: 4192.306057825685
+
+-------------Global Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6371
+Averaged Test Accuracy (Prototype Model): 0.5992
+Std Test Accuracy (Regular Model): 0.1052
+Std Test Accuracy (Prototype Model): 0.1150
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 7
+ID: 3
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 441.1533368900418
+only_train_time: 4238.668501660228
+
+-------------Global Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6363
+Averaged Test Accuracy (Prototype Model): 0.6001
+Std Test Accuracy (Regular Model): 0.1048
+Std Test Accuracy (Prototype Model): 0.1143
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 446.0250093191862
+only_train_time: 4285.290956884623
+
+-------------Global Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Test Accuracy (Prototype Model): 0.5997
+Std Test Accuracy (Regular Model): 0.1048
+Std Test Accuracy (Prototype Model): 0.1146
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 450.9620395153761
+only_train_time: 4331.914006069303
+
+-------------Global Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Test Accuracy (Prototype Model): 0.5997
+Std Test Accuracy (Regular Model): 0.1048
+Std Test Accuracy (Prototype Model): 0.1162
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 455.7952954992652
+only_train_time: 4378.654140174389
+
+-------------Global Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6366
+Averaged Test Accuracy (Prototype Model): 0.6004
+Std Test Accuracy (Regular Model): 0.1039
+Std Test Accuracy (Prototype Model): 0.1151
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 460.6437330543995
+only_train_time: 4425.274784594774
+
+-------------Global Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6363
+Averaged Test Accuracy (Prototype Model): 0.6010
+Std Test Accuracy (Regular Model): 0.1054
+Std Test Accuracy (Prototype Model): 0.1152
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 465.69093535095453
+only_train_time: 4472.788485608995
+
+-------------Global Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6364
+Averaged Test Accuracy (Prototype Model): 0.6011
+Std Test Accuracy (Regular Model): 0.1050
+Std Test Accuracy (Prototype Model): 0.1154
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 470.62299658358097
+only_train_time: 4519.738214850426
+
+-------------Global Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6367
+Averaged Test Accuracy (Prototype Model): 0.6016
+Std Test Accuracy (Regular Model): 0.1051
+Std Test Accuracy (Prototype Model): 0.1146
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 1
+ID: 5
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 475.54335687309504
+only_train_time: 4566.83842741698
+
+-------------Global Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6368
+Averaged Test Accuracy (Prototype Model): 0.6015
+Std Test Accuracy (Regular Model): 0.1051
+Std Test Accuracy (Prototype Model): 0.1147
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 480.51592586934566
+only_train_time: 4614.170726701617
+
+-------------Global Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6370
+Averaged Test Accuracy (Prototype Model): 0.6011
+Std Test Accuracy (Regular Model): 0.1043
+Std Test Accuracy (Prototype Model): 0.1149
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+end Update
+server_global_time: 485.10722901672125
+only_train_time: 4659.31626816839
+
+-------------Global Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6376
+Averaged Test Accuracy (Prototype Model): 0.6024
+Std Test Accuracy (Regular Model): 0.1048
+Std Test Accuracy (Prototype Model): 0.1138
+tobetrained:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 3 begin training
+Edge 7 begin training
+readyList:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+aggregation_buffer:
+ID: 0
+ID: 8
+ID: 2
+ID: 5
+ID: 1
+ID: 9
+ID: 4
+ID: 6
+ID: 3
+ID: 7
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Number of samples: 326
+end Update
+server_global_time: 489.7782794609666
+only_train_time: 4704.381259419024
+
+-------------Global Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6373
+Averaged Test Accuracy (Prototype Model): 0.6017
+Std Test Accuracy (Regular Model): 0.1040
+Std Test Accuracy (Prototype Model): 0.1150
+
+Best accuracy.
+0.6376290376290377
+File path: ../results/Cifar10_dir_0.3_imbalance_40_FedProto_test_0.h5
+Deleted.
+
+Average time cost: 8299.89s.
+Length:  101
+std for best accurancy: 0.0
+mean for best accurancy: 0.6376290376290377
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 5130 	Used Memory: 20.50K
+-------------------------------------------------------------------------------
+
+Storage on cuda:0
+-------------------------------------------------------------------------------
+Total Tensors: 161792 	Used Memory: 6.39M
+The allocated memory on cuda:0: 6.39M
+-------------------------------------------------------------------------------
