@@ -11,7 +11,7 @@ import copy
 import random
 from flcore.edges.edgebase import Edge
 from flcore.clients.clientbase import load_item, save_item
-from utils.func_utils import *
+
 import torch
 import numpy as np
 
@@ -123,47 +123,4 @@ class Edge_FedProto(Edge):
         # self.eshared_protos_global = cloud_shared_protos
         return None
 
-    def edgeAggregate(self, clients):
-        # 直接从当前轮次参与的客户端id读取聚合后原型和{clientid: {label: [feature], ...}, ...} Set
-        edgeProtos = load_item(self.role, "protos", self.save_folder_name)
-        clientProtos = {
-            id: load_item(clients[id].role, "protos", self.save_folder_name)
-            for id in self.id_registration
-        }
-
-        clientProtos_prev = {
-            id: load_item(clients[id].role, "prev_protos", self.save_folder_name)
-            for id in self.id_registration
-        }
-
-        if edgeProtos is None:
-            edgeProtos = defaultdict(default_tensor)
-        for j in range(self.args.num_classes):
-            edgeProtos[j] = self.N_l[j] * edgeProtos[j]  # 第一轮次为512dim 0向量
-            assert len(edgeProtos[j]) == self.args.feature_dim
-
-            for id in self.id_registration:
-                if j in clientProtos[id].keys():
-                    edgeProtos[j] += clients[id].label_counts[j] * clientProtos[id][j]
-                    assert len(edgeProtos[j]) == self.args.feature_dim
-                    if clientProtos_prev[id] is not None:
-                        edgeProtos[j] -= (
-                            clients[id].label_counts[j] * clientProtos_prev[id][j]
-                        )
-                        assert len(edgeProtos[j]) == self.args.feature_dim
-                    else:
-                        # self.N_l[j] += 1
-                        self.N_l[j] += clients[id].label_counts[j]
-            if self.N_l[j] != 0:
-                edgeProtos[j] = edgeProtos[j] / self.N_l[j]  # 平均
-
-        save_item(edgeProtos, self.role, "protos", self.save_folder_name)
-
-        for id in self.id_registration:
-            if clientProtos[id] is not None:
-                save_item(
-                    clientProtos[id],
-                    clients[id].role,
-                    "prev_protos",
-                    self.save_folder_name,
-                )
+    

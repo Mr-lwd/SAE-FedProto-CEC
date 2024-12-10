@@ -10,6 +10,7 @@ import random
 import shutil
 from utils.data_utils import read_client_data
 from flcore.clients.clientbase import load_item, save_item
+from utils.func_utils import *
 from collections import defaultdict
 import torch.nn as nn
 
@@ -197,7 +198,54 @@ class Server(object):
             self.uploaded_weights.append(client.train_samples)
         for i, w in enumerate(self.uploaded_weights):
             self.uploaded_weights[i] = w / tot_samples
+        #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
+    def proto_aggregation(self, edge_protos_list):
+        agg_protos_label = defaultdict(default_tensor)
+        global_protos = load_item(self.role, "global_protos", self.save_folder_name)
+        if self.agg_type == 0: #按数据量平均
+            for j in range(self.args.num_classes):
+                if global_protos is not None and j in global_protos.keys():
+                    for edge in self.edges:
+                        agg_protos_label[j] = agg_protos_label[j].to(self.device)
+                        agg_protos_label[j] += edge.N_l_prev[j] * global_protos[j]
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
+                for id in edge_protos_list.keys():
+                    if (
+                        edge_protos_list[id]["protos"] is not None
+                        and j in edge_protos_list[id]["protos"].keys()
+                    ):
+                        agg_protos_label[j] = agg_protos_label[j].to(self.device)
+                        agg_protos_label[j] += (
+                            self.edges[id].N_l[j] * edge_protos_list[id]["protos"][j]
+                        )
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
+                    if (
+                        edge_protos_list[id]["prev_protos"] is not None
+                        and j in edge_protos_list[id]["prev_protos"].keys()
+                    ):
+                        agg_protos_label[j] -= (
+                            self.edges[id].N_l_prev[j]
+                            * edge_protos_list[id]["prev_protos"][j]
+                        )
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
 
+                    self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
+
+                if agg_protos_label[j] is not None:
+                    agg_protos_label[j] = agg_protos_label[j] / sum(
+                        edge.N_l_prev[j] for edge in self.edges
+                    )
+
+        print("agg_protos_label", agg_protos_label.keys())
+        for id in edge_protos_list.keys():
+            if edge_protos_list[id] is not None:
+                save_item(
+                    edge_protos_list[id]["protos"],
+                    self.edges[id].role,
+                    "prev_protos",
+                    self.save_folder_name,
+                )
+        return agg_protos_label
     def aggregate_parameters(self):
         assert len(self.uploaded_ids) > 0
 
