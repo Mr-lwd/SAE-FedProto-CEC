@@ -74,7 +74,6 @@ class Edge_FedSAE(Edge):
         if self.args.trans_delay_simulate is True:
             self.etrans_time += self.etrans_simu_time
             self.eglobal_time += self.etrans_time
-            
 
         return self.eglobal_time, self.etrain_time, self.etrans_time
 
@@ -142,16 +141,19 @@ class Edge_FedSAE(Edge):
         for j in range(self.args.num_classes):
             edgeProtos[j] = self.N_l[j] * edgeProtos[j]  # 第一轮次为512dim 0向量
             assert len(edgeProtos[j]) == self.args.feature_dim
- 
+
             for id in self.id_registration:
                 if j in clientProtos[id].keys():
-                    edgeProtos[j] += clientProtos[id][j]
+                    edgeProtos[j] += clients[id].label_counts[j] * clientProtos[id][j]
                     assert len(edgeProtos[j]) == self.args.feature_dim
                     if clientProtos_prev[id] is not None:
-                        edgeProtos[j] -= clientProtos_prev[id][j]
+                        edgeProtos[j] -= (
+                            clients[id].label_counts[j] * clientProtos_prev[id][j]
+                        )
                         assert len(edgeProtos[j]) == self.args.feature_dim
                     else:
-                        self.N_l[j] += 1
+                        # self.N_l[j] += 1
+                        self.N_l[j] += clients[id].label_counts[j]
             if self.N_l[j] != 0:
                 edgeProtos[j] = edgeProtos[j] / self.N_l[j]  # 平均
 
@@ -166,32 +168,32 @@ class Edge_FedSAE(Edge):
                     self.save_folder_name,
                 )
 
-        edgeFeatureAndlabelSet = load_item(
-            self.role, "featureSet_each_client", self.save_folder_name
-        )
-        if edgeFeatureAndlabelSet is None:
-            edgeFeatureAndlabelSet = defaultdict(dict)
-        for id in self.id_registration:
-            edgeFeatureAndlabelSet[id] = load_item(
-                clients[id].role, "featureSet", self.save_folder_name
-            )
-        save_item(
-            edgeFeatureAndlabelSet,
-            self.role,
-            "featureSet_each_client",
-            self.save_folder_name,
-        )
+        # edgeFeatureAndlabelSet = load_item(
+        #     self.role, "featureSet_each_client", self.save_folder_name
+        # )
+        # if edgeFeatureAndlabelSet is None:
+        #     edgeFeatureAndlabelSet = defaultdict(dict)
+        # for id in self.id_registration:
+        #     edgeFeatureAndlabelSet[id] = load_item(
+        #         clients[id].role, "featureSet", self.save_folder_name
+        #     )
+        # save_item(
+        #     edgeFeatureAndlabelSet,
+        #     self.role,
+        #     "featureSet_each_client",
+        #     self.save_folder_name,
+        # )
 
-        mergedFeatureAndLabelSet = defaultdict(list)
-        # 遍历每个客户端的protos
-        for client_id, protos in edgeFeatureAndlabelSet.items():
-            for label, features in protos.items():
-                # 将当前客户端的特征合并到对应标签的列表中
-                mergedFeatureAndLabelSet[label].extend(features)
-        # X^l，合并所有的客户端特征及标签集合
-        save_item(
-            mergedFeatureAndLabelSet,
-            self.role,
-            "featureSet",
-            self.save_folder_name,
-        )
+        # mergedFeatureAndLabelSet = defaultdict(list)
+        # # 遍历每个客户端的protos
+        # for client_id, protos in edgeFeatureAndlabelSet.items():
+        #     for label, features in protos.items():
+        #         # 将当前客户端的特征合并到对应标签的列表中
+        #         mergedFeatureAndLabelSet[label].extend(features)
+        # # X^l，合并所有的客户端特征及标签集合
+        # save_item(
+        #     mergedFeatureAndLabelSet,
+        #     self.role,
+        #     "featureSet",
+        #     self.save_folder_name,
+        # )

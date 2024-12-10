@@ -23,12 +23,12 @@ class clientSAE(Client):
 
     def train(self):
         self.receive_from_edgeserver()
-        print("Client.id begin training", self.id)
+        # print("Client.id begin training", self.id)
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
-        if glclassifier is not None:
+        if glclassifier is not None: #固定参数
             for param in glclassifier.parameters():
                 param.requires_grad = False
         # print("local global protos", global_protos)
@@ -85,18 +85,9 @@ class clientSAE(Client):
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
         local_model_loss = local_model_loss / len(trainloader)
-        print("local_model_loss", local_model_loss.item())
-        # 计算每个 512 维张量的大小（单位：字节）
-        # 计算字典中所有张量的总大小（单位：字节）
-
-        # print(f"Tensor size: {all_bytes} bytes")
-
-        save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
-
-        all_bytes = 0
-        all_bytes += get_theory_bytes(protos)
+        # print("local_model_loss", local_model_loss.item())
+        # save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
         agg_protos = self.agg_func(protos)
-        all_bytes += get_theory_bytes(agg_protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
 
@@ -114,7 +105,7 @@ class clientSAE(Client):
         if g_classifier is not None and self.args.test_useglclassifier == 1:
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
             client_classifier.load_state_dict(g_classifier.state_dict())
-            print("g_classifier test_metrics")
+            # print("g_classifier test_metrics")
         model = model.to(self.device)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
@@ -167,12 +158,12 @@ class clientSAE(Client):
                             correct_class_count_proto[label] += 1
 
                         # 打印统计结果
-                print("-" * 30)
-                print(f"client id {self.id}")
-                print("Regular Model Correct Classifications:")
-                print(correct_class_count_regular)
-                print("Prototype-Based Model Correct Classifications:")
-                print(correct_class_count_proto)
+                # print("-" * 30)
+                # print(f"client id {self.id}")
+                # print("Regular Model Correct Classifications:")
+                # print(correct_class_count_regular)
+                # print("Prototype-Based Model Correct Classifications:")
+                # print(correct_class_count_proto)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5
@@ -240,12 +231,12 @@ class clientSAE(Client):
 
         for [label, proto_list] in protos.items():
             if len(proto_list) > 1:
-                proto = 0 * proto_list[0].data
+                proto = 0 * proto_list[0].data.detach()
                 for i in proto_list:
-                    proto += i.data
+                    proto += i.data.detach()
                 protos[label] = proto / len(proto_list)
             else:
-                protos[label] = proto_list[0]
+                protos[label] = proto_list[0].detach()
             # 平滑
 
         return protos

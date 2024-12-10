@@ -22,7 +22,7 @@ class clientProto(Client):
 
     def train(self):
         self.receive_from_edgeserver()
-        print("Client.id begin training", self.id)
+        # print("Client.id begin training", self.id)
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
@@ -97,14 +97,6 @@ class clientProto(Client):
     def test_metrics(self, g_classifier=None):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        if (
-            g_classifier is not None
-            and self.args.glclassifier == 1
-            and self.args.test_useglclassifier == 1
-        ):
-            client_classifier = model.head  # 假设客户端分类器存储在 head 属性
-            client_classifier.load_state_dict(g_classifier.state_dict())
-            print("g_classifier test_metrics")
         model = model.to(self.device)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
@@ -157,12 +149,12 @@ class clientProto(Client):
                             correct_class_count_proto[label] += 1
 
                         # 打印统计结果
-                print("-" * 30)
-                print(f"client id {self.id}")
-                print("Regular Model Correct Classifications:")
-                print(correct_class_count_regular)
-                print("Prototype-Based Model Correct Classifications:")
-                print(correct_class_count_proto)
+                # print("-" * 30)
+                # print(f"client id {self.id}")
+                # print("Regular Model Correct Classifications:")
+                # print(correct_class_count_regular)
+                # print("Prototype-Based Model Correct Classifications:")
+                # print(correct_class_count_proto)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5
@@ -230,12 +222,12 @@ class clientProto(Client):
 
         for [label, proto_list] in protos.items():
             if len(proto_list) > 1:
-                proto = 0 * proto_list[0].data
+                proto = 0 * proto_list[0].data.detach()
                 for i in proto_list:
-                    proto += i.data
+                    proto += i.data.detach()
                 protos[label] = proto / len(proto_list)
             else:
-                protos[label] = proto_list[0]
+                protos[label] = proto_list[0].detach()
             # 平滑
 
         return protos

@@ -9,7 +9,6 @@ from utils.func_utils import *
 from utils.data_utils import read_client_data
 from threading import Thread
 from collections import defaultdict
-from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import os
 import copy
@@ -24,7 +23,6 @@ class FedProto(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
         self.glprotos_invol_dataset = defaultdict(int)
-
 
         # select slow clients
         self.set_slow_clients()
@@ -45,9 +43,9 @@ class FedProto(Server):
         self.gtrans_time = 0
         self.readyList = DynamicBuffer(self.num_edges)
         self.tobetrained = DynamicBuffer(self.num_edges)
-        self.aggregation_buffer = DynamicBuffer(self.buffersize)
+        self.aggregation_buffer = DynamicBuffer(self.num_edges)
         [self.edge_register(edge=edge) for edge in self.edges]
-        
+
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
             # s_t = time.time()
@@ -112,15 +110,23 @@ class FedProto(Server):
             protos = load_item(edge.role, "protos", self.save_folder_name)
             prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
             uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-            
+
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
+        
+        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
+            self.save_tsne_with_agg(
+                args=self.args,
+                base_path="./tsneplot",
+                drawtype="clientavgproto",
+                current_epoch=self.current_epoch,
+            )
 
     #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
     def proto_aggregation(self, edge_protos_list):
         agg_protos_label = defaultdict(default_tensor)
         global_protos = load_item(self.role, "global_protos", self.save_folder_name)
-        if self.agg_type == 0:
+        if self.agg_type == 0: #按数据量平均
             for j in range(self.args.num_classes):
                 if global_protos is not None and j in global_protos.keys():
                     for edge in self.edges:
@@ -152,25 +158,6 @@ class FedProto(Server):
                         edge.N_l_prev[j] for edge in self.edges
                     )
 
-        # elif self.agg_type == 1:
-        #     for local_protos in edge_protos_list:
-        #         for label in local_protos["protos"].keys():
-        #             agg_protos_label[label].append(
-        #                 local_protos["protos"][label]
-        #                 * local_protos["client"].label_counts[label]
-        #             )
-
-        #     for [label, proto_list] in agg_protos_label.items():
-        #         if len(proto_list) > 1:
-        #             proto = 0 * proto_list[0].data
-        #             for i in proto_list:
-        #                 proto += i.data
-        #             agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #         else:
-        #             agg_protos_label[label] = (
-        #                 proto_list[0].data / self.glprotos_invol_dataset[label]
-        #             )
-
         print("agg_protos_label", agg_protos_label.keys())
         for id in edge_protos_list.keys():
             if edge_protos_list[id] is not None:
@@ -180,25 +167,7 @@ class FedProto(Server):
                     "prev_protos",
                     self.save_folder_name,
                 )
-        # if self.args.drawtsne is True and self.current_epoch % 10 == 0:
-        #     save_tsne_with_agg(
-        #         edge_protos_list=edge_protos_list,
-        #         agg_protos_label=agg_protos_label,
-        #         base_path="./tsneplot",
-        #         dataset=self.args.dataset,
-        #         algorithm=self.args.algorithm,
-        #         local_epochs=self.args.local_epochs,
-        #         agg_type=self.args.agg_type,
-        #         glclassifier=self.args.glclassifier,
-        #         test_useglclassifier=self.args.test_useglclassifier,
-        #         gamma=self.args.gamma,
-        #         lamda=self.args.lamda,
-        #         lr_rate=self.args.local_learning_rate,
-        #         usche=self.args.use_decay_scheduler,
-        #         current_epoch=self.current_epoch,
-        #     )
         return agg_protos_label
-
 
     def refresh_cloudserver(self):
         self.receiver_buffer.clear()
@@ -244,118 +213,6 @@ class FedProto(Server):
     def push_aggclients_to_trainList(self):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
-
-
-def save_tsne_with_agg(
-    edge_protos_list,
-    agg_protos_label,
-    base_path,
-    dataset,
-    algorithm,
-    local_epochs,
-    agg_type,
-    glclassifier,
-    test_useglclassifier,
-    gamma,
-    lamda,
-    lr_rate,
-    usche,
-    current_epoch,
-):
-    """
-    生成并保存包含本地和聚合原型的 t-SNE 图。
-    """
-
-    save_folder = f"{base_path}/{dataset}/{algorithm}/localepoch_{local_epochs}_agg_{agg_type}_lamda_{lamda}_glclassifier_{glclassifier}_use_{test_useglclassifier}_gamma_{gamma}_lr_{lr_rate}_usche_{usche}"
-
-    all_features = []
-    all_labels = []
-    label_types = []  # 区分来源：agg 或 local
-
-    # 收集聚合原型数据
-    for label, proto in agg_protos_label.items():
-        all_features.append(proto.cpu().detach().numpy())
-        all_labels.append(label)
-        label_types.append("Global")  # 标记为全局原型
-
-    # 收集本地原型数据
-    for local_protos in edge_protos_list:
-        for label, proto in local_protos["protos"].items():
-            all_features.append(proto.cpu().detach().numpy())
-            all_labels.append(label)
-            label_types.append("Local")  # 标记为本地原型
-
-    # 转为 NumPy 数组
-    all_features = np.vstack(all_features)
-    all_labels = np.array(all_labels)
-    # print("all_features",all_features)
-    # print("all_labels",all_labels)
-    # 打印样本数量
-    print("Number of samples:", len(all_features))
-
-    # t-SNE 降维，调整 perplexity
-    # perplexity = min(30, len(all_features) - 1)
-    tsne = TSNE(n_components=2, random_state=42)
-    reduced_features = tsne.fit_transform(all_features)
-
-    # 归一化处理
-    # scaler = preprocessing.MinMaxScaler(feature_range=(-1,1))
-    # reduced_features = scaler.fit_transform(reduced_features)
-
-    # 创建保存路径
-    os.makedirs(save_folder, exist_ok=True)
-    save_path = os.path.join(save_folder, f"tsne_agg_epoch_{current_epoch}.png")
-
-    # 可视化
-    plt.figure(figsize=(10, 8))
-    unique_labels = set(all_labels)
-    num_labels = len(unique_labels)
-    cmap = plt.get_cmap("tab10")  # 使用 Matplotlib 的内置调色盘
-    colors = [cmap(i % 10) for i in range(num_labels)]  # 支持多种颜色，不重复
-    label_to_color = {label: colors[i] for i, label in enumerate(unique_labels)}
-
-    for label in unique_labels:
-        indices = all_labels == label
-        label_source = np.array(label_types)[indices]
-
-        # 分别获取全局和本地的布尔索引
-        global_indices = indices.copy()
-        global_indices[indices] = label_source == "Global"
-
-        local_indices = indices.copy()
-        local_indices[indices] = label_source == "Local"
-
-        # 获取标签对应的颜色
-        color = label_to_color[label]
-
-        # 分别绘制全局和本地原型
-        if np.any(global_indices):
-            plt.scatter(
-                reduced_features[global_indices, 0],
-                reduced_features[global_indices, 1],
-                label=f"Global Proto {label}",
-                color=color,
-                alpha=0.7,
-                marker="o",
-            )
-        if np.any(local_indices):
-            plt.scatter(
-                reduced_features[local_indices, 0],
-                reduced_features[local_indices, 1],
-                label=f"Local Proto {label}",
-                color=color,
-                alpha=0.5,
-                marker="x",
-            )
-    # 添加图例
-    plt.legend()
-    plt.title(
-        f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
-    )
-    plt.xlabel("t-SNE Dimension 1")
-    plt.ylabel("t-SNE Dimension 2")
-    plt.savefig(save_path)
-    plt.close()
 
 
 class DynamicBuffer:

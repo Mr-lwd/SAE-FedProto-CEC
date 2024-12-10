@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+from sklearn.manifold import TSNE
 import torch
 import os
 import numpy as np
@@ -264,14 +266,14 @@ class Server(object):
             num_samples.append(regular_num)
 
         # 打印所有客户端的常规模型准确率
-        print("Regular Model Accuracies:")
-        for client_id, acc in regular_accuracies:
-            print(f"Client {client_id}: Regular Model Acc: {acc:.4f}")
+        # print("Regular Model Accuracies:")
+        # for client_id, acc in regular_accuracies:
+            # print(f"Client {client_id}: Regular Model Acc: {acc:.4f}")
 
         # 打印所有客户端的原型模型准确率
-        print("Prototype Model Accuracies:")
-        for client_id, acc in proto_accuracies:
-            print(f"Client {client_id}: Prototype Model Acc: {acc:.4f}")
+        # print("Prototype Model Accuracies:")
+        # for client_id, acc in proto_accuracies:
+            # print(f"Client {client_id}: Prototype Model Acc: {acc:.4f}")
 
         # 返回客户端ID、样本数量、常规模型和原型模型的准确数
         ids = [c.id for c in self.clients]
@@ -397,3 +399,114 @@ class Server(object):
     def send_to_edge(self, edge):
         edge.receive_from_cloudserver(copy.deepcopy(self.shared_state_dict))
         return None
+    
+    def save_tsne_with_agg(
+        self, args, base_path, drawtype="clientavgproto", current_epoch=0
+    ):
+        """
+        生成并保存包含本地和聚合原型的 t-SNE 图。
+        """
+        if args.algorithm == "FedSAE":
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}_agg_{args.agg_type}_buffer_{args.buffersize}_lamda_{args.lamda}_gamma_{args.gamma}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
+        else:
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}_lr_{args.local_learning_rate}/{drawtype}"
+
+        all_features = []
+        all_labels = []
+        label_types = []  # 区分来源：agg 或 local
+        global_protos = load_item(self.role, "global_protos", self.save_folder_name)
+        # 收集聚合原型数据
+        for label, proto in global_protos.items():
+            all_features.append(proto.cpu().detach().numpy())
+            all_labels.append(label)
+            label_types.append("Global")  # 标记为全局原型
+
+        # 收集本地原型数据
+        for client in self.clients:
+            if drawtype == "clientavgproto":
+                client_protos = load_item(
+                    client.role, "prev_protos", client.save_folder_name
+                )
+                if client_protos is not None:
+                    for key in client_protos.keys():
+                        all_features.append(client_protos[key].cpu().detach().numpy())
+                        all_labels.append(key)
+                        label_types.append("Local")  # 标记为本地原型
+            elif drawtype == "clientallfeatures":
+                client_features = load_item(
+                    client.role, "featureSet", client.save_folder_name
+                )
+                if client_features is not None:
+                    for key in client_features.keys():
+                        for tensor in client_features[key]:
+                            # 转换每个 tensor 为 NumPy 数组后添加到 all_features
+                            all_features.append(tensor.detach().cpu().numpy())
+                        all_labels.extend([label] * len(client_features[key]))
+                        label_types.extend(
+                            ["Local"] * len(client_features[key])
+                        )  # 标记为本地原型
+
+        # 转为 NumPy 数组
+        all_features = np.vstack(all_features)
+        all_labels = np.array(all_labels)
+        print("Number of samples:", len(all_features))
+
+        # t-SNE 降维，调整 perplexity
+        # perplexity = min(30, len(all_features) - 1)
+        tsne = TSNE(n_components=2, random_state=42)
+        reduced_features = tsne.fit_transform(all_features)
+
+        # 创建保存路径
+        os.makedirs(save_folder, exist_ok=True)
+        save_path = os.path.join(save_folder, f"tsne_agg_epoch_{current_epoch}.png")
+
+        # 可视化
+        plt.figure(figsize=(10, 8))
+        unique_labels = set(all_labels)
+        num_labels = len(unique_labels)
+        cmap = plt.get_cmap("tab10")  # 使用 Matplotlib 的内置调色盘
+        colors = [cmap(i % 10) for i in range(num_labels)]  # 支持多种颜色，不重复
+        label_to_color = {label: colors[i] for i, label in enumerate(unique_labels)}
+
+        for label in unique_labels:
+            indices = all_labels == label
+            label_source = np.array(label_types)[indices]
+
+            # 分别获取全局和本地的布尔索引
+            global_indices = indices.copy()
+            global_indices[indices] = label_source == "Global"
+
+            local_indices = indices.copy()
+            local_indices[indices] = label_source == "Local"
+
+            # 获取标签对应的颜色
+            color = label_to_color[label]
+
+            # 分别绘制全局和本地原型
+            if np.any(global_indices):
+                plt.scatter(
+                    reduced_features[global_indices, 0],
+                    reduced_features[global_indices, 1],
+                    label=f"Global Proto {label}",
+                    color=color,
+                    alpha=0.7,
+                    marker="o",
+                )
+            if np.any(local_indices):
+                plt.scatter(
+                    reduced_features[local_indices, 0],
+                    reduced_features[local_indices, 1],
+                    label=f"Local Proto {label}",
+                    color=color,
+                    alpha=0.5,
+                    marker="x",
+                )
+        # 添加图例
+        plt.legend()
+        plt.title(
+            f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
+        )
+        plt.xlabel("t-SNE Dimension 1")
+        plt.ylabel("t-SNE Dimension 2")
+        plt.savefig(save_path)
+        plt.close()

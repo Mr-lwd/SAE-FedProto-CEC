@@ -146,22 +146,19 @@ class Client(object):
     def initLabels(self):
         trainloader = self.load_train_data()
         total_labels = 0
-        # label_counts = defaultdict(int)
         for _, (x, y) in enumerate(trainloader):
             for label in y:
                 self.label_counts[label.item()] += 1
                 total_labels += 1
-            # 计算熵值 H(C_i)
         entropy = 0.0
         for label, count in self.label_counts.items():
-            # 计算每个标签的概率 p_j
             p_j = count / total_labels
             if p_j > 0:
                 entropy -= p_j * math.log(p_j)
         self.entropy = entropy
         print("id", self.id)
-        print("self.label_counts", self.label_counts)
-        print("entropy", entropy)
+        print("label_counts:", self.label_counts)
+        # print("entropy", entropy)
 
     def send_to_edgeserver(self, edgeserver):
         edgeserver.receive_from_client(
@@ -191,7 +188,7 @@ def save_item(item, role, item_name, item_path=None):
     torch.save(item, file_path)
 
     # 查看保存后的文件大小（单位：字节）
-    # if item_name == "protos":
+    # if item_name == "CCVR":
     #     file_size = os.path.getsize(file_path)
     #     print(f"Saved file size: {file_size} bytes")
 

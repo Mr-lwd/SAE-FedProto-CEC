@@ -46,7 +46,8 @@ class FedSAE(Server):
         self.tobetrained = DynamicBuffer(self.num_edges)
         self.aggregation_buffer = DynamicBuffer(self.buffersize)
         [self.edge_register(edge=edge) for edge in self.edges]
-        self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
+        self.global_classifier_init = nn.Linear(self.feature_dim, self.num_classes)
+        self.global_classifier = copy.deepcopy(self.global_classifier_init)
 
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
@@ -114,13 +115,31 @@ class FedSAE(Server):
             uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        self.train_global_classifier()
+
+        sampler = GaussianSampler(self.args)
+        sampled_features = sampler.aggregate_and_sample(self.edges)
+
+        self.train_global_classifier(sampled_features)
+
+        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
+            self.save_tsne_with_agg(
+                args=self.args,
+                base_path="./tsneplot",
+                drawtype="clientavgproto",
+                current_epoch=self.current_epoch,
+            )
+            # self.save_tsne_with_agg(
+            #     args=self.args,
+            #     base_path="./tsneplot",
+            #     drawtype="clientallfeatures",
+            #     current_epoch=self.current_epoch,
+            # )
 
     #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
     def proto_aggregation(self, edge_protos_list):
         agg_protos_label = defaultdict(default_tensor)
         global_protos = load_item(self.role, "global_protos", self.save_folder_name)
-        if self.agg_type == 0:
+        if self.agg_type == 0: #按数据量平均
             for j in range(self.args.num_classes):
                 if global_protos is not None and j in global_protos.keys():
                     for edge in self.edges:
@@ -152,25 +171,6 @@ class FedSAE(Server):
                         edge.N_l_prev[j] for edge in self.edges
                     )
 
-        # elif self.agg_type == 1:
-        #     for local_protos in edge_protos_list:
-        #         for label in local_protos["protos"].keys():
-        #             agg_protos_label[label].append(
-        #                 local_protos["protos"][label]
-        #                 * local_protos["client"].label_counts[label]
-        #             )
-
-        #     for [label, proto_list] in agg_protos_label.items():
-        #         if len(proto_list) > 1:
-        #             proto = 0 * proto_list[0].data
-        #             for i in proto_list:
-        #                 proto += i.data
-        #             agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #         else:
-        #             agg_protos_label[label] = (
-        #                 proto_list[0].data / self.glprotos_invol_dataset[label]
-        #             )
-
         print("agg_protos_label", agg_protos_label.keys())
         for id in edge_protos_list.keys():
             if edge_protos_list[id] is not None:
@@ -180,62 +180,18 @@ class FedSAE(Server):
                     "prev_protos",
                     self.save_folder_name,
                 )
-        # if self.args.drawtsne is True and self.current_epoch % 10 == 0:
-        #     save_tsne_with_agg(
-        #         edge_protos_list=edge_protos_list,
-        #         agg_protos_label=agg_protos_label,
-        #         base_path="./tsneplot",
-        #         dataset=self.args.dataset,
-        #         algorithm=self.args.algorithm,
-        #         local_epochs=self.args.local_epochs,
-        #         agg_type=self.args.agg_type,
-        #         glclassifier=self.args.glclassifier,
-        #         test_useglclassifier=self.args.test_useglclassifier,
-        #         gamma=self.args.gamma,
-        #         lamda=self.args.lamda,
-        #         lr_rate=self.args.local_learning_rate,
-        #         usche=self.args.use_decay_scheduler,
-        #         current_epoch=self.current_epoch,
-        #     )
         return agg_protos_label
 
-    def train_global_classifier(self):
-        self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
+    def train_global_classifier(self, retrain_vr):
+        glclassifier_time_start = time.perf_counter()
+        self.global_classifier = copy.deepcopy(self.global_classifier_init)
         for param in self.global_classifier.parameters():
             param.requires_grad = True
-        global_protos_data = defaultdict(list)
-        # for edge in self.edges:
-        for edge in self.aggregation_buffer.buffer:
-            edgeFeatures = load_item(
-                edge.role,
-                "featureSet",
-                self.save_folder_name,
-            )
-            save_item(
-                edgeFeatures,
-                edge.role,
-                "featureSet_prev",
-                self.save_folder_name,
-            )
-            
-        for edge in self.edges:
-            edgeFeatures = load_item(
-                edge.role,
-                "featureSet_prev",
-                self.save_folder_name,
-            )
-            if edgeFeatures is not None:
-                for label, proto_list in edgeFeatures.items():
-                    global_protos_data[label].extend(proto_list)
         features = []
         labels = []
-        # 生成与 features 形状相同的高斯噪声
-
-        for label, proto_list in global_protos_data.items():
+        for label, proto_list in retrain_vr.items():
             features.extend(proto_list)  # 追加所有特征向量
             labels.extend([label] * len(proto_list))  # 对应的标签
-        print("features.len", len(features))
-        print("labels.len", len(labels))
         criterion = nn.CrossEntropyLoss()
         optimizer = torch.optim.Adam(self.global_classifier.parameters(), lr=0.001)
 
@@ -254,7 +210,7 @@ class FedSAE(Server):
 
         # 训练过程
         epochs = 10
-        print("train_global_classifier")
+        print("train global classifier")
         for epoch in range(epochs):
             self.global_classifier.to(self.device)
             self.global_classifier.train()
@@ -270,7 +226,11 @@ class FedSAE(Server):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-
+        glclassifier_time_end = time.perf_counter()
+        print(
+            "train glclassifier time:",
+            glclassifier_time_end - glclassifier_time_start,
+        )
         # 保存分类器
         save_item(
             self.global_classifier, self.role, "glclassifier", self.save_folder_name
@@ -279,7 +239,7 @@ class FedSAE(Server):
         correct = 0
         total = 0
         with torch.no_grad():  # 禁用梯度计算
-            # 使用验证集进行验证
+            # 使用训练集进行验证
             for val_features, val_labels in data_loader:
                 val_features = val_features.to(self.device)
                 val_labels = val_labels.to(self.device)
@@ -341,117 +301,7 @@ class FedSAE(Server):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
 
-
-def save_tsne_with_agg(
-    edge_protos_list,
-    agg_protos_label,
-    base_path,
-    dataset,
-    algorithm,
-    local_epochs,
-    agg_type,
-    glclassifier,
-    test_useglclassifier,
-    gamma,
-    lamda,
-    lr_rate,
-    usche,
-    current_epoch,
-):
-    """
-    生成并保存包含本地和聚合原型的 t-SNE 图。
-    """
-
-    save_folder = f"{base_path}/{dataset}/{algorithm}/localepoch_{local_epochs}_agg_{agg_type}_lamda_{lamda}_glclassifier_{glclassifier}_use_{test_useglclassifier}_gamma_{gamma}_lr_{lr_rate}_usche_{usche}"
-
-    all_features = []
-    all_labels = []
-    label_types = []  # 区分来源：agg 或 local
-
-    # 收集聚合原型数据
-    for label, proto in agg_protos_label.items():
-        all_features.append(proto.cpu().detach().numpy())
-        all_labels.append(label)
-        label_types.append("Global")  # 标记为全局原型
-
-    # 收集本地原型数据
-    for local_protos in edge_protos_list:
-        for label, proto in local_protos["protos"].items():
-            all_features.append(proto.cpu().detach().numpy())
-            all_labels.append(label)
-            label_types.append("Local")  # 标记为本地原型
-
-    # 转为 NumPy 数组
-    all_features = np.vstack(all_features)
-    all_labels = np.array(all_labels)
-    # print("all_features",all_features)
-    # print("all_labels",all_labels)
-    # 打印样本数量
-    print("Number of samples:", len(all_features))
-
-    # t-SNE 降维，调整 perplexity
-    # perplexity = min(30, len(all_features) - 1)
-    tsne = TSNE(n_components=2, random_state=42)
-    reduced_features = tsne.fit_transform(all_features)
-
-    # 归一化处理
-    # scaler = preprocessing.MinMaxScaler(feature_range=(-1,1))
-    # reduced_features = scaler.fit_transform(reduced_features)
-
-    # 创建保存路径
-    os.makedirs(save_folder, exist_ok=True)
-    save_path = os.path.join(save_folder, f"tsne_agg_epoch_{current_epoch}.png")
-
-    # 可视化
-    plt.figure(figsize=(10, 8))
-    unique_labels = set(all_labels)
-    num_labels = len(unique_labels)
-    cmap = plt.get_cmap("tab10")  # 使用 Matplotlib 的内置调色盘
-    colors = [cmap(i % 10) for i in range(num_labels)]  # 支持多种颜色，不重复
-    label_to_color = {label: colors[i] for i, label in enumerate(unique_labels)}
-
-    for label in unique_labels:
-        indices = all_labels == label
-        label_source = np.array(label_types)[indices]
-
-        # 分别获取全局和本地的布尔索引
-        global_indices = indices.copy()
-        global_indices[indices] = label_source == "Global"
-
-        local_indices = indices.copy()
-        local_indices[indices] = label_source == "Local"
-
-        # 获取标签对应的颜色
-        color = label_to_color[label]
-
-        # 分别绘制全局和本地原型
-        if np.any(global_indices):
-            plt.scatter(
-                reduced_features[global_indices, 0],
-                reduced_features[global_indices, 1],
-                label=f"Global Proto {label}",
-                color=color,
-                alpha=0.7,
-                marker="o",
-            )
-        if np.any(local_indices):
-            plt.scatter(
-                reduced_features[local_indices, 0],
-                reduced_features[local_indices, 1],
-                label=f"Local Proto {label}",
-                color=color,
-                alpha=0.5,
-                marker="x",
-            )
-    # 添加图例
-    plt.legend()
-    plt.title(
-        f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
-    )
-    plt.xlabel("t-SNE Dimension 1")
-    plt.ylabel("t-SNE Dimension 2")
-    plt.savefig(save_path)
-    plt.close()
+    
 
 
 class DynamicBuffer:
@@ -500,3 +350,77 @@ class DynamicBuffer:
     def printTimeinfo(self):
         for edge in self.buffer:
             print(f"ID: {edge.id}")
+
+
+class GaussianSampler:
+    def __init__(self, args):
+        self.args = args
+
+    def aggregate_and_sample(self, edges):
+        """
+        对于每个类的原型向量，根据数据量加权计算均值和协方差矩阵，并进行高斯采样。
+        :param gl_all_protos: 所有的边缘服务器原型，格式为 [[features,weight],[features,weight]]。
+        :return: 采样后的特征。
+        """
+        gl_all_protos = defaultdict(list)
+        sampled_features = defaultdict(list)
+        for edge in edges:
+            edge_protos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+            if edge_protos is not None:
+                for key in edge_protos.keys():
+                    gl_all_protos[key].append([edge_protos[key], edge.N_l_prev[key]])
+
+        for key in range(self.args.num_classes):
+            if key in gl_all_protos.keys() and len(gl_all_protos[key]) > 0:
+                # 提取每个客户端提供的原型和对应的数据量
+                protos = gl_all_protos[key]  # List of (proto, client_data_size)
+                weights = np.array([data[1] for data in protos], dtype=np.float32)
+                features = [data[0] for data in protos]
+
+                # 计算加权均值和协方差
+                mean, cov = self._cal_weighted_mean_cov(features, weights)
+
+                # 进行高斯采样
+                num_samples = 4000
+                sampled_features[key] = self._gaussian_sampling(mean, cov, num_samples)
+                sampled_features[key] = torch.tensor(
+                    sampled_features[key], dtype=torch.float32
+                )
+        return sampled_features
+
+    def _cal_weighted_mean_cov(self, features, weights):
+        """
+        计算加权均值和协方差矩阵。
+        :param features: 特征列表，形状为 (n, feature_dim)。
+        :param weights: 权重列表，形状为 (n,)。
+        :return: 加权均值和协方差矩阵。
+        """
+        features = torch.stack(features).cpu().numpy()  # 转为 NumPy 数组
+        # 按权重归一化
+        normalized_weights = weights / weights.sum()
+        mean = np.average(features, axis=0, weights=normalized_weights)  # 加权均值
+
+        # 加权协方差矩阵
+        n_c = np.sum(weights)  # 类别c的总样本量
+        cov = np.zeros((features.shape[1], features.shape[1]))
+
+        for i in range(len(features)):
+            mean_diff = features[i] - mean  # 样本均值与全局均值的差
+            cov += weights[i] * np.outer(mean_diff, mean_diff)  # 加权外积
+
+        # 归一化
+        assert n_c > 1
+        cov /= n_c - 1  # 除以 (n_c - 1),无偏，可能出现除0
+
+        return mean, cov
+
+    def _gaussian_sampling(self, mean, cov, num_samples):
+        """
+        根据均值和协方差矩阵进行高斯采样。
+        :param mean: 均值向量。
+        :param cov: 协方差矩阵。
+        :param num_samples: 采样数量。
+        :return: 采样结果，形状为 (num_samples, feature_dim)。
+        """
+        sampled = np.random.multivariate_normal(mean, cov, num_samples)
+        return torch.tensor(sampled)

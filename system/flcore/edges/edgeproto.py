@@ -74,7 +74,6 @@ class Edge_FedProto(Edge):
         if self.args.trans_delay_simulate is True:
             self.etrans_time += self.etrans_simu_time
             self.eglobal_time += self.etrans_time
-            
 
         return self.eglobal_time, self.etrain_time, self.etrans_time
 
@@ -145,13 +144,16 @@ class Edge_FedProto(Edge):
 
             for id in self.id_registration:
                 if j in clientProtos[id].keys():
-                    edgeProtos[j] += clientProtos[id][j]
+                    edgeProtos[j] += clients[id].label_counts[j] * clientProtos[id][j]
                     assert len(edgeProtos[j]) == self.args.feature_dim
                     if clientProtos_prev[id] is not None:
-                        edgeProtos[j] -= clientProtos_prev[id][j]
+                        edgeProtos[j] -= (
+                            clients[id].label_counts[j] * clientProtos_prev[id][j]
+                        )
                         assert len(edgeProtos[j]) == self.args.feature_dim
                     else:
-                        self.N_l[j] += 1
+                        # self.N_l[j] += 1
+                        self.N_l[j] += clients[id].label_counts[j]
             if self.N_l[j] != 0:
                 edgeProtos[j] = edgeProtos[j] / self.N_l[j]  # 平均
 
