@@ -10,6 +10,7 @@ import logging
 import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
+from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverSAE import FedSAE
 from flcore.servers.servergen import FedGen
 from flcore.servers.serverdistill import FedDistill
@@ -17,7 +18,6 @@ from flcore.servers.serverlg import LG_FedAvg
 from flcore.servers.serverfml import FML
 from flcore.servers.serverkd import FedKD
 from flcore.servers.servergh import FedGH
-from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverktl_stylegan_xl import FedKTL as FedKTL_stylegan_xl
 from flcore.servers.serverktl_stylegan_3 import FedKTL as FedKTL_stylegan_3
 from flcore.servers.serverktl_stable_diffusion import FedKTL as FedKTL_stable_diffusion
@@ -347,7 +347,8 @@ if __name__ == "__main__":
         help="Multiple update steps in one local epoch.",
     )
     # parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
-    parser.add_argument("-algo", "--algorithm", type=str, default="FedSAE")
+    # parser.add_argument("-algo", "--algorithm", type=str, default="FedSAE")
+    parser.add_argument("-algo", "--algorithm", type=str, default="FedTGP")
     parser.add_argument(
         "-jr",
         "--join_ratio",

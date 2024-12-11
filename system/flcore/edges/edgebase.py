@@ -113,11 +113,11 @@ class Edge:
 
             for id in self.id_registration:
                 if j in clientProtos[id].keys():
-                    edgeProtos[j] += (clients[id].label_counts[j]) * clientProtos[id][j]
+                    edgeProtos[j] += (clients[id].label_counts[j]) * clientProtos[id][j].squeeze()
                     assert len(edgeProtos[j]) == self.args.feature_dim
                     if clientProtos_prev[id] is not None:
                         edgeProtos[j] -= (
-                            clients[id].label_counts[j] * clientProtos_prev[id][j]
+                            clients[id].label_counts[j] * clientProtos_prev[id][j].squeeze()
                         )
                         assert len(edgeProtos[j]) == self.args.feature_dim
                     else:
