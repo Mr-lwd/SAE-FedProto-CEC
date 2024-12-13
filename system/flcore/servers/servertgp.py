@@ -123,34 +123,8 @@ class FedTGP(Server):
         assert len(self.aggregation_buffer.buffer) > 0
         print("aggregation_buffer:")
         self.aggregation_buffer.printTimeinfo()
-        self.uploaded_ids = []
-        # uploaded_protos = defaultdict(dict)
-        uploaded_protos_per_client = []
-        for client in self.clients:
-            self.uploaded_ids.append(client.id)
-            protos = load_item(client.role, "protos", client.save_folder_name)
-            uploaded_protos_per_client.append(protos)
-            for k in protos.keys():
-                self.TGP_uploaded_protos.append((protos[k], k))
-                
-        self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
-        global_protos = proto_cluster(uploaded_protos_per_client)
-        # save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
-        for k1 in global_protos.keys():
-            for k2 in global_protos.keys():
-                if k1 > k2:
-                    dis = torch.norm(global_protos[k1] - global_protos[k2], p=2)
-                    self.gap[k1] = torch.min(self.gap[k1], dis)
-                    self.gap[k2] = torch.min(self.gap[k2], dis)
-        self.min_gap = torch.min(self.gap)
-        for i in range(len(self.gap)):
-            if self.gap[i] > torch.tensor(1e8, device=self.device):
-                self.gap[i] = self.min_gap
-        self.max_gap = torch.max(self.gap)
-        print('self.gap', self.gap)
-
-        self.update_Gen()
+        self.tgp_process()
 
         if self.args.drawtsne is True and self.current_epoch % 10 == 0:
             self.save_tsne_with_agg(
@@ -205,6 +179,35 @@ class FedTGP(Server):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
 
+    def tgp_process(self):
+        uploaded_protos_per_client = []
+        for client in self.clients:
+            self.uploaded_ids.append(client.id)
+            protos = load_item(client.role, "protos", client.save_folder_name)
+            uploaded_protos_per_client.append({"client": client, "protos": protos})
+            for k in protos.keys():
+                self.TGP_uploaded_protos.append((protos[k], k))
+
+        self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
+        global_protos = self.proto_cluster(uploaded_protos_per_client)
+        # global_protos = self.proto_aggregation(uploaded_protos_per_client)
+        # save_item(global_protos, self.role, "global_protos", self.save_folder_name)
+
+        for k1 in global_protos.keys():
+            for k2 in global_protos.keys():
+                if k1 > k2:
+                    dis = torch.norm(global_protos[k1] - global_protos[k2], p=2)
+                    self.gap[k1] = torch.min(self.gap[k1], dis)
+                    self.gap[k2] = torch.min(self.gap[k2], dis)
+        self.min_gap = torch.min(self.gap)
+        for i in range(len(self.gap)):
+            if self.gap[i] > torch.tensor(1e8, device=self.device):
+                self.gap[i] = self.min_gap
+        self.max_gap = torch.max(self.gap)
+        print("self.gap", self.gap)
+
+        self.update_Gen()
+
     def update_Gen(self):
         PROTO = load_item(self.role, "PROTO", self.save_folder_name)
         Gen_opt = torch.optim.SGD(PROTO.parameters(), lr=self.server_learning_rate)
@@ -247,18 +250,38 @@ class FedTGP(Server):
                 torch.tensor(class_id, device=self.device)
             ).detach()
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        
-def proto_cluster(protos_list):
-    proto_clusters = defaultdict(list)
-    for protos in protos_list:
-        for k in protos.keys():
-            proto_clusters[k].append(protos[k])
 
-    for k in proto_clusters.keys():
-        protos = torch.stack(proto_clusters[k])
-        proto_clusters[k] = torch.mean(protos, dim=0).detach()
+    def proto_cluster(self, protos_list):
+        agg_protos_label = defaultdict(list)
+        for local_protos in protos_list:
+            for label in local_protos["protos"].keys():
+                agg_protos_label[label].append(
+                    local_protos["protos"][label]
+                    * local_protos["client"].label_counts[label]
+                )
 
-    return proto_clusters
+        for [label, proto_list] in agg_protos_label.items():
+            if len(proto_list) > 1:
+                proto = 0 * proto_list[0].data
+                for i in proto_list:
+                    proto += i.data
+                agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+            else:
+                agg_protos_label[label] = (
+                    proto_list[0].data / self.glprotos_invol_dataset[label]
+                )
+        return agg_protos_label
+        # proto_clusters = defaultdict(list)
+        # for protos in protos_list:
+        #     for k in protos.keys():
+        #         proto_clusters[k].append(protos[k])
+
+        # for k in proto_clusters.keys():
+        #     protos = torch.stack(proto_clusters[k])
+        #     proto_clusters[k] = torch.mean(protos, dim=0).detach()
+
+        # return proto_clusters
+
 
 class DynamicBuffer:
     def __init__(self, max_length):

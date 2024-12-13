@@ -28,7 +28,7 @@ class clientSAE(Client):
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
-        if glclassifier is not None: #固定参数
+        if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
                 param.requires_grad = False
         # print("local global protos", global_protos)
@@ -108,6 +108,7 @@ class clientSAE(Client):
             # print("g_classifier test_metrics")
         model = model.to(self.device)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)

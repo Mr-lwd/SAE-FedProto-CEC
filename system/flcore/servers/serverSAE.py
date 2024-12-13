@@ -1,6 +1,5 @@
 import time
 import numpy as np
-
 from flcore.clients.clientSAE import clientSAE
 from flcore.edges.edgeSAE import Edge_FedSAE
 from flcore.servers.serverbase import Server
@@ -18,6 +17,7 @@ from sklearn import preprocessing
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
+import torch.nn.functional as F
 
 
 class FedSAE(Server):
@@ -48,6 +48,28 @@ class FedSAE(Server):
         [self.edge_register(edge=edge) for edge in self.edges]
         self.global_classifier_init = nn.Linear(self.feature_dim, self.num_classes)
         self.global_classifier = copy.deepcopy(self.global_classifier_init)
+
+        self.server_learning_rate = args.server_learning_rate
+        self.batch_size = args.batch_size
+        self.server_epochs = args.server_epochs
+        self.margin_threthold = args.margin_threthold
+
+        self.feature_dim = args.feature_dim
+        self.server_hidden_dim = self.feature_dim
+
+        self.TGP_uploaded_protos = []
+        if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
+            PROTO = Trainable_prototypes(
+                self.num_classes, self.server_hidden_dim, self.feature_dim, self.device
+            ).to(self.device)
+            save_item(PROTO, self.role, "PROTO", self.save_folder_name)
+            print(PROTO)
+        self.CEloss = nn.CrossEntropyLoss()
+        self.MSEloss = nn.MSELoss()
+
+        self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
+        self.min_gap = None
+        self.max_gap = None
 
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
@@ -110,11 +132,15 @@ class FedSAE(Server):
             # for edge in self.selected_edges:
             id = edge.id
             self.uploaded_ids.append(id)
+        for edge in self.edges:
+            id = edge.id
             protos = load_item(edge.role, "protos", self.save_folder_name)
             prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
             uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
         global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
+        if self.args.addTGP is True:
+            self.tgp_process()
 
         sampler = GaussianSampler(self.args)
         sampled_features = sampler.aggregate_and_sample(self.edges)
@@ -134,7 +160,6 @@ class FedSAE(Server):
             #     drawtype="clientallfeatures",
             #     current_epoch=self.current_epoch,
             # )
-
 
     def train_global_classifier(self, retrain_vr):
         glclassifier_time_start = time.perf_counter()
@@ -255,7 +280,76 @@ class FedSAE(Server):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
 
-    
+    def tgp_process(self):
+        self.TGP_uploaded_protos = []
+        for edge in self.edges:
+            # prev_protos == protos
+            edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+            if edgeprotos is not None:
+                for k in edgeprotos.keys():
+                    self.TGP_uploaded_protos.append((edgeprotos[k], k))
+
+        self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
+        global_protos = load_item(self.role, "global_protos", self.save_folder_name)
+        # global_protos = self.proto_cluster(uploaded_protos_per_client)
+
+        for k1 in global_protos.keys():
+            for k2 in global_protos.keys():
+                if k1 > k2:
+                    dis = torch.norm(global_protos[k1] - global_protos[k2], p=2)
+                    self.gap[k1] = torch.min(self.gap[k1], dis)
+                    self.gap[k2] = torch.min(self.gap[k2], dis)
+        self.min_gap = torch.min(self.gap)
+        for i in range(len(self.gap)):
+            if self.gap[i] > torch.tensor(1e8, device=self.device):
+                self.gap[i] = self.min_gap
+        self.max_gap = torch.max(self.gap)
+        print("self.gap", self.gap)
+
+        self.update_Gen()
+
+    def update_Gen(self):
+        PROTO = load_item(self.role, "PROTO", self.save_folder_name)
+        Gen_opt = torch.optim.SGD(PROTO.parameters(), lr=self.server_learning_rate)
+        PROTO.train()
+        for e in range(self.server_epochs):
+            proto_loader = DataLoader(
+                self.TGP_uploaded_protos, self.batch_size, drop_last=False, shuffle=True
+            )
+            for proto, y in proto_loader:
+                y = torch.tensor(y).to(self.device, dtype=torch.int64)  # 转换为整数类型
+                # y = torch.Tensor(y).type(torch.int64).to(self.device)
+
+                proto_gen = PROTO(list(range(self.num_classes)))
+                proto = proto.squeeze(1)  # 移除第二维，proto 变为 [24, 512]
+
+                features_square = torch.sum(torch.pow(proto, 2), 1, keepdim=True)
+                centers_square = torch.sum(torch.pow(proto_gen, 2), 1, keepdim=True)
+                features_into_centers = torch.matmul(proto, proto_gen.T)
+                dist = features_square - 2 * features_into_centers + centers_square.T
+                # exit()
+                dist = torch.sqrt(dist)
+
+                one_hot = F.one_hot(y, self.num_classes).to(self.device)
+                gap2 = min(self.max_gap.item(), self.margin_threthold)
+                dist = dist + one_hot * gap2
+                loss = self.CEloss(-dist, y)
+
+                Gen_opt.zero_grad()
+                loss.backward()
+                Gen_opt.step()
+
+        print(f"Server loss: {loss.item()}")
+        self.TGP_uploaded_protos = []
+        save_item(PROTO, self.role, "PROTO", self.save_folder_name)
+
+        PROTO.eval()
+        global_protos = defaultdict(list)
+        for class_id in range(self.num_classes):
+            global_protos[class_id] = PROTO(
+                torch.tensor(class_id, device=self.device)
+            ).detach()
+        save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
 
 class DynamicBuffer:
@@ -302,8 +396,7 @@ class DynamicBuffer:
             self.add(obj)  # 尝试添加到当前缓冲区
 
     def printTimeinfo(self):
-        for edge in self.buffer:
-            print(f"ID: {edge.id}")
+        print([item.id for item in self.buffer])
 
 
 class GaussianSampler:
@@ -378,3 +471,24 @@ class GaussianSampler:
         """
         sampled = np.random.multivariate_normal(mean, cov, num_samples)
         return torch.tensor(sampled)
+
+
+class Trainable_prototypes(nn.Module):
+    def __init__(self, num_classes, server_hidden_dim, feature_dim, device):
+        super().__init__()
+
+        self.device = device
+
+        self.embedings = nn.Embedding(num_classes, feature_dim)
+        layers = [nn.Sequential(nn.Linear(feature_dim, server_hidden_dim), nn.ReLU())]
+        self.middle = nn.Sequential(*layers)
+        self.fc = nn.Linear(server_hidden_dim, feature_dim)
+
+    def forward(self, class_id):
+        class_id = torch.tensor(class_id, device=self.device)
+
+        emb = self.embedings(class_id)
+        mid = self.middle(emb)
+        out = self.fc(mid)
+
+        return out

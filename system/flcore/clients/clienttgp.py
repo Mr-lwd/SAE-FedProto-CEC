@@ -25,7 +25,12 @@ class clientTGP(Client):
         # print("Client.id begin training", self.id)
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.addTGP:
+            global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
+        else:
+            global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
@@ -108,17 +113,23 @@ class clientTGP(Client):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
         if self.device == "cuda":
-            torch.cuda.synchronize()        
+            torch.cuda.synchronize()
         eval_time = time.perf_counter() - eval_time_start
         save_item(self.agg_func(protos), self.role, "protos", self.save_folder_name)
-        
+
         return eval_time
 
     def test_metrics(self, g_classifier=None):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         model = model.to(self.device)
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.addTGP:
+            global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
+        else:
+            global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)
