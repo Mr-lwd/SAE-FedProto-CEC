@@ -110,6 +110,7 @@ class Edge:
             for id in self.cids:
                 if id in self.id_registration:
                     if j in clientProtos[id].keys():
+                        edgeProtos[j] = edgeProtos[j].to(self.device)
                         edgeProtos[j] += (clients[id].label_counts[j]) * clientProtos[
                             id
                         ][j].squeeze()
@@ -120,6 +121,7 @@ class Edge:
                         clientProtos_prev[id] is not None
                         and j in clientProtos_prev[id].keys()
                     ):
+                        edgeProtos[j] = edgeProtos[j].to(self.device)
                         edgeProtos[j] += (
                             clients[id].label_counts[j]
                             * clientProtos_prev[id][j].squeeze()

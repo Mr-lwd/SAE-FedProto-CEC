@@ -8,7 +8,7 @@ def args_parser():
     parser.add_argument('--balance', type=str, default="imbalance", help="balance data size per client")
     parser.add_argument('--partition', type=str, default="dir", help="partition distribution, dir|pat｜exdir")
     parser.add_argument('--num_users', type=int, default=40, help="number of users")
-    parser.add_argument('--alpha', type=float, default=0.3, help="the degree of imbalance in dir partition")
+    parser.add_argument('--alpha', type=float, default=0.1, help="the degree of imbalance in dir partition")
 
     parser.add_argument('--class_per_client', type=int, default=4, help="number of classes per client")
 

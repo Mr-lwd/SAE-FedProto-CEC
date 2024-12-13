@@ -252,83 +252,36 @@ class FedTGP(Server):
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
     def proto_cluster(self, protos_list):
-        agg_protos_label = defaultdict(list)
-        for local_protos in protos_list:
-            for label in local_protos["protos"].keys():
-                agg_protos_label[label].append(
-                    local_protos["protos"][label]
-                    * local_protos["client"].label_counts[label]
-                )
+        # agg_protos_label = defaultdict(list)
+        # for local_protos in protos_list:
+        #     for label in local_protos["protos"].keys():
+        #         agg_protos_label[label].append(
+        #             local_protos["protos"][label]
+        #             * local_protos["client"].label_counts[label]
+        #         )
 
-        for [label, proto_list] in agg_protos_label.items():
-            if len(proto_list) > 1:
-                proto = 0 * proto_list[0].data
-                for i in proto_list:
-                    proto += i.data
-                agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-            else:
-                agg_protos_label[label] = (
-                    proto_list[0].data / self.glprotos_invol_dataset[label]
-                )
-        return agg_protos_label
-        # proto_clusters = defaultdict(list)
-        # for protos in protos_list:
-        #     for k in protos.keys():
-        #         proto_clusters[k].append(protos[k])
+        # for [label, proto_list] in agg_protos_label.items():
+        #     if len(proto_list) > 1:
+        #         proto = 0 * proto_list[0].data
+        #         for i in proto_list:
+        #             proto += i.data
+        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+        #     else:
+        #         agg_protos_label[label] = (
+        #             proto_list[0].data / self.glprotos_invol_dataset[label]
+        #         )
+        # return agg_protos_label
+        proto_clusters = defaultdict(list)
+        for protos in protos_list:
+            for k in protos["protos"].keys():
+                proto_clusters[k].append(protos["protos"][k])
 
-        # for k in proto_clusters.keys():
-        #     protos = torch.stack(proto_clusters[k])
-        #     proto_clusters[k] = torch.mean(protos, dim=0).detach()
+        for k in proto_clusters.keys():
+            protos = torch.stack(proto_clusters[k])
+            proto_clusters[k] = torch.mean(protos, dim=0).detach()
 
-        # return proto_clusters
+        return proto_clusters
 
-
-class DynamicBuffer:
-    def __init__(self, max_length):
-        self.buffer = []  # 初始化空缓冲区
-        self.max_length = max_length  # 设置最大长度
-
-    def add(self, edge):
-        # 检查edge_id是否已存在
-        if any(existing_edge.id == edge.id for existing_edge in self.buffer):
-            print(f"edge with ID {edge.edge_id} already exists in the buffer.")
-            exit(0)
-
-        if len(self.buffer) < self.max_length:
-            # 使用插入排序的方式插入
-            index = 0
-            while (
-                index < len(self.buffer)
-                and self.buffer[index].eglobal_time < edge.eglobal_time
-            ):
-                index += 1
-            self.buffer.insert(index, edge)  # 按照global_time插入
-        else:
-            print("Buffer is full, cannot add more objects.")  # 缓冲区已满
-
-    def getbyid(self, edge_id):
-        for index, edge in enumerate(self.buffer):
-            if edge.id == edge_id:  # 匹配edge_id
-                return self.buffer[index]  # 返回匹配的对象
-        print("Edge with ID {} not found.".format(edge_id))  # 未找到该edge_id
-
-    def removebyid(self, edge_id):
-        for index, edge in enumerate(self.buffer):
-            if edge.id == edge_id:  # 匹配edge_id
-                return self.buffer.pop(index)  # 移除匹配的对象
-        print("Edge with ID {} not found.".format(edge_id))  # 未找到该edge_id
-
-    def get_buffer(self):
-        return self.buffer
-
-    def transfer_edge_from(self, other_buffer):
-        if other_buffer.buffer:  # 检查另一个缓冲区是否为空
-            obj = other_buffer.remove()  # 从另一个缓冲区移除对象
-            self.add(obj)  # 尝试添加到当前缓冲区
-
-    def printTimeinfo(self):
-        for edge in self.buffer:
-            print(f"ID: {edge.id}")
 
 
 class Trainable_prototypes(nn.Module):

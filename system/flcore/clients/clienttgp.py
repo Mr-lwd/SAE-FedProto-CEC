@@ -25,12 +25,7 @@ class clientTGP(Client):
         # print("Client.id begin training", self.id)
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        if self.args.addTGP:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
-        else:
-            global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
@@ -123,12 +118,7 @@ class clientTGP(Client):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         model = model.to(self.device)
-        if self.args.addTGP:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
-        else:
-            global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 

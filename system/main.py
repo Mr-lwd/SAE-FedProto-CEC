@@ -300,7 +300,7 @@ def set_seed(seed: int = 42) -> None:
 if __name__ == "__main__":
     total_start = time.time()
     num_edges = 10
-    edge_ratio = 0.5
+    edge_ratio = 1.0
     buffer_size = int(num_edges * edge_ratio)
 
     parser = argparse.ArgumentParser()
@@ -436,8 +436,11 @@ if __name__ == "__main__":
         "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
     )
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
+    parser.add_argument("-usb", "--use_beta", type=bool, default=True)
+    parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=0.5)
     parser.add_argument("-addTGP", "--addTGP", type=bool, default=True)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=True)
+    
 
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
