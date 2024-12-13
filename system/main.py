@@ -440,7 +440,7 @@ if __name__ == "__main__":
     parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=0.5)
     parser.add_argument("-addTGP", "--addTGP", type=bool, default=True)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=True)
-    
+    parser.add_argument("-drawround", "--drawround", type=int, default=10)
 
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
