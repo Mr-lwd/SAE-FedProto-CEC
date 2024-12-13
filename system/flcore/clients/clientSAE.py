@@ -116,12 +116,14 @@ class clientSAE(Client):
         # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)
         return self.id, self.train_time, self.trans_time
 
-    def test_metrics(self, g_classifier=None):
+    def test_metrics(self):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        if g_classifier is not None and self.args.test_useglclassifier == 1:
+        if self.args.test_useglclassifier == 1:
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
-            client_classifier.load_state_dict(g_classifier.state_dict())
+            glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
+            if glclassifier is not None:
+                client_classifier.load_state_dict(glclassifier.state_dict())
             # print("g_classifier test_metrics")
         model = model.to(self.device)
         global_protos = load_item("Server", "tgp_global_protos", self.save_folder_name)
