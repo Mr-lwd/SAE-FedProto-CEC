@@ -438,6 +438,7 @@ if __name__ == "__main__":
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
     parser.add_argument("-addTGP", "--addTGP", type=bool, default=True)
     parser.add_argument("-drawtsne", "--drawtsne", type=bool, default=True)
+    parser.add_argument("-drawround", "--drawround", type=int, default=10)
 
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)

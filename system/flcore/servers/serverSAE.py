@@ -147,7 +147,7 @@ class FedSAE(Server):
 
         self.train_global_classifier(sampled_features)
 
-        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
+        if self.args.drawtsne is True and self.current_epoch % self.args.drawround == 0:
             self.save_tsne_with_agg(
                 args=self.args,
                 base_path="./tsneplot",
