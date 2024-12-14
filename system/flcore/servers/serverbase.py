@@ -289,9 +289,7 @@ class Server(object):
 
         # 收集每个客户端的测试结果
         for c in self.clients:
-            regular_acc, regular_num, proto_acc, proto_num = c.test_metrics(
-                g_classifier=self.global_classifier
-            )
+            regular_acc, regular_num, proto_acc, proto_num = c.test_metrics()
 
             # 计算每个客户端的准确率
             regular_accuracy = regular_acc * 1.0 / regular_num if regular_num > 0 else 0

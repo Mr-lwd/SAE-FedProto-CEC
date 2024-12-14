@@ -114,7 +114,7 @@ class clientTGP(Client):
 
         return eval_time
 
-    def test_metrics(self, g_classifier=None):
+    def test_metrics(self):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         model = model.to(self.device)
