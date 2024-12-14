@@ -27,9 +27,10 @@ class clientSAE(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        tgp_global_protos = load_item(
-            "Server", "tgp_global_protos", self.save_folder_name
-        )
+        if self.args.addTGP:
+            tgp_global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
         if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
@@ -84,13 +85,15 @@ class clientSAE(Client):
                         )
                     else:
                         loss += self.loss_mse(proto_new, rep) * self.lamda
-                if tgp_global_protos is not None and self.args.use_beta:
+                if self.args.use_beta and tgp_global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
                         y_c = yy.item()
                         if type(tgp_global_protos[y_c]) != type([]):
                             proto_new[i, :] = tgp_global_protos[y_c].data
-                    loss += self.loss_mse(proto_new, rep) * self.lamda * self.args.SAEbeta
+                    loss += (
+                        self.loss_mse(proto_new, rep) * self.lamda * self.args.SAEbeta
+                    )
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
@@ -126,8 +129,12 @@ class clientSAE(Client):
                 client_classifier.load_state_dict(glclassifier.state_dict())
             # print("g_classifier test_metrics")
         model = model.to(self.device)
-        global_protos = load_item("Server", "tgp_global_protos", self.save_folder_name)
-        # global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.addTGP:
+            global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
+        else:
+            global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)

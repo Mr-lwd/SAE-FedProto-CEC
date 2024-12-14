@@ -252,6 +252,16 @@ class FedTGP(Server):
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
     def proto_cluster(self, protos_list):
+        proto_clusters = defaultdict(list)
+        for protos in protos_list:
+            for k in protos["protos"].keys():
+                proto_clusters[k].append(protos["protos"][k])
+
+        for k in proto_clusters.keys():
+            protos = torch.stack(proto_clusters[k])
+            proto_clusters[k] = torch.mean(protos, dim=0).detach()
+
+        return proto_clusters
         # agg_protos_label = defaultdict(list)
         # for local_protos in protos_list:
         #     for label in local_protos["protos"].keys():
@@ -271,35 +281,6 @@ class FedTGP(Server):
         #             proto_list[0].data / self.glprotos_invol_dataset[label]
         #         )
         # return agg_protos_label
-        proto_clusters = defaultdict(list)
-        for protos in protos_list:
-            for k in protos["protos"].keys():
-                proto_clusters[k].append(protos["protos"][k])
-
-        for k in proto_clusters.keys():
-            protos = torch.stack(proto_clusters[k])
-            proto_clusters[k] = torch.mean(protos, dim=0).detach()
-
-        return proto_clusters
 
 
 
-class Trainable_prototypes(nn.Module):
-    def __init__(self, num_classes, server_hidden_dim, feature_dim, device):
-        super().__init__()
-
-        self.device = device
-
-        self.embedings = nn.Embedding(num_classes, feature_dim)
-        layers = [nn.Sequential(nn.Linear(feature_dim, server_hidden_dim), nn.ReLU())]
-        self.middle = nn.Sequential(*layers)
-        self.fc = nn.Linear(server_hidden_dim, feature_dim)
-
-    def forward(self, class_id):
-        class_id = torch.tensor(class_id, device=self.device)
-
-        emb = self.embedings(class_id)
-        mid = self.middle(emb)
-        out = self.fc(mid)
-
-        return out
