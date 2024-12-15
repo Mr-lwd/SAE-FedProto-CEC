@@ -35,6 +35,22 @@ class clientSAE(Client):
         if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
                 param.requires_grad = False
+                
+        if self.args.mixclassifier == 1:
+            client_classifier = model.head 
+            client_state_dict = client_classifier.state_dict()
+            global_state_dict = glclassifier.state_dict()
+            averaged_state_dict = {}
+            for key in client_state_dict.keys():
+                if key in global_state_dict:
+                    averaged_state_dict[key] = (
+                        client_state_dict[key] + global_state_dict[key]
+                    ) / 2
+                else:
+                    averaged_state_dict[key] = client_state_dict[key]
+
+            client_classifier.load_state_dict(averaged_state_dict)
+
         # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
@@ -60,15 +76,13 @@ class clientSAE(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 # loss = self.loss(output, y)
-                if glclassifier is not None:
+                if glclassifier is not None and self.args.mixclassifier != 1:
                     loss = self.loss(output, y) * (1 - self.args.gamma)
-                else:
-                    loss = self.loss(output, y)
-
-                if glclassifier is not None:
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
                     loss += global_loss
+                else:
+                    loss = self.loss(output, y)
 
                 local_model_loss += loss
                 if global_protos is not None:
