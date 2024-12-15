@@ -30,24 +30,26 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 
 # 定义文件路径
 log_files = [
-   "./SAE_addTGP_gamma_1.0_beta_0.2_buffer=1.0.out",
-    "./FedTGP.out",
+    "./SAE_addTGP_gamma_1.0_beta_0.2_buffer=1.0.out",
+    "./FedTGP_gr300.out",
+    "./fedproto.out",
+    "./SAE_noTGP_gamma_1.0_buffer=1.0.out"
 ]
 time_model_configs = [
     {
         "time_type": "only_train_time",
         "models": [
             ("Prototype", "./onlytrain.png"),
-            ("Regular", "./onlytrain_model.png")
-        ]
+            ("Regular", "./onlytrain_model.png"),
+        ],
     },
     {
         "time_type": "server_global_time",
         "models": [
             ("Prototype", "./global_time.png"),
-            ("Regular", "./global_time_model.png")
-        ]
-    }
+            ("Regular", "./global_time_model.png"),
+        ],
+    },
 ]
 
 for config in time_model_configs:
