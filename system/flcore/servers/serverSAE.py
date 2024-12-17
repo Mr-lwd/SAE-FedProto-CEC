@@ -127,23 +127,26 @@ class FedSAE(Server):
         print("aggregation_buffer:")
         self.aggregation_buffer.printTimeinfo()
         self.uploaded_ids = []
-        uploaded_protos = defaultdict(dict)
+        self.uploaded_client_ids = []
+        # uploaded_protos = defaultdict(dict)
         for edge in self.aggregation_buffer.buffer:
-            # for edge in self.selected_edges:
             id = edge.id
             self.uploaded_ids.append(id)
-        for edge in self.edges:
-            id = edge.id
-            protos = load_item(edge.role, "protos", self.save_folder_name)
-            prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
-            uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-        global_protos = self.proto_aggregation(uploaded_protos)
+            for client_id in edge.id_registration:
+                self.uploaded_client_ids.append(client_id)
+        # for edge in self.edges:
+        #     id = edge.id
+        #     protos = load_item(edge.role, "protos", self.save_folder_name)
+        #     prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
+        #     uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
+        global_protos = self.proto_aggregation_clients()
+        # global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
         if self.args.addTGP is True:
             self.tgp_process()
 
         sampler = GaussianSampler(self.args)
-        sampled_features = sampler.aggregate_and_sample(self.edges)
+        sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
 
         self.train_global_classifier(sampled_features)
 
@@ -282,12 +285,18 @@ class FedSAE(Server):
 
     def tgp_process(self):
         self.TGP_uploaded_protos = []
-        for edge in self.edges:
+        # for edge in self.edges:
+        #     # prev_protos == protos
+        #     edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+        #     if edgeprotos is not None:
+        #         for k in edgeprotos.keys():
+        #             self.TGP_uploaded_protos.append((edgeprotos[k], k))
+        for client in self.clients:
             # prev_protos == protos
-            edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
-            if edgeprotos is not None:
-                for k in edgeprotos.keys():
-                    self.TGP_uploaded_protos.append((edgeprotos[k], k))
+            clientprotos = load_item(client.role, "prev_protos", client.save_folder_name)
+            if clientprotos is not None:
+                for k in clientprotos.keys():
+                    self.TGP_uploaded_protos.append((clientprotos[k], k))
 
         self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
         global_protos = load_item(self.role, "global_protos", self.save_folder_name)

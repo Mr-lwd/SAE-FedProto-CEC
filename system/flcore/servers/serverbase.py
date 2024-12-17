@@ -68,6 +68,7 @@ class Server(object):
 
         self.uploaded_weights = []
         self.uploaded_ids = []
+        self.uploaded_client_ids = []
 
         self.rs_test_acc = []
         self.rs_test_auc = []
@@ -93,6 +94,7 @@ class Server(object):
         self.current_epoch = 0
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
         self.buffersize = args.buffersize
+        self.N_cloud = defaultdict(int)
 
     def set_clients(self, clientObj):
         # 加载数据集
@@ -198,21 +200,51 @@ class Server(object):
             self.uploaded_weights[i] = w / tot_samples
         #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
 
+    def proto_aggregation_clients(self):
+        clientProtos = {
+            id: load_item(self.client[id].role, "protos", self.client[id].save_folder_name)
+            for id in self.uploaded_client_ids
+        }
+        for id in self.uploaded_client_ids:
+            save_item(clientProtos[id], self.client[id].role, "cloud_protos", self.client[id].save_folder_name)
+
+        for clientid in self.uploaded_client_ids:
+                self.N_cloud[clientid] = self.clients[clientid].label_counts
+
+        cloud_clientProtos = {
+            client.id: load_item(client.role, "cloud_protos", client.save_folder_name)
+            for client in self.clients
+        }
+        
+        agg_protos_label = defaultdict(default_tensor)
+        for j in range(self.num_classes):
+            for id in cloud_clientProtos.keys():
+                if cloud_clientProtos[id] is not None j in cloud_clientProtos[id].keys():
+                    agg_protos_label[j] += self.N_cloud[id][j] * cloud_clientProtos[id][j]
+            denominator = sum(
+                self.N_cloud[id][j]
+                for id, values in self.N_cloud.items()
+                if j in values
+            )
+            agg_protos_label[j] = agg_protos_label[j]/denominator
+        return agg_protos_label
+
     def proto_aggregation(self, edge_protos_list):
         agg_protos_label = defaultdict(default_tensor)
         if self.agg_type == 0:  # 按数据量平均
             for j in range(self.args.num_classes):
                 for edge in self.edges:
                     id = edge.id
-                    if id in self.uploaded_ids:
-                        if j in edge_protos_list[id]["protos"].keys():
-                            agg_protos_label[j] = agg_protos_label[j].to(self.device)
-                            agg_protos_label[j] += (
-                                self.edges[id].N_l[j]
-                                * edge_protos_list[id]["protos"][j]
-                            )
-                            self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
-                            assert len(agg_protos_label[j]) == self.args.feature_dim
+                    if (
+                        id in self.uploaded_ids
+                        and j in edge_protos_list[id]["protos"].keys()
+                    ):
+                        agg_protos_label[j] = agg_protos_label[j].to(self.device)
+                        agg_protos_label[j] += (
+                            self.edges[id].N_l[j] * edge_protos_list[id]["protos"][j]
+                        )
+                        self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
                     elif (
                         edge_protos_list[id]["prev_protos"] is not None
                         and j in edge_protos_list[id]["prev_protos"].keys()
@@ -227,9 +259,10 @@ class Server(object):
                     agg_protos_label[j] = agg_protos_label[j] / sum(
                         edge.N_l_prev[j] for edge in self.edges
                     )
-                
+
         print("agg_protos_label", agg_protos_label.keys())
-        for id in edge_protos_list.keys():
+        for id in self.uploaded_ids:
+            #更新edge的prev_protos
             if edge_protos_list[id] is not None:
                 save_item(
                     edge_protos_list[id]["protos"],
@@ -237,6 +270,18 @@ class Server(object):
                     "prev_protos",
                     self.save_folder_name,
                 )
+            #更新client的prev_protos
+            for client_id in self.edges[id].selected_cids:
+                client_protos = load_item(
+                    self.clients[client_id].role, "protos", self.save_folder_name
+                )
+                if client_protos is not None:
+                    save_item(
+                        client_protos,
+                        self.clients[client_id].role,
+                        "prev_protos",
+                        self.save_folder_name,
+                    )
         return agg_protos_label
 
     def aggregate_parameters(self):
@@ -443,7 +488,7 @@ class Server(object):
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
         if args.algorithm == "FedSAE":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gl_use_clients_{args.gl_use_clients}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
         else:
             save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}_lr_{args.local_learning_rate}/{drawtype}"
 
@@ -540,7 +585,7 @@ class Server(object):
                     marker="x",
                 )
         # 添加图例
-        plt.legend()
+        # plt.legend()
         plt.title(
             f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
         )

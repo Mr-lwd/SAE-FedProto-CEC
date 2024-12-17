@@ -104,40 +104,37 @@ class Edge:
             for id in self.cids
         }
 
-
         edgeProtos = defaultdict(default_tensor)
         for j in range(self.args.num_classes):
             for id in self.cids:
-                if id in self.id_registration:
-                    if j in clientProtos[id].keys():
-                        edgeProtos[j] = edgeProtos[j].to(self.device)
-                        edgeProtos[j] += (clients[id].label_counts[j]) * clientProtos[
-                            id
-                        ][j].squeeze()
-                        if clientProtos_prev[id] is None:
-                            self.N_l[j] += clients[id].label_counts[j]
-                        assert len(edgeProtos[j]) == self.args.feature_dim
-                    elif (
-                        clientProtos_prev[id] is not None
-                        and j in clientProtos_prev[id].keys()
-                    ):
-                        edgeProtos[j] = edgeProtos[j].to(self.device)
-                        edgeProtos[j] += (
-                            clients[id].label_counts[j]
-                            * clientProtos_prev[id][j].squeeze()
-                        )
-                        assert len(edgeProtos[j]) == self.args.feature_dim
+                if id in self.id_registration and j in clientProtos[id].keys():
+                    edgeProtos[j] = edgeProtos[j].to(self.device)
+                    edgeProtos[j] += (clients[id].label_counts[j]) * clientProtos[id][
+                        j
+                    ].squeeze()
+                    if clientProtos_prev[id] is None:
+                        self.N_l[j] += clients[id].label_counts[j]
+                    assert len(edgeProtos[j]) == self.args.feature_dim
+                elif (
+                    clientProtos_prev[id] is not None
+                    and j in clientProtos_prev[id].keys()
+                ):
+                    edgeProtos[j] = edgeProtos[j].to(self.device)
+                    edgeProtos[j] += (
+                        clients[id].label_counts[j] * clientProtos_prev[id][j].squeeze()
+                    )
+                    assert len(edgeProtos[j]) == self.args.feature_dim
 
             if self.N_l[j] != 0:
                 edgeProtos[j] = edgeProtos[j] / self.N_l[j]  # 平均
 
         save_item(edgeProtos, self.role, "protos", self.save_folder_name)
 
-        for id in self.id_registration:
-            if clientProtos[id] is not None:
-                save_item(
-                    clientProtos[id],
-                    clients[id].role,
-                    "prev_protos",
-                    self.save_folder_name,
-                )
+        # for id in self.id_registration:
+        #     if clientProtos[id] is not None:
+        #         save_item(
+        #             clientProtos[id],
+        #             clients[id].role,
+        #             "prev_protos",
+        #             self.save_folder_name,
+        #         )

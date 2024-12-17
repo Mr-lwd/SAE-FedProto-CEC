@@ -68,9 +68,12 @@ class Edge_FedSAE(Edge):
 
             self.eparallel_time += max(eparallel_time_list)
 
-            self.edgeAggregate(clients)
+            # self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
         self.eglobal_time += self.eparallel_time
+        for id in self.id_registration:
+            self.N_l[id] = clients[id].label_counts
+        
         if self.args.trans_delay_simulate is True:
             self.etrans_time += self.etrans_simu_time
             self.eglobal_time += self.etrans_time
