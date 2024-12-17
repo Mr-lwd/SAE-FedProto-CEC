@@ -36,20 +36,23 @@ class clientSAE(Client):
             for param in glclassifier.parameters():
                 param.requires_grad = False
                 
-        if self.args.mixclassifier == 1:
-            client_classifier = model.head 
-            client_state_dict = client_classifier.state_dict()
-            global_state_dict = glclassifier.state_dict()
-            averaged_state_dict = {}
-            for key in client_state_dict.keys():
-                if key in global_state_dict:
-                    averaged_state_dict[key] = (
-                        client_state_dict[key] + global_state_dict[key]
-                    ) / 2
-                else:
-                    averaged_state_dict[key] = client_state_dict[key]
-
-            client_classifier.load_state_dict(averaged_state_dict)
+            if self.args.mixclassifier == 1:
+                client_classifier = model.head 
+                client_state_dict = client_classifier.state_dict()
+                global_state_dict = glclassifier.state_dict()
+                averaged_state_dict = {}
+                for key in client_state_dict.keys():
+                    if key in global_state_dict:
+                        # averaged_state_dict[key] = (
+                        #     client_state_dict[key] + global_state_dict[key]
+                        # ) / 2
+                        averaged_state_dict[key] = (
+                            0.7 * client_state_dict[key] + 0.3 * global_state_dict[key]
+                        )
+                    else:
+                        averaged_state_dict[key] = client_state_dict[key]
+    
+                client_classifier.load_state_dict(averaged_state_dict)
 
         # print("local global protos", global_protos)
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
@@ -143,12 +146,13 @@ class clientSAE(Client):
                 client_classifier.load_state_dict(glclassifier.state_dict())
             # print("g_classifier test_metrics")
         model = model.to(self.device)
-        if self.args.addTGP:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
-        else:
-            global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        # if self.args.addTGP:
+        #     global_protos = load_item(
+        #         "Server", "tgp_global_protos", self.save_folder_name
+        #     )
+        # else:
+        #     global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)

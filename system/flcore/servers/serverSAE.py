@@ -143,7 +143,7 @@ class FedSAE(Server):
             self.tgp_process()
 
         sampler = GaussianSampler(self.args)
-        sampled_features = sampler.aggregate_and_sample(self.edges)
+        sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
 
         self.train_global_classifier(sampled_features)
 
@@ -282,12 +282,18 @@ class FedSAE(Server):
 
     def tgp_process(self):
         self.TGP_uploaded_protos = []
-        for edge in self.edges:
+        # for edge in self.edges:
+        #     # prev_protos == protos
+        #     edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+        #     if edgeprotos is not None:
+        #         for k in edgeprotos.keys():
+        #             self.TGP_uploaded_protos.append((edgeprotos[k], k))
+        for client in self.clients:
             # prev_protos == protos
-            edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
-            if edgeprotos is not None:
-                for k in edgeprotos.keys():
-                    self.TGP_uploaded_protos.append((edgeprotos[k], k))
+            clientprotos = load_item(client.role, "prev_protos", client.save_folder_name)
+            if clientprotos is not None:
+                for k in clientprotos.keys():
+                    self.TGP_uploaded_protos.append((clientprotos[k], k))
 
         self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
         global_protos = load_item(self.role, "global_protos", self.save_folder_name)

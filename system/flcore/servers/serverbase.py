@@ -204,15 +204,16 @@ class Server(object):
             for j in range(self.args.num_classes):
                 for edge in self.edges:
                     id = edge.id
-                    if id in self.uploaded_ids:
-                        if j in edge_protos_list[id]["protos"].keys():
-                            agg_protos_label[j] = agg_protos_label[j].to(self.device)
-                            agg_protos_label[j] += (
-                                self.edges[id].N_l[j]
-                                * edge_protos_list[id]["protos"][j]
-                            )
-                            self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
-                            assert len(agg_protos_label[j]) == self.args.feature_dim
+                    if (
+                        id in self.uploaded_ids
+                        and j in edge_protos_list[id]["protos"].keys()
+                    ):
+                        agg_protos_label[j] = agg_protos_label[j].to(self.device)
+                        agg_protos_label[j] += (
+                            self.edges[id].N_l[j] * edge_protos_list[id]["protos"][j]
+                        )
+                        self.edges[id].N_l_prev[j] = self.edges[id].N_l[j]
+                        assert len(agg_protos_label[j]) == self.args.feature_dim
                     elif (
                         edge_protos_list[id]["prev_protos"] is not None
                         and j in edge_protos_list[id]["prev_protos"].keys()
@@ -227,9 +228,10 @@ class Server(object):
                     agg_protos_label[j] = agg_protos_label[j] / sum(
                         edge.N_l_prev[j] for edge in self.edges
                     )
-                
+
         print("agg_protos_label", agg_protos_label.keys())
-        for id in edge_protos_list.keys():
+        for id in self.uploaded_ids:
+            #更新edge的prev_protos
             if edge_protos_list[id] is not None:
                 save_item(
                     edge_protos_list[id]["protos"],
@@ -237,6 +239,18 @@ class Server(object):
                     "prev_protos",
                     self.save_folder_name,
                 )
+            #更新client的prev_protos
+            for client_id in self.edges[id].selected_cids:
+                client_protos = load_item(
+                    self.clients[client_id].role, "protos", self.save_folder_name
+                )
+                if client_protos is not None:
+                    save_item(
+                        client_protos,
+                        self.clients[client_id].role,
+                        "prev_protos",
+                        self.save_folder_name,
+                    )
         return agg_protos_label
 
     def aggregate_parameters(self):
@@ -443,7 +457,7 @@ class Server(object):
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
         if args.algorithm == "FedSAE":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gl_use_clients_{args.gl_use_clients}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
         else:
             save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}_lr_{args.local_learning_rate}/{drawtype}"
 

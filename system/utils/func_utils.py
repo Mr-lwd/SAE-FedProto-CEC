@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from collections import defaultdict
 from flcore.clients.clientbase import load_item, save_item
 
+
 def default_tensor(feature_dim=512):
     return torch.zeros(feature_dim)
 
@@ -31,7 +32,7 @@ def get_theory_bytes(protos={}):
             tensor_size_bytes = tensor_list.element_size() * tensor_list.nelement()
             all_bytes += tensor_size_bytes
 
-        elif hasattr(tensor_list, '__iter__'):
+        elif hasattr(tensor_list, "__iter__"):
             for tensor in tensor_list:
                 if isinstance(tensor, torch.Tensor):
                     tensor_size_bytes = tensor.element_size() * tensor.nelement()
@@ -87,13 +88,13 @@ class DynamicBuffer:
 
     def printTimeinfo(self):
         print([edge.id for edge in self.buffer])
-            
-            
+
+
 class GaussianSampler:
     def __init__(self, args):
         self.args = args
 
-    def aggregate_and_sample(self, edges):
+    def aggregate_and_sample(self,edges, clients):
         """
         对于每个类的原型向量，根据数据量加权计算均值和协方差矩阵，并进行高斯采样。
         :param gl_all_protos: 所有的边缘服务器原型，格式为 [[features,weight],[features,weight]]。
@@ -101,11 +102,24 @@ class GaussianSampler:
         """
         gl_all_protos = defaultdict(list)
         sampled_features = defaultdict(list)
-        for edge in edges:
-            edge_protos = load_item(edge.role, "prev_protos", edge.save_folder_name)
-            if edge_protos is not None:
-                for key in edge_protos.keys():
-                    gl_all_protos[key].append([edge_protos[key], edge.N_l_prev[key]])
+        if self.args.gl_use_clients != 1:
+            for edge in edges:
+                edge_protos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+                if edge_protos is not None:
+                    for key in edge_protos.keys():
+                        gl_all_protos[key].append(
+                            [edge_protos[key], edge.N_l_prev[key]]
+                        )
+        elif self.args.gl_use_clients == 1:
+            for client in clients:
+                client_protos = load_item(
+                    client.role, "prev_protos", client.save_folder_name
+                )
+                if client_protos is not None:
+                    for key in client_protos.keys():
+                        gl_all_protos[key].append(
+                            [client_protos[key], client.label_counts[key]]
+                        )
 
         for key in range(self.args.num_classes):
             if key in gl_all_protos.keys() and len(gl_all_protos[key]) > 0:
