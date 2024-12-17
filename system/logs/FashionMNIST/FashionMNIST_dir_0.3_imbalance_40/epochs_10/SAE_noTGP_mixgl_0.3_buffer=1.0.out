@@ -1,0 +1,5077 @@
+
+cuda is not avaiable.
+
+==================================================
+goal = test
+device = cpu
+device_id = 0
+dataset = FashionMNIST_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 150
+edge_epochs = 1
+local_epochs = 10
+algorithm = FedSAE
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+lamda = 2
+trans_delay_simulate = False
+agg_type = 0
+buffersize = 10
+mixclassifier = 1
+test_useglclassifier = 0
+gamma = 0.0
+use_beta = False
+SAEbeta = 0.0
+addTGP = False
+drawtsne = False
+drawround = 10
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {5: 106, 1: 338, 0: 287, 3: 26, 9: 545, 6: 3, 2: 98, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {4: 630, 7: 199, 1: 507, 2: 18, 5: 47, 0: 18, 3: 3, 6: 2})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {0: 190, 5: 157, 7: 312, 9: 99, 6: 67, 8: 6, 2: 3, 3: 30, 4: 11})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {6: 100, 3: 171, 8: 190, 9: 19, 4: 51, 2: 395, 0: 3, 5: 4})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {5: 553, 0: 327, 1: 428, 2: 202, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {4: 421, 6: 633, 2: 58, 3: 41, 8: 45, 1: 100, 7: 11, 5: 13, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {4: 260, 9: 425, 8: 384, 3: 24, 1: 12, 2: 6, 6: 31, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {9: 477, 8: 645, 6: 335, 7: 16, 3: 38, 5: 13, 4: 53, 0: 36, 1: 11, 2: 7})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {4: 502, 9: 102, 0: 124, 6: 63, 2: 81, 8: 26, 5: 17, 3: 9, 1: 3})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 943, 2: 177, 1: 139, 0: 75})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {8: 445, 4: 883, 2: 57, 0: 32, 3: 12, 5: 19, 7: 1, 6: 1, 1: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {6: 147, 4: 230, 8: 220, 9: 88, 3: 44, 1: 58, 5: 54, 2: 13, 7: 8})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {6: 248, 3: 165, 1: 263, 9: 14, 0: 206, 5: 101, 7: 1, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {3: 402, 2: 795, 4: 7, 7: 197, 0: 11, 5: 3, 1: 7})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {9: 218, 0: 312, 3: 131, 4: 21, 5: 65, 1: 57, 2: 44, 8: 3})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {6: 980, 5: 215, 3: 12, 1: 39, 0: 83, 4: 2})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {4: 58, 3: 83, 0: 140, 1: 860, 5: 68, 8: 280, 6: 18, 7: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {8: 642, 5: 490, 0: 104, 4: 28, 3: 30, 2: 16, 7: 1, 6: 21, 1: 2})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {8: 391, 1: 105, 2: 1, 4: 108, 7: 229, 3: 33, 5: 27, 6: 2, 0: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 364, 0: 1204})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 858, 0: 37, 1: 290, 6: 44, 4: 216, 5: 157, 7: 131, 2: 19, 3: 1, 8: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {6: 225, 0: 136, 1: 383, 3: 62, 4: 288, 7: 16, 8: 4, 9: 1, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {5: 243, 7: 387, 1: 102, 2: 9, 6: 68, 0: 12, 4: 1, 8: 15, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {0: 232, 9: 256, 5: 40, 8: 141, 1: 32, 7: 1, 3: 2, 6: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 309, 9: 235, 3: 447, 5: 120, 0: 62, 8: 15, 1: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 222, 3: 388, 5: 505, 2: 154, 0: 81, 4: 7, 1: 34})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {8: 568, 7: 172, 4: 139, 0: 443, 3: 26, 2: 116, 1: 10, 5: 5})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {2: 186, 5: 530, 6: 253, 3: 75, 0: 88, 7: 1, 4: 5})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {1: 63, 9: 281, 5: 14, 7: 176, 2: 50, 8: 93, 3: 24, 0: 22, 6: 2, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {7: 363, 5: 337, 8: 138, 3: 170, 9: 164, 2: 27, 1: 20, 4: 2, 6: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {8: 229, 7: 302, 0: 243, 9: 43, 5: 24, 2: 1, 3: 2, 1: 2})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {2: 510, 4: 583, 0: 98, 1: 223})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {9: 1142, 7: 49, 2: 276, 5: 146, 1: 20, 3: 51, 6: 75, 8: 12, 0: 31, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {2: 405, 6: 254, 7: 122, 1: 76, 3: 276, 0: 151, 4: 83})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {0: 172, 2: 880, 6: 870, 3: 12, 1: 42, 4: 9})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {4: 312, 9: 70, 0: 300, 6: 18, 7: 36, 5: 70, 2: 90, 3: 121, 1: 25, 8: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {6: 412, 2: 127, 8: 221, 3: 364, 1: 41, 9: 158, 7: 124, 0: 3, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {7: 2178, 3: 1002, 6: 142, 4: 3, 2: 20, 5: 11, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {5: 1124, 1: 545, 2: 23, 0: 14, 3: 21, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {2: 387, 6: 233, 8: 501, 1: 41, 0: 13, 9: 3, 3: 2, 5: 12, 4: 1, 7: 2})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+Trainable_prototypes(
+  (embedings): Embedding(10, 512)
+  (middle): Sequential(
+    (0): Sequential(
+      (0): Linear(in_features=512, out_features=512, bias=True)
+      (1): ReLU()
+    )
+  )
+  (fc): Linear(in_features=512, out_features=512, bias=True)
+)
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_10 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_34 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_14 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_27 protos Not Found
+Client_14 prev_protos Not Found
+Client_10 prev_protos Not Found
+Client_34 prev_protos Not Found
+Client_27 prev_protos Not Found
+Edge 8 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_3 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_31 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_22 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_21 protos Not Found
+Client_22 prev_protos Not Found
+Client_3 prev_protos Not Found
+Client_21 prev_protos Not Found
+Client_31 prev_protos Not Found
+Edge 7 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_23 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_35 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_6 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_30 protos Not Found
+Client_6 prev_protos Not Found
+Client_35 prev_protos Not Found
+Client_23 prev_protos Not Found
+Client_30 prev_protos Not Found
+Edge 6 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_4 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_39 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_9 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_8 protos Not Found
+Client_4 prev_protos Not Found
+Client_39 prev_protos Not Found
+Client_9 prev_protos Not Found
+Client_8 prev_protos Not Found
+Edge 5 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_11 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_32 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_29 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_0 protos Not Found
+Client_0 prev_protos Not Found
+Client_32 prev_protos Not Found
+Client_29 prev_protos Not Found
+Client_11 prev_protos Not Found
+Edge 4 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_36 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_7 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_1 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_28 protos Not Found
+Client_1 prev_protos Not Found
+Client_36 prev_protos Not Found
+Client_7 prev_protos Not Found
+Client_28 prev_protos Not Found
+Edge 3 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_37 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_13 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_20 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_18 protos Not Found
+Client_20 prev_protos Not Found
+Client_13 prev_protos Not Found
+Client_18 prev_protos Not Found
+Client_37 prev_protos Not Found
+Edge 2 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_5 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_25 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_2 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_38 protos Not Found
+Client_38 prev_protos Not Found
+Client_5 prev_protos Not Found
+Client_2 prev_protos Not Found
+Client_25 prev_protos Not Found
+Edge 1 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_12 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_17 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_33 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_24 protos Not Found
+Client_17 prev_protos Not Found
+Client_24 prev_protos Not Found
+Client_12 prev_protos Not Found
+Client_33 prev_protos Not Found
+Edge 0 begin training
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_26 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_15 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_19 protos Not Found
+Server global_protos Not Found
+Server glclassifier Not Found
+Client_16 protos Not Found
+Client_19 prev_protos Not Found
+Client_16 prev_protos Not Found
+Client_15 prev_protos Not Found
+Client_26 prev_protos Not Found
+readyList:
+[7, 5, 1, 0, 2, 8, 6, 9, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 0, 2, 8, 6, 9, 4, 3]
+Edge_0 prev_protos Not Found
+Edge_1 prev_protos Not Found
+Edge_2 prev_protos Not Found
+Edge_3 prev_protos Not Found
+Edge_4 prev_protos Not Found
+Edge_5 prev_protos Not Found
+Edge_6 prev_protos Not Found
+Edge_7 prev_protos Not Found
+Edge_8 prev_protos Not Found
+Edge_9 prev_protos Not Found
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8525482802651823
+global classifier accuracy: 99.0125
+end Update
+server_global_time: 15.204072858206928
+only_train_time: 212.2987145013176
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.7955
+Averaged Test Accuracy (Prototype Model): 0.6076
+Std Test Accuracy (Regular Model): 0.1607
+Std Test Accuracy (Prototype Model): 0.2270
+tobetrained:
+[7, 5, 1, 0, 2, 8, 6, 9, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.905763850081712
+global classifier accuracy: 99.8
+end Update
+server_global_time: 27.115269583184272
+only_train_time: 381.88535539759323
+
+-------------Global Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8668
+Averaged Test Accuracy (Prototype Model): 0.8297
+Std Test Accuracy (Regular Model): 0.0936
+Std Test Accuracy (Prototype Model): 0.1215
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8103762650862336
+global classifier accuracy: 99.9475
+end Update
+server_global_time: 38.693173692096025
+only_train_time: 549.7485486301593
+
+-------------Global Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8896
+Averaged Test Accuracy (Prototype Model): 0.8786
+Std Test Accuracy (Regular Model): 0.0763
+Std Test Accuracy (Prototype Model): 0.0862
+tobetrained:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.753269209060818
+global classifier accuracy: 99.96
+end Update
+server_global_time: 50.15081941522658
+only_train_time: 717.5563764097169
+
+-------------Global Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8995
+Averaged Test Accuracy (Prototype Model): 0.8944
+Std Test Accuracy (Regular Model): 0.0692
+Std Test Accuracy (Prototype Model): 0.0717
+tobetrained:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.116154510062188
+global classifier accuracy: 99.985
+end Update
+server_global_time: 61.679883340373635
+only_train_time: 886.5935944048688
+
+-------------Global Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9062
+Averaged Test Accuracy (Prototype Model): 0.9023
+Std Test Accuracy (Regular Model): 0.0652
+Std Test Accuracy (Prototype Model): 0.0704
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.810405689291656
+global classifier accuracy: 99.9825
+end Update
+server_global_time: 73.17543018842116
+only_train_time: 1057.4345930088311
+
+-------------Global Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9113
+Averaged Test Accuracy (Prototype Model): 0.9093
+Std Test Accuracy (Regular Model): 0.0608
+Std Test Accuracy (Prototype Model): 0.0644
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.897205124143511
+global classifier accuracy: 99.995
+end Update
+server_global_time: 84.73827011371031
+only_train_time: 1225.343955292832
+
+-------------Global Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9139
+Averaged Test Accuracy (Prototype Model): 0.9125
+Std Test Accuracy (Regular Model): 0.0631
+Std Test Accuracy (Prototype Model): 0.0618
+tobetrained:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.91072555212304
+global classifier accuracy: 99.9975
+end Update
+server_global_time: 96.5138513976708
+only_train_time: 1395.0661461194977
+
+-------------Global Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9172
+Averaged Test Accuracy (Prototype Model): 0.9158
+Std Test Accuracy (Regular Model): 0.0567
+Std Test Accuracy (Prototype Model): 0.0564
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.021641241386533
+global classifier accuracy: 100.0
+end Update
+server_global_time: 108.38391540851444
+only_train_time: 1566.4726105676964
+
+-------------Global Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9204
+Averaged Test Accuracy (Prototype Model): 0.9195
+Std Test Accuracy (Regular Model): 0.0559
+Std Test Accuracy (Prototype Model): 0.0553
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9388336506672204
+global classifier accuracy: 99.9975
+end Update
+server_global_time: 119.77416692581028
+only_train_time: 1738.5150670162402
+
+-------------Global Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9205
+Averaged Test Accuracy (Prototype Model): 0.9173
+Std Test Accuracy (Regular Model): 0.0566
+Std Test Accuracy (Prototype Model): 0.0670
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.895536271855235
+global classifier accuracy: 100.0
+end Update
+server_global_time: 131.54338272102177
+only_train_time: 1909.692689333111
+
+-------------Global Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9202
+Averaged Test Accuracy (Prototype Model): 0.9192
+Std Test Accuracy (Regular Model): 0.0538
+Std Test Accuracy (Prototype Model): 0.0539
+tobetrained:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.765634402167052
+global classifier accuracy: 100.0
+end Update
+server_global_time: 143.34282995713875
+only_train_time: 2079.3715037712827
+
+-------------Global Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9221
+Averaged Test Accuracy (Prototype Model): 0.9205
+Std Test Accuracy (Regular Model): 0.0525
+Std Test Accuracy (Prototype Model): 0.0523
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.200659714173526
+global classifier accuracy: 100.0
+end Update
+server_global_time: 154.73941594036296
+only_train_time: 2248.232576043345
+
+-------------Global Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9260
+Averaged Test Accuracy (Prototype Model): 0.9245
+Std Test Accuracy (Regular Model): 0.0477
+Std Test Accuracy (Prototype Model): 0.0488
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.674496131017804
+global classifier accuracy: 100.0
+end Update
+server_global_time: 166.28052594838664
+only_train_time: 2417.5535568287596
+
+-------------Global Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9257
+Averaged Test Accuracy (Prototype Model): 0.9248
+Std Test Accuracy (Regular Model): 0.0488
+Std Test Accuracy (Prototype Model): 0.0496
+tobetrained:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7703430321998894
+global classifier accuracy: 100.0
+end Update
+server_global_time: 177.8720752564259
+only_train_time: 2585.5525403176434
+
+-------------Global Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9257
+Averaged Test Accuracy (Prototype Model): 0.9245
+Std Test Accuracy (Regular Model): 0.0490
+Std Test Accuracy (Prototype Model): 0.0506
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.926875584758818
+global classifier accuracy: 100.0
+end Update
+server_global_time: 189.23843862954527
+only_train_time: 2754.1721850452013
+
+-------------Global Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9266
+Averaged Test Accuracy (Prototype Model): 0.9270
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9144135690294206
+global classifier accuracy: 100.0
+end Update
+server_global_time: 200.89976628869772
+only_train_time: 2922.4730223370716
+
+-------------Global Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9276
+Averaged Test Accuracy (Prototype Model): 0.9271
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.790304881054908
+global classifier accuracy: 100.0
+end Update
+server_global_time: 212.3667682535015
+only_train_time: 3091.869862589054
+
+-------------Global Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9276
+Averaged Test Accuracy (Prototype Model): 0.9278
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.786068175919354
+global classifier accuracy: 100.0
+end Update
+server_global_time: 223.8555475603789
+only_train_time: 3261.4587636096403
+
+-------------Global Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9275
+Averaged Test Accuracy (Prototype Model): 0.9277
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0464
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9414278930053115
+global classifier accuracy: 100.0
+end Update
+server_global_time: 235.29351707734168
+only_train_time: 3431.2563768215477
+
+-------------Global Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9274
+Averaged Test Accuracy (Prototype Model): 0.9283
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 9, 8, 0, 7, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 9, 8, 0, 7, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.126436477061361
+global classifier accuracy: 100.0
+end Update
+server_global_time: 246.67453557252884
+only_train_time: 3600.5712914858013
+
+-------------Global Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9281
+Averaged Test Accuracy (Prototype Model): 0.9289
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 9, 8, 0, 7, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 7 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7493761121295393
+global classifier accuracy: 100.0
+end Update
+server_global_time: 258.11768623953685
+only_train_time: 3769.866461256519
+
+-------------Global Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9285
+Averaged Test Accuracy (Prototype Model): 0.9289
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9268748108297586
+global classifier accuracy: 100.0
+end Update
+server_global_time: 269.87959111854434
+only_train_time: 3937.6589063424617
+
+-------------Global Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9287
+Averaged Test Accuracy (Prototype Model): 0.9286
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8383951550349593
+global classifier accuracy: 100.0
+end Update
+server_global_time: 281.82157423952594
+only_train_time: 4106.061927239876
+
+-------------Global Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9291
+Averaged Test Accuracy (Prototype Model): 0.9287
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8473105509765446
+global classifier accuracy: 100.0
+end Update
+server_global_time: 293.1301901647821
+only_train_time: 4273.997745064553
+
+-------------Global Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9292
+Averaged Test Accuracy (Prototype Model): 0.9290
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0461
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.887276214081794
+global classifier accuracy: 100.0
+end Update
+server_global_time: 304.85846653953195
+only_train_time: 4446.104552472942
+
+-------------Global Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9289
+Averaged Test Accuracy (Prototype Model): 0.9294
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0464
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 8, 0, 6, 4, 9, 7, 3, 2]
+aggregation_buffer:
+[5, 1, 8, 0, 6, 4, 9, 7, 3, 2]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.2022994086146355
+global classifier accuracy: 100.0
+end Update
+server_global_time: 323.4841836518608
+only_train_time: 4638.04919673875
+
+-------------Global Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9291
+Averaged Test Accuracy (Prototype Model): 0.9290
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0470
+tobetrained:
+[5, 1, 8, 0, 6, 4, 9, 7, 3, 2]
+Edge 5 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 7 begin training
+Edge 3 begin training
+Edge 2 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.80026962980628
+global classifier accuracy: 100.0
+end Update
+server_global_time: 335.06787141179666
+only_train_time: 4809.712689012289
+
+-------------Global Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9292
+Averaged Test Accuracy (Prototype Model): 0.9292
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 1, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.979910275898874
+global classifier accuracy: 100.0
+end Update
+server_global_time: 346.8723439606838
+only_train_time: 4981.026816079393
+
+-------------Global Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9294
+Averaged Test Accuracy (Prototype Model): 0.9289
+Std Test Accuracy (Regular Model): 0.0466
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[5, 7, 1, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.163012822158635
+global classifier accuracy: 100.0
+end Update
+server_global_time: 358.17901175050065
+only_train_time: 5149.40154483309
+
+-------------Global Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9296
+Averaged Test Accuracy (Prototype Model): 0.9290
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0468
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7512654191814363
+global classifier accuracy: 100.0
+end Update
+server_global_time: 369.64089885214344
+only_train_time: 5324.0838700393215
+
+-------------Global Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9296
+Averaged Test Accuracy (Prototype Model): 0.9291
+Std Test Accuracy (Regular Model): 0.0466
+Std Test Accuracy (Prototype Model): 0.0466
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.771581231150776
+global classifier accuracy: 100.0
+end Update
+server_global_time: 381.33233427722007
+only_train_time: 5492.896621373482
+
+-------------Global Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9292
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.00385588593781
+global classifier accuracy: 100.0
+end Update
+server_global_time: 392.81233606114984
+only_train_time: 5665.02786975028
+
+-------------Global Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9294
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0466
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8506930861622095
+global classifier accuracy: 100.0
+end Update
+server_global_time: 404.1150400522165
+only_train_time: 5833.044986312743
+
+-------------Global Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9295
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0468
+tobetrained:
+[1, 7, 5, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 0, 8, 6, 4, 2, 9, 3]
+aggregation_buffer:
+[1, 5, 7, 0, 8, 6, 4, 2, 9, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.05788003327325
+global classifier accuracy: 100.0
+end Update
+server_global_time: 416.14646215131506
+only_train_time: 6008.652560296003
+
+-------------Global Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9303
+Averaged Test Accuracy (Prototype Model): 0.9298
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0464
+tobetrained:
+[1, 5, 7, 0, 8, 6, 4, 2, 9, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 9, 8, 0, 4, 6, 2, 5, 3]
+aggregation_buffer:
+[1, 7, 9, 8, 0, 4, 6, 2, 5, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.010853505227715
+global classifier accuracy: 100.0
+end Update
+server_global_time: 427.47632454615086
+only_train_time: 6185.452627994586
+
+-------------Global Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9306
+Averaged Test Accuracy (Prototype Model): 0.9298
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0466
+tobetrained:
+[1, 7, 9, 8, 0, 4, 6, 2, 5, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8543961318209767
+global classifier accuracy: 100.0
+end Update
+server_global_time: 438.94326405320317
+only_train_time: 6353.047110891435
+
+-------------Global Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9308
+Averaged Test Accuracy (Prototype Model): 0.9299
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0463
+tobetrained:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7503253309987485
+global classifier accuracy: 100.0
+end Update
+server_global_time: 450.7106425934471
+only_train_time: 6522.157617588062
+
+-------------Global Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9309
+Averaged Test Accuracy (Prototype Model): 0.9300
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0465
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 9, 0, 8, 7, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 9, 0, 8, 7, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8338566618040204
+global classifier accuracy: 100.0
+end Update
+server_global_time: 462.07640623068437
+only_train_time: 6691.251299399883
+
+-------------Global Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9310
+Averaged Test Accuracy (Prototype Model): 0.9302
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0461
+tobetrained:
+[5, 1, 9, 0, 8, 7, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.358923715073615
+global classifier accuracy: 100.0
+end Update
+server_global_time: 473.5502909044735
+only_train_time: 6858.461139714345
+
+-------------Global Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9313
+Averaged Test Accuracy (Prototype Model): 0.9303
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 2, 4, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 2, 4, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.772727212868631
+global classifier accuracy: 100.0
+end Update
+server_global_time: 486.96398462867364
+only_train_time: 7040.5519678932615
+
+-------------Global Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9313
+Averaged Test Accuracy (Prototype Model): 0.9305
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 2, 4, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7132425317540765
+global classifier accuracy: 100.0
+end Update
+server_global_time: 498.40369054768234
+only_train_time: 7207.773981875274
+
+-------------Global Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9313
+Averaged Test Accuracy (Prototype Model): 0.9304
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0459
+tobetrained:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.925833738874644
+global classifier accuracy: 100.0
+end Update
+server_global_time: 509.90804178174585
+only_train_time: 7375.069952941965
+
+-------------Global Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9310
+Averaged Test Accuracy (Prototype Model): 0.9305
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[7, 9, 0, 8, 6, 4, 2, 1, 5, 3]
+aggregation_buffer:
+[7, 9, 0, 8, 6, 4, 2, 1, 5, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8359159799292684
+global classifier accuracy: 100.0
+end Update
+server_global_time: 521.3267583618872
+only_train_time: 7549.848799682688
+
+-------------Global Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9310
+Averaged Test Accuracy (Prototype Model): 0.9307
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0456
+tobetrained:
+[7, 9, 0, 8, 6, 4, 2, 1, 5, 3]
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8433230509981513
+global classifier accuracy: 100.0
+end Update
+server_global_time: 533.0509691247717
+only_train_time: 7718.4501155116595
+
+-------------Global Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9313
+Averaged Test Accuracy (Prototype Model): 0.9307
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0457
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.092557014897466
+global classifier accuracy: 100.0
+end Update
+server_global_time: 544.8211256256327
+only_train_time: 7888.824957570061
+
+-------------Global Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9313
+Averaged Test Accuracy (Prototype Model): 0.9307
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.954096017871052
+global classifier accuracy: 100.0
+end Update
+server_global_time: 556.1636480595917
+only_train_time: 8058.735580796376
+
+-------------Global Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9314
+Averaged Test Accuracy (Prototype Model): 0.9307
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0455
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 8, 0, 9, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 8, 0, 9, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.953118673991412
+global classifier accuracy: 100.0
+end Update
+server_global_time: 567.6223069578409
+only_train_time: 8233.843326750677
+
+-------------Global Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9314
+Averaged Test Accuracy (Prototype Model): 0.9309
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[1, 7, 5, 8, 0, 9, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 9, 5, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 9, 5, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.200621034950018
+global classifier accuracy: 100.0
+end Update
+server_global_time: 578.9150352207944
+only_train_time: 8403.811311793514
+
+-------------Global Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9317
+Averaged Test Accuracy (Prototype Model): 0.9310
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[1, 7, 9, 5, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8473380468785763
+global classifier accuracy: 100.0
+end Update
+server_global_time: 590.4584757196717
+only_train_time: 8573.756364339963
+
+-------------Global Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9311
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.757300077006221
+global classifier accuracy: 100.0
+end Update
+server_global_time: 602.7207090314478
+only_train_time: 8741.296619685832
+
+-------------Global Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9317
+Averaged Test Accuracy (Prototype Model): 0.9314
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 9, 8, 0, 6, 4, 3, 2]
+aggregation_buffer:
+[5, 7, 1, 9, 8, 0, 6, 4, 3, 2]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8314727428369224
+global classifier accuracy: 100.0
+end Update
+server_global_time: 625.391917668283
+only_train_time: 8953.679230669979
+
+-------------Global Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9314
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[5, 7, 1, 9, 8, 0, 6, 4, 3, 2]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 3 begin training
+Edge 2 begin training
+readyList:
+[1, 5, 9, 7, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 9, 7, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.241177518852055
+global classifier accuracy: 100.0
+end Update
+server_global_time: 636.7128984010778
+only_train_time: 9123.171927469783
+
+-------------Global Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9314
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[1, 5, 9, 7, 8, 0, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7897959728725255
+global classifier accuracy: 100.0
+end Update
+server_global_time: 648.1011828873307
+only_train_time: 9291.083345687948
+
+-------------Global Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9313
+Std Test Accuracy (Regular Model): 0.0450
+Std Test Accuracy (Prototype Model): 0.0455
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 6, 4, 2, 8, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 6, 4, 2, 8, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.796351999975741
+global classifier accuracy: 100.0
+end Update
+server_global_time: 659.798242376186
+only_train_time: 9462.196047912352
+
+-------------Global Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9313
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0456
+tobetrained:
+[5, 1, 7, 9, 0, 6, 4, 2, 8, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 8, 0, 4, 6, 2, 7, 9, 3]
+aggregation_buffer:
+[5, 1, 8, 0, 4, 6, 2, 7, 9, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.736076327972114
+global classifier accuracy: 100.0
+end Update
+server_global_time: 671.6094456571154
+only_train_time: 9656.433393463958
+
+-------------Global Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9311
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[5, 1, 8, 0, 4, 6, 2, 7, 9, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9774120897054672
+global classifier accuracy: 100.0
+end Update
+server_global_time: 683.1399640459567
+only_train_time: 9826.052429768723
+
+-------------Global Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9311
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.841024837922305
+global classifier accuracy: 100.0
+end Update
+server_global_time: 694.7764375740662
+only_train_time: 9995.604444165714
+
+-------------Global Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9311
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0459
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.703272445127368
+global classifier accuracy: 100.0
+end Update
+server_global_time: 706.1065679281019
+only_train_time: 10164.516101646703
+
+-------------Global Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9311
+Std Test Accuracy (Regular Model): 0.0450
+Std Test Accuracy (Prototype Model): 0.0459
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 9, 7, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 9, 7, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8667039242573082
+global classifier accuracy: 100.0
+end Update
+server_global_time: 717.598261943087
+only_train_time: 10333.37920436589
+
+-------------Global Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9312
+Std Test Accuracy (Regular Model): 0.0450
+Std Test Accuracy (Prototype Model): 0.0457
+tobetrained:
+[1, 5, 9, 7, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 4, 2, 6, 0, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 4, 2, 6, 0, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9142566453665495
+global classifier accuracy: 100.0
+end Update
+server_global_time: 729.1638927059248
+only_train_time: 10510.467729784548
+
+-------------Global Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9313
+Std Test Accuracy (Regular Model): 0.0448
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[1, 5, 7, 9, 8, 4, 2, 6, 0, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 6 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9069841313175857
+global classifier accuracy: 100.0
+end Update
+server_global_time: 740.8733572806232
+only_train_time: 10679.699286162853
+
+-------------Global Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9314
+Std Test Accuracy (Regular Model): 0.0448
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.041812754701823
+global classifier accuracy: 100.0
+end Update
+server_global_time: 752.1426248871721
+only_train_time: 10848.19576559402
+
+-------------Global Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9314
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.000384913757443
+global classifier accuracy: 100.0
+end Update
+server_global_time: 763.7746138735674
+only_train_time: 11018.00053306343
+
+-------------Global Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9316
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8541158409789205
+global classifier accuracy: 100.0
+end Update
+server_global_time: 775.179206341505
+only_train_time: 11190.171102093533
+
+-------------Global Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9317
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.911705377046019
+global classifier accuracy: 100.0
+end Update
+server_global_time: 786.577777904924
+only_train_time: 11361.496927766595
+
+-------------Global Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9317
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0453
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.415885731112212
+global classifier accuracy: 100.0
+end Update
+server_global_time: 798.0109804519452
+only_train_time: 11531.995900014415
+
+-------------Global Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9319
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.110191848129034
+global classifier accuracy: 100.0
+end Update
+server_global_time: 809.9282931676134
+only_train_time: 11710.384135784116
+
+-------------Global Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9321
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.118548328988254
+global classifier accuracy: 100.0
+end Update
+server_global_time: 821.3178247064352
+only_train_time: 11878.649930418003
+
+-------------Global Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.819514657370746
+global classifier accuracy: 100.0
+end Update
+server_global_time: 832.6854410134256
+only_train_time: 12048.070411392488
+
+-------------Global Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 8, 0, 9, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 8, 0, 9, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.005427857860923
+global classifier accuracy: 100.0
+end Update
+server_global_time: 844.557838044595
+only_train_time: 12218.030917567201
+
+-------------Global Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[5, 1, 7, 8, 0, 9, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8209409923292696
+global classifier accuracy: 100.0
+end Update
+server_global_time: 856.054280643817
+only_train_time: 12387.316713714506
+
+-------------Global Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0444
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8996885656379163
+global classifier accuracy: 100.0
+end Update
+server_global_time: 875.2695262786001
+only_train_time: 12563.920210530516
+
+-------------Global Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0444
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8280284269712865
+global classifier accuracy: 100.0
+end Update
+server_global_time: 887.5175684066489
+only_train_time: 12733.71973784687
+
+-------------Global Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 9, 0, 7, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 9, 0, 7, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9675272279419005
+global classifier accuracy: 100.0
+end Update
+server_global_time: 899.1477442043833
+only_train_time: 12904.228148481343
+
+-------------Global Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[5, 1, 9, 0, 7, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8990282537415624
+global classifier accuracy: 100.0
+end Update
+server_global_time: 910.6189619945362
+only_train_time: 13074.127633628901
+
+-------------Global Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.901187603827566
+global classifier accuracy: 100.0
+end Update
+server_global_time: 922.3032904760912
+only_train_time: 13243.421716296114
+
+-------------Global Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7391978800296783
+global classifier accuracy: 100.0
+end Update
+server_global_time: 934.1273833140731
+only_train_time: 13413.660883685108
+
+-------------Global Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 0, 9, 8, 7, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 0, 9, 8, 7, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.292508515063673
+global classifier accuracy: 100.0
+end Update
+server_global_time: 945.6357827433385
+only_train_time: 13584.99486844847
+
+-------------Global Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[5, 1, 0, 9, 8, 7, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8178511010482907
+global classifier accuracy: 100.0
+end Update
+server_global_time: 956.9339444804937
+only_train_time: 13753.796356971841
+
+-------------Global Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8461114619858563
+global classifier accuracy: 100.0
+end Update
+server_global_time: 968.3799893613905
+only_train_time: 13924.22866122052
+
+-------------Global Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 9, 8, 0, 7, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 9, 8, 0, 7, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.820913359988481
+global classifier accuracy: 100.0
+end Update
+server_global_time: 979.7492110426538
+only_train_time: 14094.301499002147
+
+-------------Global Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 9, 8, 0, 7, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.917662726249546
+global classifier accuracy: 100.0
+end Update
+server_global_time: 991.3815525225364
+only_train_time: 14264.725236908067
+
+-------------Global Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.914820217061788
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1003.0077848676592
+only_train_time: 14437.054076074623
+
+-------------Global Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 9, 7, 8, 1, 6, 4, 2, 0, 3]
+aggregation_buffer:
+[5, 9, 7, 8, 1, 6, 4, 2, 0, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.1464921669103205
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1014.6189026897773
+only_train_time: 14614.215796077158
+
+-------------Global Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 9, 7, 8, 1, 6, 4, 2, 0, 3]
+Edge 5 begin training
+Edge 9 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7952459841035306
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1026.2608240377158
+only_train_time: 14785.030443957541
+
+-------------Global Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7568675908260047
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1037.9910831674933
+only_train_time: 14956.283545822836
+
+-------------Global Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 8, 6, 0, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 8, 6, 0, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7901780479587615
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1049.4559208475985
+only_train_time: 15125.57239609724
+
+-------------Global Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 7, 5, 9, 8, 6, 0, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.250449995044619
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1060.69289122615
+only_train_time: 15295.81332988618
+
+-------------Global Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9322
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.731904224958271
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1072.4526486950926
+only_train_time: 15465.822852091864
+
+-------------Global Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.764444511849433
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1083.9339282116853
+only_train_time: 15633.900376453064
+
+-------------Global Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 9, 0, 8, 7, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 9, 0, 8, 7, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.1146384491585195
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1095.8835638463497
+only_train_time: 15802.881405214779
+
+-------------Global Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 9, 0, 8, 7, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8574137343093753
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1107.293647410348
+only_train_time: 15972.325286924839
+
+-------------Global Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 7, 1, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7813771246001124
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1119.392172188498
+only_train_time: 16142.622516615782
+
+-------------Global Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9318
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.918430460151285
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1130.9399530105293
+only_train_time: 16311.33379579382
+
+-------------Global Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9319
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8415267118252814
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1142.2661340464838
+only_train_time: 16480.11123480834
+
+-------------Global Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.83464916003868
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1153.8754100487567
+only_train_time: 16649.29558663629
+
+-------------Global Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9320
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9343936420045793
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1165.6694570197724
+only_train_time: 16818.349649085198
+
+-------------Global Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.075362592935562
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1176.939309982583
+only_train_time: 16990.111462994944
+
+-------------Global Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 9, 8, 0, 6, 4, 2, 5, 3]
+aggregation_buffer:
+[1, 7, 9, 8, 0, 6, 4, 2, 5, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8534993422217667
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1188.2848166157492
+only_train_time: 17162.951387120876
+
+-------------Global Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[1, 7, 9, 8, 0, 6, 4, 2, 5, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 9, 0, 8, 6, 4, 2, 5, 3]
+aggregation_buffer:
+[1, 7, 9, 0, 8, 6, 4, 2, 5, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8016317756846547
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1200.1965079857036
+only_train_time: 17335.870305425487
+
+-------------Global Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9323
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[1, 7, 9, 0, 8, 6, 4, 2, 5, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.433405057061464
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1211.784003005363
+only_train_time: 17506.60197205888
+
+-------------Global Round number: 101-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.071858698967844
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1223.7378791263327
+only_train_time: 17679.167721365113
+
+-------------Global Round number: 102-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 0, 8, 9, 4, 1, 6, 2, 3]
+aggregation_buffer:
+[5, 7, 0, 8, 9, 4, 1, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.391191971022636
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1235.319032500498
+only_train_time: 17857.740850761533
+
+-------------Global Round number: 103-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[5, 7, 0, 8, 9, 4, 1, 6, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.97192769497633
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1247.0008039358072
+only_train_time: 18030.179045182187
+
+-------------Global Round number: 104-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 0, 8, 6, 9, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 0, 8, 6, 9, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9333227379247546
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1258.4800161095336
+only_train_time: 18204.037845665123
+
+-------------Global Round number: 105-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9321
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[1, 5, 7, 0, 8, 6, 9, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8969495273195207
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1269.855981707573
+only_train_time: 18372.670750650577
+
+-------------Global Round number: 106-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9326
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.004122211132199
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1281.6676946114749
+only_train_time: 18547.23096090695
+
+-------------Global Round number: 107-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9326
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7498194160871208
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1293.247458548285
+only_train_time: 18716.653497111518
+
+-------------Global Round number: 108-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.289130536839366
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1304.8194660865702
+only_train_time: 18889.171903899405
+
+-------------Global Round number: 109-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 7, 9, 0, 6, 4, 8, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8533319672569633
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1316.4054052275605
+only_train_time: 19058.76981974719
+
+-------------Global Round number: 110-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7949480870738626
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1327.7389279804192
+only_train_time: 19227.26015077764
+
+-------------Global Round number: 111-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9326
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.068331446964294
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1339.2536689057015
+only_train_time: 19396.150451646186
+
+-------------Global Round number: 112-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.009853092953563
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1350.8141895239241
+only_train_time: 19573.949766659178
+
+-------------Global Round number: 113-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.01921715401113
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1362.3405496096238
+only_train_time: 19743.19357888261
+
+-------------Global Round number: 114-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9324
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.774533133022487
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1373.976028308738
+only_train_time: 19915.169603223912
+
+-------------Global Round number: 115-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 7, 5, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.794688005000353
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1385.4265689933673
+only_train_time: 20084.401040604804
+
+-------------Global Round number: 116-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9322
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 8, 0, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.407691462896764
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1396.8283923454583
+only_train_time: 20255.760627733544
+
+-------------Global Round number: 117-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 1, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 1, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.892760992050171
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1408.3199997874908
+only_train_time: 20430.738045101985
+
+-------------Global Round number: 118-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 7, 1, 0, 9, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.839125121943653
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1419.7816669093445
+only_train_time: 20601.38446908677
+
+-------------Global Round number: 119-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9325
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 6, 4, 0, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 6, 4, 0, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9288045917637646
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1431.6120814173482
+only_train_time: 20776.07387249591
+
+-------------Global Round number: 120-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9326
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 8, 6, 4, 0, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.041398653760552
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1443.2217030613683
+only_train_time: 20948.140503184404
+
+-------------Global Round number: 121-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9327
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.017508997116238
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1454.5456285062246
+only_train_time: 21124.00587214576
+
+-------------Global Round number: 122-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9327
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9034410333260894
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1465.9066168530844
+only_train_time: 21293.472714496776
+
+-------------Global Round number: 123-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9328
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 6, 8, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 6, 8, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.842512974049896
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1477.3593823700212
+only_train_time: 21463.388774949126
+
+-------------Global Round number: 124-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9327
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 0, 6, 8, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.171068275813013
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1488.7952122921124
+only_train_time: 21634.549537315965
+
+-------------Global Round number: 125-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9327
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.759046696126461
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1500.3483847859316
+only_train_time: 21803.783755357377
+
+-------------Global Round number: 126-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9329
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 7, 0, 9, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.862450720742345
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1511.981767611578
+only_train_time: 21973.31087179575
+
+-------------Global Round number: 127-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9329
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9709311639890075
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1523.4660227657296
+only_train_time: 22142.324341009837
+
+-------------Global Round number: 128-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9329
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.316856946796179
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1534.8347517200746
+only_train_time: 22311.674827812705
+
+-------------Global Round number: 129-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.903522144071758
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1546.3894127979875
+only_train_time: 22481.706006410066
+
+-------------Global Round number: 130-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 2, 4, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 2, 4, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8328453423455358
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1557.77839169465
+only_train_time: 22651.67776813684
+
+-------------Global Round number: 131-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9329
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0451
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 2, 4, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.2001864947378635
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1569.215607904829
+only_train_time: 22820.3078922634
+
+-------------Global Round number: 132-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.345429673790932
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1580.5090755508281
+only_train_time: 22988.554943390656
+
+-------------Global Round number: 133-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[1, 5, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 9, 0, 7, 6, 2, 8, 4, 3]
+aggregation_buffer:
+[1, 5, 9, 0, 7, 6, 2, 8, 4, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9350193589925766
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1592.2509172451682
+only_train_time: 23169.07914479403
+
+-------------Global Round number: 134-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9329
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[1, 5, 9, 0, 7, 6, 2, 8, 4, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 8, 0, 9, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 8, 0, 9, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.004343857057393
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1603.6898317700252
+only_train_time: 23337.965148669202
+
+-------------Global Round number: 135-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[1, 5, 7, 8, 0, 9, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.801683616358787
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1615.2060083150864
+only_train_time: 23508.366661583073
+
+-------------Global Round number: 136-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9330
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 7, 9, 8, 0, 1, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 7, 9, 8, 0, 1, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8043061732314527
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1626.956175556872
+only_train_time: 23679.954860026017
+
+-------------Global Round number: 137-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9331
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[5, 7, 9, 8, 0, 1, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.868937700986862
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1638.809893891681
+only_train_time: 23848.903895800002
+
+-------------Global Round number: 138-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9323
+Averaged Test Accuracy (Prototype Model): 0.9331
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.250714910682291
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1650.6040564361028
+only_train_time: 24022.738360400777
+
+-------------Global Round number: 139-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9331
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[5, 1, 7, 9, 8, 0, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 5, 0, 8, 9, 4, 6, 2, 3]
+aggregation_buffer:
+[7, 1, 5, 0, 8, 9, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.221073104068637
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1662.4471025229432
+only_train_time: 24194.582228290383
+
+-------------Global Round number: 140-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9331
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[7, 1, 5, 0, 8, 9, 4, 6, 2, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7787794950418174
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1674.2054183222353
+only_train_time: 24366.566288218368
+
+-------------Global Round number: 141-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9332
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[5, 1, 7, 8, 9, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 8, 6, 9, 4, 2, 0, 3]
+aggregation_buffer:
+[5, 1, 7, 8, 6, 9, 4, 2, 0, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9669093950651586
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1685.9047099254094
+only_train_time: 24545.656122744083
+
+-------------Global Round number: 142-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9332
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[5, 1, 7, 8, 6, 9, 4, 2, 0, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.7082432471215725
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1697.4878693544306
+only_train_time: 24717.926505057607
+
+-------------Global Round number: 143-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8122850973159075
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1708.9407764864154
+only_train_time: 24886.88849456981
+
+-------------Global Round number: 144-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[5, 1, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.32502112723887
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1720.574631754309
+only_train_time: 25055.857301203534
+
+-------------Global Round number: 145-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9324
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.8170535429380834
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1731.886007498484
+only_train_time: 25225.818122669123
+
+-------------Global Round number: 146-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0453
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[1, 7, 5, 9, 0, 8, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+aggregation_buffer:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9102870719507337
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1743.475942844525
+only_train_time: 25393.831739487592
+
+-------------Global Round number: 147-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9332
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[1, 5, 7, 9, 8, 0, 6, 4, 2, 3]
+Edge 1 begin training
+Edge 5 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 0, 8, 9, 6, 4, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 0, 8, 9, 6, 4, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.9357603560201824
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1754.8488862225786
+only_train_time: 25562.234556367155
+
+-------------Global Round number: 148-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[5, 1, 7, 0, 8, 9, 6, 4, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 6 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 4.243242798373103
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1766.31260703085
+only_train_time: 25730.192276983988
+
+-------------Global Round number: 149-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0445
+tobetrained:
+[5, 1, 7, 9, 0, 8, 4, 6, 2, 3]
+Edge 5 begin training
+Edge 1 begin training
+Edge 7 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[5, 1, 7, 9, 0, 8, 6, 2, 4, 3]
+aggregation_buffer:
+[5, 1, 7, 9, 0, 8, 6, 2, 4, 3]
+agg_protos_label dict_keys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+train global classifier
+train glclassifier time: 3.734253556933254
+global classifier accuracy: 100.0
+end Update
+server_global_time: 1777.739886696916
+only_train_time: 25902.23046388151
+
+-------------Global Round number: 150-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9325
+Averaged Test Accuracy (Prototype Model): 0.9333
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0445
+
+Best accuracy.
+0.9325111339499829
+File path: ../results/FashionMNIST_dir_0.3_imbalance_40_FedSAE_test_0.h5
+Deleted.
+
+Average time cost: 28952.8s.
+Length:  151
+std for best accurancy: 0.0
+mean for best accurancy: 0.9325111339499829
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 176168 	Used Memory: 14.37M
+-------------------------------------------------------------------------------
