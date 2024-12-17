@@ -113,7 +113,7 @@ class GaussianSampler:
         elif self.args.gl_use_clients == 1:
             for client in clients:
                 client_protos = load_item(
-                    client.role, "prev_protos", client.save_folder_name
+                    client.role, "cloud_protos", client.save_folder_name
                 )
                 if client_protos is not None:
                     for key in client_protos.keys():

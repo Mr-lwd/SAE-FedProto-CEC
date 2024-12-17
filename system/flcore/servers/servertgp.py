@@ -252,35 +252,36 @@ class FedTGP(Server):
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
     def proto_cluster(self, protos_list):
-        proto_clusters = defaultdict(list)
-        for protos in protos_list:
-            for k in protos["protos"].keys():
-                proto_clusters[k].append(protos["protos"][k])
+        # proto_clusters = defaultdict(list)
+        # for protos in protos_list:
+        #     for k in protos["protos"].keys():
+        #         proto_clusters[k].append(protos["protos"][k])
 
-        for k in proto_clusters.keys():
-            protos = torch.stack(proto_clusters[k])
-            proto_clusters[k] = torch.mean(protos, dim=0).detach()
+        # for k in proto_clusters.keys():
+        #     protos = torch.stack(proto_clusters[k])
+        #     proto_clusters[k] = torch.mean(protos, dim=0).detach()
 
-        return proto_clusters
-        # agg_protos_label = defaultdict(list)
-        # for local_protos in protos_list:
-        #     for label in local_protos["protos"].keys():
-        #         agg_protos_label[label].append(
-        #             local_protos["protos"][label]
-        #             * local_protos["client"].label_counts[label]
-        #         )
+        # return proto_clusters
+        
+        agg_protos_label = defaultdict(list)
+        for local_protos in protos_list:
+            for label in local_protos["protos"].keys():
+                agg_protos_label[label].append(
+                    local_protos["protos"][label]
+                    * local_protos["client"].label_counts[label]
+                )
 
-        # for [label, proto_list] in agg_protos_label.items():
-        #     if len(proto_list) > 1:
-        #         proto = 0 * proto_list[0].data
-        #         for i in proto_list:
-        #             proto += i.data
-        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #     else:
-        #         agg_protos_label[label] = (
-        #             proto_list[0].data / self.glprotos_invol_dataset[label]
-        #         )
-        # return agg_protos_label
+        for [label, proto_list] in agg_protos_label.items():
+            if len(proto_list) > 1:
+                proto = 0 * proto_list[0].data
+                for i in proto_list:
+                    proto += i.data
+                agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+            else:
+                agg_protos_label[label] = (
+                    proto_list[0].data / self.glprotos_invol_dataset[label]
+                )
+        return agg_protos_label
 
 
 

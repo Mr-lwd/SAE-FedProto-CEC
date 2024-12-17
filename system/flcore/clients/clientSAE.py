@@ -142,7 +142,6 @@ class clientSAE(Client):
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
                 client_classifier.load_state_dict(glclassifier.state_dict())
-            # print("g_classifier test_metrics")
         model = model.to(self.device)
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         if self.args.addTGP:

@@ -292,8 +292,7 @@ class FedSAE(Server):
         #         for k in edgeprotos.keys():
         #             self.TGP_uploaded_protos.append((edgeprotos[k], k))
         for client in self.clients:
-            # prev_protos == protos
-            clientprotos = load_item(client.role, "prev_protos", client.save_folder_name)
+            clientprotos = load_item(client.role, "cloud_protos", client.save_folder_name)
             if clientprotos is not None:
                 for k in clientprotos.keys():
                     self.TGP_uploaded_protos.append((clientprotos[k], k))

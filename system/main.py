@@ -329,7 +329,7 @@ if __name__ == "__main__":
         "-lr",
         "--local_learning_rate",
         type=float,
-        default=0.06,
+        default=0.02,
         help="Local learning rate",
     )
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)
@@ -420,7 +420,7 @@ if __name__ == "__main__":
         help="The threthold for droping slow clients",
     )
     # FedProto
-    parser.add_argument("-lam", "--lamda", type=float, default=2)
+    parser.add_argument("-lam", "--lamda", type=float, default=1)
     parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
@@ -436,7 +436,7 @@ if __name__ == "__main__":
         "-gl_use_clients", "--gl_use_clients", type=int, default=1
     )
     parser.add_argument(
-        "-test_useglclassifier", "--test_useglclassifier", type=int, default=0
+        "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
     )
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
     # parser.add_argument("-usb", "--use_beta", type=bool, default=True)

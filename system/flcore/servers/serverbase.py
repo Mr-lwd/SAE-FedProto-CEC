@@ -201,32 +201,40 @@ class Server(object):
         #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
 
     def proto_aggregation_clients(self):
-        clientProtos = {
-            id: load_item(self.client[id].role, "protos", self.client[id].save_folder_name)
-            for id in self.uploaded_client_ids
-        }
         for id in self.uploaded_client_ids:
-            save_item(clientProtos[id], self.client[id].role, "cloud_protos", self.client[id].save_folder_name)
+            clientprotos = load_item(
+                self.client[id].role, "protos", self.clients[id].save_folder_name
+            )
+            save_item(
+                clientprotos,
+                self.client[id].role,
+                "cloud_protos",
+                self.clients[id].save_folder_name,
+            )
 
-        for clientid in self.uploaded_client_ids:
-                self.N_cloud[clientid] = self.clients[clientid].label_counts
+            self.N_cloud[id] = self.clients[id].label_counts
 
         cloud_clientProtos = {
             client.id: load_item(client.role, "cloud_protos", client.save_folder_name)
             for client in self.clients
         }
-        
+
         agg_protos_label = defaultdict(default_tensor)
         for j in range(self.num_classes):
             for id in cloud_clientProtos.keys():
-                if cloud_clientProtos[id] is not None j in cloud_clientProtos[id].keys():
-                    agg_protos_label[j] += self.N_cloud[id][j] * cloud_clientProtos[id][j]
+                if (
+                    cloud_clientProtos[id] is not None
+                    and j in cloud_clientProtos[id].keys()
+                ):
+                    agg_protos_label[j] += (
+                        self.N_cloud[id][j] * cloud_clientProtos[id][j]
+                    )
             denominator = sum(
                 self.N_cloud[id][j]
                 for id, values in self.N_cloud.items()
                 if j in values
             )
-            agg_protos_label[j] = agg_protos_label[j]/denominator
+            agg_protos_label[j] = agg_protos_label[j] / denominator
         return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
@@ -262,7 +270,7 @@ class Server(object):
 
         print("agg_protos_label", agg_protos_label.keys())
         for id in self.uploaded_ids:
-            #更新edge的prev_protos
+            # 更新edge的prev_protos
             if edge_protos_list[id] is not None:
                 save_item(
                     edge_protos_list[id]["protos"],
@@ -270,7 +278,7 @@ class Server(object):
                     "prev_protos",
                     self.save_folder_name,
                 )
-            #更新client的prev_protos
+            # 更新client的prev_protos
             for client_id in self.edges[id].selected_cids:
                 client_protos = load_item(
                     self.clients[client_id].role, "protos", self.save_folder_name

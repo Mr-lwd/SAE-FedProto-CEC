@@ -60,14 +60,13 @@ class Edge_FedSAE(Edge):
 
         for edge_epoch in range(self.args.edge_epochs):  # 边缘轮次, ==1
             eparallel_time_list = []
-            for selected_cid in self.selected_cids:
+            for selected_cid in self.id_registration:
                 # self.send_to_client(clients[selected_cid])
                 id, train_time, trans_time = clients[selected_cid].train()
                 self.etrain_time += train_time
                 eparallel_time_list.append((train_time + trans_time))
 
             self.eparallel_time += max(eparallel_time_list)
-
             # self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
         self.eglobal_time += self.eparallel_time
