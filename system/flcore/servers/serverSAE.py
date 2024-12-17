@@ -127,17 +127,20 @@ class FedSAE(Server):
         print("aggregation_buffer:")
         self.aggregation_buffer.printTimeinfo()
         self.uploaded_ids = []
-        uploaded_protos = defaultdict(dict)
+        self.uploaded_client_ids = []
+        # uploaded_protos = defaultdict(dict)
         for edge in self.aggregation_buffer.buffer:
-            # for edge in self.selected_edges:
             id = edge.id
             self.uploaded_ids.append(id)
-        for edge in self.edges:
-            id = edge.id
-            protos = load_item(edge.role, "protos", self.save_folder_name)
-            prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
-            uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-        global_protos = self.proto_aggregation(uploaded_protos)
+            for client_id in edge.id_registration:
+                self.uploaded_client_ids.append(client_id)
+        # for edge in self.edges:
+        #     id = edge.id
+        #     protos = load_item(edge.role, "protos", self.save_folder_name)
+        #     prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
+        #     uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
+        global_protos = self.proto_aggregation_clients()
+        # global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
         if self.args.addTGP is True:
             self.tgp_process()

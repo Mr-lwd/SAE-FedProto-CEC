@@ -68,6 +68,7 @@ class Server(object):
 
         self.uploaded_weights = []
         self.uploaded_ids = []
+        self.uploaded_client_ids = []
 
         self.rs_test_acc = []
         self.rs_test_auc = []
@@ -93,6 +94,7 @@ class Server(object):
         self.current_epoch = 0
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
         self.buffersize = args.buffersize
+        self.N_cloud = defaultdict(int)
 
     def set_clients(self, clientObj):
         # 加载数据集
@@ -197,6 +199,35 @@ class Server(object):
         for i, w in enumerate(self.uploaded_weights):
             self.uploaded_weights[i] = w / tot_samples
         #    https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L221
+
+    def proto_aggregation_clients(self):
+        clientProtos = {
+            id: load_item(self.client[id].role, "protos", self.client[id].save_folder_name)
+            for id in self.uploaded_client_ids
+        }
+        for id in self.uploaded_client_ids:
+            save_item(clientProtos[id], self.client[id].role, "cloud_protos", self.client[id].save_folder_name)
+
+        for clientid in self.uploaded_client_ids:
+                self.N_cloud[clientid] = self.clients[clientid].label_counts
+
+        cloud_clientProtos = {
+            client.id: load_item(client.role, "cloud_protos", client.save_folder_name)
+            for client in self.clients
+        }
+        
+        agg_protos_label = defaultdict(default_tensor)
+        for j in range(self.num_classes):
+            for id in cloud_clientProtos.keys():
+                if cloud_clientProtos[id] is not None j in cloud_clientProtos[id].keys():
+                    agg_protos_label[j] += self.N_cloud[id][j] * cloud_clientProtos[id][j]
+            denominator = sum(
+                self.N_cloud[id][j]
+                for id, values in self.N_cloud.items()
+                if j in values
+            )
+            agg_protos_label[j] = agg_protos_label[j]/denominator
+        return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
         agg_protos_label = defaultdict(default_tensor)
@@ -554,7 +585,7 @@ class Server(object):
                     marker="x",
                 )
         # 添加图例
-        plt.legend()
+        # plt.legend()
         plt.title(
             f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
         )

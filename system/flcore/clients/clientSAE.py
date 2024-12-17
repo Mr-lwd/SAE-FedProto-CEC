@@ -23,7 +23,6 @@ class clientSAE(Client):
 
     def train(self):
         self.receive_from_edgeserver()
-        # print("Client.id begin training", self.id)
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
@@ -43,18 +42,17 @@ class clientSAE(Client):
                 averaged_state_dict = {}
                 for key in client_state_dict.keys():
                     if key in global_state_dict:
-                        # averaged_state_dict[key] = (
-                        #     client_state_dict[key] + global_state_dict[key]
-                        # ) / 2
                         averaged_state_dict[key] = (
-                            0.7 * client_state_dict[key] + 0.3 * global_state_dict[key]
-                        )
+                            client_state_dict[key] + global_state_dict[key]
+                        ) / 2
+                        # averaged_state_dict[key] = (
+                        #     0.7 * client_state_dict[key] + 0.3 * global_state_dict[key]
+                        # )
                     else:
                         averaged_state_dict[key] = client_state_dict[key]
     
                 client_classifier.load_state_dict(averaged_state_dict)
-
-        # print("local global protos", global_protos)
+                
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         model.train()
@@ -86,31 +84,31 @@ class clientSAE(Client):
                     loss += global_loss
                 else:
                     loss = self.loss(output, y)
-
                 local_model_loss += loss
+                
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    if self.args.use_beta:
+                    if self.args.addTGP:
                         loss += (
                             self.loss_mse(proto_new, rep)
                             * self.lamda
                             * (1 - self.args.SAEbeta)
                         )
+                        if tgp_global_protos is not None:
+                            proto_new = copy.deepcopy(rep.detach())
+                            for i, yy in enumerate(y):
+                                y_c = yy.item()
+                                if type(tgp_global_protos[y_c]) != type([]):
+                                    proto_new[i, :] = tgp_global_protos[y_c].data
+                            loss += (
+                                self.loss_mse(proto_new, rep) * self.lamda * self.args.SAEbeta
+                            )
                     else:
                         loss += self.loss_mse(proto_new, rep) * self.lamda
-                if self.args.use_beta and tgp_global_protos is not None:
-                    proto_new = copy.deepcopy(rep.detach())
-                    for i, yy in enumerate(y):
-                        y_c = yy.item()
-                        if type(tgp_global_protos[y_c]) != type([]):
-                            proto_new[i, :] = tgp_global_protos[y_c].data
-                    loss += (
-                        self.loss_mse(proto_new, rep) * self.lamda * self.args.SAEbeta
-                    )
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
@@ -146,13 +144,13 @@ class clientSAE(Client):
                 client_classifier.load_state_dict(glclassifier.state_dict())
             # print("g_classifier test_metrics")
         model = model.to(self.device)
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        # if self.args.addTGP:
-        #     global_protos = load_item(
-        #         "Server", "tgp_global_protos", self.save_folder_name
-        #     )
-        # else:
-        #     global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        # global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.addTGP:
+            global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
+        else:
+            global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)
