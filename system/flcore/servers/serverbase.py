@@ -511,7 +511,9 @@ class Server(object):
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
         if args.algorithm == "FedSAE":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/mixcl_{args.mixclassifier}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
+        elif args.algorithm == "FedTGP":
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/tam_{args.tgpaddmse}_addmse_{args.addmse}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
         else:
             save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
 

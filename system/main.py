@@ -441,6 +441,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "-tam", "--tgpaddmse", type=int, default=0
     )
+    parser.add_argument(
+        "-addmse", "--addmse", type=int, default=0
+    )
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
     # parser.add_argument("-usb", "--use_beta", type=bool, default=True)
     parser.add_argument("-addTGP", "--addTGP", type=int, default=1)

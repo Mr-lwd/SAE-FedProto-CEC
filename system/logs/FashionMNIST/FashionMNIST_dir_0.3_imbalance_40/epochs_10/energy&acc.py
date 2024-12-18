@@ -31,8 +31,9 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 # 定义文件路径
 log_files = [
     # "./fedproto.out",
-    "./lr002_lamda_10_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out",
-    "./lr003_lamda_10_FedTGP.out",
+    # "./lamda_10_FedSAE_addTGP_gl_use_clients_gamma_1.0_buffer=1.0.out",
+    # "./lr003_lamda_10_FedTGP.out",
+    "./lamda_10_FedTGP_addMSE.out"
 ]
 time_model_configs = [
     {
