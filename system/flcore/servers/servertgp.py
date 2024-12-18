@@ -237,12 +237,10 @@ class FedTGP(Server):
                 loss = self.CEloss(-dist, y)
                 ##添加类内约束
                 if self.args.tgpaddmse == 1:
-                    proto_new = copy.deepcopy(proto.detach())
-                    for i, yy in enumerate(y):
-                        y_c = yy.item()
-                        if type(proto_gen[y_c]) != type([]):
-                            proto_new[i, :] = proto_gen[y_c].data
-                    loss += self.MSEloss(proto_new, proto) * self.lamda
+                    # 使用索引操作从 proto_gen 中获取对应类中心
+                    selected_centers = proto_gen[y]  # [batch_size, feature_dim]
+                    # 计算类内约束损失
+                    loss += self.MSEloss(selected_centers, proto) * self.args.lamda
 
                 Gen_opt.zero_grad()
                 loss.backward()
