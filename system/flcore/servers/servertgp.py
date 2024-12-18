@@ -240,7 +240,7 @@ class FedTGP(Server):
                     # 使用索引操作从 proto_gen 中获取对应类中心
                     selected_centers = proto_gen[y]  # [batch_size, feature_dim]
                     # 计算类内约束损失
-                    loss += self.MSEloss(selected_centers, proto) * self.args.addmse
+                    loss += self.MSEloss(selected_centers, proto) * self.args.lamda
 
                 Gen_opt.zero_grad()
                 loss.backward()
