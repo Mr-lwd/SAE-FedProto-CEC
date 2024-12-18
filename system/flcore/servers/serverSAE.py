@@ -128,12 +128,12 @@ class FedSAE(Server):
         self.aggregation_buffer.printTimeinfo()
         self.uploaded_ids = []
         self.uploaded_client_ids = []
-        # uploaded_protos = defaultdict(dict)
         for edge in self.aggregation_buffer.buffer:
             id = edge.id
             self.uploaded_ids.append(id)
             for client_id in edge.id_registration:
                 self.uploaded_client_ids.append(client_id)
+        # print(f"self.uploaded_client_ids:{self.uploaded_client_ids}")
         # for edge in self.edges:
         #     id = edge.id
         #     protos = load_item(edge.role, "protos", self.save_folder_name)
@@ -142,7 +142,7 @@ class FedSAE(Server):
         global_protos = self.proto_aggregation_clients()
         # global_protos = self.proto_aggregation(uploaded_protos)
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        if self.args.addTGP is True:
+        if self.args.addTGP == 1:
             self.tgp_process()
 
         sampler = GaussianSampler(self.args)
@@ -150,19 +150,18 @@ class FedSAE(Server):
 
         self.train_global_classifier(sampled_features)
 
-        if self.args.drawtsne is True and self.current_epoch % self.args.drawround == 0:
-            self.save_tsne_with_agg(
-                args=self.args,
-                base_path="./tsneplot",
-                drawtype="clientavgproto",
-                current_epoch=self.current_epoch,
-            )
-            # self.save_tsne_with_agg(
-            #     args=self.args,
-            #     base_path="./tsneplot",
-            #     drawtype="clientallfeatures",
-            #     current_epoch=self.current_epoch,
-            # )
+        self.save_tsne_with_agg(
+            args=self.args,
+            base_path="./tsneplot",
+            drawtype="clientavgproto",
+            current_epoch=self.current_epoch,
+        )
+        # self.save_tsne_with_agg(
+        #     args=self.args,
+        #     base_path="./tsneplot",
+        #     drawtype="clientallfeatures",
+        #     current_epoch=self.current_epoch,
+        # )
 
     def train_global_classifier(self, retrain_vr):
         glclassifier_time_start = time.perf_counter()
@@ -236,7 +235,7 @@ class FedSAE(Server):
 
         # 计算验证集准确率
         accuracy = 100 * correct / total
-        print("global classifier accuracy:", accuracy)
+        print("global classifier accuracy in train virtual:", accuracy)
 
     def refresh_cloudserver(self):
         self.receiver_buffer.clear()
@@ -285,14 +284,10 @@ class FedSAE(Server):
 
     def tgp_process(self):
         self.TGP_uploaded_protos = []
-        # for edge in self.edges:
-        #     # prev_protos == protos
-        #     edgeprotos = load_item(edge.role, "prev_protos", edge.save_folder_name)
-        #     if edgeprotos is not None:
-        #         for k in edgeprotos.keys():
-        #             self.TGP_uploaded_protos.append((edgeprotos[k], k))
         for client in self.clients:
-            clientprotos = load_item(client.role, "cloud_protos", client.save_folder_name)
+            clientprotos = load_item(
+                client.role, "cloud_protos", client.save_folder_name
+            )
             if clientprotos is not None:
                 for k in clientprotos.keys():
                     self.TGP_uploaded_protos.append((clientprotos[k], k))
@@ -312,7 +307,9 @@ class FedSAE(Server):
             if self.gap[i] > torch.tensor(1e8, device=self.device):
                 self.gap[i] = self.min_gap
         self.max_gap = torch.max(self.gap)
-        print("self.gap", self.gap)
+        print("class-wise minimum distance", self.gap)
+        print("min_gap", self.min_gap)
+        print("max_gap", self.max_gap)
 
         self.update_Gen()
 
@@ -325,23 +322,31 @@ class FedSAE(Server):
                 self.TGP_uploaded_protos, self.batch_size, drop_last=False, shuffle=True
             )
             for proto, y in proto_loader:
+                proto = proto.squeeze(1)  # 移除多余维，proto 变为 [24, 512]
                 y = torch.tensor(y).to(self.device, dtype=torch.int64)  # 转换为整数类型
                 # y = torch.Tensor(y).type(torch.int64).to(self.device)
 
                 proto_gen = PROTO(list(range(self.num_classes)))
-                proto = proto.squeeze(1)  # 移除第二维，proto 变为 [24, 512]
 
                 features_square = torch.sum(torch.pow(proto, 2), 1, keepdim=True)
                 centers_square = torch.sum(torch.pow(proto_gen, 2), 1, keepdim=True)
                 features_into_centers = torch.matmul(proto, proto_gen.T)
                 dist = features_square - 2 * features_into_centers + centers_square.T
-                # exit()
                 dist = torch.sqrt(dist)
 
                 one_hot = F.one_hot(y, self.num_classes).to(self.device)
-                gap2 = min(self.max_gap.item(), self.margin_threthold)
-                dist = dist + one_hot * gap2
+                margin = min(self.max_gap.item(), self.margin_threthold)
+                dist = dist + one_hot * margin
                 loss = self.CEloss(-dist, y)
+
+                ##添加类内约束
+                if self.args.tgpaddmse == 1:
+                    proto_new = copy.deepcopy(proto.detach())
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        if type(proto_gen[y_c]) != type([]):
+                            proto_new[i, :] = proto_gen[y_c].data
+                    loss += self.MSEloss(proto_new, proto) * self.lamda
 
                 Gen_opt.zero_grad()
                 loss.backward()
@@ -358,6 +363,3 @@ class FedSAE(Server):
                 torch.tensor(class_id, device=self.device)
             ).detach()
         save_item(global_protos, self.role, "tgp_global_protos", self.save_folder_name)
-
-
-

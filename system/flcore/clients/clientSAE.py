@@ -26,7 +26,7 @@ class clientSAE(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.addTGP:
+        if self.args.addTGP == 1:
             tgp_global_protos = load_item(
                 "Server", "tgp_global_protos", self.save_folder_name
             )
@@ -34,9 +34,9 @@ class clientSAE(Client):
         if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
                 param.requires_grad = False
-                
+
             if self.args.mixclassifier == 1:
-                client_classifier = model.head 
+                client_classifier = model.head
                 client_state_dict = client_classifier.state_dict()
                 global_state_dict = glclassifier.state_dict()
                 averaged_state_dict = {}
@@ -50,9 +50,9 @@ class clientSAE(Client):
                         # )
                     else:
                         averaged_state_dict[key] = client_state_dict[key]
-    
+
                 client_classifier.load_state_dict(averaged_state_dict)
-                
+
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         model.train()
@@ -85,28 +85,29 @@ class clientSAE(Client):
                 else:
                     loss = self.loss(output, y)
                 local_model_loss += loss
-                
+
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    if self.args.addTGP:
+                    if self.args.addTGP == 1 and tgp_global_protos is not None:
                         loss += (
                             self.loss_mse(proto_new, rep)
                             * self.lamda
                             * (1 - self.args.SAEbeta)
                         )
-                        if tgp_global_protos is not None:
-                            proto_new = copy.deepcopy(rep.detach())
-                            for i, yy in enumerate(y):
-                                y_c = yy.item()
-                                if type(tgp_global_protos[y_c]) != type([]):
-                                    proto_new[i, :] = tgp_global_protos[y_c].data
-                            loss += (
-                                self.loss_mse(proto_new, rep) * self.lamda * self.args.SAEbeta
-                            )
+                        proto_new = copy.deepcopy(rep.detach())
+                        for i, yy in enumerate(y):
+                            y_c = yy.item()
+                            if type(tgp_global_protos[y_c]) != type([]):
+                                proto_new[i, :] = tgp_global_protos[y_c].data
+                        loss += (
+                            self.loss_mse(proto_new, rep)
+                            * self.lamda
+                            * self.args.SAEbeta
+                        )
                     else:
                         loss += self.loss_mse(proto_new, rep) * self.lamda
                 for i, yy in enumerate(y):
@@ -144,7 +145,7 @@ class clientSAE(Client):
                 client_classifier.load_state_dict(glclassifier.state_dict())
         model = model.to(self.device)
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.addTGP:
+        if self.args.addTGP == 1:
             global_protos = load_item(
                 "Server", "tgp_global_protos", self.save_folder_name
             )
@@ -273,9 +274,9 @@ class clientSAE(Client):
 
         for [label, proto_list] in protos.items():
             if len(proto_list) > 1:
-                proto = 0 * proto_list[0].data.detach()
+                proto = 0 * proto_list[0].detach()
                 for i in proto_list:
-                    proto += i.data.detach()
+                    proto += i.detach()
                 protos[label] = proto / len(proto_list)
             else:
                 protos[label] = proto_list[0].detach()

@@ -102,28 +102,21 @@ class FedProto(Server):
         print("aggregation_buffer:")
         self.aggregation_buffer.printTimeinfo()
         self.uploaded_ids = []
-        uploaded_protos = defaultdict(dict)
+        self.uploaded_client_ids = []
         for edge in self.aggregation_buffer.buffer:
-            # for edge in self.selected_edges:
             id = edge.id
             self.uploaded_ids.append(id)
-        for edge in self.edges: 
-            id = edge.id
-            protos = load_item(edge.role, "protos", self.save_folder_name)
-            prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
-            uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-        global_protos = self.proto_aggregation(uploaded_protos)
+            for client_id in edge.id_registration:
+                self.uploaded_client_ids.append(client_id)
+        global_protos = self.proto_aggregation_clients()
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        
-        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
-            self.save_tsne_with_agg(
+
+        self.save_tsne_with_agg(
                 args=self.args,
                 base_path="./tsneplot",
                 drawtype="clientavgproto",
                 current_epoch=self.current_epoch,
             )
-
-
 
     def refresh_cloudserver(self):
         self.receiver_buffer.clear()
@@ -169,6 +162,3 @@ class FedProto(Server):
     def push_aggclients_to_trainList(self):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
-
-
-

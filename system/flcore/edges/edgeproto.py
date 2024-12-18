@@ -68,7 +68,7 @@ class Edge_FedProto(Edge):
 
             self.eparallel_time += max(eparallel_time_list)
 
-            self.edgeAggregate(clients)
+            # self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
         self.eglobal_time += self.eparallel_time
         if self.args.trans_delay_simulate is True:

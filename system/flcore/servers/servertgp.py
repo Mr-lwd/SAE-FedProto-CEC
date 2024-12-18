@@ -126,13 +126,12 @@ class FedTGP(Server):
 
         self.tgp_process()
 
-        if self.args.drawtsne is True and self.current_epoch % 10 == 0:
-            self.save_tsne_with_agg(
-                args=self.args,
-                base_path="./tsneplot",
-                drawtype="clientavgproto",
-                current_epoch=self.current_epoch,
-            )
+        self.save_tsne_with_agg(
+            args=self.args,
+            base_path="./tsneplot",
+            drawtype="clientavgproto",
+            current_epoch=self.current_epoch,
+        )
 
     def refresh_cloudserver(self):
         self.receiver_buffer.clear()
@@ -204,7 +203,9 @@ class FedTGP(Server):
             if self.gap[i] > torch.tensor(1e8, device=self.device):
                 self.gap[i] = self.min_gap
         self.max_gap = torch.max(self.gap)
-        print("self.gap", self.gap)
+        print('class-wise minimum distance', self.gap)
+        print('min_gap', self.min_gap)
+        print('max_gap', self.max_gap)
 
         self.update_Gen()
 
@@ -231,9 +232,17 @@ class FedTGP(Server):
                 dist = torch.sqrt(dist)
 
                 one_hot = F.one_hot(y, self.num_classes).to(self.device)
-                gap2 = min(self.max_gap.item(), self.margin_threthold)
-                dist = dist + one_hot * gap2
+                margin = min(self.max_gap.item(), self.margin_threthold)
+                dist = dist + one_hot * margin
                 loss = self.CEloss(-dist, y)
+                ##添加类内约束
+                if self.args.tgpaddmse == 1:
+                    proto_new = copy.deepcopy(proto.detach())
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        if type(proto_gen[y_c]) != type([]):
+                            proto_new[i, :] = proto_gen[y_c].data
+                    loss += self.MSEloss(proto_new, proto) * self.lamda
 
                 Gen_opt.zero_grad()
                 loss.backward()
@@ -251,37 +260,22 @@ class FedTGP(Server):
             ).detach()
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
-    def proto_cluster(self, protos_list):
-        # proto_clusters = defaultdict(list)
-        # for protos in protos_list:
-        #     for k in protos["protos"].keys():
-        #         proto_clusters[k].append(protos["protos"][k])
+        # agg_protos_label = defaultdict(list)
+        # for local_protos in protos_list:
+        #     for label in local_protos["protos"].keys():
+        #         agg_protos_label[label].append(
+        #             local_protos["protos"][label]
+        #             * local_protos["client"].label_counts[label]
+        #         )
 
-        # for k in proto_clusters.keys():
-        #     protos = torch.stack(proto_clusters[k])
-        #     proto_clusters[k] = torch.mean(protos, dim=0).detach()
-
-        # return proto_clusters
-        
-        agg_protos_label = defaultdict(list)
-        for local_protos in protos_list:
-            for label in local_protos["protos"].keys():
-                agg_protos_label[label].append(
-                    local_protos["protos"][label]
-                    * local_protos["client"].label_counts[label]
-                )
-
-        for [label, proto_list] in agg_protos_label.items():
-            if len(proto_list) > 1:
-                proto = 0 * proto_list[0].data
-                for i in proto_list:
-                    proto += i.data
-                agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-            else:
-                agg_protos_label[label] = (
-                    proto_list[0].data / self.glprotos_invol_dataset[label]
-                )
-        return agg_protos_label
-
-
-
+        # for [label, proto_list] in agg_protos_label.items():
+        #     if len(proto_list) > 1:
+        #         proto = 0 * proto_list[0].data
+        #         for i in proto_list:
+        #             proto += i.data
+        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+        #     else:
+        #         agg_protos_label[label] = (
+        #             proto_list[0].data / self.glprotos_invol_dataset[label]
+        #         )
+        # return agg_protos_label

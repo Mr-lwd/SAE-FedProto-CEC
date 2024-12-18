@@ -161,7 +161,7 @@ class GaussianSampler:
 
         # 归一化
         assert n_c > 1
-        cov /= n_c - 1  # 除以 (n_c - 1),无偏，可能出现除0
+        cov /= (n_c - 1)  # 除以 (n_c - 1),无偏，可能出现除0
 
         return mean, cov
 

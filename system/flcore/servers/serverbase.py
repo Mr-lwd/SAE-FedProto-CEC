@@ -42,7 +42,7 @@ class Server(object):
         self.auto_break = args.auto_break
         self.role = "Server"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/{time.time()}/"
+            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
@@ -203,11 +203,11 @@ class Server(object):
     def proto_aggregation_clients(self):
         for id in self.uploaded_client_ids:
             clientprotos = load_item(
-                self.client[id].role, "protos", self.clients[id].save_folder_name
+                self.clients[id].role, "protos", self.clients[id].save_folder_name
             )
             save_item(
                 clientprotos,
-                self.client[id].role,
+                self.clients[id].role,
                 "cloud_protos",
                 self.clients[id].save_folder_name,
             )
@@ -218,23 +218,36 @@ class Server(object):
             client.id: load_item(client.role, "cloud_protos", client.save_folder_name)
             for client in self.clients
         }
-
-        agg_protos_label = defaultdict(default_tensor)
-        for j in range(self.num_classes):
+        # print(f"cloud_clientProtos.keys():{cloud_clientProtos.keys()}")
+        # print(f"self.N_cloud{self.N_cloud}")
+        if self.args.algorithm != "FedSAE" or self.args.addTGP != 1:
+            agg_protos_label = defaultdict(default_tensor)
+            for j in range(self.num_classes):
+                for id in cloud_clientProtos.keys():
+                    if (
+                        cloud_clientProtos[id] is not None
+                        and j in cloud_clientProtos[id].keys()
+                    ):
+                        agg_protos_label[j] = agg_protos_label[j].to(self.device)
+                        agg_protos_label[j] += (
+                            self.N_cloud[id][j] * cloud_clientProtos[id][j]
+                        )
+                denominator = sum(
+                    self.N_cloud[id][j]
+                    for id, values in self.N_cloud.items()
+                    if j in values
+                )
+                # print(f"j:{j}, denominator:{denominator}")
+                agg_protos_label[j] = agg_protos_label[j] / denominator
+        elif self.args.addTGP == 1 and self.args.algorithm == "FedSAE":
+            agg_protos_label = defaultdict(list)
             for id in cloud_clientProtos.keys():
-                if (
-                    cloud_clientProtos[id] is not None
-                    and j in cloud_clientProtos[id].keys()
-                ):
-                    agg_protos_label[j] += (
-                        self.N_cloud[id][j] * cloud_clientProtos[id][j]
-                    )
-            denominator = sum(
-                self.N_cloud[id][j]
-                for id, values in self.N_cloud.items()
-                if j in values
-            )
-            agg_protos_label[j] = agg_protos_label[j] / denominator
+                if cloud_clientProtos[id] is not None:
+                    for k in cloud_clientProtos[id].keys():
+                            agg_protos_label[k].append(cloud_clientProtos[id][k])
+            for k in agg_protos_label.keys():
+                protos = torch.stack(agg_protos_label[k])
+                agg_protos_label[k] = torch.mean(protos, dim=0).detach()
         return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
@@ -492,20 +505,29 @@ class Server(object):
     def save_tsne_with_agg(
         self, args, base_path, drawtype="clientavgproto", current_epoch=0
     ):
+        if args.drawtsne != 1 or current_epoch % args.drawround != 0:
+            return
         """
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
         if args.algorithm == "FedSAE":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gl_use_clients_{args.gl_use_clients}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegl_{args.test_useglclassifier}_lr_{args.local_learning_rate}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
         else:
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}_lr_{args.local_learning_rate}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
 
         all_features = []
         all_labels = []
         label_types = []  # 区分来源：agg 或 local
+        global_protos = None  # 初始化为 None
 
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        # global_protos = load_item(self.role, "global_protos", self.save_folder_name)
+        if self.args.addTGP == 1:
+            global_protos = load_item(
+                "Server", "tgp_global_protos", self.save_folder_name
+            )
+
+        # 如果 global_protos 仍为 None，加载备用的 global_protos
+        if global_protos is None:
+            global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # 收集聚合原型数据
         for label, proto in global_protos.items():
             all_features.append(proto.cpu().detach().numpy())
@@ -516,7 +538,7 @@ class Server(object):
         for client in self.clients:
             if drawtype == "clientavgproto":
                 client_protos = load_item(
-                    client.role, "prev_protos", client.save_folder_name
+                    client.role, "protos", client.save_folder_name
                 )
                 if client_protos is not None:
                     for key in client_protos.keys():
@@ -601,3 +623,15 @@ class Server(object):
         plt.ylabel("t-SNE Dimension 2")
         plt.savefig(save_path)
         plt.close()
+
+    def proto_cluster(self, protos_list):
+        proto_clusters = defaultdict(list)
+        for protos in protos_list:
+            for k in protos["protos"].keys():
+                proto_clusters[k].append(protos["protos"][k])
+
+        for k in proto_clusters.keys():
+            protos = torch.stack(proto_clusters[k])
+            proto_clusters[k] = torch.mean(protos, dim=0).detach()
+
+        return proto_clusters
