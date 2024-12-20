@@ -42,12 +42,12 @@ class Server(object):
         self.auto_break = args.auto_break
         self.role = "Server"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
+            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
             args.save_folder_name_full = (
-                f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/"
+                f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
             )
         self.save_folder_name = args.save_folder_name_full
 
@@ -218,9 +218,9 @@ class Server(object):
             client.id: load_item(client.role, "cloud_protos", client.save_folder_name)
             for client in self.clients
         }
-        # print(f"cloud_clientProtos.keys():{cloud_clientProtos.keys()}")
-        # print(f"self.N_cloud{self.N_cloud}")
-        if self.args.algorithm != "FedSAE" or self.args.addTGP != 1:
+
+        agg_protos_label = None
+        if self.args.algorithm != "FedSAE":
             agg_protos_label = defaultdict(default_tensor)
             for j in range(self.num_classes):
                 for id in cloud_clientProtos.keys():
@@ -237,17 +237,16 @@ class Server(object):
                     for id, values in self.N_cloud.items()
                     if j in values
                 )
-                # print(f"j:{j}, denominator:{denominator}")
                 agg_protos_label[j] = agg_protos_label[j] / denominator
-        elif self.args.addTGP == 1 and self.args.algorithm == "FedSAE":
-            agg_protos_label = defaultdict(list)
-            for id in cloud_clientProtos.keys():
-                if cloud_clientProtos[id] is not None:
-                    for k in cloud_clientProtos[id].keys():
-                            agg_protos_label[k].append(cloud_clientProtos[id][k])
-            for k in agg_protos_label.keys():
-                protos = torch.stack(agg_protos_label[k])
-                agg_protos_label[k] = torch.mean(protos, dim=0).detach()
+        # elif self.args.addTGP == 1 and self.args.algorithm == "FedSAE":
+        #     agg_protos_label = defaultdict(list)
+        #     for id in cloud_clientProtos.keys():
+        #         if cloud_clientProtos[id] is not None:
+        #             for k in cloud_clientProtos[id].keys():
+        #                     agg_protos_label[k].append(cloud_clientProtos[id][k])
+        #     for k in agg_protos_label.keys():
+        #         protos = torch.stack(agg_protos_label[k])
+        #         agg_protos_label[k] = torch.mean(protos, dim=0).detach()
         return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
@@ -339,12 +338,12 @@ class Server(object):
                 hf.create_dataset("rs_test_auc", data=self.rs_test_auc)
                 hf.create_dataset("rs_train_loss", data=self.rs_train_loss)
 
-        if "temp" in self.save_folder_name:
-            try:
-                shutil.rmtree(self.save_folder_name)
-                print("Deleted.")
-            except:
-                print("Already deleted.")
+        # if "temp" in self.save_folder_name:
+        #     try:
+        #         shutil.rmtree(self.save_folder_name)
+        #         print("Deleted.")
+        #     except:
+        #         print("Already deleted.")
 
     def test_metrics(self):
         num_samples = []
@@ -637,3 +636,23 @@ class Server(object):
             proto_clusters[k] = torch.mean(protos, dim=0).detach()
 
         return proto_clusters
+
+        # agg_protos_label = defaultdict(list)
+        # for local_protos in protos_list:
+        #     for label in local_protos["protos"].keys():
+        #         agg_protos_label[label].append(
+        #             local_protos["protos"][label]
+        #             * local_protos["client"].label_counts[label]
+        #         )
+
+        # for [label, proto_list] in agg_protos_label.items():
+        #     if len(proto_list) > 1:
+        #         proto = 0 * proto_list[0].data
+        #         for i in proto_list:
+        #             proto += i.data
+        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
+        #     else:
+        #         agg_protos_label[label] = (
+        #             proto_list[0].data / self.glprotos_invol_dataset[label]
+        #         )
+        # return agg_protos_label

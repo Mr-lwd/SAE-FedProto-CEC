@@ -123,6 +123,7 @@ class clientSAE(Client):
         local_model_loss = local_model_loss / len(trainloader)
         # print("local_model_loss", local_model_loss.item())
         # save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
+        self.cal_mean_and_covariance(protos)
         agg_protos = self.agg_func(protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
@@ -266,6 +267,45 @@ class clientSAE(Client):
         # self.cshared_protos_global = self.receive_buffer
         return None
 
+    def cal_mean_and_covariance(self, protos):
+        """
+        计算加权均值和协方差矩阵。
+        保存均值和协方差矩阵。
+
+        Args:
+            protos (dict): {label: proto_list}, 其中
+                           proto_list 是 512 维向量的列表。
+        Returns:
+            mean_dict (dict): {label: mean_vector}, 均值向量。
+            cov_dict (dict): {label: covariance_matrix}, 协方差矩阵。
+            counts (dict): {label: count}, 每个类别的样本数量。
+        """
+        mean_dict = defaultdict(np.ndarray)  # 保存每个类别的均值
+        cov_dict = defaultdict(np.ndarray)   # 保存每个类别的协方差矩阵
+        counts = defaultdict(int)  # 保存每个类别的样本数量
+
+        for label, proto_list in protos.items():
+            # 将原型列表转换为矩阵 (n_samples, 512)
+            
+            proto_array = np.array([proto.numpy() for proto in proto_list])  # (n_samples, 512)
+
+            # 计算加权均值
+            mean_vector = np.mean(proto_array, axis=0)  # (512,)
+            mean_dict[label] = mean_vector
+
+            # 计算协方差矩阵
+            centered_array = proto_array - mean_vector  # 每个向量减去均值
+            covariance_matrix = np.cov(centered_array, rowvar=False)  # (512, 512)
+            cov_dict[label] = covariance_matrix
+            counts[label] = proto_array.shape[0]
+
+        combined_meancov = prepare_item(mean_dict, cov_dict, counts)
+
+        # 保存
+        save_item(combined_meancov, role=self.role, item_name="mean_cov", item_path=self.save_folder_name)
+        # return mean_dict, cov_dict
+            
+
     # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205
     def agg_func(self, protos):
         """
@@ -283,3 +323,24 @@ class clientSAE(Client):
             # 平滑
 
         return protos
+
+
+def prepare_item(mean_dict, cov_dict, counts):
+    """
+    将均值和协方差转为 Tensor 并合并为字典对象。
+    
+    Args:
+        mean_dict (dict): {label: mean_vector}, 每个类别的均值。
+        cov_dict (dict): {label: covariance_matrix}, 每个类别的协方差矩阵。
+        counts (dict): {label: count}, 每个类别的样本数量。
+    Returns:
+        combined_dict (dict): {label: {"mean": Tensor, "cov": Tensor, "counts": int}}, 合并后的字典。
+    """
+    combined_dict = {}
+    for label in mean_dict.keys():
+        combined_dict[label] = {
+            "mean": torch.tensor(mean_dict[label], dtype=torch.float32),
+            "cov": torch.tensor(cov_dict[label], dtype=torch.float32),
+            "counts": counts[label]
+        }
+    return combined_dict
