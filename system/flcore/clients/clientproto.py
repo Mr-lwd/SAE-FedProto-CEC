@@ -27,7 +27,7 @@ class clientProto(Client):
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
-        self.client_protos = load_item(self.role, "protos", self.save_folder_name)
+        # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         model.train()
 

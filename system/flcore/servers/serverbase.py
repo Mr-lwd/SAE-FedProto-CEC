@@ -42,12 +42,12 @@ class Server(object):
         self.auto_break = args.auto_break
         self.role = "Server"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
+            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
             args.save_folder_name_full = (
-                f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/"
+                f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
             )
         self.save_folder_name = args.save_folder_name_full
 
@@ -339,12 +339,12 @@ class Server(object):
                 hf.create_dataset("rs_test_auc", data=self.rs_test_auc)
                 hf.create_dataset("rs_train_loss", data=self.rs_train_loss)
 
-        if "temp" in self.save_folder_name:
-            try:
-                shutil.rmtree(self.save_folder_name)
-                print("Deleted.")
-            except:
-                print("Already deleted.")
+        # if "temp" in self.save_folder_name:
+        #     try:
+        #         shutil.rmtree(self.save_folder_name)
+        #         print("Deleted.")
+        #     except:
+        #         print("Already deleted.")
 
     def test_metrics(self):
         num_samples = []
