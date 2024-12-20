@@ -48,6 +48,7 @@ class Edge_FedSAE(Edge):
         # Number of clients in edge l containing class j that have participated in aggregation
 
     def train(self, clients):
+
         print(f"Edge {self.id} begin training")
         selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
         self.join_clients = selected_cnum  # 记录本轮参与训练的客户端数量
@@ -70,9 +71,9 @@ class Edge_FedSAE(Edge):
             # self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
         self.eglobal_time += self.eparallel_time
-        for id in self.id_registration:
-            self.N_l[id] = clients[id].label_counts
-        
+
+        self.edge_update_mean_cov(clients)
+
         if self.args.trans_delay_simulate is True:
             self.etrans_time += self.etrans_simu_time
             self.eglobal_time += self.etrans_time
@@ -125,32 +126,106 @@ class Edge_FedSAE(Edge):
         # self.eshared_protos_global = cloud_shared_protos
         return None
 
-        # edgeFeatureAndlabelSet = load_item(
-        #     self.role, "featureSet_each_client", self.save_folder_name
-        # )
-        # if edgeFeatureAndlabelSet is None:
-        #     edgeFeatureAndlabelSet = defaultdict(dict)
-        # for id in self.id_registration:
-        #     edgeFeatureAndlabelSet[id] = load_item(
-        #         clients[id].role, "featureSet", self.save_folder_name
-        #     )
-        # save_item(
-        #     edgeFeatureAndlabelSet,
-        #     self.role,
-        #     "featureSet_each_client",
-        #     self.save_folder_name,
-        # )
+    def edge_update_mean_cov(self, clients):
+        """
+        计算加权均值和协方差矩阵。
+        保存边缘均值和协方差矩阵。
 
-        # mergedFeatureAndLabelSet = defaultdict(list)
-        # # 遍历每个客户端的protos
-        # for client_id, protos in edgeFeatureAndlabelSet.items():
-        #     for label, features in protos.items():
-        #         # 将当前客户端的特征合并到对应标签的列表中
-        #         mergedFeatureAndLabelSet[label].extend(features)
-        # # X^l，合并所有的客户端特征及标签集合
-        # save_item(
-        #     mergedFeatureAndLabelSet,
-        #     self.role,
-        #     "featureSet",
-        #     self.save_folder_name,
-        # )
+        Args:
+
+        """
+        clients_mean_cov = {
+            client_id: load_item(
+                clients[client_id].role, "mean_cov", self.save_folder_name
+            )
+            for client_id in self.cids
+        }
+        # self.N_l = defaultdict(int)
+        for id in self.id_registration:
+            if id not in self.have_participated_ids:
+                for key in clients[id].label_counts.keys():
+                    self.N_l[key] += clients[id].label_counts[key]
+                self.have_participated_ids.add(id)
+
+        self.edge_cal_mean_and_cov(clients_mean_cov)
+
+    def edge_cal_mean_and_cov(self, clients_mean_cov):
+        """
+        按数据量计算全局均值和协方差矩阵。
+
+        Args:
+            clients_mean_cov (dict):
+                {client_id: {label: {"mean": Tensor, "cov": Tensor, "counts": int}}}, 客户端均值和协方差，样本数量。
+            N_l (dict):
+                {label: total_count}, 每个类别在所有已经参加训练的客户端的样本总数。
+
+        Returns:
+            edge_mean_cov (dict):
+                {label: {"mean": Tensor, "cov": Tensor}}, 全局均值和协方差。
+        """
+        edge_mean_cov = {}
+
+        # Step 1: 计算边缘均值
+        for label in self.N_l.keys():
+            # 初始化
+            edge_mean = None
+            edge_count = 0
+            for client_id, data in clients_mean_cov.items():
+                if data is None or label not in data:
+                    continue
+                mean_vec = data[label]["mean"]
+                client_count = data[label]["counts"]
+                if edge_mean is None:
+                    edge_mean = mean_vec * client_count
+                else:
+                    edge_mean += mean_vec * client_count
+
+                edge_count += client_count
+
+            edge_mean /= self.N_l[label]
+            # print(f"N_l[label]:{self.N_l[label]}, client_count:{client_count}")
+            edge_mean_cov[label] = {"mean": edge_mean}
+
+        # Step 2: 计算边缘协方差
+        for label in self.N_l.keys():
+            total_cov = None
+            for client_id, data in clients_mean_cov.items():
+                if data is None or label not in data:
+                    continue
+
+                # 从客户端获取信息
+                mean_vec = data[label]["mean"]
+                cov_matrix = data[label]["cov"]
+                client_count = data[label]["counts"]
+
+                # 加权协方差
+                # print(f"label:{label}, client_count:{client_count}, cov_matrix shape: {cov_matrix.shape}, mean_vec shape: {mean_vec.shape}, edge_mean_cov[label]['mean'] shape: {edge_mean_cov[label]['mean'].shape}")
+                weighted_cov = (client_count - 1) * cov_matrix
+                # print(f"weighted_cov shape: {weighted_cov.shape}")
+                mean_diff = (mean_vec - edge_mean_cov[label]["mean"]).unsqueeze(
+                    1
+                )  # 变为列向量
+                if client_count == 1:
+                    weighted_cov = torch.zeros_like(
+                        torch.mm(mean_diff, mean_diff.T)
+                    )  # 初始化为零矩阵
+                else:
+                    weighted_cov += client_count * torch.mm(
+                        mean_diff, mean_diff.T
+                    )  # 均值差计算
+
+                if total_cov is None:
+                    total_cov = weighted_cov
+                else:
+                    total_cov += weighted_cov
+
+            # 归一化
+            edge_cov = total_cov / (self.N_l[label] - 1)
+            edge_mean_cov[label]["cov"] = edge_cov
+        save_item(
+            edge_mean_cov,
+            role=self.role,
+            item_name="mean_cov",
+            item_path=self.save_folder_name,
+        )
+        return edge_mean_cov
