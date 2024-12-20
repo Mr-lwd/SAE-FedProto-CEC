@@ -42,6 +42,8 @@ class FedSAE(Server):
         self.global_time = 0
         self.gtrain_time = 0
         self.gtrans_time = 0
+        self.N = defaultdict(int)
+        self.have_participated = set()
         self.readyList = DynamicBuffer(self.num_edges)
         self.tobetrained = DynamicBuffer(self.num_edges)
         self.aggregation_buffer = DynamicBuffer(self.buffersize)
@@ -133,22 +135,25 @@ class FedSAE(Server):
             self.uploaded_ids.append(id)
             for client_id in edge.id_registration:
                 self.uploaded_client_ids.append(client_id)
-        # print(f"self.uploaded_client_ids:{self.uploaded_client_ids}")
-        # for edge in self.edges:
-        #     id = edge.id
-        #     protos = load_item(edge.role, "protos", self.save_folder_name)
-        #     prev_protos = load_item(edge.role, "prev_protos", self.save_folder_name)
-        #     uploaded_protos[id] = {"protos": protos, "prev_protos": prev_protos}
-        global_protos = self.proto_aggregation_clients()
-        # global_protos = self.proto_aggregation(uploaded_protos)
-        save_item(global_protos, self.role, "global_protos", self.save_folder_name)
+                clientprotos = load_item(
+                    self.clients[client_id].role, "protos", self.save_folder_name
+                )
+                save_item(
+                    clientprotos,
+                    self.clients[client_id].role,
+                    "cloud_protos",
+                    self.save_folder_name,
+                )
+        # global_protos = self.proto_aggregation_clients()
+
+        sampled_features = self.cal_meancov_and_saveglprotos()
+        # sampler = GaussianSampler(self.args)
+        # sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
+        self.train_global_classifier(sampled_features)
+
+        # save_item(global_protos, self.role, "global_protos", self.save_folder_name)
         if self.args.addTGP == 1:
             self.tgp_process()
-
-        sampler = GaussianSampler(self.args)
-        sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
-
-        self.train_global_classifier(sampled_features)
 
         self.save_tsne_with_agg(
             args=self.args,
@@ -281,6 +286,132 @@ class FedSAE(Server):
     def push_aggclients_to_trainList(self):
         while len(self.aggregation_buffer.buffer) > 0:
             self.tobetrained.add(self.aggregation_buffer.buffer.pop(0))
+
+    def cal_meancov_and_saveglprotos(self):
+        """
+        cloud_mean_cov (dict):
+            {label: {"mean": Tensor, "cov": Tensor}}, 均值和协方差
+        """
+        self.cloud_cal_mean_cov()
+        cloud_mean_cov = load_item(self.role, "mean_cov", self.save_folder_name)
+        sampled_features = defaultdict(list)
+        for label, item in cloud_mean_cov.items():
+            if item is not None:
+                sampled_features[label] = self._gaussian_sampling(
+                    item["mean"].cpu().numpy(), item["cov"].cpu().numpy(), 4000
+                )
+        return sampled_features
+
+    def cloud_cal_mean_cov(self):
+        """
+        计算加权均值和协方差矩阵。
+        保存云端均值和协方差矩阵。
+
+        Args:
+
+        """
+        for id in self.uploaded_ids:
+            edge_mean_cov = load_item(
+                self.edges[id].role, "mean_cov", self.save_folder_name
+            )
+            save_item(
+                edge_mean_cov,
+                self.edges[id].role,
+                "cloud_mean_cov",
+                self.save_folder_name,
+            )
+
+            if id not in self.have_participated:
+                for key in self.edges[id].N_l.keys():
+                    self.N[key] += self.edges[id].N_l[key]
+                self.have_participated.add(id)
+        # print(f"self.N[key]:{self.N[key]}")
+
+        cloud_mean_cov = {}
+        edges_mean_cov = {
+            edge.id: load_item(edge.role, "cloud_mean_cov", edge.save_folder_name)
+            for edge in self.edges
+        }
+        # Step 1: 计算边缘均值
+        for label in self.N.keys():
+            # 初始化
+            cloud_mean = None
+            cloud_count = 0
+            for edge_id, data in edges_mean_cov.items():
+                if data is None or label not in data:
+                    continue
+                mean_vec = data[label]["mean"]
+                edge_count = self.edges[edge_id].N_l[label]
+                if cloud_mean is None:
+                    cloud_mean = mean_vec * edge_count
+                else:
+                    cloud_mean += mean_vec * edge_count
+
+                cloud_count += edge_count
+
+            cloud_mean /= self.N[label]
+            # print(f"N[label]:{self.N[label]}, cloud_count:{cloud_count}")
+            cloud_mean_cov[label] = {"mean": cloud_mean}
+
+        # Step 2: 计算边缘协方差
+        for label in self.N.keys():
+            total_cov = None
+            for edge_id, data in edges_mean_cov.items():
+                if data is None or label not in data:
+                    continue
+
+                # 从客户端获取信息
+                mean_vec = data[label]["mean"]
+                cov_matrix = data[label]["cov"]
+
+                # 加权协方差
+                weighted_cov = (self.edges[edge_id].N_l[label] - 1) * cov_matrix
+                mean_diff = (mean_vec - cloud_mean_cov[label]["mean"]).unsqueeze(
+                    1
+                )  # 变为列向量
+                if self.edges[edge_id].N_l[label] == 1:
+                    weighted_cov = torch.zeros_like(
+                        torch.mm(mean_diff, mean_diff.T)
+                    )  # 初始化为零矩阵
+                else:
+                    weighted_cov += self.edges[edge_id].N_l[label] * torch.mm(
+                        mean_diff, mean_diff.T
+                    )
+                if total_cov is None:
+                    total_cov = weighted_cov
+                else:
+                    total_cov += weighted_cov
+
+            # 归一化
+            edge_cov = total_cov / (self.N[label] - 1)
+            cloud_mean_cov[label]["cov"] = edge_cov
+        save_item(
+            cloud_mean_cov,
+            role=self.role,
+            item_name="mean_cov",
+            item_path=self.save_folder_name,
+        )
+
+        global_protos = defaultdict(list)
+        for class_id in range(self.num_classes):
+            if class_id in cloud_mean_cov:
+                global_protos[class_id] = cloud_mean_cov[class_id]["mean"]
+        print("global_protos",global_protos)
+        exit(0)
+        save_item(global_protos, self.role, "global_protos", self.save_folder_name)
+
+        return cloud_mean_cov
+
+    def _gaussian_sampling(self, mean, cov, num_samples):
+        """
+        根据均值和协方差矩阵进行高斯采样。
+        :param mean: 均值向量。
+        :param cov: 协方差矩阵。
+        :param num_samples: 采样数量。
+        :return: 采样结果，形状为 (num_samples, feature_dim)。
+        """
+        sampled = np.random.multivariate_normal(mean, cov, num_samples)
+        return torch.tensor(sampled, dtype=torch.float32)
 
     def tgp_process(self):
         self.TGP_uploaded_protos = []

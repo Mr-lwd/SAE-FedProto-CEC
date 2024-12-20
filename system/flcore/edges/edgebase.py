@@ -37,6 +37,7 @@ class Edge:
         self.receiver_buffer = {}
         self.shared_state_dict = {}
         self.id_registration = []
+        self.have_participated_ids =  set()
         self.sample_registration = {}
         self.all_trainsample_num = 0
         # self.shared_state_dict = shared_layers.state_dict()
