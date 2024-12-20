@@ -30,11 +30,10 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 
 # 定义文件路径
 log_files = [
-    # "./FedTGP_gr300.out",
-    # "./FedProto.out",
-    # "./SAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out",
-    # "./lamda_10_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out"
-    "./lamda_2_FedTGP.out"
+    "./lam_2_FedProto.out",
+    "./lam_2_FedSAE_noTGP_gl_use_clients_gamma_0.5_buffer=1.0.out",
+    "./lam_2_FedSAE_noTGP_gl_use_clients_gamma_0.7_buffer=1.0.out",
+    "./lamda_2_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out"
 ]
 time_model_configs = [
     {
