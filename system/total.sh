@@ -11,7 +11,7 @@
 
 # nohup python -u main.py -algo FedTGP -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 10 -m HCNNs8 -tam 1 -addmse 1 -mart 1000 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/lamda_10_FedTGP_addMSE.out 2>&1 &
 
-nohup python -u main.py -algo FedTGP -data Cifar10_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 2 -m HtFE8 -tam 0 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lamda_2_FedTGP.out 2>&1 &
+nohup python -u main.py -algo FedTGP -data Cifar10_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.06 -ls 10 -lam 2 -m HtFE8 -tam 0 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lr_006_lamda_2_FedTGP.out 2>&1 &
 
 # nohup python -u main.py -algo FedSAE -addTGP 1 -gamma 1.0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 19 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/lamda_5_SAE_addTGP_gl_use_clients_gamma_1.0_beta_1.0_buffer=1.0.out 2>&1 && \
 
