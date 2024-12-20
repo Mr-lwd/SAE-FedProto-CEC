@@ -33,7 +33,8 @@ log_files = [
     # "./FedTGP_gr300.out",
     "./FedProto.out",
     # "./SAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out",
-    "./lamda_10_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out"
+    "./lamda_10_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out",
+    "./lamda_2_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out"
 ]
 time_model_configs = [
     {
