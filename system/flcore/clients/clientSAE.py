@@ -286,8 +286,8 @@ class clientSAE(Client):
 
         for label, proto_list in protos.items():
             # 将原型列表转换为矩阵 (n_samples, 512)
-            
-            proto_array = np.array([proto.numpy() for proto in proto_list])  # (n_samples, 512)
+            proto_array = np.array([proto.cpu().numpy() for proto in proto_list])  # (n_samples, 512)
+            # proto_array = np.array([proto.numpy() for proto in proto_list])  # (n_samples, 512)
 
             # 计算加权均值
             mean_vector = np.mean(proto_array, axis=0)  # (512,)

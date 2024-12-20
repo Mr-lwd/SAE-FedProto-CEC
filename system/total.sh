@@ -1,6 +1,5 @@
 
-nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 -mixclassifier 0 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/fedSAE_1220test.out 
-# 2>&1 &
+nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 -mixclassifier 0 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/fedSAE_1220test.out 2>&1 &
 
 # nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data MNIST_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 > ./logs/MNIST/MNIST_dir_0.3_imbalance_40/epochs_10/lamda_2_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out 2>&1 &
 
