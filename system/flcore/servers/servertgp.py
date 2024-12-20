@@ -180,6 +180,7 @@ class FedTGP(Server):
 
     def tgp_process(self):
         uploaded_protos_per_client = []
+        self.TGP_uploaded_protos = []
         for client in self.clients:
             self.uploaded_ids.append(client.id)
             protos = load_item(client.role, "protos", client.save_folder_name)
