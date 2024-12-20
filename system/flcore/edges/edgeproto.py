@@ -60,7 +60,7 @@ class Edge_FedProto(Edge):
 
         for edge_epoch in range(self.args.edge_epochs):  # 边缘轮次, ==1
             eparallel_time_list = []
-            for selected_cid in self.selected_cids:
+            for selected_cid in self.id_registration:
                 # self.send_to_client(clients[selected_cid])
                 id, train_time, trans_time = clients[selected_cid].train()
                 self.etrain_time += train_time
