@@ -396,8 +396,10 @@ class FedSAE(Server):
         for class_id in range(self.num_classes):
             if class_id in cloud_mean_cov:
                 global_protos[class_id] = cloud_mean_cov[class_id]["mean"]
-        print("global_protos",global_protos)
-        exit(0)
+        global_protos = {
+            j: pro.to(self.device) if isinstance(pro, torch.Tensor) else torch.tensor(pro).to(self.device)
+            for j, pro in global_protos.items()
+        }
         save_item(global_protos, self.role, "global_protos", self.save_folder_name)
 
         return cloud_mean_cov
