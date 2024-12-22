@@ -54,7 +54,8 @@ class clientSAE(Client):
                 client_classifier.load_state_dict(averaged_state_dict)
 
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.Adam(model.parameters(), lr=self.learning_rate,weight_decay=1e-4)
         model.train()
 
         max_local_epochs = self.local_epochs

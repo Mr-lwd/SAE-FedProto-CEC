@@ -1,5 +1,5 @@
 
-nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 -mixclassifier 0 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/fedSAE_1220test.out 2>&1 &
+# nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 -mixclassifier 0 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/fedSAE_1220test.out 2>&1 &
 
 # nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data MNIST_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 > ./logs/MNIST/MNIST_dir_0.3_imbalance_40/epochs_10/lamda_2_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out 2>&1 &
 
@@ -7,9 +7,9 @@ nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir
 
 # nohup python -u main.py -algo FedProto -addTGP 0 -data MNIST_dir_0.3_imbalance_40 -gr 150 -nc 40 -lr 0.03 -ls 10 -lam 2 -m HCNNs8 > ./logs/MNIST/MNIST_dir_0.3_imbalance_40/epochs_10/lam_2_FedProto.out 2>&1 &
 
-# nohup python -u main.py -algo FedProto -addTGP 0 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.03 -ls 10 -lam 10 -m HtFE8 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/FedProto.out 2>&1 && \
+# nohup python -u main.py -algo FedProto -addTGP 0 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.06 -ls 10 -lam 2 -m HtFE8 -drawtsne 1 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lr006_lam_2_FedProto_test.out 2>&1 &
 
-# nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.03 -ls 10 -lam 10 -test_useglclassifier 1 -m HtFE8 -mart 100 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lamda_10_FedSAE_noTGP_gl_use_clients_gamma_1.0_buffer=1.0.out 2>&1 &
+# nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.001 -ls 10 -lam 1 -test_useglclassifier 1 -m HtFE8 -mart 100 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/Adam_gaussian_lr0001_lamda_1_FedSAE_noTGP_gamma_1.0_buffer=1.0.out 2>&1 &
 
 # nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 0.7 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -nc 40 -lr 0.03 -ls 10 -lam 2 -test_useglclassifier 0 -m HtFE8 -mart 100 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lam_2_FedSAE_noTGP_gl_use_clients_gamma_0.7_buffer=1.0.out 2>&1 &
 
@@ -22,3 +22,9 @@ nohup python -u main.py -algo FedSAE -addTGP 0 -gamma 1.0 -data FashionMNIST_dir
 # nohup python -u main.py -algo FedSAE -addTGP 1 -gamma 1.0 -data MNIST_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 10 -test_useglclassifier 1 -SAEbeta 1 -m HCNNs8 -mart 1000 > ./logs/MNIST/MNIST_dir_0.3_imbalance_40/epochs_10/lamda_5_SAE_addTGP_gl_use_clients_gamma_1.0_beta_1.0_buffer=1.0.out 2>&1 &
 
 # nohup python -u main.py -algo FedSAE -addTGP 1 -gamma 1.0 -data Cifar10_dir_0.3_imbalance_40 -gr 300 -nc 40 -lr 0.03 -ls 10 -lam 10 -test_useglclassifier 1 -SAEbeta 1 -m HtFE8 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/lamda_10_SAE_addTGP_gl_use_clients_gamma_1.0_beta_1.0_buffer=1.0.out 2>&1 && \
+
+# nohup python -u main.py -algo FedProto -addTGP 0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 200 -lbs 256 -nc 40 -lr 0.0001 -ls 10 -lam 1 -m HCNNs8 -drawtsne 1 -drawround 10 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/Adam_lr_1e-4_wd_1e-4_lam_1_batch_256_FedProto.out 2>&1 &
+
+# nohup python -u main.py -algo FedProto -addTGP 0 -data FashionMNIST_dir_0.3_imbalance_40 -gr 200 -lbs 256 -nc 40 -lr 0.0005 -ls 10 -lam 1 -m HCNNs8 -drawtsne 1 -drawround 10 > ./logs/FashionMNIST/FashionMNIST_dir_0.3_imbalance_40/epochs_10/Adam_lr_5e-4_wd_1e-4_lam_1_batch_256_FedProto.out 2>&1 &
+
+nohup python -u main.py -algo FedProto -addTGP 0 -data Cifar10_dir_0.3_imbalance_40 -gr 200 -lbs 256 -nc 40 -lr 0.08 -ls 10 -lam 1 -m HtFE8 -drawtsne 1 -drawround 10 > ./logs/Cifar10/Cifar10_dir_0.3_imbalance_40/epochs_10/SGD_lr_008_lam_1_batch_256_FedProto.out 2>&1 &
