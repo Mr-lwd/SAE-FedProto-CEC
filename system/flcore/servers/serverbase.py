@@ -501,7 +501,7 @@ class Server(object):
     def aggregate(self, args):
         received_dict = [dict for dict in self.receiver_buffer.values()]
         sample_num = [snum for snum in self.sample_registration.values()]
-        self.shared_state_dict = average_weights(w=received_dict, s_num=sample_num)
+        # self.shared_state_dict = average_weights(w=received_dict, s_num=sample_num)
         return None
 
     def send_to_edge(self, edge):

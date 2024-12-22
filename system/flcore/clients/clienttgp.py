@@ -30,7 +30,9 @@ class clientTGP(Client):
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
         # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.SGD(
+            model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
+        )
         model.train()
 
         max_local_epochs = self.local_epochs
@@ -63,7 +65,7 @@ class clientTGP(Client):
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
-                
+
                 self.local_all_loss += loss
                 for i, yy in enumerate(y):
                     y_c = yy.item()
@@ -76,7 +78,7 @@ class clientTGP(Client):
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
         self.local_model_loss = self.local_model_loss / len(trainloader)
-        self.local_all_loss =self.local_all_loss / len(trainloader)
+        self.local_all_loss = self.local_all_loss / len(trainloader)
 
         save_item(model, self.role, "model", self.save_folder_name)
         eval_extra_time = self.collect_protos()
