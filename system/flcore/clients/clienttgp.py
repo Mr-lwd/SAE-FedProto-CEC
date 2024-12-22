@@ -33,6 +33,7 @@ class clientTGP(Client):
         optimizer = torch.optim.SGD(
             model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
         )
+        model.to(self.device)
         model.train()
 
         max_local_epochs = self.local_epochs
@@ -42,7 +43,7 @@ class clientTGP(Client):
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(max_local_epochs):
             self.local_model_loss = 0
-            local_gl_loss = 0
+            self.local_all_loss = 0
             protos = defaultdict(list)
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
@@ -57,7 +58,7 @@ class clientTGP(Client):
                 output = model.head(rep)
                 loss = self.loss(output, y)
 
-                self.local_model_loss += loss
+                self.local_model_loss += loss.item()
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
@@ -66,7 +67,7 @@ class clientTGP(Client):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
 
-                self.local_all_loss += loss
+                self.local_all_loss += loss.item()
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)

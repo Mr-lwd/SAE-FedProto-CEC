@@ -64,7 +64,7 @@ class clientProto(Client):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
                     
-                self.local_all_loss += loss
+                self.local_all_loss += loss.item()
                 
                 for i, yy in enumerate(y):
                     y_c = yy.item()
