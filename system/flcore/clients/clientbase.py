@@ -64,7 +64,7 @@ class Client(object):
             train_data,
             batch_size,
             drop_last=False,
-            shuffle=False,
+            shuffle=True,
         )
 
     def load_test_data(self, batch_size=None):

@@ -19,6 +19,8 @@ class clientProto(Client):
         self.cshared_protos_global = None
         self.train_time = 0
         self.trans_time  = 0
+        self.local_model_loss = 0
+        self.local_all_loss = 0
 
     def train(self):
         self.receive_from_edgeserver()
@@ -26,9 +28,9 @@ class clientProto(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        # print("local global protos", global_protos)
-        # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate,momentum=self.args.momentum)
+
+        model.to(self.device)
         model.train()
 
         max_local_epochs = self.local_epochs
@@ -37,8 +39,8 @@ class clientProto(Client):
             
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(max_local_epochs):
-            local_model_loss = 0
-            local_gl_loss = 0
+            self.local_model_loss = 0
+            self.local_all_loss = 0
             protos = defaultdict(list)
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
@@ -53,7 +55,7 @@ class clientProto(Client):
                 output = model.head(rep)
                 loss = self.loss(output, y)
 
-                local_model_loss += loss
+                self.local_model_loss += loss.item()
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
@@ -61,6 +63,9 @@ class clientProto(Client):
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
+                    
+                self.local_all_loss += loss
+                
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
@@ -71,8 +76,8 @@ class clientProto(Client):
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
-        local_model_loss = local_model_loss / len(trainloader)
-        local_gl_loss = local_gl_loss / len(trainloader)
+        self.local_model_loss = self.local_model_loss / len(trainloader)
+        self.local_all_loss =self.local_all_loss / len(trainloader)
         # print("local_model_loss", local_model_loss)
         # print("local_gl_loss", local_gl_loss)\
         # 计算每个 512 维张量的大小（单位：字节）

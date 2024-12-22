@@ -424,6 +424,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False
     )
+    parser.add_argument(
+        "-momentum",
+        "--momentum",
+        type=float,
+        default=0.5,
+        help="SGD momentum (default: 0.5)",
+    )
     # agg_type 0--按数据量平均 1--按类平均原型聚合
     parser.add_argument("-agg_type", "--agg_type", type=int, default=0)
 
@@ -432,22 +439,16 @@ if __name__ == "__main__":
         "-bs", "--buffersize", type=int, default=buffer_size
     )  # 与边缘数量相等则等价于全同步
     parser.add_argument("-mixclassifier", "--mixclassifier", type=int, default=0)
-    parser.add_argument(
-        "-gl_use_clients", "--gl_use_clients", type=int, default=1
-    )
+    parser.add_argument("-gl_use_clients", "--gl_use_clients", type=int, default=1)
     parser.add_argument(
         "-test_useglclassifier", "--test_useglclassifier", type=int, default=1
     )
-    parser.add_argument(
-        "-tam", "--tgpaddmse", type=int, default=0
-    )
-    parser.add_argument(
-        "-addmse", "--addmse", type=int, default=0
-    )
+    parser.add_argument("-tam", "--tgpaddmse", type=int, default=0)
+    parser.add_argument("-addmse", "--addmse", type=int, default=0)
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
     # parser.add_argument("-usb", "--use_beta", type=bool, default=True)
     parser.add_argument("-addTGP", "--addTGP", type=int, default=1)
-    parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=1.0)
+    parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=0)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)
     parser.add_argument("-drawround", "--drawround", type=int, default=10)
 

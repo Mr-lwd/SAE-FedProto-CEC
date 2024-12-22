@@ -19,6 +19,8 @@ class clientTGP(Client):
         self.cshared_protos_global = None
         self.train_time = 0
         self.trans_time = 0
+        self.local_model_loss = 0
+        self.local_all_loss = 0
 
     def train(self):
         self.receive_from_edgeserver()
@@ -37,7 +39,7 @@ class clientTGP(Client):
 
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(max_local_epochs):
-            local_model_loss = 0
+            self.local_model_loss = 0
             local_gl_loss = 0
             protos = defaultdict(list)
             for i, (x, y) in enumerate(trainloader):
@@ -53,7 +55,7 @@ class clientTGP(Client):
                 output = model.head(rep)
                 loss = self.loss(output, y)
 
-                local_model_loss += loss
+                self.local_model_loss += loss
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
                     for i, yy in enumerate(y):
@@ -61,6 +63,8 @@ class clientTGP(Client):
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
+                
+                self.local_all_loss += loss
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
@@ -71,8 +75,8 @@ class clientTGP(Client):
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
-        local_model_loss = local_model_loss / len(trainloader)
-        local_gl_loss = local_gl_loss / len(trainloader)
+        self.local_model_loss = self.local_model_loss / len(trainloader)
+        self.local_all_loss =self.local_all_loss / len(trainloader)
 
         save_item(model, self.role, "model", self.save_folder_name)
         eval_extra_time = self.collect_protos()

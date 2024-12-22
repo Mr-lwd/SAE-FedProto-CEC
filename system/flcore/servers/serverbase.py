@@ -46,9 +46,7 @@ class Server(object):
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
-            args.save_folder_name_full = (
-                f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
-            )
+            args.save_folder_name_full = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/"
         self.save_folder_name = args.save_folder_name_full
 
         self.selected_edges = []
@@ -410,9 +408,18 @@ class Server(object):
             sum(tot_proto_correct) / sum(num_samples) if sum(num_samples) > 0 else 0
         )
 
+        avg_model_loss = sum(
+            [client.local_model_loss for client in self.clients]
+        ) / self.num_clients
+        
+        avg_all_loss = sum(
+            [client.local_all_loss for client in self.clients]
+        ) / self.num_clients
         # 打印平均准确率
         print("Averaged Test Accuracy (Regular Model): {:.4f}".format(regular_acc))
         print("Averaged Test Accuracy (Prototype Model): {:.4f}".format(proto_acc))
+        print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
+        print("Averaged Train Loss (Regular + Proto): {:.4f}".format(avg_all_loss))
 
         # 计算标准差
         accs = [a / n for a, n in zip(tot_regular_correct, num_samples)]
@@ -514,7 +521,7 @@ class Server(object):
         elif args.algorithm == "FedTGP":
             save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/tam_{args.tgpaddmse}_addmse_{args.addmse}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
         else:
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
+            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/lr_{args.local_learning_rate}/lamda_{args.lamda}/lbs_{args.batch_size}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/{drawtype}"
 
         all_features = []
         all_labels = []
