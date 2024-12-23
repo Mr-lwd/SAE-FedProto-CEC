@@ -212,7 +212,8 @@ class FedTGP(Server):
 
     def update_Gen(self):
         PROTO = load_item(self.role, "PROTO", self.save_folder_name)
-        Gen_opt = torch.optim.SGD(PROTO.parameters(), lr=self.server_learning_rate)
+        Gen_opt = torch.optim.Adam(PROTO.parameters(), lr=0.001)
+        # Gen_opt = torch.optim.SGD(PROTO.parameters(), lr=self.server_learning_rate)
         PROTO.train()
         for e in range(self.server_epochs):
             proto_loader = DataLoader(

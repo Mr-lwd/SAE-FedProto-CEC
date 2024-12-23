@@ -411,10 +411,15 @@ class Server(object):
         avg_model_loss = sum(
             [client.local_model_loss for client in self.clients]
         ) / self.num_clients
+        
+        avg_all_loss = sum(
+            [client.local_all_loss for client in self.clients]
+        ) / self.num_clients
         # 打印平均准确率
         print("Averaged Test Accuracy (Regular Model): {:.4f}".format(regular_acc))
         print("Averaged Test Accuracy (Prototype Model): {:.4f}".format(proto_acc))
         print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
+        print("Averaged Train Loss (Regular + Proto): {:.4f}".format(avg_all_loss))
 
         # 计算标准差
         accs = [a / n for a, n in zip(tot_regular_correct, num_samples)]
@@ -496,7 +501,7 @@ class Server(object):
     def aggregate(self, args):
         received_dict = [dict for dict in self.receiver_buffer.values()]
         sample_num = [snum for snum in self.sample_registration.values()]
-        self.shared_state_dict = average_weights(w=received_dict, s_num=sample_num)
+        # self.shared_state_dict = average_weights(w=received_dict, s_num=sample_num)
         return None
 
     def send_to_edge(self, edge):
@@ -511,12 +516,11 @@ class Server(object):
         """
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
+        prefix_path = f"{base_path}/{args.dataset}/{args.algorithm}/lr_{args.local_learning_rate}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.algorithm == "FedSAE":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/agg_{args.agg_type}/lr_{args.local_learning_rate}/buffer_{args.buffersize}/lamda_{args.lamda}/mixcl_{args.mixclassifier}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
-        elif args.algorithm == "FedTGP":
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/localepoch_{args.local_epochs}/lr_{args.local_learning_rate}/tam_{args.tgpaddmse}_addmse_{args.addmse}/localepoch_{args.local_epochs}_agg_{args.agg_type}_lamda_{args.lamda}/{drawtype}"
+            save_folder = f"{prefix_path}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
         else:
-            save_folder = f"{base_path}/{args.dataset}/{args.algorithm}/lr_{args.local_learning_rate}/lamda_{args.lamda}/lbs_{args.batch_size}/localepoch_{args.local_epochs}/agg_{args.agg_type}/buffer_{args.buffersize}/{drawtype}"
+            save_folder = f"{prefix_path}/{drawtype}"
 
         all_features = []
         all_labels = []
