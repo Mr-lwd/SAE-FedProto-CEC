@@ -81,8 +81,9 @@ class clientTGP(Client):
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
 
-        save_item(model, self.role, "model", self.save_folder_name)
         eval_extra_time = self.collect_protos()
+        save_item(model, self.role, "model", self.save_folder_name)
+        
         local_train_time += eval_extra_time
 
         self.train_time = local_train_time
