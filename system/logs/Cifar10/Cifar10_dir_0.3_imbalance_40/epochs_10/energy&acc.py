@@ -30,8 +30,7 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 
 # 定义文件路径
 log_files = [
-    "./Adam_lr_0001_lam_1_batch_256_FedProto.out",
-    "./AdamW_lr_3e-4_wd_1e-3_lam_1_batch_256_FedProto.out"
+    "./lr_006_mo_0.5_lam_1_batch_256_FedSAE_gam_0.7.out"
 ]
 time_model_configs = [ 
     {
