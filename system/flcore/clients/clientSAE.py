@@ -69,7 +69,7 @@ class clientSAE(Client):
                     loss += global_loss
                 else:
                     loss = self.loss(output, y)
-                self.local_model_loss += loss
+                self.local_model_loss += loss.item()
 
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
