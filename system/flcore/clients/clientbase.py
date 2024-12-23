@@ -55,6 +55,7 @@ class Client(object):
         self.trans_delay_simulate = args.trans_delay_simulate
         self.trans_simu_time = random.randint(1, 10)
         self.receive_buffer = None
+        self.optimizer = self.args.optimizer
 
     def load_train_data(self, batch_size=None, num_workers=4):
         if batch_size == None:

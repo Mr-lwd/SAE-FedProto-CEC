@@ -37,7 +37,15 @@ class clientSAE(Client):
             for param in glclassifier.parameters():
                 param.requires_grad = False
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate,momentum=self.args.momentum)
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.SGD(
+                model.parameters(), lr=self.learning_rate, weight_decay=1e-4
+            )
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate,momentum=self.args.momentum)
         model.to(self.device)
         model.train()
 
