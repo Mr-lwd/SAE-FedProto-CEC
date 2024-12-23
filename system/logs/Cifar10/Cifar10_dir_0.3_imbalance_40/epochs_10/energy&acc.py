@@ -30,9 +30,7 @@ def extract_data(log_file, time_type="all_clients_time_cost", model_type="Protot
 
 # 定义文件路径
 log_files = [
-    "./lr_003_lamda_2_FedTGP_avg.out",
-    "./SAE_gl_use_edges_lr006/lr_006_FedTGP_weights.out",
-    "./lr_006_lamda_2_FedTGP.out",
+    "./AdamW_lr_5e-4_wd_1e-4_lam_1_batch_256_FedProto.out"
 ]
 time_model_configs = [
     {

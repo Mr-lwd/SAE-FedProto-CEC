@@ -28,7 +28,8 @@ class clientTGP(Client):
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
         # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.Adam(model.parameters(), lr=self.learning_rate,weight_decay=1e-4)
         model.train()
 
         max_local_epochs = self.local_epochs
