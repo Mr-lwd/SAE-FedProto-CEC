@@ -30,9 +30,17 @@ class clientTGP(Client):
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         # print("local global protos", global_protos)
         # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
-        optimizer = torch.optim.SGD(
-            model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
-        )
+        # optimizer = torch.optim.SGD(
+            # model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
+        # )
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.SGD(
+                model.parameters(), lr=self.learning_rate, weight_decay=1e-4
+            )
         model.to(self.device)
         model.train()
 
@@ -81,8 +89,9 @@ class clientTGP(Client):
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
 
-        save_item(model, self.role, "model", self.save_folder_name)
         eval_extra_time = self.collect_protos()
+        save_item(model, self.role, "model", self.save_folder_name)
+        
         local_train_time += eval_extra_time
 
         self.train_time = local_train_time
