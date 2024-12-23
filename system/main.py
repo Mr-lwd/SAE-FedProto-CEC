@@ -420,7 +420,8 @@ if __name__ == "__main__":
         help="The threthold for droping slow clients",
     )
     # FedProto
-    parser.add_argument("-lam", "--lamda", type=float, default=10)
+    parser.add_argument("-optimizer", "--optimizer", type=str, default="SGD")
+    parser.add_argument("-lam", "--lamda", type=float, default=1)
     parser.add_argument("-awd", "--adam_weight_decay", type=float, default=1e-4)
     parser.add_argument(
         "-trans_delay_simulate", "--trans_delay_simulate", type=bool, default=False

@@ -50,10 +50,9 @@ def extract_loss_data(log_file):
 log_files = [
     "./SGD_lr_006_lam_1_momentum_0.5_batch_256_FedProto.out",
     # "./SGD_lr_008_lam_2_momentum_0_batch_256_FedProto.out",
-    "./lr_006_mo_0.5_lam_1_batch_256_FedSAE_gam_0.7.out",
+    # "./lr_006_mo_0.5_lam_1_batch_256_FedSAE_gam_0.7.out",
     "./lr_006_mo_0.5_lam_1_batch_256_FedSAE_gam_1.out",
-    # "./Adam_lr_006_mo_0.5_lam_1_batch_256_FedTGP.out",
-    "./SGD_lr_008_lam_2_momentum_0_batch_256_FedProto.out"
+    "./SGD_lr_006_mo_0.5_lam_1_batch_256_FedTGP.out"
 ]
 
 time_model_configs = [ 
