@@ -30,11 +30,16 @@ class clientProto(Client):
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         if self.optimizer == "SGD":
             optimizer = torch.optim.SGD(
-                model.parameters(), lr=self.learning_rate, momentum=self.args.momentum
+                model.parameters(),
+                lr=self.learning_rate,
+                momentum=self.args.momentum,
+                weight_decay=self.args.weight_decay,
             )
         elif self.optimizer == "Adam":
             optimizer = torch.optim.SGD(
-                model.parameters(), lr=self.learning_rate, weight_decay=1e-4
+                model.parameters(),
+                lr=self.learning_rate,
+                weight_decay=self.args.weight_decay,
             )
         model.to(self.device)
         model.train()
