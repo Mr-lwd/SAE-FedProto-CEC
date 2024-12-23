@@ -29,32 +29,13 @@ class clientSAE(Client):
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
         if self.args.addTGP == 1:
-            tgp_global_protos = load_item(
+            global_protos = load_item(
                 "Server", "tgp_global_protos", self.save_folder_name
             )
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
         if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
                 param.requires_grad = False
-
-            if self.args.mixclassifier == 1:
-                client_classifier = model.head
-                client_state_dict = client_classifier.state_dict()
-                global_state_dict = glclassifier.state_dict()
-                averaged_state_dict = {}
-                for key in client_state_dict.keys():
-                    if key in global_state_dict:
-                        averaged_state_dict[key] = (
-                            client_state_dict[key] + global_state_dict[key]
-                        ) / 2
-                        # averaged_state_dict[key] = (
-                        #     0.7 * client_state_dict[key] + 0.3 * global_state_dict[key]
-                        # )
-                    else:
-                        averaged_state_dict[key] = client_state_dict[key]
-
-                client_classifier.load_state_dict(averaged_state_dict)
-
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate,momentum=self.args.momentum)
         model.to(self.device)
@@ -96,25 +77,25 @@ class clientSAE(Client):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    if self.args.addTGP == 1 and tgp_global_protos is not None:
-                        loss += (
-                            self.loss_mse(proto_new, rep)
-                            * self.lamda
-                            * (1 - self.args.SAEbeta)
-                        )
-                        if self.args.SAEbeta != 0:
-                            proto_new = copy.deepcopy(rep.detach())
-                            for i, yy in enumerate(y):
-                                y_c = yy.item()
-                                if type(tgp_global_protos[y_c]) != type([]):
-                                    proto_new[i, :] = tgp_global_protos[y_c].data
-                            loss += (
-                                self.loss_mse(proto_new, rep)
-                                * self.lamda
-                                * self.args.SAEbeta
-                            )
-                    else:
-                        loss += self.loss_mse(proto_new, rep) * self.lamda
+                    # if self.args.addTGP == 1 and tgp_global_protos is not None:
+                    #     loss += (
+                    #         self.loss_mse(proto_new, rep)
+                    #         * self.lamda
+                    #         * (1 - self.args.SAEbeta)
+                    #     )
+                    #     if self.args.SAEbeta != 0:
+                    #         proto_new = copy.deepcopy(rep.detach())
+                    #         for i, yy in enumerate(y):
+                    #             y_c = yy.item()
+                    #             if type(tgp_global_protos[y_c]) != type([]):
+                    #                 proto_new[i, :] = tgp_global_protos[y_c].data
+                    #         loss += (
+                    #             self.loss_mse(proto_new, rep)
+                    #             * self.lamda
+                    #             * self.args.SAEbeta
+                    #         )
+                    # else:
+                    loss += self.loss_mse(proto_new, rep) * self.lamda
                 self.local_all_loss += loss
                 for i, yy in enumerate(y):
                     y_c = yy.item()
