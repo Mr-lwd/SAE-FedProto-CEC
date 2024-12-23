@@ -88,7 +88,7 @@ class clientSAE(Client):
                     loss += global_loss
                 else:
                     loss = self.loss(output, y)
-                self.local_model_loss += loss
+                self.local_model_loss += loss.item()
 
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
@@ -115,7 +115,7 @@ class clientSAE(Client):
                             )
                     else:
                         loss += self.loss_mse(proto_new, rep) * self.lamda
-                self.local_all_loss += loss
+                self.local_all_loss += loss.item()
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
