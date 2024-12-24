@@ -48,8 +48,8 @@ def extract_loss_data(log_file):
 
 # 定义文件路径
 log_files = [
-    "./lr_008_mo_0.5_lam_2_batch_256_FedSAE_gam_1.out",
-    "./SGD_lr_008_lam_2_momentum_0.5_batch_256_FedProto.out"
+    "./lr_006_wd_1e-5_mo_0.5_lam_2_batch_256_FedSAE_gam_1.out",
+    "./SGD_lr_006_wd_1e-5_mo_0.5_lam_2_batch_256_FedProto.out"
 ]
 
 time_model_configs = [ 

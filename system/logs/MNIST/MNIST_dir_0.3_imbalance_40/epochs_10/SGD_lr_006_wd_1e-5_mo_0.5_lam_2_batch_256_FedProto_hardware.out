@@ -1,0 +1,283 @@
+==================================================
+goal = test
+device = cpu
+device_id = 0
+dataset = MNIST_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 10
+edge_epochs = 1
+local_epochs = 10
+algorithm = FedProto
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 2.0
+weight_decay = 1e-05
+trans_delay_simulate = False
+momentum = 0.5
+agg_type = 0
+buffersize = 10
+mixclassifier = 0
+gl_use_clients = 1
+test_useglclassifier = 1
+tgpaddmse = 0
+addmse = 0
+gamma = 1
+addTGP = 0
+SAEbeta = 0
+drawtsne = 1
+drawround = 10
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {7: 487, 6: 197, 8: 413, 1: 35, 4: 113, 0: 3, 5: 8, 2: 24})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {1: 314, 8: 346, 7: 243, 0: 210, 3: 103, 4: 45, 2: 9, 5: 6, 6: 4})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {9: 543, 4: 422, 2: 135, 0: 70, 6: 48, 3: 24, 8: 31, 5: 3, 1: 4})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {1: 485, 0: 152, 8: 245, 3: 110, 2: 22, 7: 2, 6: 7, 9: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {6: 53, 7: 164, 8: 230, 3: 236, 0: 43, 1: 24, 5: 5, 9: 13})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {5: 257, 3: 425, 2: 36, 8: 33, 7: 5, 0: 9, 4: 1, 9: 2})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {3: 471, 5: 64, 6: 76, 7: 35, 1: 22, 2: 44, 9: 41, 8: 14, 0: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {8: 469, 7: 49, 2: 50, 3: 890, 4: 16, 6: 62})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {2: 136, 7: 267, 9: 101, 4: 69, 5: 237, 8: 112, 6: 72, 3: 7, 0: 18, 1: 5})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {0: 161, 7: 383, 2: 164, 4: 108, 3: 76, 8: 31, 5: 93, 1: 4, 9: 4})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {2: 924, 6: 181, 7: 897, 3: 36, 0: 3, 5: 7})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {5: 572, 4: 98, 0: 797, 2: 58, 1: 11})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {9: 1764, 3: 362, 6: 302, 4: 231, 5: 101, 0: 44, 2: 2, 8: 10})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {6: 579, 4: 103, 2: 53, 0: 20, 5: 7, 3: 172, 7: 346})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {3: 332, 7: 524, 4: 328, 6: 47, 1: 47, 0: 2})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {9: 233, 7: 156, 1: 215, 8: 88, 4: 49, 6: 15, 3: 4, 2: 4, 0: 4})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {9: 190, 8: 72, 2: 563, 6: 243, 1: 61, 0: 75, 4: 2, 5: 22, 3: 36, 7: 16})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {6: 102, 1: 376, 0: 255, 3: 14, 2: 14, 5: 4, 9: 3})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {4: 679, 3: 362, 5: 233, 2: 6})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {6: 80, 5: 72, 4: 89, 0: 154, 1: 59, 3: 3, 2: 52, 9: 2, 7: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {4: 381, 5: 1209, 1: 460, 3: 233, 2: 21})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {2: 380, 8: 90, 9: 122, 6: 368, 1: 45, 3: 3, 5: 10, 7: 5, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {1: 790, 0: 220, 2: 270})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {6: 312, 2: 136, 0: 163, 3: 36, 9: 26, 1: 82, 4: 11, 5: 1, 7: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {7: 320, 6: 60, 4: 62, 1: 50, 9: 10, 3: 6, 8: 2, 5: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {2: 148, 1: 723, 4: 375, 3: 4, 7: 9, 5: 21})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {0: 379, 6: 65, 2: 222, 3: 205, 1: 62, 7: 34, 9: 41, 5: 4, 8: 10, 4: 2})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {5: 398, 9: 368, 7: 252, 4: 199, 0: 42, 1: 17, 2: 3, 6: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {0: 514, 3: 395, 2: 371})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {8: 699, 0: 155, 2: 125, 4: 780, 1: 25, 3: 4, 6: 3, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {2: 378, 5: 453, 1: 140, 0: 260, 4: 37, 3: 12})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {9: 234, 1: 392, 6: 9, 4: 99, 8: 23, 0: 8, 7: 1, 3: 2})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {0: 67, 9: 603, 5: 241, 2: 68, 3: 27, 7: 8, 6: 3, 8: 6, 1: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {6: 877, 2: 252, 0: 237, 1: 72, 4: 42, 3: 55, 5: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {0: 547, 4: 196, 1: 62, 9: 105, 6: 51, 2: 40, 7: 6, 5: 16, 3: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {6: 292, 8: 88, 2: 42, 7: 49, 9: 38, 5: 2, 3: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {6: 459, 9: 44, 4: 63, 1: 205, 3: 17, 2: 77, 8: 23, 7: 124, 0: 12})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {8: 1303, 5: 58, 6: 75, 7: 71, 2: 8, 3: 13, 0: 6, 1: 2})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {1: 631, 7: 208, 8: 83, 3: 38, 5: 25, 9: 6, 6: 26, 4: 7})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {5: 141, 9: 267, 8: 28, 0: 64, 4: 4, 1: 6, 6: 1, 3: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 8 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 7 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 6 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 5 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 4 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 3 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 2 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 1 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 0 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+readyList:
+[0, 6, 7, 8, 2, 9, 4, 5, 3, 1]
+aggregation_buffer:
+[0, 6, 7, 8, 2, 9, 4, 5, 3, 1]
+Number of samples: 315
+Traceback (most recent call last):
+  File "main.py", line 510, in <module>
+    run(args)
+  File "main.py", line 270, in run
+    server.train()
+  File "/media/jet/85e5c3a0-6da4-4632-b91a-3b46292ad123/lwd/SAE-FedProto-CEC/system/flcore/servers/serverproto.py", line 70, in train
+    self.  ()
+  File "/media/jet/85e5c3a0-6da4-4632-b91a-3b46292ad123/lwd/SAE-FedProto-CEC/system/flcore/servers/serverproto.py", line 118, in cloudUpdate
+    current_epoch=self.current_epoch,
+  File "/media/jet/85e5c3a0-6da4-4632-b91a-3b46292ad123/lwd/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 578, in save_tsne_with_agg
+    reduced_features = tsne.fit_transform(all_features)
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/manifold/_t_sne.py", line 932, in fit_transform
+    embedding = self._fit(X)
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/manifold/_t_sne.py", line 704, in _fit
+    dtype=[np.float32, np.float64])
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/base.py", line 421, in _validate_data
+    X = check_array(X, **check_params)
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/utils/validation.py", line 63, in inner_f
+    return f(*args, **kwargs)
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/utils/validation.py", line 721, in check_array
+    allow_nan=force_all_finite == 'allow-nan')
+  File "/home/jet/archiconda3/envs/py36/lib/python3.6/site-packages/sklearn/utils/validation.py", line 106, in _assert_all_finite
+    msg_dtype if msg_dtype is not None else X.dtype)
+ValueError: Input contains NaN, infinity or a value too large for dtype('float32').
