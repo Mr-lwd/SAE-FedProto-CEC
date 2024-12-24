@@ -24,8 +24,21 @@ class clientGen(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
         generative_model = load_item('Server', 'generative_model', self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
-        # model.to(self.device)
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                momentum=self.args.momentum,
+                weight_decay=self.args.weight_decay,
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                weight_decay=self.args.weight_decay,
+            )
+        model.to(self.device)
         model.train()
         
         start_time = time.time()
@@ -43,7 +56,10 @@ class clientGen(Client):
                 y = y.to(self.device)
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
-                output = model(x)
+                # output = model(x)
+                rep = model.base(x)
+                rep = rep.squeeze(1)
+                output = model.head(rep)
                 loss = self.loss(output, y)
                 
                 if generative_model is not None:

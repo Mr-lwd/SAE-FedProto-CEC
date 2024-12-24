@@ -346,6 +346,21 @@ class Server(object):
 
     def test_metrics(self):
         num_samples = []
+        tot_correct = []
+        tot_auc = []
+        for c in self.clients:
+            ct, ns, auc = c.test_metrics()
+            tot_correct.append(ct*1.0)
+            print(f'Client {c.id}: Acc: {ct*1.0/ns}, AUC: {auc}')
+            tot_auc.append(auc*ns)
+            num_samples.append(ns)
+
+        ids = [c.id for c in self.clients]
+
+        return ids, num_samples, tot_correct, tot_auc      
+
+    def test_metrics_proto(self):
+        num_samples = []
         tot_regular_correct = []
         tot_proto_correct = []
         regular_accuracies = []
@@ -353,7 +368,7 @@ class Server(object):
 
         # 收集每个客户端的测试结果
         for c in self.clients:
-            regular_acc, regular_num, proto_acc, proto_num = c.test_metrics()
+            regular_acc, regular_num, proto_acc, proto_num = c.test_metrics_proto()
 
             # 计算每个客户端的准确率
             regular_accuracy = regular_acc * 1.0 / regular_num if regular_num > 0 else 0
@@ -395,8 +410,8 @@ class Server(object):
 
         return ids, num_samples, losses
 
-    def evaluate(self, acc=None, loss=None):
-        stats = self.test_metrics()  # 调用 test_metrics 来收集所有统计信息
+    def evaluate_proto(self, acc=None, loss=None):
+        stats = self.test_metrics_proto()  # 调用 test_metrics 来收集所有统计信息
 
         # 解包 stats 中的统计信息
         ids, num_samples, tot_regular_correct, tot_proto_correct = stats
@@ -435,6 +450,33 @@ class Server(object):
             self.rs_test_acc.append(regular_acc)
         else:
             acc.append(regular_acc)
+
+    def evaluate(self, acc=None, loss=None):
+        stats = self.test_metrics()
+        # stats_train = self.train_metrics()
+
+        test_acc = sum(stats[2])*1.0 / sum(stats[1])
+        test_auc = sum(stats[3])*1.0 / sum(stats[1])
+        # train_loss = sum(stats_train[2])*1.0 / sum(stats_train[1])
+        accs = [a / n for a, n in zip(stats[2], stats[1])]
+        aucs = [a / n for a, n in zip(stats[3], stats[1])]
+        
+        if acc == None:
+            self.rs_test_acc.append(test_acc)
+        else:
+            acc.append(test_acc)
+        
+        # if loss == None:
+        #     self.rs_train_loss.append(train_loss)
+        # else:
+        #     loss.append(train_loss)
+
+        # print("Averaged Train Loss: {:.4f}".format(train_loss))
+        print("Averaged Test Accurancy: {:.4f}".format(test_acc))
+        print("Averaged Test AUC: {:.4f}".format(test_auc))
+        # self.print_(test_acc, train_acc, train_loss)
+        print("Std Test Accurancy: {:.4f}".format(np.std(accs)))
+        print("Std Test AUC: {:.4f}".format(np.std(aucs)))
 
     def print_(self, test_acc, test_auc, train_loss):
         print("Average Test Accurancy: {:.4f}".format(test_acc))
