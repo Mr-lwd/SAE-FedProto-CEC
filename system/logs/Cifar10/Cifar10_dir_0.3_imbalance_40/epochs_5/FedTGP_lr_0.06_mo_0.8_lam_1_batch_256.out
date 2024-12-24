@@ -1,0 +1,349 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = Cifar10_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HtFE8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = FedTGP
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+mixclassifier = 0
+gl_use_clients = 1
+test_useglclassifier = 1
+tgpaddmse = 0
+addmse = 0
+gamma = 1
+addTGP = 0
+SAEbeta = 0
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {6: 81, 7: 315, 3: 373, 1: 43, 4: 168, 8: 37, 2: 1, 5: 2, 9: 2, 0: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {2: 742, 4: 275, 0: 5, 3: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {5: 94, 9: 40, 4: 121, 8: 106, 6: 31, 2: 66, 1: 8, 7: 29, 0: 16, 3: 1})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {9: 341, 4: 87, 5: 389, 8: 32, 7: 413, 2: 15, 0: 3})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {8: 153, 2: 525, 3: 75, 7: 25, 5: 209, 1: 3, 4: 17, 0: 17})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {0: 708, 5: 482, 1: 61, 3: 29})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {3: 350, 6: 147, 8: 128, 9: 38, 0: 87, 1: 14, 2: 1, 4: 2, 7: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {9: 1383, 4: 314, 3: 104, 2: 72, 0: 72, 7: 73, 5: 24, 1: 6})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {4: 360, 1: 12, 3: 74, 8: 137, 0: 3, 2: 93, 7: 74, 9: 10, 6: 4, 5: 1})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {7: 250, 1: 59, 4: 83, 0: 7, 2: 69, 3: 12, 9: 26, 5: 6})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {8: 852, 0: 790, 4: 102, 1: 16, 3: 11, 2: 10, 6: 6, 5: 5})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {8: 145, 7: 5, 1: 145, 2: 170, 3: 12, 9: 34, 5: 1})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {4: 321, 6: 610, 1: 39, 0: 48, 3: 4, 5: 1, 2: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {0: 449, 6: 407, 3: 88, 2: 260, 1: 66, 4: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {5: 682, 1: 468, 4: 89, 3: 14, 0: 26, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {4: 954, 2: 823, 1: 151, 0: 75, 3: 45})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {6: 102, 1: 1, 3: 357, 0: 7, 8: 56, 9: 156, 4: 29, 5: 60})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {7: 965, 0: 8, 6: 42, 3: 84, 2: 125, 5: 9, 4: 47})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {0: 245, 5: 167, 1: 176, 4: 75, 3: 49, 7: 7, 8: 45, 6: 3, 2: 1})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 419, 5: 54, 9: 81, 8: 134, 2: 44, 6: 19, 7: 10, 3: 7})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {3: 284, 0: 173, 4: 38, 8: 298, 7: 16, 6: 199, 2: 13, 5: 3})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {1: 259, 0: 409, 5: 39, 4: 123, 2: 70, 3: 89, 8: 31, 9: 2, 6: 2})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {3: 75, 6: 120, 8: 353, 9: 97, 5: 51, 1: 56, 7: 14, 4: 2})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {2: 413, 3: 303, 1: 171, 0: 137})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 108, 7: 394, 6: 225, 2: 21, 1: 145, 8: 68, 3: 18, 9: 41, 0: 4})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 313, 4: 90, 1: 317, 5: 186, 6: 75, 3: 25, 2: 11, 9: 2, 8: 3, 0: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {9: 803, 0: 249, 3: 104, 5: 51, 8: 52, 1: 16, 6: 2, 4: 3})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {6: 291, 5: 114, 1: 19, 3: 10, 4: 20, 9: 44, 2: 14})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {8: 25, 5: 431, 1: 132, 0: 74, 4: 65, 7: 27, 6: 11, 2: 2, 3: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {5: 328, 7: 802, 1: 41, 6: 43, 4: 10, 3: 48, 2: 8})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {3: 614, 2: 14, 6: 483, 0: 84, 5: 79, 4: 6})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {6: 47, 0: 121, 9: 142, 1: 83, 7: 41, 3: 5, 4: 43, 2: 8, 5: 22})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {0: 27, 5: 290, 8: 72, 9: 47, 2: 55, 1: 8, 3: 3, 7: 1, 6: 9})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {6: 226, 1: 600, 8: 55, 4: 72, 5: 27, 7: 33, 0: 9, 2: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {8: 744, 6: 172, 4: 26, 1: 189, 3: 119, 7: 25, 2: 5})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {0: 51, 2: 209, 9: 284, 3: 52, 6: 18, 7: 131, 8: 11, 1: 6, 4: 6})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {5: 139, 8: 137, 1: 62, 9: 64, 4: 88, 2: 11, 7: 10, 0: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {1: 133, 0: 86, 4: 65, 6: 405, 9: 17, 3: 38, 7: 7, 5: 11, 2: 6})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {2: 95, 7: 111, 6: 129, 5: 21, 8: 23, 3: 92, 1: 22, 9: 17, 0: 2})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {3: 326, 8: 199, 9: 290, 4: 197, 0: 2, 5: 4, 7: 4, 2: 1, 1: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+Trainable_prototypes(
+  (embedings): Embedding(10, 512)
+  (middle): Sequential(
+    (0): Sequential(
+      (0): Linear(in_features=512, out_features=512, bias=True)
+      (1): ReLU()
+    )
+  )
+  (fc): Linear(in_features=512, out_features=512, bias=True)
+)
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 8 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 7 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 6 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 5 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 4 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 3 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 2 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 1 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 0 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+readyList:
+[0, 8, 2, 5, 1, 9, 4, 6, 7, 3]
+aggregation_buffer:
+[0, 8, 2, 5, 1, 9, 4, 6, 7, 3]
+class-wise minimum distance tensor([ 1066.0027,  1066.0027,  2764.0361,   130.9454,  3870.2644,  3870.2644,
+        10912.6104,  6359.9370, 18116.0449,   130.9454], device='cuda:0')
+min_gap tensor(130.9454, device='cuda:0')
+max_gap tensor(18116.0449, device='cuda:0')
+Server loss: 102.2080307006836
+Number of samples: 323
+end Update
+server_global_time: 7.068933859467506
+only_train_time: 61.39811235666275
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.4695
+Averaged Test Accuracy (Prototype Model): 0.1180
+Averaged Train Loss (Regular Model): 1.4174
+Averaged Train Loss (Regular + Proto): 1.4174
+Std Test Accuracy (Regular Model): 0.1674
+Std Test Accuracy (Prototype Model): 0.1097
+tobetrained:
+[0, 8, 2, 5, 1, 9, 4, 6, 7, 3]
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+[0, 8, 2, 9, 1, 5, 4, 6, 7, 3]
+aggregation_buffer:
+[0, 8, 2, 9, 1, 5, 4, 6, 7, 3]
+class-wise minimum distance tensor([ 3766.4014,  2724.0852,  5552.4624,  2724.0852,  9766.2598,  6344.4062,
+         4972.6611,  7847.9937, 42273.6914, 19190.8945], device='cuda:0')
+min_gap tensor(2724.0852, device='cuda:0')
+max_gap tensor(42273.6914, device='cuda:0')
+Server loss: 102.14710998535156
+end Update
+server_global_time: 14.38628489524126
+only_train_time: 126.27933475375175
+
+-------------Global Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5756
+Averaged Test Accuracy (Prototype Model): 0.1564
+Averaged Train Loss (Regular Model): 0.9486
+Averaged Train Loss (Regular + Proto): 1.4527
+Std Test Accuracy (Regular Model): 0.1364
+Std Test Accuracy (Prototype Model): 0.1261
+tobetrained:
+[0, 8, 2, 9, 1, 5, 4, 6, 7, 3]
+Edge 0 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 7 begin training
+Edge 3 begin training
+readyList:
+[0, 8, 2, 9, 5, 1, 4, 6, 7, 3]
+aggregation_buffer:
+[0, 8, 2, 9, 5, 1, 4, 6, 7, 3]
+class-wise minimum distance tensor([3.9572, 1.0057, 0.9483, 1.5279, 4.1538, 1.4483, 0.9483, 1.0057, 3.7726,
+        3.2614], device='cuda:0')
+min_gap tensor(0.9483, device='cuda:0')
+max_gap tensor(4.1538, device='cuda:0')
+Server loss: 6.237544536590576
+end Update
+server_global_time: 21.63377672433853
+only_train_time: 190.63331039249897
+
+-------------Global Round number: 2-------------
+
+Evaluate heterogeneous models

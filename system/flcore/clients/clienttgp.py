@@ -97,7 +97,7 @@ class clientTGP(Client):
         eval_extra_time = self.collect_protos()
         save_item(model, self.role, "model", self.save_folder_name)
         
-        local_train_time += eval_extra_time
+        # local_train_time += eval_extra_time
 
         self.train_time = local_train_time
         if self.trans_delay_simulate is True:
