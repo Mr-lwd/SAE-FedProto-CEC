@@ -449,10 +449,10 @@ if __name__ == "__main__":
     parser.add_argument("-addmse", "--addmse", type=int, default=0)
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
     # parser.add_argument("-usb", "--use_beta", type=bool, default=True)
-    parser.add_argument("-addTGP", "--addTGP", type=int, default=1)
+    parser.add_argument("-addTGP", "--addTGP", type=int, default=0)
     parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=0)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)
-    parser.add_argument("-drawround", "--drawround", type=int, default=10)
+    parser.add_argument("-drawround", "--drawround", type=int, default=20)
 
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
