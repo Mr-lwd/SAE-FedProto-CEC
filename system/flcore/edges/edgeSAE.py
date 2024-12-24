@@ -181,10 +181,10 @@ class Edge_FedSAE(Edge):
                     edge_mean += mean_vec * client_count
 
                 edge_count += client_count
-
-            edge_mean /= self.N_l[label]
-            # print(f"N_l[label]:{self.N_l[label]}, client_count:{client_count}")
-            edge_mean_cov[label] = {"mean": edge_mean}
+            if edge_mean is not None and self.N_l[label] > 0:
+                edge_mean /= self.N_l[label]
+                # print(f"N_l[label]:{self.N_l[label]}, client_count:{client_count}")
+                edge_mean_cov[label] = {"mean": edge_mean}
 
         # Step 2: 计算边缘协方差
         for label in self.N_l.keys():
@@ -220,8 +220,9 @@ class Edge_FedSAE(Edge):
                     total_cov += weighted_cov
 
             # 归一化
-            edge_cov = total_cov / (self.N_l[label] - 1)
-            edge_mean_cov[label]["cov"] = edge_cov
+            if total_cov is not None:
+                edge_cov = total_cov / (self.N_l[label] - 1)
+                edge_mean_cov[label]["cov"] = edge_cov
         save_item(
             edge_mean_cov,
             role=self.role,
