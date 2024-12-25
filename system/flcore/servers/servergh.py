@@ -35,11 +35,6 @@ class FedGH(Server):
             self.selected_clients = self.select_clients()
             self.send_parameters()
 
-            if i%self.eval_gap == 0:
-                print(f"\n-------------Round number: {i}-------------")
-                print("\nEvaluate heterogeneous models")
-                self.evaluate()
-
             for client in self.selected_clients:
                 client.train()
                 client.collect_protos()
@@ -54,7 +49,12 @@ class FedGH(Server):
 
             self.Budget.append(time.time() - s_t)
             print('-'*50, self.Budget[-1])
-
+            
+            if i%self.eval_gap == 0:
+                print(f"\n-------------Round number: {i}-------------")
+                print("\nEvaluate heterogeneous models")
+                self.evaluate()
+                
             if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
                 break
 

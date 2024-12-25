@@ -32,7 +32,9 @@ class clientGH(Client):
                 y = y.to(self.device)
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
-                output = model(x)
+                rep = model.base(x)
+                rep = rep.squeeze(1)
+                output = model.head(rep)
                 loss = self.loss(output, y)
                 optimizer.zero_grad()
                 loss.backward()
@@ -67,7 +69,8 @@ class clientGH(Client):
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
-
+                rep = rep.squeeze(1)
+                
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)

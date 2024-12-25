@@ -351,7 +351,7 @@ class Server(object):
         for c in self.clients:
             ct, ns, auc = c.test_metrics()
             tot_correct.append(ct*1.0)
-            print(f'Client {c.id}: Acc: {ct*1.0/ns}, AUC: {auc}')
+            # print(f'Client {c.id}: Acc: {ct*1.0/ns}, AUC: {auc}')
             tot_auc.append(auc*ns)
             num_samples.append(ns)
 
