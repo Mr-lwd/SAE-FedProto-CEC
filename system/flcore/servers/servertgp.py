@@ -103,7 +103,7 @@ class FedTGP(Server):
             if i % self.eval_gap == 0:
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
-                self.evaluate()
+                self.evaluate_proto()
 
             if self.auto_break and self.check_done(
                 acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt
