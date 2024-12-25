@@ -1,0 +1,1647 @@
+nohup: ignoring input
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = FashionMNIST_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = FedTGP
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+mixclassifier = 0
+gl_use_clients = 1
+test_useglclassifier = 1
+tgpaddmse = 0
+addmse = 0
+gamma = 1
+addTGP = 0
+SAEbeta = 0
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {0: 263, 1: 304, 5: 94, 9: 505, 3: 25, 2: 86, 6: 3})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {7: 178, 4: 564, 1: 460, 5: 42, 0: 14, 2: 17, 3: 3, 6: 2})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {9: 90, 0: 168, 7: 273, 5: 135, 6: 57, 4: 10, 3: 27, 8: 5, 2: 3})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {8: 158, 3: 137, 2: 329, 0: 1, 4: 43, 6: 83, 9: 14, 5: 3})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {1: 363, 0: 286, 5: 463, 2: 163, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {4: 405, 6: 616, 1: 96, 3: 40, 2: 54, 8: 45, 5: 13, 7: 10, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {4: 237, 8: 342, 9: 383, 3: 21, 6: 26, 2: 5, 1: 9, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {9: 449, 0: 34, 6: 318, 8: 607, 5: 13, 1: 11, 4: 50, 3: 35, 7: 14, 2: 5})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {9: 82, 4: 417, 2: 66, 0: 105, 5: 12, 6: 53, 8: 23, 3: 7, 1: 3})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 908, 1: 129, 2: 172, 0: 71})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {4: 769, 8: 400, 2: 53, 3: 9, 5: 17, 0: 29, 7: 1, 1: 1, 6: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {6: 129, 1: 52, 8: 201, 4: 207, 5: 49, 3: 41, 7: 7, 9: 72, 2: 10})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {5: 83, 6: 190, 3: 124, 1: 196, 0: 162, 9: 11, 4: 1, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {3: 370, 2: 718, 7: 167, 0: 10, 4: 7, 5: 2, 1: 6})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {3: 123, 0: 284, 5: 60, 1: 51, 9: 188, 2: 39, 4: 20, 8: 3})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {6: 947, 5: 209, 1: 38, 0: 74, 3: 11, 4: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {8: 237, 1: 732, 3: 73, 4: 52, 5: 59, 0: 115, 6: 12})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {5: 475, 8: 612, 3: 30, 4: 27, 0: 100, 2: 16, 6: 17, 1: 2, 7: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {5: 25, 7: 204, 4: 95, 8: 325, 1: 87, 3: 28, 6: 2, 0: 1, 2: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 358, 0: 1178})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 754, 2: 16, 7: 115, 1: 253, 6: 40, 4: 184, 0: 34, 5: 138, 8: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {7: 16, 1: 354, 4: 269, 6: 205, 0: 120, 3: 54, 8: 4, 9: 1, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {7: 357, 5: 221, 1: 96, 6: 58, 2: 8, 0: 11, 8: 15, 4: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {9: 189, 0: 166, 8: 101, 1: 24, 5: 30, 3: 1, 7: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 257, 3: 391, 5: 103, 9: 199, 0: 57, 8: 15, 1: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {3: 361, 5: 462, 1: 32, 0: 72, 7: 205, 2: 142, 4: 6})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {0: 386, 8: 485, 7: 156, 2: 103, 4: 115, 1: 8, 3: 23, 5: 4})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {2: 169, 5: 476, 6: 224, 3: 70, 0: 79, 4: 5, 7: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {0: 17, 1: 43, 9: 192, 3: 17, 7: 126, 2: 39, 8: 67, 4: 1, 5: 8, 6: 2})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {5: 282, 8: 115, 6: 3, 7: 307, 1: 15, 9: 139, 3: 139, 2: 22, 4: 2})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {8: 209, 7: 276, 0: 221, 9: 39, 5: 20, 2: 1, 1: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {2: 462, 1: 196, 4: 536, 0: 86})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {9: 1136, 7: 49, 2: 274, 6: 75, 5: 143, 3: 51, 1: 20, 0: 31, 8: 12, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {0: 140, 2: 386, 3: 259, 1: 68, 7: 112, 6: 239, 4: 76})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {6: 791, 2: 788, 1: 38, 0: 156, 3: 11, 4: 8})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {0: 298, 2: 89, 4: 308, 7: 35, 3: 119, 1: 25, 5: 65, 9: 69, 6: 15, 8: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {8: 185, 3: 330, 6: 360, 2: 114, 7: 109, 9: 137, 1: 37, 0: 3, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {3: 989, 7: 2163, 6: 141, 5: 11, 2: 20, 0: 1, 4: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {5: 995, 1: 489, 0: 12, 2: 23, 3: 16, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {8: 428, 2: 330, 6: 198, 1: 37, 5: 11, 7: 2, 0: 12, 3: 2, 4: 1, 9: 3})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+Trainable_prototypes(
+  (embedings): Embedding(10, 512)
+  (middle): Sequential(
+    (0): Sequential(
+      (0): Linear(in_features=512, out_features=512, bias=True)
+      (1): ReLU()
+    )
+  )
+  (fc): Linear(in_features=512, out_features=512, bias=True)
+)
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 8 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 7 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 6 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 5 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 4 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 3 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 2 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 1 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Edge 0 begin training
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+Server global_protos Not Found
+readyList:
+[7, 1, 6, 8, 2, 5, 4, 0, 9, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 2, 5, 4, 0, 9, 3]
+class-wise minimum distance tensor([0.1697, 0.2279, 0.1783, 0.1893, 0.2420, 0.3021, 0.1697, 0.2644, 0.2594,
+        0.3633], device='cuda:0')
+min_gap tensor(0.1697, device='cuda:0')
+max_gap tensor(0.3633, device='cuda:0')
+Server loss: 2.589970350265503
+Number of samples: 322
+end Update
+server_global_time: 0.7309108227491379
+only_train_time: 10.053518198430538
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.7908
+Averaged Test Accuracy (Prototype Model): 0.1896
+Averaged Train Loss (Regular Model): 0.7231
+Averaged Train Loss (Regular + Proto): 0.7231
+Std Test Accuracy (Regular Model): 0.1673
+Std Test Accuracy (Prototype Model): 0.1732
+tobetrained:
+[7, 1, 6, 8, 2, 5, 4, 0, 9, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 5, 9, 4, 0, 2, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 5, 9, 4, 0, 2, 3]
+class-wise minimum distance tensor([0.9887, 1.3847, 1.0583, 0.9887, 1.2695, 1.4549, 1.0583, 1.4549, 1.7459,
+        3.4688], device='cuda:0')
+min_gap tensor(0.9887, device='cuda:0')
+max_gap tensor(3.4688, device='cuda:0')
+Server loss: 5.289549827575684
+end Update
+server_global_time: 1.8262373730540276
+only_train_time: 25.54368556290865
+
+-------------Global Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8651
+Averaged Test Accuracy (Prototype Model): 0.7012
+Averaged Train Loss (Regular Model): 0.4485
+Averaged Train Loss (Regular + Proto): 0.5533
+Std Test Accuracy (Regular Model): 0.0923
+Std Test Accuracy (Prototype Model): 0.2068
+tobetrained:
+[7, 6, 1, 8, 5, 9, 4, 0, 2, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[7, 2, 8, 0, 9, 6, 1, 4, 5, 3]
+aggregation_buffer:
+[7, 2, 8, 0, 9, 6, 1, 4, 5, 3]
+class-wise minimum distance tensor([0.8420, 1.0584, 0.5695, 0.8464, 0.5695, 1.0412, 0.7023, 1.0412, 1.3213,
+        1.9010], device='cuda:0')
+min_gap tensor(0.5695, device='cuda:0')
+max_gap tensor(1.9010, device='cuda:0')
+Server loss: 3.319840669631958
+end Update
+server_global_time: 2.847476549446583
+only_train_time: 41.54265737533569
+
+-------------Global Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8954
+Averaged Test Accuracy (Prototype Model): 0.8111
+Averaged Train Loss (Regular Model): 0.3224
+Averaged Train Loss (Regular + Proto): 0.4354
+Std Test Accuracy (Regular Model): 0.0660
+Std Test Accuracy (Prototype Model): 0.1525
+tobetrained:
+[7, 2, 8, 0, 9, 6, 1, 4, 5, 3]
+Edge 7 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[6, 7, 1, 2, 0, 5, 4, 8, 9, 3]
+aggregation_buffer:
+[6, 7, 1, 2, 0, 5, 4, 8, 9, 3]
+class-wise minimum distance tensor([1.0698, 1.3746, 0.6843, 1.0698, 0.6843, 1.3905, 0.6845, 1.3905, 1.7854,
+        2.5953], device='cuda:0')
+min_gap tensor(0.6843, device='cuda:0')
+max_gap tensor(2.5953, device='cuda:0')
+Server loss: 3.5430192947387695
+end Update
+server_global_time: 3.9265637770295143
+only_train_time: 56.85220497101545
+
+-------------Global Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9052
+Averaged Test Accuracy (Prototype Model): 0.8521
+Averaged Train Loss (Regular Model): 0.2571
+Averaged Train Loss (Regular + Proto): 0.3788
+Std Test Accuracy (Regular Model): 0.0605
+Std Test Accuracy (Prototype Model): 0.1173
+tobetrained:
+[6, 7, 1, 2, 0, 5, 4, 8, 9, 3]
+Edge 6 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[6, 7, 1, 8, 2, 0, 5, 9, 4, 3]
+aggregation_buffer:
+[6, 7, 1, 8, 2, 0, 5, 9, 4, 3]
+class-wise minimum distance tensor([1.3871, 1.7900, 0.7944, 1.3882, 0.7944, 1.6042, 0.9158, 1.6042, 2.3509,
+        3.2526], device='cuda:0')
+min_gap tensor(0.7944, device='cuda:0')
+max_gap tensor(3.2526, device='cuda:0')
+Server loss: 3.7358641624450684
+end Update
+server_global_time: 5.124917387962341
+only_train_time: 72.04083888232708
+
+-------------Global Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9084
+Averaged Test Accuracy (Prototype Model): 0.8657
+Averaged Train Loss (Regular Model): 0.2300
+Averaged Train Loss (Regular + Proto): 0.3718
+Std Test Accuracy (Regular Model): 0.0590
+Std Test Accuracy (Prototype Model): 0.0879
+tobetrained:
+[6, 7, 1, 8, 2, 0, 5, 9, 4, 3]
+Edge 6 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 2, 0, 9, 4, 5, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 2, 0, 9, 4, 5, 3]
+class-wise minimum distance tensor([1.6420, 2.3009, 0.8962, 1.6420, 0.8962, 1.8848, 1.0578, 1.8848, 3.0246,
+        3.9917], device='cuda:0')
+min_gap tensor(0.8962, device='cuda:0')
+max_gap tensor(3.9917, device='cuda:0')
+Server loss: 4.477386951446533
+end Update
+server_global_time: 6.280455395579338
+only_train_time: 87.07349260151386
+
+-------------Global Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9100
+Averaged Test Accuracy (Prototype Model): 0.8683
+Averaged Train Loss (Regular Model): 0.1940
+Averaged Train Loss (Regular + Proto): 0.3533
+Std Test Accuracy (Regular Model): 0.0607
+Std Test Accuracy (Prototype Model): 0.0944
+tobetrained:
+[7, 1, 6, 8, 2, 0, 9, 4, 5, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 1, 2, 5, 4, 0, 9, 3]
+aggregation_buffer:
+[7, 6, 8, 1, 2, 5, 4, 0, 9, 3]
+class-wise minimum distance tensor([2.0212, 2.8365, 1.0088, 2.0212, 1.0088, 2.5099, 1.1469, 2.5099, 3.7669,
+        4.7801], device='cuda:0')
+min_gap tensor(1.0088, device='cuda:0')
+max_gap tensor(4.7801, device='cuda:0')
+Server loss: 4.832957744598389
+end Update
+server_global_time: 7.4432694762945175
+only_train_time: 102.18101242184639
+
+-------------Global Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9149
+Averaged Test Accuracy (Prototype Model): 0.8873
+Averaged Train Loss (Regular Model): 0.1803
+Averaged Train Loss (Regular + Proto): 0.3587
+Std Test Accuracy (Regular Model): 0.0568
+Std Test Accuracy (Prototype Model): 0.0753
+tobetrained:
+[7, 6, 8, 1, 2, 5, 4, 0, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 0, 2, 4, 9, 5, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 0, 2, 4, 9, 5, 3]
+class-wise minimum distance tensor([2.3779, 3.4118, 1.2454, 2.3779, 1.2454, 2.7976, 1.4731, 2.7976, 4.4789,
+        5.6499], device='cuda:0')
+min_gap tensor(1.2454, device='cuda:0')
+max_gap tensor(5.6499, device='cuda:0')
+Server loss: 5.16365385055542
+end Update
+server_global_time: 8.586916103959084
+only_train_time: 117.35051193088293
+
+-------------Global Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9177
+Averaged Test Accuracy (Prototype Model): 0.8848
+Averaged Train Loss (Regular Model): 0.1442
+Averaged Train Loss (Regular + Proto): 0.3368
+Std Test Accuracy (Regular Model): 0.0558
+Std Test Accuracy (Prototype Model): 0.0765
+tobetrained:
+[7, 6, 1, 8, 0, 2, 4, 9, 5, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 4, 9, 5, 0, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 4, 9, 5, 0, 3]
+class-wise minimum distance tensor([2.8201, 3.8682, 1.5101, 2.8201, 1.5101, 3.6424, 1.6905, 3.6424, 5.2887,
+        6.5015], device='cuda:0')
+min_gap tensor(1.5101, device='cuda:0')
+max_gap tensor(6.5015, device='cuda:0')
+Server loss: 6.254453659057617
+end Update
+server_global_time: 9.689158320426941
+only_train_time: 132.38140527158976
+
+-------------Global Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9185
+Averaged Test Accuracy (Prototype Model): 0.8865
+Averaged Train Loss (Regular Model): 0.1312
+Averaged Train Loss (Regular + Proto): 0.3412
+Std Test Accuracy (Regular Model): 0.0569
+Std Test Accuracy (Prototype Model): 0.0762
+tobetrained:
+[7, 6, 1, 8, 2, 4, 9, 5, 0, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 8, 6, 2, 4, 9, 5, 0, 3]
+aggregation_buffer:
+[7, 1, 8, 6, 2, 4, 9, 5, 0, 3]
+class-wise minimum distance tensor([3.2620, 4.4303, 1.8321, 3.2620, 1.8321, 3.7570, 1.8749, 3.7570, 5.9976,
+        7.1794], device='cuda:0')
+min_gap tensor(1.8321, device='cuda:0')
+max_gap tensor(7.1794, device='cuda:0')
+Server loss: 5.634605407714844
+end Update
+server_global_time: 10.828303523361683
+only_train_time: 147.11278779059649
+
+-------------Global Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9222
+Averaged Test Accuracy (Prototype Model): 0.8927
+Averaged Train Loss (Regular Model): 0.1041
+Averaged Train Loss (Regular + Proto): 0.3333
+Std Test Accuracy (Regular Model): 0.0511
+Std Test Accuracy (Prototype Model): 0.0689
+tobetrained:
+[7, 1, 8, 6, 2, 4, 9, 5, 0, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([3.7336, 5.1292, 2.0600, 3.7336, 2.0600, 4.4505, 2.2162, 4.4505, 6.9953,
+        8.2923], device='cuda:0')
+min_gap tensor(2.0600, device='cuda:0')
+max_gap tensor(8.2923, device='cuda:0')
+Server loss: 7.286172389984131
+end Update
+server_global_time: 11.974553525447845
+only_train_time: 162.03965918719769
+
+-------------Global Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9196
+Averaged Test Accuracy (Prototype Model): 0.8981
+Averaged Train Loss (Regular Model): 0.0913
+Averaged Train Loss (Regular + Proto): 0.3385
+Std Test Accuracy (Regular Model): 0.0527
+Std Test Accuracy (Prototype Model): 0.0651
+tobetrained:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 8, 6, 1, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 8, 6, 1, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([4.3502, 5.7359, 2.5541, 4.5548, 2.5541, 5.0053, 2.7426, 5.0053, 7.8070,
+        8.8990], device='cuda:0')
+min_gap tensor(2.5541, device='cuda:0')
+max_gap tensor(8.8990, device='cuda:0')
+Server loss: 7.453958511352539
+end Update
+server_global_time: 13.064115263521671
+only_train_time: 176.6860528588295
+
+-------------Global Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9172
+Averaged Test Accuracy (Prototype Model): 0.8996
+Averaged Train Loss (Regular Model): 0.1026
+Averaged Train Loss (Regular + Proto): 0.3760
+Std Test Accuracy (Regular Model): 0.0552
+Std Test Accuracy (Prototype Model): 0.0648
+tobetrained:
+[7, 8, 6, 1, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([4.7249, 6.2583, 2.8357, 4.8487, 2.8357, 5.5345, 2.8374, 5.5345, 8.4801,
+        9.5953], device='cuda:0')
+min_gap tensor(2.8357, device='cuda:0')
+max_gap tensor(9.5953, device='cuda:0')
+Server loss: 7.50236177444458
+end Update
+server_global_time: 14.085406519472599
+only_train_time: 191.4068304374814
+
+-------------Global Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9203
+Averaged Test Accuracy (Prototype Model): 0.9054
+Averaged Train Loss (Regular Model): 0.0741
+Averaged Train Loss (Regular + Proto): 0.3613
+Std Test Accuracy (Regular Model): 0.0539
+Std Test Accuracy (Prototype Model): 0.0632
+tobetrained:
+[7, 1, 6, 8, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([ 5.3766,  7.1855,  3.5252,  5.3860,  3.5252,  6.4356,  3.5493,  6.4356,
+         9.3572, 10.7468], device='cuda:0')
+min_gap tensor(3.5252, device='cuda:0')
+max_gap tensor(10.7468, device='cuda:0')
+Server loss: 8.013877868652344
+end Update
+server_global_time: 15.238067716360092
+only_train_time: 206.11569939553738
+
+-------------Global Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9219
+Averaged Test Accuracy (Prototype Model): 0.9040
+Averaged Train Loss (Regular Model): 0.0620
+Averaged Train Loss (Regular + Proto): 0.3633
+Std Test Accuracy (Regular Model): 0.0516
+Std Test Accuracy (Prototype Model): 0.0663
+tobetrained:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([ 5.9868,  7.7784,  3.8814,  6.0000,  3.7496,  7.2719,  3.7496,  7.2719,
+        10.5480, 11.6424], device='cuda:0')
+min_gap tensor(3.7496, device='cuda:0')
+max_gap tensor(11.6424, device='cuda:0')
+Server loss: 9.164219856262207
+end Update
+server_global_time: 16.388810709118843
+only_train_time: 221.1321931257844
+
+-------------Global Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9243
+Averaged Test Accuracy (Prototype Model): 0.9076
+Averaged Train Loss (Regular Model): 0.0537
+Averaged Train Loss (Regular + Proto): 0.3762
+Std Test Accuracy (Regular Model): 0.0489
+Std Test Accuracy (Prototype Model): 0.0594
+tobetrained:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 1, 2, 0, 4, 9, 5, 3]
+aggregation_buffer:
+[7, 6, 8, 1, 2, 0, 4, 9, 5, 3]
+class-wise minimum distance tensor([ 6.4878,  8.6804,  4.3830,  6.4878,  4.2505,  7.9388,  4.2505,  7.9388,
+        11.2345, 12.8558], device='cuda:0')
+min_gap tensor(4.2505, device='cuda:0')
+max_gap tensor(12.8558, device='cuda:0')
+Server loss: 9.737147331237793
+end Update
+server_global_time: 17.46946781873703
+only_train_time: 236.00942370295525
+
+-------------Global Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9255
+Averaged Test Accuracy (Prototype Model): 0.9089
+Averaged Train Loss (Regular Model): 0.0587
+Averaged Train Loss (Regular + Proto): 0.4084
+Std Test Accuracy (Regular Model): 0.0513
+Std Test Accuracy (Prototype Model): 0.0622
+tobetrained:
+[7, 6, 8, 1, 2, 0, 4, 9, 5, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 2, 5, 4, 9, 0, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 2, 5, 4, 9, 0, 3]
+class-wise minimum distance tensor([ 7.2405,  9.7081,  5.2719,  7.3950,  4.6545,  8.3345,  4.6545,  8.3345,
+        12.2141, 13.4635], device='cuda:0')
+min_gap tensor(4.6545, device='cuda:0')
+max_gap tensor(13.4635, device='cuda:0')
+Server loss: 8.138915061950684
+end Update
+server_global_time: 18.644641689956188
+only_train_time: 250.96303921192884
+
+-------------Global Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9201
+Averaged Test Accuracy (Prototype Model): 0.9024
+Averaged Train Loss (Regular Model): 0.0856
+Averaged Train Loss (Regular + Proto): 0.4770
+Std Test Accuracy (Regular Model): 0.0579
+Std Test Accuracy (Prototype Model): 0.0909
+tobetrained:
+[7, 1, 6, 8, 2, 5, 4, 9, 0, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 0, 4, 5, 2, 9, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 0, 4, 5, 2, 9, 3]
+class-wise minimum distance tensor([ 7.7756,  9.8579,  5.0568,  7.7756,  4.7431,  9.4976,  4.7431,  9.4976,
+        12.6026, 14.4602], device='cuda:0')
+min_gap tensor(4.7431, device='cuda:0')
+max_gap tensor(14.4602, device='cuda:0')
+Server loss: 8.2900972366333
+end Update
+server_global_time: 19.81021672487259
+only_train_time: 266.1245340257883
+
+-------------Global Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9219
+Averaged Test Accuracy (Prototype Model): 0.9098
+Averaged Train Loss (Regular Model): 0.0898
+Averaged Train Loss (Regular + Proto): 0.4976
+Std Test Accuracy (Regular Model): 0.0529
+Std Test Accuracy (Prototype Model): 0.0639
+tobetrained:
+[7, 1, 6, 8, 0, 4, 5, 2, 9, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 4, 5, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 4, 5, 9, 3]
+class-wise minimum distance tensor([ 8.8491, 11.0420,  5.9666,  9.1910,  5.7788, 10.2288,  5.7788, 10.2288,
+        13.4213, 15.3080], device='cuda:0')
+min_gap tensor(5.7788, device='cuda:0')
+max_gap tensor(15.3080, device='cuda:0')
+Server loss: 9.644969940185547
+end Update
+server_global_time: 20.945460759103298
+only_train_time: 281.20178600400686
+
+-------------Global Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9247
+Averaged Test Accuracy (Prototype Model): 0.9074
+Averaged Train Loss (Regular Model): 0.0555
+Averaged Train Loss (Regular + Proto): 0.4968
+Std Test Accuracy (Regular Model): 0.0529
+Std Test Accuracy (Prototype Model): 0.0772
+tobetrained:
+[7, 6, 1, 8, 2, 0, 4, 5, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 8, 6, 0, 5, 4, 9, 2, 3]
+aggregation_buffer:
+[7, 1, 8, 6, 0, 5, 4, 9, 2, 3]
+class-wise minimum distance tensor([ 9.4240, 12.6075,  6.9680,  9.5531,  6.1121, 10.8301,  6.1121, 10.8301,
+        14.6637, 16.5777], device='cuda:0')
+min_gap tensor(6.1121, device='cuda:0')
+max_gap tensor(16.5777, device='cuda:0')
+Server loss: 12.183411598205566
+end Update
+server_global_time: 22.04660888016224
+only_train_time: 296.7254470586777
+
+-------------Global Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9205
+Averaged Test Accuracy (Prototype Model): 0.9075
+Averaged Train Loss (Regular Model): 0.0803
+Averaged Train Loss (Regular + Proto): 0.5569
+Std Test Accuracy (Regular Model): 0.0554
+Std Test Accuracy (Prototype Model): 0.0692
+tobetrained:
+[7, 1, 8, 6, 0, 5, 4, 9, 2, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[7, 8, 6, 1, 5, 4, 2, 9, 0, 3]
+aggregation_buffer:
+[7, 8, 6, 1, 5, 4, 2, 9, 0, 3]
+class-wise minimum distance tensor([ 9.8634, 13.6248,  6.9928, 10.4258,  6.9928, 11.6184,  7.0595, 11.6184,
+        15.7798, 17.7874], device='cuda:0')
+min_gap tensor(6.9928, device='cuda:0')
+max_gap tensor(17.7874, device='cuda:0')
+Server loss: 10.91842269897461
+Number of samples: 319
+end Update
+server_global_time: 23.143548913300037
+only_train_time: 311.685353718698
+
+-------------Global Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9108
+Averaged Test Accuracy (Prototype Model): 0.8978
+Averaged Train Loss (Regular Model): 482100509.6154
+Averaged Train Loss (Regular + Proto): 6855038387372032.0000
+Std Test Accuracy (Regular Model): 0.0980
+Std Test Accuracy (Prototype Model): 0.1514
+tobetrained:
+[7, 8, 6, 1, 5, 4, 2, 9, 0, 3]
+Edge 7 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 5, 8, 4, 0, 9, 2, 3]
+aggregation_buffer:
+[7, 1, 6, 5, 8, 4, 0, 9, 2, 3]
+class-wise minimum distance tensor([19.1057,     nan,     nan,     nan,     nan, 19.1057,     nan,     nan,
+            nan,     nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 24.240237921476364
+only_train_time: 327.2355204373598
+
+-------------Global Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8997
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1550
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 1, 6, 5, 8, 4, 0, 9, 2, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 5 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[7, 8, 0, 6, 5, 9, 4, 1, 2, 3]
+aggregation_buffer:
+[7, 8, 0, 6, 5, 9, 4, 1, 2, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 25.413769081234932
+only_train_time: 343.5685299411416
+
+-------------Global Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 8, 0, 6, 5, 9, 4, 1, 2, 3]
+Edge 7 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 6 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 3 begin training
+readyList:
+[1, 6, 8, 7, 2, 5, 9, 4, 0, 3]
+aggregation_buffer:
+[1, 6, 8, 7, 2, 5, 9, 4, 0, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 26.506172381341457
+only_train_time: 358.7016033679247
+
+-------------Global Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[1, 6, 8, 7, 2, 5, 9, 4, 0, 3]
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 7 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 2, 1, 5, 0, 9, 4, 3]
+aggregation_buffer:
+[7, 6, 8, 2, 1, 5, 0, 9, 4, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 27.594562135636806
+only_train_time: 373.6433518603444
+
+-------------Global Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 8, 2, 1, 5, 0, 9, 4, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 1, 2, 5, 4, 9, 0, 3]
+aggregation_buffer:
+[7, 6, 8, 1, 2, 5, 4, 9, 0, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 28.695613108575344
+only_train_time: 388.45588229596615
+
+-------------Global Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 8, 1, 2, 5, 4, 9, 0, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 0, 1, 2, 9, 5, 4, 3]
+aggregation_buffer:
+[7, 6, 8, 0, 1, 2, 9, 5, 4, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 29.72388979047537
+only_train_time: 403.5745153874159
+
+-------------Global Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 8, 0, 1, 2, 9, 5, 4, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 31.034619599580765
+only_train_time: 418.74345107376575
+
+-------------Global Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[6, 7, 8, 2, 5, 4, 1, 0, 9, 3]
+aggregation_buffer:
+[6, 7, 8, 2, 5, 4, 1, 0, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 32.11813011020422
+only_train_time: 434.45833940804005
+
+-------------Global Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[6, 7, 8, 2, 5, 4, 1, 0, 9, 3]
+Edge 6 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 1 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 8, 1, 6, 2, 0, 4, 5, 9, 3]
+aggregation_buffer:
+[7, 8, 1, 6, 2, 0, 4, 5, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 33.24391095340252
+only_train_time: 449.62730403989553
+
+-------------Global Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 8, 1, 6, 2, 0, 4, 5, 9, 3]
+Edge 7 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 4, 6, 1, 2, 9, 8, 0, 3]
+aggregation_buffer:
+[7, 5, 4, 6, 1, 2, 9, 8, 0, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 34.33730247616768
+only_train_time: 465.5506820976734
+
+-------------Global Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 5, 4, 6, 1, 2, 9, 8, 0, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 1, 4, 5, 2, 0, 9, 3]
+aggregation_buffer:
+[7, 6, 8, 1, 4, 5, 2, 0, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 35.43926887959242
+only_train_time: 482.00224317610264
+
+-------------Global Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 8, 1, 4, 5, 2, 0, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[8, 7, 1, 6, 5, 4, 2, 0, 9, 3]
+aggregation_buffer:
+[8, 7, 1, 6, 5, 4, 2, 0, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 36.539221450686455
+only_train_time: 498.24689693003893
+
+-------------Global Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[8, 7, 1, 6, 5, 4, 2, 0, 9, 3]
+Edge 8 begin training
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 2, 0, 4, 5, 9, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 2, 0, 4, 5, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 37.63823328912258
+only_train_time: 513.6688794791698
+
+-------------Global Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 1, 6, 8, 2, 0, 4, 5, 9, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 8, 2, 4, 5, 1, 6, 9, 0, 3]
+aggregation_buffer:
+[7, 8, 2, 4, 5, 1, 6, 9, 0, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 38.74677522480488
+only_train_time: 529.8880723193288
+
+-------------Global Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 8, 2, 4, 5, 1, 6, 9, 0, 3]
+Edge 7 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 8, 5, 4, 9, 2, 0, 3]
+aggregation_buffer:
+[7, 1, 6, 8, 5, 4, 9, 2, 0, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 39.90510784834623
+only_train_time: 545.2129244431853
+
+-------------Global Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 1, 6, 8, 5, 4, 9, 2, 0, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 8, 1, 2, 5, 0, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 8, 1, 2, 5, 0, 4, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 41.026172645390034
+only_train_time: 560.1337883844972
+
+-------------Global Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 8, 1, 2, 5, 0, 4, 9, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 8 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 5 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[1, 7, 8, 6, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[1, 7, 8, 6, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 42.1166855096817
+only_train_time: 575.2394515424967
+
+-------------Global Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[1, 7, 8, 6, 2, 0, 5, 4, 9, 3]
+Edge 1 begin training
+Edge 7 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 4, 9, 5, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 4, 9, 5, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 43.21020068228245
+only_train_time: 590.1573766320944
+
+-------------Global Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 6, 1, 8, 2, 0, 4, 9, 5, 3]
+Edge 7 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 3 begin training
+readyList:
+[7, 2, 0, 4, 5, 6, 1, 9, 8, 3]
+aggregation_buffer:
+[7, 2, 0, 4, 5, 6, 1, 9, 8, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+end Update
+server_global_time: 44.29947869479656
+only_train_time: 605.9892300888896
+
+-------------Global Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.0975
+Averaged Test Accuracy (Prototype Model): 0.0975
+Averaged Train Loss (Regular Model): nan
+Averaged Train Loss (Regular + Proto): nan
+Std Test Accuracy (Regular Model): 0.1431
+Std Test Accuracy (Prototype Model): 0.1431
+tobetrained:
+[7, 2, 0, 4, 5, 6, 1, 9, 8, 3]
+Edge 7 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 3 begin training
+readyList:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+aggregation_buffer:
+[7, 6, 1, 8, 2, 0, 5, 4, 9, 3]
+class-wise minimum distance tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan], device='cuda:0')
+min_gap tensor(nan, device='cuda:0')
+max_gap tensor(nan, device='cuda:0')
+Server loss: nan
+Number of samples: 322
+Traceback (most recent call last):
+  File "main.py", line 510, in <module>
+    run(args)
+  File "main.py", line 270, in run
+    server.train()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servertgp.py", line 92, in train
+    self.cloudUpdate()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servertgp.py", line 129, in cloudUpdate
+    self.save_tsne_with_agg(
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 578, in save_tsne_with_agg
+    reduced_features = tsne.fit_transform(all_features)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/_set_output.py", line 157, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/base.py", line 1152, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/manifold/_t_sne.py", line 1111, in fit_transform
+    embedding = self._fit(X)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/manifold/_t_sne.py", line 841, in _fit
+    X = self._validate_data(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/base.py", line 605, in _validate_data
+    out = check_array(X, input_name="X", **check_params)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 957, in check_array
+    _assert_all_finite(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 122, in _assert_all_finite
+    _assert_all_finite_element_wise(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 171, in _assert_all_finite_element_wise
+    raise ValueError(msg_err)
+ValueError: Input X contains NaN.
+TSNE does not accept missing values encoded as NaN natively. For supervised learning, you might want to consider sklearn.ensemble.HistGradientBoostingClassifier and Regressor which accept missing values encoded as NaNs natively. Alternatively, it is possible to preprocess the data, for instance by using an imputer transformer in a pipeline or drop samples with missing values. See https://scikit-learn.org/stable/modules/impute.html You can find a list of all estimators that handle NaN values at the following page: https://scikit-learn.org/stable/modules/impute.html#estimators-that-handle-nan-values

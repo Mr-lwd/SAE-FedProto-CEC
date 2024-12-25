@@ -1,0 +1,2029 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = FashionMNIST_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = Local
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+mixclassifier = 0
+gl_use_clients = 1
+test_useglclassifier = 1
+tgpaddmse = 0
+addmse = 0
+gamma = 1
+addTGP = 0
+SAEbeta = 0
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.005
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {0: 263, 1: 304, 5: 94, 9: 505, 3: 25, 2: 86, 6: 3})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {7: 178, 4: 564, 1: 460, 5: 42, 0: 14, 2: 17, 3: 3, 6: 2})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {9: 90, 0: 168, 7: 273, 5: 135, 6: 57, 4: 10, 3: 27, 8: 5, 2: 3})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {8: 158, 3: 137, 2: 329, 0: 1, 4: 43, 6: 83, 9: 14, 5: 3})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {1: 363, 0: 286, 5: 463, 2: 163, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {4: 405, 6: 616, 1: 96, 3: 40, 2: 54, 8: 45, 5: 13, 7: 10, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {4: 237, 8: 342, 9: 383, 3: 21, 6: 26, 2: 5, 1: 9, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {9: 449, 0: 34, 6: 318, 8: 607, 5: 13, 1: 11, 4: 50, 3: 35, 7: 14, 2: 5})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {9: 82, 4: 417, 2: 66, 0: 105, 5: 12, 6: 53, 8: 23, 3: 7, 1: 3})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 908, 1: 129, 2: 172, 0: 71})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {4: 769, 8: 400, 2: 53, 3: 9, 5: 17, 0: 29, 7: 1, 1: 1, 6: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {6: 129, 1: 52, 8: 201, 4: 207, 5: 49, 3: 41, 7: 7, 9: 72, 2: 10})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {5: 83, 6: 190, 3: 124, 1: 196, 0: 162, 9: 11, 4: 1, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {3: 370, 2: 718, 7: 167, 0: 10, 4: 7, 5: 2, 1: 6})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {3: 123, 0: 284, 5: 60, 1: 51, 9: 188, 2: 39, 4: 20, 8: 3})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {6: 947, 5: 209, 1: 38, 0: 74, 3: 11, 4: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {8: 237, 1: 732, 3: 73, 4: 52, 5: 59, 0: 115, 6: 12})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {5: 475, 8: 612, 3: 30, 4: 27, 0: 100, 2: 16, 6: 17, 1: 2, 7: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {5: 25, 7: 204, 4: 95, 8: 325, 1: 87, 3: 28, 6: 2, 0: 1, 2: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 358, 0: 1178})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 754, 2: 16, 7: 115, 1: 253, 6: 40, 4: 184, 0: 34, 5: 138, 8: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {7: 16, 1: 354, 4: 269, 6: 205, 0: 120, 3: 54, 8: 4, 9: 1, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {7: 357, 5: 221, 1: 96, 6: 58, 2: 8, 0: 11, 8: 15, 4: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {9: 189, 0: 166, 8: 101, 1: 24, 5: 30, 3: 1, 7: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 257, 3: 391, 5: 103, 9: 199, 0: 57, 8: 15, 1: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {3: 361, 5: 462, 1: 32, 0: 72, 7: 205, 2: 142, 4: 6})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {0: 386, 8: 485, 7: 156, 2: 103, 4: 115, 1: 8, 3: 23, 5: 4})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {2: 169, 5: 476, 6: 224, 3: 70, 0: 79, 4: 5, 7: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {0: 17, 1: 43, 9: 192, 3: 17, 7: 126, 2: 39, 8: 67, 4: 1, 5: 8, 6: 2})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {5: 282, 8: 115, 6: 3, 7: 307, 1: 15, 9: 139, 3: 139, 2: 22, 4: 2})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {8: 209, 7: 276, 0: 221, 9: 39, 5: 20, 2: 1, 1: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {2: 462, 1: 196, 4: 536, 0: 86})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {9: 1136, 7: 49, 2: 274, 6: 75, 5: 143, 3: 51, 1: 20, 0: 31, 8: 12, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {0: 140, 2: 386, 3: 259, 1: 68, 7: 112, 6: 239, 4: 76})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {6: 791, 2: 788, 1: 38, 0: 156, 3: 11, 4: 8})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {0: 298, 2: 89, 4: 308, 7: 35, 3: 119, 1: 25, 5: 65, 9: 69, 6: 15, 8: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {8: 185, 3: 330, 6: 360, 2: 114, 7: 109, 9: 137, 1: 37, 0: 3, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {3: 989, 7: 2163, 6: 141, 5: 11, 2: 20, 0: 1, 4: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {5: 995, 1: 489, 0: 12, 2: 23, 3: 16, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {8: 428, 2: 330, 6: 198, 1: 37, 5: 11, 7: 2, 0: 12, 3: 2, 4: 1, 9: 3})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+------------------------- time cost ------------------------- 7.863667011260986
+
+-------------Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.6799
+Averaged Test AUC: 0.9385
+Std Test Accurancy: 0.2192
+Std Test AUC: 0.0516
+------------------------- time cost ------------------------- 6.9950220584869385
+
+-------------Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.7777
+Averaged Test AUC: 0.9587
+Std Test Accurancy: 0.1894
+Std Test AUC: 0.0386
+------------------------- time cost ------------------------- 6.971196413040161
+
+-------------Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8170
+Averaged Test AUC: 0.9701
+Std Test Accurancy: 0.1452
+Std Test AUC: 0.0252
+------------------------- time cost ------------------------- 6.953226804733276
+
+-------------Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8444
+Averaged Test AUC: 0.9753
+Std Test Accurancy: 0.1092
+Std Test AUC: 0.0175
+------------------------- time cost ------------------------- 7.071519374847412
+
+-------------Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8611
+Averaged Test AUC: 0.9782
+Std Test Accurancy: 0.1002
+Std Test AUC: 0.0146
+------------------------- time cost ------------------------- 6.921501159667969
+
+-------------Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8672
+Averaged Test AUC: 0.9794
+Std Test Accurancy: 0.0927
+Std Test AUC: 0.0132
+------------------------- time cost ------------------------- 7.109498977661133
+
+-------------Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8683
+Averaged Test AUC: 0.9804
+Std Test Accurancy: 0.0980
+Std Test AUC: 0.0132
+------------------------- time cost ------------------------- 7.005886793136597
+
+-------------Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8800
+Averaged Test AUC: 0.9819
+Std Test Accurancy: 0.0836
+Std Test AUC: 0.0122
+------------------------- time cost ------------------------- 6.9434814453125
+
+-------------Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8865
+Averaged Test AUC: 0.9822
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0118
+------------------------- time cost ------------------------- 7.031769514083862
+
+-------------Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8754
+Averaged Test AUC: 0.9757
+Std Test Accurancy: 0.0911
+Std Test AUC: 0.0419
+------------------------- time cost ------------------------- 7.0918965339660645
+
+-------------Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8987
+Averaged Test AUC: 0.9843
+Std Test Accurancy: 0.0671
+Std Test AUC: 0.0102
+------------------------- time cost ------------------------- 7.052064657211304
+
+-------------Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8973
+Averaged Test AUC: 0.9843
+Std Test Accurancy: 0.0770
+Std Test AUC: 0.0107
+------------------------- time cost ------------------------- 6.912967681884766
+
+-------------Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9009
+Averaged Test AUC: 0.9845
+Std Test Accurancy: 0.0670
+Std Test AUC: 0.0105
+------------------------- time cost ------------------------- 6.985838174819946
+
+-------------Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.8995
+Averaged Test AUC: 0.9849
+Std Test Accurancy: 0.0687
+Std Test AUC: 0.0102
+------------------------- time cost ------------------------- 6.856462478637695
+
+-------------Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9001
+Averaged Test AUC: 0.9852
+Std Test Accurancy: 0.0726
+Std Test AUC: 0.0104
+------------------------- time cost ------------------------- 6.933730125427246
+
+-------------Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9068
+Averaged Test AUC: 0.9855
+Std Test Accurancy: 0.0676
+Std Test AUC: 0.0104
+------------------------- time cost ------------------------- 6.993275165557861
+
+-------------Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9089
+Averaged Test AUC: 0.9858
+Std Test Accurancy: 0.0619
+Std Test AUC: 0.0102
+------------------------- time cost ------------------------- 6.929473161697388
+
+-------------Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9084
+Averaged Test AUC: 0.9860
+Std Test Accurancy: 0.0614
+Std Test AUC: 0.0099
+------------------------- time cost ------------------------- 6.934386253356934
+
+-------------Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9067
+Averaged Test AUC: 0.9858
+Std Test Accurancy: 0.0684
+Std Test AUC: 0.0110
+------------------------- time cost ------------------------- 6.9537389278411865
+
+-------------Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9068
+Averaged Test AUC: 0.9864
+Std Test Accurancy: 0.0656
+Std Test AUC: 0.0101
+------------------------- time cost ------------------------- 7.041489124298096
+
+-------------Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9142
+Averaged Test AUC: 0.9870
+Std Test Accurancy: 0.0578
+Std Test AUC: 0.0095
+------------------------- time cost ------------------------- 7.041798114776611
+
+-------------Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9077
+Averaged Test AUC: 0.9865
+Std Test Accurancy: 0.0603
+Std Test AUC: 0.0097
+------------------------- time cost ------------------------- 7.151449918746948
+
+-------------Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9087
+Averaged Test AUC: 0.9866
+Std Test Accurancy: 0.0691
+Std Test AUC: 0.0105
+------------------------- time cost ------------------------- 7.0184361934661865
+
+-------------Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9109
+Averaged Test AUC: 0.9865
+Std Test Accurancy: 0.0591
+Std Test AUC: 0.0102
+------------------------- time cost ------------------------- 7.042072057723999
+
+-------------Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9169
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0526
+Std Test AUC: 0.0097
+------------------------- time cost ------------------------- 6.898804187774658
+
+-------------Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9120
+Averaged Test AUC: 0.9869
+Std Test Accurancy: 0.0611
+Std Test AUC: 0.0103
+------------------------- time cost ------------------------- 6.991237163543701
+
+-------------Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9136
+Averaged Test AUC: 0.9871
+Std Test Accurancy: 0.0603
+Std Test AUC: 0.0101
+------------------------- time cost ------------------------- 6.750164985656738
+
+-------------Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9178
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0544
+Std Test AUC: 0.0098
+------------------------- time cost ------------------------- 6.765553951263428
+
+-------------Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9169
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0534
+Std Test AUC: 0.0099
+------------------------- time cost ------------------------- 6.72258186340332
+
+-------------Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9149
+Averaged Test AUC: 0.9872
+Std Test Accurancy: 0.0554
+Std Test AUC: 0.0097
+------------------------- time cost ------------------------- 6.72390604019165
+
+-------------Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9107
+Averaged Test AUC: 0.9866
+Std Test Accurancy: 0.0714
+Std Test AUC: 0.0121
+------------------------- time cost ------------------------- 6.74772572517395
+
+-------------Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9168
+Averaged Test AUC: 0.9874
+Std Test Accurancy: 0.0542
+Std Test AUC: 0.0099
+------------------------- time cost ------------------------- 6.775958061218262
+
+-------------Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9168
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0548
+Std Test AUC: 0.0095
+------------------------- time cost ------------------------- 6.7766478061676025
+
+-------------Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9193
+Averaged Test AUC: 0.9879
+Std Test Accurancy: 0.0505
+Std Test AUC: 0.0098
+------------------------- time cost ------------------------- 6.69736123085022
+
+-------------Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9205
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0523
+Std Test AUC: 0.0099
+------------------------- time cost ------------------------- 6.805495738983154
+
+-------------Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9177
+Averaged Test AUC: 0.9882
+Std Test Accurancy: 0.0583
+Std Test AUC: 0.0096
+------------------------- time cost ------------------------- 6.702650785446167
+
+-------------Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9203
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0513
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.6910035610198975
+
+-------------Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9178
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0529
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.646275758743286
+
+-------------Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9180
+Averaged Test AUC: 0.9881
+Std Test Accurancy: 0.0545
+Std Test AUC: 0.0100
+------------------------- time cost ------------------------- 6.702512502670288
+
+-------------Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9202
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0529
+Std Test AUC: 0.0096
+------------------------- time cost ------------------------- 6.558304786682129
+
+-------------Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9217
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0521
+Std Test AUC: 0.0094
+------------------------- time cost ------------------------- 6.660639047622681
+
+-------------Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9181
+Averaged Test AUC: 0.9878
+Std Test Accurancy: 0.0534
+Std Test AUC: 0.0103
+------------------------- time cost ------------------------- 6.664412498474121
+
+-------------Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9206
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0522
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.746830463409424
+
+-------------Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9223
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0513
+Std Test AUC: 0.0093
+------------------------- time cost ------------------------- 6.736295223236084
+
+-------------Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9236
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0481
+Std Test AUC: 0.0091
+------------------------- time cost ------------------------- 6.506423711776733
+
+-------------Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9209
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0515
+Std Test AUC: 0.0094
+------------------------- time cost ------------------------- 6.733790874481201
+
+-------------Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9227
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0506
+Std Test AUC: 0.0090
+------------------------- time cost ------------------------- 6.769114255905151
+
+-------------Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9208
+Averaged Test AUC: 0.9882
+Std Test Accurancy: 0.0527
+Std Test AUC: 0.0101
+------------------------- time cost ------------------------- 6.69504189491272
+
+-------------Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9243
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0485
+Std Test AUC: 0.0094
+------------------------- time cost ------------------------- 6.7901880741119385
+
+-------------Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0464
+Std Test AUC: 0.0090
+------------------------- time cost ------------------------- 6.691904306411743
+
+-------------Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9211
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0566
+Std Test AUC: 0.0097
+------------------------- time cost ------------------------- 6.622995138168335
+
+-------------Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0486
+Std Test AUC: 0.0093
+------------------------- time cost ------------------------- 6.679623603820801
+
+-------------Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9232
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0472
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.730310916900635
+
+-------------Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9235
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0472
+Std Test AUC: 0.0090
+------------------------- time cost ------------------------- 6.451528787612915
+
+-------------Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9225
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0483
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.5902135372161865
+
+-------------Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9234
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0477
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.680276393890381
+
+-------------Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9234
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0484
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.688344955444336
+
+-------------Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9233
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0501
+Std Test AUC: 0.0092
+------------------------- time cost ------------------------- 6.616427659988403
+
+-------------Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0481
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7365968227386475
+
+-------------Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.652209043502808
+
+-------------Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9224
+Averaged Test AUC: 0.9883
+Std Test Accurancy: 0.0518
+Std Test AUC: 0.0103
+------------------------- time cost ------------------------- 6.7132813930511475
+
+-------------Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9239
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.693169832229614
+
+-------------Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9229
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0494
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.737786293029785
+
+-------------Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9226
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0495
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.778164863586426
+
+-------------Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9229
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0088
+------------------------- time cost ------------------------- 6.7665629386901855
+
+-------------Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9230
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0479
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.830528736114502
+
+-------------Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9221
+Averaged Test AUC: 0.9882
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0097
+------------------------- time cost ------------------------- 6.750456094741821
+
+-------------Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9237
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0484
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.740638971328735
+
+-------------Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.643321514129639
+
+-------------Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0460
+Std Test AUC: 0.0084
+------------------------- time cost ------------------------- 6.75583553314209
+
+-------------Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9252
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0452
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.726529121398926
+
+-------------Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0482
+Std Test AUC: 0.0088
+------------------------- time cost ------------------------- 6.6669464111328125
+
+-------------Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9206
+Averaged Test AUC: 0.9877
+Std Test Accurancy: 0.0657
+Std Test AUC: 0.0141
+------------------------- time cost ------------------------- 6.734375476837158
+
+-------------Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9228
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0498
+Std Test AUC: 0.0088
+------------------------- time cost ------------------------- 6.676751136779785
+
+-------------Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9230
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0494
+Std Test AUC: 0.0092
+------------------------- time cost ------------------------- 6.601854562759399
+
+-------------Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9891
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.717620849609375
+
+-------------Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9218
+Averaged Test AUC: 0.9883
+Std Test Accurancy: 0.0478
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.706999063491821
+
+-------------Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9239
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0484
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.689264535903931
+
+-------------Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0466
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.7008140087127686
+
+-------------Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.760693073272705
+
+-------------Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7688305377960205
+
+-------------Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0462
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.672128200531006
+
+-------------Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.686951637268066
+
+-------------Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9236
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0490
+Std Test AUC: 0.0089
+------------------------- time cost ------------------------- 6.588691711425781
+
+-------------Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.719461441040039
+
+-------------Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.647313117980957
+
+-------------Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9252
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0460
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.792147874832153
+
+-------------Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.742298603057861
+
+-------------Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9244
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.700898170471191
+
+-------------Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9231
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0484
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.741595268249512
+
+-------------Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9243
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0474
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.5735554695129395
+
+-------------Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9244
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0473
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.689709663391113
+
+-------------Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9242
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.733745098114014
+
+-------------Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0462
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.766141653060913
+
+-------------Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.766491174697876
+
+-------------Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.71928858757019
+
+-------------Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0473
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.697277069091797
+
+-------------Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.622971296310425
+
+-------------Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.762970209121704
+
+-------------Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.610849142074585
+
+-------------Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9243
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0085
+------------------------- time cost ------------------------- 6.6897056102752686
+
+-------------Round number: 101-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.711134672164917
+
+-------------Round number: 102-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0462
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.735409736633301
+
+-------------Round number: 103-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.701143264770508
+
+-------------Round number: 104-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0466
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.740429401397705
+
+-------------Round number: 105-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.747938632965088
+
+-------------Round number: 106-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.778062582015991
+
+-------------Round number: 107-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.823208332061768
+
+-------------Round number: 108-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9245
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.736342906951904
+
+-------------Round number: 109-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.666626930236816
+
+-------------Round number: 110-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.705091238021851
+
+-------------Round number: 111-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.766546249389648
+
+-------------Round number: 112-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.733901739120483
+
+-------------Round number: 113-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.682974576950073
+
+-------------Round number: 114-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.7469801902771
+
+-------------Round number: 115-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.704081773757935
+
+-------------Round number: 116-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.6985650062561035
+
+-------------Round number: 117-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.7254533767700195
+
+-------------Round number: 118-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.732630729675293
+
+-------------Round number: 119-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9252
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.792401075363159
+
+-------------Round number: 120-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.7238547801971436
+
+-------------Round number: 121-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.724691152572632
+
+-------------Round number: 122-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.728639841079712
+
+-------------Round number: 123-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.664981365203857
+
+-------------Round number: 124-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.650897741317749
+
+-------------Round number: 125-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.65034556388855
+
+-------------Round number: 126-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.6407692432403564
+
+-------------Round number: 127-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9244
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.703053951263428
+
+-------------Round number: 128-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0473
+Std Test AUC: 0.0086
+------------------------- time cost ------------------------- 6.717193603515625
+
+-------------Round number: 129-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0465
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.672142505645752
+
+-------------Round number: 130-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9254
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.695798635482788
+
+-------------Round number: 131-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.605760097503662
+
+-------------Round number: 132-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.63821005821228
+
+-------------Round number: 133-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0466
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.685244798660278
+
+-------------Round number: 134-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.657439947128296
+
+-------------Round number: 135-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.752701759338379
+
+-------------Round number: 136-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.69761061668396
+
+-------------Round number: 137-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.699160099029541
+
+-------------Round number: 138-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.736423015594482
+
+-------------Round number: 139-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.653261661529541
+
+-------------Round number: 140-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.766937971115112
+
+-------------Round number: 141-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.745915174484253
+
+-------------Round number: 142-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.688448429107666
+
+-------------Round number: 143-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7149434089660645
+
+-------------Round number: 144-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.719229698181152
+
+-------------Round number: 145-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.626282453536987
+
+-------------Round number: 146-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.67951226234436
+
+-------------Round number: 147-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9254
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.805325031280518
+
+-------------Round number: 148-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.79313588142395
+
+-------------Round number: 149-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.713502407073975
+
+-------------Round number: 150-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.751126050949097
+
+-------------Round number: 151-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.607305288314819
+
+-------------Round number: 152-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.718035936355591
+
+-------------Round number: 153-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.808153867721558
+
+-------------Round number: 154-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.782052755355835
+
+-------------Round number: 155-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.711863279342651
+
+-------------Round number: 156-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.752882242202759
+
+-------------Round number: 157-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.724905490875244
+
+-------------Round number: 158-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.707903146743774
+
+-------------Round number: 159-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.666380405426025
+
+-------------Round number: 160-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.746924638748169
+
+-------------Round number: 161-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.706545114517212
+
+-------------Round number: 162-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.729133367538452
+
+-------------Round number: 163-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.693058490753174
+
+-------------Round number: 164-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0466
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.743108034133911
+
+-------------Round number: 165-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.649688720703125
+
+-------------Round number: 166-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.678376197814941
+
+-------------Round number: 167-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9246
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7798779010772705
+
+-------------Round number: 168-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.825984001159668
+
+-------------Round number: 169-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.797980070114136
+
+-------------Round number: 170-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.6598896980285645
+
+-------------Round number: 171-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.71182656288147
+
+-------------Round number: 172-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.724524259567261
+
+-------------Round number: 173-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.770148754119873
+
+-------------Round number: 174-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.779316425323486
+
+-------------Round number: 175-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7454986572265625
+
+-------------Round number: 176-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.761869668960571
+
+-------------Round number: 177-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.708379507064819
+
+-------------Round number: 178-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.640246391296387
+
+-------------Round number: 179-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0467
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.799355506896973
+
+-------------Round number: 180-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.728783369064331
+
+-------------Round number: 181-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.738290548324585
+
+-------------Round number: 182-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.76618504524231
+
+-------------Round number: 183-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.76902174949646
+
+-------------Round number: 184-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.728102922439575
+
+-------------Round number: 185-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.708481311798096
+
+-------------Round number: 186-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7448225021362305
+
+-------------Round number: 187-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0468
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.61454963684082
+
+-------------Round number: 188-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.75653338432312
+
+-------------Round number: 189-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.665479421615601
+
+-------------Round number: 190-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.752029895782471
+
+-------------Round number: 191-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0466
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.756005525588989
+
+-------------Round number: 192-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.783230781555176
+
+-------------Round number: 193-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9251
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0470
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.624918699264526
+
+-------------Round number: 194-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.671705484390259
+
+-------------Round number: 195-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9248
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.7409257888793945
+
+-------------Round number: 196-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.710715055465698
+
+-------------Round number: 197-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0471
+Std Test AUC: 0.0087
+------------------------- time cost ------------------------- 6.675157308578491
+
+-------------Round number: 198-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9249
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0088
+------------------------- time cost ------------------------- 6.650846481323242
+
+-------------Round number: 199-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9250
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0088
+------------------------- time cost ------------------------- 6.488901615142822
+
+-------------Round number: 200-------------
+
+Evaluate heterogeneous models
+Averaged Test Accurancy: 0.9247
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0469
+Std Test AUC: 0.0087
+
+Best accuracy.
+0.9253739865250656
+
+Average time cost per round.
+6.746317554712295
+File path: ../results/FashionMNIST_dir_0.3_imbalance_40_Local_test_0.h5
+
+Average time cost: 1535.81s.
+Length:  201
+std for best accurancy: 0.0
+mean for best accurancy: 0.9253739865250656
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 5130 	Used Memory: 20.50K
+-------------------------------------------------------------------------------

@@ -32,7 +32,10 @@ class clientLocal(Client):
                 y = y.to(self.device)
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
-                output = model(x)
+                # output = model(x)
+                rep = model.base(x)
+                rep = rep.squeeze(1)
+                output = model.head(rep)
                 loss = self.loss(output, y)
                 optimizer.zero_grad()
                 loss.backward()

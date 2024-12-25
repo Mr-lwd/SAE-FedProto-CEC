@@ -11,6 +11,7 @@ class clientGH(Client):
         torch.manual_seed(0)
 
     def train(self):
+        self.set_parameters()
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
         optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
