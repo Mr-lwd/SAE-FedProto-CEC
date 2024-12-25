@@ -28,14 +28,18 @@ class clientSAE(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.addTGP == 1:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
+        # if self.args.addTGP == 1:
+        #     global_protos = load_item(
+        #         "Server", "tgp_global_protos", self.save_folder_name
+        #     )
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
         if glclassifier is not None:  # 固定参数
-            for param in glclassifier.parameters():
-                param.requires_grad = False
+            if self.args.replace_classifier == 1:
+                self.set_parameters()
+            else:
+                for param in glclassifier.parameters():
+                    param.requires_grad = False
+        
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
         if self.optimizer == "SGD":
             optimizer = torch.optim.SGD(
@@ -75,7 +79,7 @@ class clientSAE(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 # loss = self.loss(output, y)
-                if glclassifier is not None and self.args.mixclassifier != 1:
+                if glclassifier is not None and self.args.replace_classifier != 1:
                     loss = self.loss(output, y) * (1 - self.args.gamma)
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
@@ -231,6 +235,13 @@ class clientSAE(Client):
             # 平滑
 
         return protos
+    
+    def set_parameters(self):
+        model = load_item(self.role, "model", self.save_folder_name)
+        head = load_item("Server", "glclassifier", self.save_folder_name)
+        for new_param, old_param in zip(head.parameters(), model.head.parameters()):
+            old_param.data = new_param.data.clone()
+        save_item(model, self.role, "model", self.save_folder_name)
 
 
 def prepare_item(mean_dict, cov_dict, counts):
