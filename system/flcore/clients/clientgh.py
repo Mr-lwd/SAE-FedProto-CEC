@@ -13,11 +13,24 @@ class clientGH(Client):
     def train(self):
         self.set_parameters()
         trainloader = self.load_train_data()
-        model = load_item(self.role, 'model', self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        model = load_item(self.role, "model", self.save_folder_name)
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                momentum=self.args.momentum,
+                weight_decay=self.args.weight_decay,
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                weight_decay=self.args.weight_decay,
+            )
         # model.to(self.device)
         model.train()
-        
+
         start_time = time.time()
 
         max_local_epochs = self.local_epochs
@@ -41,22 +54,21 @@ class clientGH(Client):
                 loss.backward()
                 optimizer.step()
 
-        save_item(model, self.role, 'model', self.save_folder_name)
-        
-        self.train_time_cost['num_rounds'] += 1
-        self.train_time_cost['total_cost'] += time.time() - start_time
+        save_item(model, self.role, "model", self.save_folder_name)
 
-        
+        self.train_time_cost["num_rounds"] += 1
+        self.train_time_cost["total_cost"] += time.time() - start_time
+
     def set_parameters(self):
-        model = load_item(self.role, 'model', self.save_folder_name)
-        head = load_item('Server', 'head', self.save_folder_name)
+        model = load_item(self.role, "model", self.save_folder_name)
+        head = load_item("Server", "head", self.save_folder_name)
         for new_param, old_param in zip(head.parameters(), model.head.parameters()):
             old_param.data = new_param.data.clone()
-        save_item(model, self.role, 'model', self.save_folder_name)
+        save_item(model, self.role, "model", self.save_folder_name)
 
     def collect_protos(self):
         trainloader = self.load_train_data()
-        model = load_item(self.role, 'model', self.save_folder_name)
+        model = load_item(self.role, "model", self.save_folder_name)
         model.eval()
 
         protos = defaultdict(list)
@@ -71,12 +83,12 @@ class clientGH(Client):
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
                 rep = rep.squeeze(1)
-                
+
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
 
-        save_item(agg_func(protos), self.role, 'protos', self.save_folder_name)
+        save_item(agg_func(protos), self.role, "protos", self.save_folder_name)
 
 
 # https://github.com/yuetan031/fedproto/blob/main/lib/utils.py#L205

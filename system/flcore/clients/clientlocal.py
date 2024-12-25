@@ -13,7 +13,20 @@ class clientLocal(Client):
     def train(self):
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
-        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                momentum=self.args.momentum,
+                weight_decay=self.args.weight_decay,
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                weight_decay=self.args.weight_decay,
+            )
         # model.to(self.device)
         model.train()
         
