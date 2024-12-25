@@ -203,8 +203,28 @@ Finished creating server and clients.
 Traceback (most recent call last):
   File "main.py", line 510, in <module>
     run(args)
-  File "main.py", line 238, in run
-    server = FedGen(args, i)
-  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servergen.py", line 37, in __init__
-    lr=self.generator_learning_rate, betas=(0.9, 0.999),
-AttributeError: 'FedGen' object has no attribute 'generator_learning_rate'
+  File "main.py", line 270, in run
+    server.train()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servergen.py", line 73, in train
+    client.train()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/clients/clientgen.py", line 61, in train
+    rep = model.base(x)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/trainmodel/models.py", line 166, in forward
+    out = self.conv(x)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/container.py", line 119, in forward
+    input = module(input)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/container.py", line 119, in forward
+    input = module(input)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 399, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/root/miniconda3/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 395, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Given groups=1, weight of size [32, 1, 5, 5], expected input[256, 3, 32, 32] to have 1 channels, but got 3 channels instead
