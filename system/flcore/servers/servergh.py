@@ -24,8 +24,8 @@ class FedGH(Server):
         self.CEloss = nn.CrossEntropyLoss()
         self.server_learning_rate = args.server_learning_rate
         self.server_epochs = args.server_epochs
-
-        head = load_item(self.clients[0].role, 'model', self.clients[0].save_folder_name).head
+        head = nn.Linear(self.feature_dim, self.num_classes).to(self.device)
+        # head = load_item(self.clients[0].role, 'model', self.clients[0].save_folder_name).head
         save_item(head, 'Server', 'head', self.save_folder_name)
 
 
@@ -90,6 +90,8 @@ class FedGH(Server):
 
         for _ in range(self.server_epochs):
             for p, y in proto_loader:
+                # print(f"Input shape: {p.shape}, Label shape: {y.shape}")
+                p = p.squeeze(1)
                 out = head(p)
                 loss = self.CEloss(out, y)
                 opt_h.zero_grad()

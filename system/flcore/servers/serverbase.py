@@ -43,11 +43,11 @@ class Server(object):
         self.role = "Server"
         self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{self.model_folder_prefix}/addTGP_{args.addTGP}_gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
-            args.save_folder_name_full = f"{self.model_folder_prefix}/addTGP_{args.addTGP}_gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/notTemp"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/notTemp"
         self.save_folder_name = args.save_folder_name_full
 
         self.selected_edges = []
@@ -561,7 +561,7 @@ class Server(object):
         """
         prefix_path = f"{base_path}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.algorithm == "FedSAE":
-            save_folder = f"{prefix_path}/addTGP_{args.addTGP}_gamma_{args.gamma}_beta_{args.SAEbeta}_usegltest_{args.test_useglclassifier}/{drawtype}"
+            save_folder = f"{prefix_path}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{drawtype}"
         else:
             save_folder = f"{prefix_path}/{drawtype}"
 
@@ -570,10 +570,10 @@ class Server(object):
         label_types = []  # 区分来源：agg 或 local
         global_protos = None  # 初始化为 None
 
-        if self.args.addTGP == 1:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
+        # if self.args.addTGP == 1:
+        #     global_protos = load_item(
+        #         "Server", "tgp_global_protos", self.save_folder_name
+        #     )
 
         # 如果 global_protos 仍为 None，加载备用的 global_protos
         if global_protos is None:

@@ -50,6 +50,7 @@ class FedSAE(Server):
         [self.edge_register(edge=edge) for edge in self.edges]
         self.global_classifier_init = nn.Linear(self.feature_dim, self.num_classes)
         self.global_classifier = copy.deepcopy(self.global_classifier_init)
+        # save(item=self.global_classifier, role=self.role, item_name="glclassifier", item_path=self.save_folder_name)
 
         self.server_learning_rate = args.server_learning_rate
         self.batch_size = args.batch_size
@@ -152,8 +153,8 @@ class FedSAE(Server):
         self.train_global_classifier(sampled_features)
 
         # save_item(global_protos, self.role, "global_protos", self.save_folder_name)
-        if self.args.addTGP == 1:
-            self.tgp_process()
+        # if self.args.addTGP == 1:
+        #     self.tgp_process()
 
         self.save_tsne_with_agg(
             args=self.args,

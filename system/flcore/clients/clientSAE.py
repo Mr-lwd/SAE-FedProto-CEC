@@ -28,10 +28,10 @@ class clientSAE(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.addTGP == 1:
-            global_protos = load_item(
-                "Server", "tgp_global_protos", self.save_folder_name
-            )
+        # if self.args.addTGP == 1:
+        #     global_protos = load_item(
+        #         "Server", "tgp_global_protos", self.save_folder_name
+        #     )
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
         if glclassifier is not None:  # 固定参数
             for param in glclassifier.parameters():
@@ -75,7 +75,7 @@ class clientSAE(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 # loss = self.loss(output, y)
-                if glclassifier is not None and self.args.mixclassifier != 1:
+                if glclassifier is not None:
                     loss = self.loss(output, y) * (1 - self.args.gamma)
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
@@ -90,24 +90,6 @@ class clientSAE(Client):
                         y_c = yy.item()
                         if type(global_protos[y_c]) != type([]):
                             proto_new[i, :] = global_protos[y_c].data
-                    # if self.args.addTGP == 1 and tgp_global_protos is not None:
-                    #     loss += (
-                    #         self.loss_mse(proto_new, rep)
-                    #         * self.lamda
-                    #         * (1 - self.args.SAEbeta)
-                    #     )
-                    #     if self.args.SAEbeta != 0:
-                    #         proto_new = copy.deepcopy(rep.detach())
-                    #         for i, yy in enumerate(y):
-                    #             y_c = yy.item()
-                    #             if type(tgp_global_protos[y_c]) != type([]):
-                    #                 proto_new[i, :] = tgp_global_protos[y_c].data
-                    #         loss += (
-                    #             self.loss_mse(proto_new, rep)
-                    #             * self.lamda
-                    #             * self.args.SAEbeta
-                    #         )
-                    # else:
                     loss += self.loss_mse(proto_new, rep) * self.lamda
                 self.local_all_loss += loss
                 for i, yy in enumerate(y):

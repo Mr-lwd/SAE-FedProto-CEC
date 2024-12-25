@@ -11,9 +11,12 @@ class clientGH(Client):
         torch.manual_seed(0)
 
     def train(self):
-        self.set_parameters()
+        head = load_item("Server", "head", self.save_folder_name)
+        if head is not None:
+            self.set_parameters()
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
+        total_loss = 0
         # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
         if self.optimizer == "SGD":
             optimizer = torch.optim.SGD(
@@ -28,7 +31,7 @@ class clientGH(Client):
                 lr=self.learning_rate,
                 weight_decay=self.args.weight_decay,
             )
-        # model.to(self.device)
+        model.to(self.device)
         model.train()
 
         start_time = time.time()
@@ -38,6 +41,7 @@ class clientGH(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         for step in range(max_local_epochs):
+            total_loss = 0
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
                     x[0] = x[0].to(self.device)
@@ -50,10 +54,12 @@ class clientGH(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 loss = self.loss(output, y)
+                total_loss+=loss.item()
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-
+            total_loss = total_loss / len(trainloader)
+        print(f"Client {self.id} Loss: {total_loss}")
         save_item(model, self.role, "model", self.save_folder_name)
 
         self.train_time_cost["num_rounds"] += 1
@@ -82,7 +88,7 @@ class clientGH(Client):
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
-                rep = rep.squeeze(1)
+                # rep = rep.squeeze(1)
 
                 for i, yy in enumerate(y):
                     y_c = yy.item()
