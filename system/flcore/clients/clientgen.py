@@ -21,6 +21,7 @@ class clientGen(Client):
         
 
     def train(self):
+        self.set_parameters()
         trainloader = self.load_train_data()
         model = load_item(self.role, 'model', self.save_folder_name)
         generative_model = load_item('Server', 'generative_model', self.save_folder_name)

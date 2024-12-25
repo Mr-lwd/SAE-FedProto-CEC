@@ -83,7 +83,7 @@ class FedGH(Server):
     
     def train_head(self):
         uploaded_protos = load_item(self.role, 'uploaded_protos', self.save_folder_name)
-        proto_loader = DataLoader(uploaded_protos, self.batch_size, drop_last=False, shuffle=True)
+        proto_loader = DataLoader(uploaded_protos, 32, drop_last=False, shuffle=True)
         head = load_item('Server', 'head', self.save_folder_name)
         
         opt_h = torch.optim.SGD(head.parameters(), lr=self.server_learning_rate)
