@@ -94,8 +94,8 @@ class clientTGP(Client):
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
 
-        eval_extra_time = self.collect_protos()
         save_item(model, self.role, "model", self.save_folder_name)
+        eval_extra_time = self.collect_protos()
         
         # local_train_time += eval_extra_time
 
@@ -124,7 +124,9 @@ class clientTGP(Client):
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
-
+                rep = rep.squeeze(1)
+                # print("rep.shape", rep.shape)
+                # exit(0)
                 for i, yy in enumerate(y):
                     y_c = yy.item()
                     protos[y_c].append(rep[i, :].detach().data)
