@@ -472,7 +472,13 @@ class Server(object):
         #     loss.append(train_loss)
 
         # print("Averaged Train Loss: {:.4f}".format(train_loss))
-        print("Averaged Test Accurancy: {:.4f}".format(test_acc))
+        avg_model_loss = sum(
+            [client.local_model_loss for client in self.clients]
+        ) / self.num_clients
+        
+        print("Averaged Test Accuracy (Regular Model): {:.4f}".format(test_acc))
+        print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
+        # print("Averaged Test Accurancy: {:.4f}".format(test_acc))
         print("Averaged Test AUC: {:.4f}".format(test_auc))
         # self.print_(test_acc, train_acc, train_loss)
         print("Std Test Accurancy: {:.4f}".format(np.std(accs)))

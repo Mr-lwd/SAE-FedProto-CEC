@@ -56,6 +56,8 @@ class Client(object):
         self.trans_simu_time = random.randint(1, 10)
         self.receive_buffer = None
         self.optimizer = self.args.optimizer
+        self.local_model_loss = 0
+        self.local_all_loss = 0
 
     def load_train_data(self, batch_size=None, num_workers=4):
         if batch_size == None:
