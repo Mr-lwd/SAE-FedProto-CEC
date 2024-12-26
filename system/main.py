@@ -456,7 +456,7 @@ if __name__ == "__main__":
 
     # FedGen
     parser.add_argument("-nd", "--noise_dim", type=int, default=512)
-    parser.add_argument("-glr", "--generator_learning_rate", type=float, default=0.005)
+    parser.add_argument("-glr", "--generator_learning_rate", type=float, default=0.0001)
     parser.add_argument("-hd", "--hidden_dim", type=int, default=512)
     parser.add_argument("-se", "--server_epochs", type=int, default=100)
     # FML
