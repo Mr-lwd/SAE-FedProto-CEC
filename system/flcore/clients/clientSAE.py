@@ -235,13 +235,14 @@ class clientSAE(Client):
     def test_metrics_proto(self):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        model = model.to(self.device)
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
         if self.args.test_useglclassifier == 1:
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
                 client_classifier.load_state_dict(glclassifier.state_dict())
+                
+        global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        model = model.to(self.device)
         model.eval()
 
         # Regular inference accuracy (baseline accuracy using the model alone)
