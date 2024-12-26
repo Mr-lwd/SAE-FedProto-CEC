@@ -64,7 +64,7 @@ class Client(object):
         return DataLoader(
             train_data,
             batch_size,
-            drop_last=True,
+            drop_last=False,
             shuffle=True,
         )
 
