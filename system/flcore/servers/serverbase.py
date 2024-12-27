@@ -220,7 +220,7 @@ class Server(object):
 
         agg_protos_label = None
         if self.args.algorithm != "FedSAE":
-            agg_protos_label = defaultdict(default_tensor)
+            agg_protos_label = self.default_tensor()
             for j in range(self.num_classes):
                 for id in cloud_clientProtos.keys():
                     if (
@@ -249,7 +249,7 @@ class Server(object):
         return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
-        agg_protos_label = defaultdict(default_tensor)
+        agg_protos_label = self.default_tensor()
         if self.agg_type == 0:  # 按数据量平均
             for j in range(self.args.num_classes):
                 for edge in self.edges:
@@ -691,6 +691,12 @@ class Server(object):
             proto_clusters[k] = torch.mean(protos, dim=0).detach()
 
         return proto_clusters
+    
+    def default_tensor(self):
+        agg_protos_label =  defaultdict(list)
+        for i in range(self.num_classes):
+            agg_protos_label[i] = torch.zeros(self.feature_dim)
+        return agg_protos_label
 
         # agg_protos_label = defaultdict(list)
         # for local_protos in protos_list:

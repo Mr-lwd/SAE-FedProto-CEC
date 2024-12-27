@@ -7,8 +7,7 @@ from collections import defaultdict
 from flcore.clients.clientbase import load_item, save_item
 
 
-def default_tensor(feature_dim=512):
-    return torch.zeros(feature_dim)
+
 
 
 def get_transmission_time(M=0):

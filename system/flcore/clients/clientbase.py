@@ -36,6 +36,7 @@ class Client(object):
         self.local_epochs = args.local_epochs
         self.args = args
         self.involve_count = 0
+        self.num_workers = self.args.num_workers
 
         # 创建client model
         if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
@@ -58,10 +59,9 @@ class Client(object):
         self.optimizer = self.args.optimizer
         self.local_model_loss = 0
         self.local_all_loss = 0
-        
-        self.num_workers = sefl.args.num_workers
 
-    def load_train_data(self, batch_size=None, num_workers=self.num_workers):
+
+    def load_train_data(self, batch_size=None):
         if batch_size == None:
             batch_size = self.batch_size
         train_data = read_client_data(self.dataset, self.id, is_train=True)
@@ -70,7 +70,7 @@ class Client(object):
             batch_size,
             drop_last=False,
             shuffle=True,
-            num_workers=num_workers,
+            num_workers=self.num_workers,
         )
 
     def load_test_data(self, batch_size=None):
