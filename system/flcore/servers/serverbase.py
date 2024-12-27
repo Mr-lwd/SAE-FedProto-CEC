@@ -41,7 +41,7 @@ class Server(object):
         self.top_cnt = 100
         self.auto_break = args.auto_break
         self.role = "Server"
-        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
             args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
@@ -565,7 +565,7 @@ class Server(object):
         """
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
-        prefix_path = f"{base_path}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        prefix_path = f"{base_path}/{args.dataset}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.algorithm == "FedSAE":
             save_folder = f"{prefix_path}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{drawtype}"
         else:
