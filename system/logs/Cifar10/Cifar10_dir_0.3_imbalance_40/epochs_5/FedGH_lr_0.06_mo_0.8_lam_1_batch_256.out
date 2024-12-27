@@ -13,7 +13,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedTGP
+algorithm = FedGH
 join_ratio = 1.0
 random_join_ratio = False
 num_clients = 40
@@ -195,99 +195,42 @@ label_counts: defaultdict(<class 'int'>, {3: 345, 8: 216, 9: 312, 4: 217, 0: 3, 
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
-Trainable_prototypes(
-  (embedings): Embedding(10, 512)
-  (middle): Sequential(
-    (0): Sequential(
-      (0): Linear(in_features=512, out_features=512, bias=True)
-      (1): ReLU()
-    )
-  )
-  (fc): Linear(in_features=512, out_features=512, bias=True)
-)
-tobetrained:
-[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-Edge 9 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 8 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 7 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 6 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 5 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 4 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 3 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 2 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 1 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Edge 0 begin training
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-Server global_protos Not Found
-readyList:
-[0, 8, 2, 5, 1, 9, 4, 6, 3, 7]
-aggregation_buffer:
-[0, 8, 2, 5, 1, 9, 4, 6, 3, 7]
-class-wise minimum distance tensor([249.3531,  77.6011, 104.6133, 265.3618, 572.9062,  77.6011, 104.6133,
-        340.1782, 572.9062, 465.2938], device='cuda:0')
-min_gap tensor(77.6011, device='cuda:0')
-max_gap tensor(572.9062, device='cuda:0')
-Server loss: 102.06364440917969
-Number of samples: 326
-end Update
-server_global_time: 8.20697658509016
-only_train_time: 77.2328747883439
+-------------------------------------------------- 98.77184581756592
 
--------------Global Round number: 0-------------
+-------------Round number: 0-------------
 
 Evaluate heterogeneous models
-Averaged Test Accuracy (Regular Model): 0.4958
-Averaged Test Accuracy (Prototype Model): 0.1276
-Averaged Train Loss (Regular Model): 1.3497
-Averaged Train Loss (Regular + Proto): 1.3497
-Std Test Accuracy (Regular Model): 0.1468
-Std Test Accuracy (Prototype Model): 0.1458
-tobetrained:
-[0, 8, 2, 5, 1, 9, 4, 6, 3, 7]
-Edge 0 begin training
-Edge 8 begin training
-Edge 2 begin training
-Edge 5 begin training
-Edge 1 begin training
-Edge 9 begin training
-Edge 4 begin training
-Edge 6 begin training
-Edge 3 begin training
+Averaged Test Accuracy (Regular Model): 0.4849
+Averaged Train Loss (Regular Model): 1.3494
+Averaged Test AUC: 0.8512
+Std Test Accurancy: 0.1573
+Std Test AUC: 0.0742
+-------------------------------------------------- 97.03456044197083
+
+-------------Round number: 1-------------
+
+Evaluate heterogeneous models
+Traceback (most recent call last):
+  File "main.py", line 510, in <module>
+    run(args)
+  File "main.py", line 270, in run
+    server.train()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servergh.py", line 56, in train
+    self.evaluate()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 455, in evaluate
+    stats = self.test_metrics()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 352, in test_metrics
+    ct, ns, auc = c.test_metrics()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/clients/clientbase.py", line 190, in test_metrics
+    auc = metrics.roc_auc_score(y_true, y_prob, average="micro")
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/_param_validation.py", line 214, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/metrics/_ranking.py", line 606, in roc_auc_score
+    y_score = check_array(y_score, ensure_2d=False)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 957, in check_array
+    _assert_all_finite(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 122, in _assert_all_finite
+    _assert_all_finite_element_wise(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 171, in _assert_all_finite_element_wise
+    raise ValueError(msg_err)
+ValueError: Input contains NaN.
