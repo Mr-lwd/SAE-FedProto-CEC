@@ -48,7 +48,7 @@ def extract_loss_data(log_file):
 
 # 定义文件路径
 log_files = [
-    "./FedTGP_lr_0.06_mo_0.8_lam_1_batch_256.out"
+    "./FedProto_lr_0.06_mo_0.8_lam_1_batch_256.out"
 ]
 
 time_model_configs = [ 
