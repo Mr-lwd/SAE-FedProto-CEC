@@ -1,0 +1,227 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = Cifar10_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HtFE8
+batch_size = 256
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = Local
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 1024
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+gl_use_clients = 1
+test_useglclassifier = 1
+gamma = 1
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.0001
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {3: 400, 7: 347, 4: 179, 6: 87, 1: 47, 2: 1, 8: 41, 0: 2, 5: 2, 9: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {2: 855, 4: 327, 3: 3, 0: 5})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {2: 95, 8: 162, 0: 23, 4: 177, 5: 141, 7: 49, 9: 71, 6: 36, 1: 9, 3: 2})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {7: 415, 5: 394, 9: 347, 4: 88, 8: 32, 2: 15, 0: 3})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {2: 591, 1: 3, 8: 172, 5: 234, 4: 18, 0: 18, 3: 83, 7: 30})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {5: 565, 0: 841, 1: 70, 3: 35})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {9: 43, 8: 143, 3: 381, 0: 93, 6: 154, 1: 15, 7: 1, 4: 2, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {0: 78, 9: 1519, 2: 76, 3: 115, 7: 79, 4: 349, 5: 29, 1: 6, 6: 1})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {4: 425, 3: 83, 8: 161, 7: 92, 2: 115, 1: 15, 6: 5, 9: 10, 0: 4, 5: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {2: 80, 7: 286, 4: 95, 5: 7, 1: 64, 9: 28, 3: 14, 0: 7})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {0: 830, 8: 906, 4: 108, 1: 17, 2: 10, 5: 5, 3: 11, 6: 6})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {8: 208, 2: 238, 1: 227, 3: 16, 9: 48, 7: 8, 6: 2, 4: 1, 5: 2})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {3: 4, 6: 681, 1: 47, 4: 354, 0: 50, 5: 1, 2: 2})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {6: 426, 0: 464, 2: 271, 1: 67, 3: 90, 4: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {4: 104, 1: 509, 5: 746, 0: 30, 3: 17, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {4: 973, 2: 843, 3: 45, 0: 75, 1: 155})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {9: 202, 8: 77, 6: 120, 3: 448, 5: 71, 4: 43, 0: 8, 1: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {2: 130, 7: 978, 4: 48, 3: 84, 5: 9, 6: 42, 0: 8})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {0: 260, 4: 82, 1: 196, 7: 8, 8: 51, 3: 53, 5: 179, 2: 2, 6: 3})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 456, 8: 150, 9: 86, 2: 46, 5: 56, 3: 7, 6: 20, 7: 10})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {3: 362, 6: 242, 8: 358, 7: 24, 0: 218, 2: 17, 4: 48, 5: 6})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {4: 131, 1: 276, 0: 436, 3: 93, 2: 72, 8: 33, 5: 44, 6: 2, 9: 2})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {5: 64, 8: 459, 9: 131, 1: 82, 6: 159, 7: 22, 3: 97, 2: 1, 4: 2})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {3: 373, 1: 205, 0: 170, 2: 510})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 111, 7: 407, 6: 231, 1: 151, 9: 44, 3: 19, 8: 68, 2: 21, 0: 4})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {5: 197, 1: 353, 7: 336, 4: 100, 6: 83, 3: 29, 2: 11, 9: 2, 0: 2, 8: 3})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {9: 885, 8: 57, 0: 276, 5: 59, 3: 116, 1: 18, 6: 2, 4: 3})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {5: 140, 6: 360, 2: 15, 9: 54, 1: 24, 4: 28, 3: 12})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {4: 71, 6: 12, 5: 486, 0: 87, 1: 148, 7: 29, 8: 31, 2: 2, 3: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {7: 932, 5: 380, 1: 46, 4: 10, 3: 54, 6: 48, 2: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {6: 555, 3: 724, 2: 19, 5: 89, 0: 95, 4: 8, 1: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {0: 185, 5: 41, 1: 130, 9: 201, 7: 52, 6: 65, 2: 12, 4: 61, 3: 7})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {5: 339, 3: 3, 8: 81, 2: 65, 0: 33, 9: 53, 6: 11, 1: 9, 7: 1})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {1: 688, 4: 82, 8: 63, 6: 249, 7: 39, 5: 32, 0: 10, 2: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {1: 196, 8: 782, 6: 180, 3: 124, 4: 26, 7: 25, 2: 5})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {2: 255, 7: 151, 9: 362, 8: 12, 0: 69, 3: 64, 1: 7, 6: 20, 4: 8})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {5: 152, 8: 159, 4: 109, 1: 70, 9: 83, 2: 15, 7: 10, 0: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {1: 171, 6: 519, 3: 58, 4: 82, 0: 116, 5: 16, 9: 20, 2: 10, 7: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {8: 27, 2: 125, 5: 29, 3: 111, 1: 29, 7: 141, 6: 156, 9: 20, 0: 6})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {4: 217, 9: 312, 3: 345, 8: 216, 5: 5, 2: 1, 0: 3, 7: 4, 1: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+------------------------- time cost ------------------------- 87.23295903205872
+
+-------------Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.4625
+Averaged Train Loss (Regular Model): 1.8549
+Averaged Test AUC: 0.8388
+Std Test Accurancy: 0.1707
+Std Test AUC: 0.0818
+------------------------- time cost ------------------------- 86.58885717391968
+
+-------------Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5328
+Averaged Train Loss (Regular Model): 1.3195
+Averaged Test AUC: 0.8796
+Std Test Accurancy: 0.1325
+Std Test AUC: 0.0720
+------------------------- time cost ------------------------- 85.97016453742981
+
+-------------Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5607
+Averaged Train Loss (Regular Model): 1.2246
+Averaged Test AUC: 0.8865
+Std Test Accurancy: 0.1373
+Std Test AUC: 0.0705
