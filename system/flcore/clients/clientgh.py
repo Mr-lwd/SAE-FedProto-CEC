@@ -41,7 +41,8 @@ class clientGH(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         for step in range(max_local_epochs):
-            total_loss = 0
+            self.local_model_loss = 0
+            self.local_all_loss = 0
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
                     x[0] = x[0].to(self.device)
@@ -54,14 +55,14 @@ class clientGH(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 loss = self.loss(output, y)
-                total_loss+=loss.item()
+                self.local_model_loss += loss.item()
+                
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-            total_loss = total_loss / len(trainloader)
-        print(f"Client {self.id} Loss: {total_loss}")
-        save_item(model, self.role, "model", self.save_folder_name)
 
+        save_item(model, self.role, "model", self.save_folder_name)
+        self.local_model_loss = self.local_model_loss / len(trainloader)
         self.train_time_cost["num_rounds"] += 1
         self.train_time_cost["total_cost"] += time.time() - start_time
 

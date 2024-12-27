@@ -37,6 +37,8 @@ class clientLocal(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         for step in range(max_local_epochs):
+            self.local_model_loss = 0
+            self.local_all_loss = 0
             for i, (x, y) in enumerate(trainloader):
                 if type(x) == type([]):
                     x[0] = x[0].to(self.device)
@@ -50,12 +52,15 @@ class clientLocal(Client):
                 rep = rep.squeeze(1)
                 output = model.head(rep)
                 loss = self.loss(output, y)
+                self.local_model_loss += loss.item()
+                
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
 
         save_item(model, self.role, 'model', self.save_folder_name)
         
+        self.local_model_loss = self.local_model_loss / len(trainloader)
         self.train_time_cost['num_rounds'] += 1
         self.train_time_cost['total_cost'] += time.time() - start_time
         

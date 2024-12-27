@@ -19,8 +19,7 @@ class clientProto(Client):
         self.cshared_protos_global = None
         self.train_time = 0
         self.trans_time = 0
-        self.local_model_loss = 0
-        self.local_all_loss = 0
+
 
     def train(self):
         self.receive_from_edgeserver()
