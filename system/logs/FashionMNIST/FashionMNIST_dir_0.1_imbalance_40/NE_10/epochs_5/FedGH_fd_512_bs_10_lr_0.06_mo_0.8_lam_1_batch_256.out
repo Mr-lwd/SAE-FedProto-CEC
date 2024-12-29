@@ -1,0 +1,1867 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = FashionMNIST_dir_0.1_imbalance_40
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+num_workers = 0
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = FedGH
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 512
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+gl_use_clients = 1
+test_useglclassifier = 1
+gamma = 1
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.0001
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {7: 1486, 2: 18, 6: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {6: 128, 2: 23, 4: 74, 1: 141, 5: 907, 0: 64})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {3: 903, 0: 187, 2: 364})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {5: 157, 6: 498, 7: 4})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {6: 712, 3: 83, 1: 39, 7: 11, 4: 2, 5: 2})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {5: 1671, 0: 176, 2: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {0: 185, 4: 494, 6: 351, 5: 40, 3: 10})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {8: 1071, 7: 88, 1: 11, 2: 5, 6: 1, 9: 1, 0: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {4: 595, 3: 633, 9: 21, 1: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 592, 0: 983, 2: 17, 1: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {8: 386, 3: 6, 2: 2, 6: 8})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {9: 280, 4: 95, 6: 1, 2: 13, 7: 3, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {1: 1691, 0: 569})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {2: 776, 1: 161, 6: 174, 7: 15, 8: 31, 3: 156, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {3: 247, 8: 61, 5: 46})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {5: 445, 2: 802, 9: 96, 1: 52, 3: 11, 0: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {2: 619, 0: 5, 3: 21, 9: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {0: 404, 2: 27, 6: 5, 5: 3, 7: 4, 3: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {9: 357, 7: 31, 4: 5, 8: 3})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {9: 716, 7: 20, 8: 2})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 672, 5: 198, 0: 3, 1: 2, 6: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {6: 3263, 1: 578, 3: 141, 5: 73, 2: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {9: 2370, 2: 63, 1: 46, 7: 2})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {9: 360, 4: 40, 0: 5, 1: 19, 8: 4})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {3: 992, 6: 49, 9: 28, 2: 4})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 602, 8: 1902, 2: 180})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {7: 1823, 3: 55, 0: 710, 4: 101, 1: 214, 5: 7})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {0: 253, 2: 295, 6: 15, 3: 28, 1: 9})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {9: 250, 0: 249, 4: 500, 6: 5, 8: 5, 3: 1, 5: 2})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {5: 914, 6: 5, 1: 20, 9: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {3: 253, 7: 708, 2: 384})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {0: 279, 9: 92, 7: 269, 8: 14, 1: 19, 5: 2})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {5: 748, 2: 239, 3: 354, 4: 12})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {1: 985, 0: 320, 3: 122})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {2: 1409, 1: 79})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {4: 2966, 0: 161, 1: 2})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {1: 1198, 7: 171, 3: 3, 5: 10})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {3: 642, 0: 148, 4: 103, 5: 51, 9: 11, 1: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {0: 494, 5: 8, 8: 9, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {8: 1743, 4: 256, 7: 32, 6: 15, 0: 1, 2: 1, 1: 1, 3: 1, 9: 1, 5: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+-------------------------------------------------- 11.896272659301758
+
+-------------Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9260
+Averaged Train Loss (Regular Model): 0.3674
+Averaged Test AUC: 0.9821
+Std Test Accurancy: 0.0878
+Std Test AUC: 0.0200
+-------------------------------------------------- 10.920536041259766
+
+-------------Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9418
+Averaged Train Loss (Regular Model): 0.2297
+Averaged Test AUC: 0.9904
+Std Test Accurancy: 0.1174
+Std Test AUC: 0.0184
+-------------------------------------------------- 10.575023174285889
+
+-------------Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9556
+Averaged Train Loss (Regular Model): 0.1574
+Averaged Test AUC: 0.9935
+Std Test Accurancy: 0.0660
+Std Test AUC: 0.0145
+-------------------------------------------------- 10.575320720672607
+
+-------------Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9613
+Averaged Train Loss (Regular Model): 0.1061
+Averaged Test AUC: 0.9950
+Std Test Accurancy: 0.0463
+Std Test AUC: 0.0089
+-------------------------------------------------- 10.530791997909546
+
+-------------Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9655
+Averaged Train Loss (Regular Model): 0.0997
+Averaged Test AUC: 0.9954
+Std Test Accurancy: 0.0494
+Std Test AUC: 0.0080
+-------------------------------------------------- 10.644035339355469
+
+-------------Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9667
+Averaged Train Loss (Regular Model): 0.0785
+Averaged Test AUC: 0.9951
+Std Test Accurancy: 0.0440
+Std Test AUC: 0.0076
+-------------------------------------------------- 10.82388162612915
+
+-------------Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9633
+Averaged Train Loss (Regular Model): 0.1043
+Averaged Test AUC: 0.9910
+Std Test Accurancy: 0.0477
+Std Test AUC: 0.0174
+-------------------------------------------------- 12.073545694351196
+
+-------------Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9689
+Averaged Train Loss (Regular Model): 0.0600
+Averaged Test AUC: 0.9946
+Std Test Accurancy: 0.0423
+Std Test AUC: 0.0084
+-------------------------------------------------- 12.916570663452148
+
+-------------Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9709
+Averaged Train Loss (Regular Model): 0.0487
+Averaged Test AUC: 0.9946
+Std Test Accurancy: 0.0412
+Std Test AUC: 0.0077
+-------------------------------------------------- 12.98139214515686
+
+-------------Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9703
+Averaged Train Loss (Regular Model): 0.0420
+Averaged Test AUC: 0.9944
+Std Test Accurancy: 0.0421
+Std Test AUC: 0.0081
+-------------------------------------------------- 12.691967487335205
+
+-------------Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0373
+Averaged Test AUC: 0.9939
+Std Test Accurancy: 0.0399
+Std Test AUC: 0.0078
+-------------------------------------------------- 12.865845203399658
+
+-------------Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9708
+Averaged Train Loss (Regular Model): 0.0293
+Averaged Test AUC: 0.9940
+Std Test Accurancy: 0.0401
+Std Test AUC: 0.0083
+-------------------------------------------------- 12.867546319961548
+
+-------------Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0259
+Averaged Test AUC: 0.9938
+Std Test Accurancy: 0.0375
+Std Test AUC: 0.0079
+-------------------------------------------------- 12.848442792892456
+
+-------------Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0238
+Averaged Test AUC: 0.9934
+Std Test Accurancy: 0.0363
+Std Test AUC: 0.0089
+-------------------------------------------------- 13.04030966758728
+
+-------------Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9729
+Averaged Train Loss (Regular Model): 0.0177
+Averaged Test AUC: 0.9932
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0082
+-------------------------------------------------- 12.795641422271729
+
+-------------Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9695
+Averaged Train Loss (Regular Model): 0.0225
+Averaged Test AUC: 0.9924
+Std Test Accurancy: 0.0370
+Std Test AUC: 0.0090
+-------------------------------------------------- 12.727627038955688
+
+-------------Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0141
+Averaged Test AUC: 0.9932
+Std Test Accurancy: 0.0341
+Std Test AUC: 0.0087
+-------------------------------------------------- 12.65152096748352
+
+-------------Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9729
+Averaged Train Loss (Regular Model): 0.0110
+Averaged Test AUC: 0.9933
+Std Test Accurancy: 0.0336
+Std Test AUC: 0.0081
+-------------------------------------------------- 12.998014211654663
+
+-------------Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0122
+Averaged Test AUC: 0.9929
+Std Test Accurancy: 0.0352
+Std Test AUC: 0.0089
+-------------------------------------------------- 11.170016527175903
+
+-------------Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9715
+Averaged Train Loss (Regular Model): 0.0105
+Averaged Test AUC: 0.9928
+Std Test Accurancy: 0.0363
+Std Test AUC: 0.0083
+-------------------------------------------------- 12.065383434295654
+
+-------------Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0081
+Averaged Test AUC: 0.9925
+Std Test Accurancy: 0.0333
+Std Test AUC: 0.0083
+-------------------------------------------------- 12.667542219161987
+
+-------------Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0106
+Averaged Test AUC: 0.9921
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0086
+-------------------------------------------------- 12.721733093261719
+
+-------------Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9726
+Averaged Train Loss (Regular Model): 0.0070
+Averaged Test AUC: 0.9921
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0090
+-------------------------------------------------- 12.803035259246826
+
+-------------Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9712
+Averaged Train Loss (Regular Model): 0.0071
+Averaged Test AUC: 0.9914
+Std Test Accurancy: 0.0362
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.749058246612549
+
+-------------Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0047
+Averaged Test AUC: 0.9917
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0086
+-------------------------------------------------- 12.890069723129272
+
+-------------Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0034
+Averaged Test AUC: 0.9916
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0089
+-------------------------------------------------- 10.769770383834839
+
+-------------Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0028
+Averaged Test AUC: 0.9913
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0087
+-------------------------------------------------- 10.355035781860352
+
+-------------Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0048
+Averaged Test AUC: 0.9910
+Std Test Accurancy: 0.0352
+Std Test AUC: 0.0093
+-------------------------------------------------- 10.298375844955444
+
+-------------Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0021
+Averaged Test AUC: 0.9911
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0091
+-------------------------------------------------- 10.284181594848633
+
+-------------Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0018
+Averaged Test AUC: 0.9910
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0090
+-------------------------------------------------- 10.186682939529419
+
+-------------Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0014
+Averaged Test AUC: 0.9908
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0092
+-------------------------------------------------- 10.206928253173828
+
+-------------Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9682
+Averaged Train Loss (Regular Model): 0.1319
+Averaged Test AUC: 0.9907
+Std Test Accurancy: 0.0380
+Std Test AUC: 0.0092
+-------------------------------------------------- 10.140833854675293
+
+-------------Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9678
+Averaged Train Loss (Regular Model): 0.0110
+Averaged Test AUC: 0.9904
+Std Test Accurancy: 0.0382
+Std Test AUC: 0.0097
+-------------------------------------------------- 10.974842548370361
+
+-------------Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9674
+Averaged Train Loss (Regular Model): 0.0152
+Averaged Test AUC: 0.9899
+Std Test Accurancy: 0.0390
+Std Test AUC: 0.0106
+-------------------------------------------------- 13.427504301071167
+
+-------------Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9673
+Averaged Train Loss (Regular Model): 0.0109
+Averaged Test AUC: 0.9894
+Std Test Accurancy: 0.0386
+Std Test AUC: 0.0115
+-------------------------------------------------- 13.322246789932251
+
+-------------Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9699
+Averaged Train Loss (Regular Model): 0.0067
+Averaged Test AUC: 0.9901
+Std Test Accurancy: 0.0361
+Std Test AUC: 0.0096
+-------------------------------------------------- 13.457740783691406
+
+-------------Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9674
+Averaged Train Loss (Regular Model): 0.0123
+Averaged Test AUC: 0.9911
+Std Test Accurancy: 0.0390
+Std Test AUC: 0.0086
+-------------------------------------------------- 13.408404111862183
+
+-------------Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9674
+Averaged Train Loss (Regular Model): 0.0125
+Averaged Test AUC: 0.9906
+Std Test Accurancy: 0.0391
+Std Test AUC: 0.0088
+-------------------------------------------------- 13.455879926681519
+
+-------------Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9711
+Averaged Train Loss (Regular Model): 0.0055
+Averaged Test AUC: 0.9901
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0094
+-------------------------------------------------- 13.547126770019531
+
+-------------Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9713
+Averaged Train Loss (Regular Model): 0.0048
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0091
+-------------------------------------------------- 12.601349592208862
+
+-------------Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9716
+Averaged Train Loss (Regular Model): 0.0035
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0353
+Std Test AUC: 0.0089
+-------------------------------------------------- 11.837610483169556
+
+-------------Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0036
+Averaged Test AUC: 0.9904
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0088
+-------------------------------------------------- 13.493927001953125
+
+-------------Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9451
+Averaged Train Loss (Regular Model): 0.0505
+Averaged Test AUC: 0.9878
+Std Test Accurancy: 0.1118
+Std Test AUC: 0.0143
+-------------------------------------------------- 13.196369886398315
+
+-------------Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9673
+Averaged Train Loss (Regular Model): 0.0121
+Averaged Test AUC: 0.9900
+Std Test Accurancy: 0.0396
+Std Test AUC: 0.0092
+-------------------------------------------------- 13.459476947784424
+
+-------------Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9677
+Averaged Train Loss (Regular Model): 0.0101
+Averaged Test AUC: 0.9898
+Std Test Accurancy: 0.0377
+Std Test AUC: 0.0095
+-------------------------------------------------- 13.300260782241821
+
+-------------Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9678
+Averaged Train Loss (Regular Model): 0.0091
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0385
+Std Test AUC: 0.0096
+-------------------------------------------------- 13.378147602081299
+
+-------------Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9677
+Averaged Train Loss (Regular Model): 0.0122
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0390
+Std Test AUC: 0.0108
+-------------------------------------------------- 13.151479005813599
+
+-------------Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9680
+Averaged Train Loss (Regular Model): 0.0114
+Averaged Test AUC: 0.9892
+Std Test Accurancy: 0.0382
+Std Test AUC: 0.0103
+-------------------------------------------------- 13.516418218612671
+
+-------------Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9671
+Averaged Train Loss (Regular Model): 0.0265
+Averaged Test AUC: 0.9901
+Std Test Accurancy: 0.0392
+Std Test AUC: 0.0090
+-------------------------------------------------- 13.422771215438843
+
+-------------Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9672
+Averaged Train Loss (Regular Model): 0.0111
+Averaged Test AUC: 0.9899
+Std Test Accurancy: 0.0394
+Std Test AUC: 0.0092
+-------------------------------------------------- 13.575084447860718
+
+-------------Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9679
+Averaged Train Loss (Regular Model): 0.0094
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0381
+Std Test AUC: 0.0091
+-------------------------------------------------- 13.40626072883606
+
+-------------Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9682
+Averaged Train Loss (Regular Model): 0.0091
+Averaged Test AUC: 0.9905
+Std Test Accurancy: 0.0376
+Std Test AUC: 0.0090
+-------------------------------------------------- 13.360637187957764
+
+-------------Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9683
+Averaged Train Loss (Regular Model): 0.0090
+Averaged Test AUC: 0.9905
+Std Test Accurancy: 0.0380
+Std Test AUC: 0.0090
+-------------------------------------------------- 13.576969385147095
+
+-------------Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9677
+Averaged Train Loss (Regular Model): 0.0121
+Averaged Test AUC: 0.9895
+Std Test Accurancy: 0.0388
+Std Test AUC: 0.0099
+-------------------------------------------------- 13.725855112075806
+
+-------------Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9677
+Averaged Train Loss (Regular Model): 0.0094
+Averaged Test AUC: 0.9894
+Std Test Accurancy: 0.0384
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.90186595916748
+
+-------------Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9701
+Averaged Train Loss (Regular Model): 0.0056
+Averaged Test AUC: 0.9899
+Std Test Accurancy: 0.0353
+Std Test AUC: 0.0093
+-------------------------------------------------- 12.646571636199951
+
+-------------Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9716
+Averaged Train Loss (Regular Model): 0.0044
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0091
+-------------------------------------------------- 12.5637686252594
+
+-------------Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9689
+Averaged Train Loss (Regular Model): 0.0058
+Averaged Test AUC: 0.9898
+Std Test Accurancy: 0.0363
+Std Test AUC: 0.0095
+-------------------------------------------------- 13.08344030380249
+
+-------------Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9714
+Averaged Train Loss (Regular Model): 0.0038
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0091
+-------------------------------------------------- 13.41304349899292
+
+-------------Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9713
+Averaged Train Loss (Regular Model): 0.0033
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0092
+-------------------------------------------------- 13.61150312423706
+
+-------------Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9713
+Averaged Train Loss (Regular Model): 0.0059
+Averaged Test AUC: 0.9900
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0094
+-------------------------------------------------- 13.06637454032898
+
+-------------Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9713
+Averaged Train Loss (Regular Model): 0.0030
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0097
+-------------------------------------------------- 12.625258684158325
+
+-------------Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0031
+Averaged Test AUC: 0.9896
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.570954084396362
+
+-------------Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9709
+Averaged Train Loss (Regular Model): 0.0042
+Averaged Test AUC: 0.9895
+Std Test Accurancy: 0.0356
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.625503778457642
+
+-------------Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0026
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0098
+-------------------------------------------------- 12.530419826507568
+
+-------------Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9581
+Averaged Train Loss (Regular Model): 0.0110
+Averaged Test AUC: 0.9881
+Std Test Accurancy: 0.0642
+Std Test AUC: 0.0132
+-------------------------------------------------- 12.596529960632324
+
+-------------Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9709
+Averaged Train Loss (Regular Model): 0.0031
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0097
+-------------------------------------------------- 12.606874942779541
+
+-------------Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9716
+Averaged Train Loss (Regular Model): 0.0030
+Averaged Test AUC: 0.9895
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.487010478973389
+
+-------------Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0027
+Averaged Test AUC: 0.9900
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0095
+-------------------------------------------------- 10.879244804382324
+
+-------------Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0021
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0094
+-------------------------------------------------- 10.573691606521606
+
+-------------Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9718
+Averaged Train Loss (Regular Model): 0.0016
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0351
+Std Test AUC: 0.0094
+-------------------------------------------------- 10.557233810424805
+
+-------------Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0015
+Averaged Test AUC: 0.9898
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0095
+-------------------------------------------------- 10.582270860671997
+
+-------------Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0014
+Averaged Test AUC: 0.9896
+Std Test Accurancy: 0.0351
+Std Test AUC: 0.0096
+-------------------------------------------------- 10.471961736679077
+
+-------------Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9716
+Averaged Train Loss (Regular Model): 0.0012
+Averaged Test AUC: 0.9893
+Std Test Accurancy: 0.0353
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.613670110702515
+
+-------------Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0011
+Averaged Test AUC: 0.9893
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.597370147705078
+
+-------------Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0011
+Averaged Test AUC: 0.9891
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0100
+-------------------------------------------------- 12.562752723693848
+
+-------------Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0010
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0352
+Std Test AUC: 0.0102
+-------------------------------------------------- 12.643457174301147
+
+-------------Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9718
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0104
+-------------------------------------------------- 12.733682870864868
+
+-------------Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9887
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0107
+-------------------------------------------------- 12.616681098937988
+
+-------------Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0109
+-------------------------------------------------- 12.6133394241333
+
+-------------Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0012
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0108
+-------------------------------------------------- 12.5806143283844
+
+-------------Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9692
+Averaged Train Loss (Regular Model): 0.0074
+Averaged Test AUC: 0.9885
+Std Test Accurancy: 0.0363
+Std Test AUC: 0.0111
+-------------------------------------------------- 12.640490531921387
+
+-------------Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0029
+Averaged Test AUC: 0.9891
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0104
+-------------------------------------------------- 12.662592887878418
+
+-------------Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9699
+Averaged Train Loss (Regular Model): 0.0078
+Averaged Test AUC: 0.9889
+Std Test Accurancy: 0.0359
+Std Test AUC: 0.0109
+-------------------------------------------------- 10.465595960617065
+
+-------------Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9710
+Averaged Train Loss (Regular Model): 0.0026
+Averaged Test AUC: 0.9898
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0095
+-------------------------------------------------- 10.650336265563965
+
+-------------Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0014
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0091
+-------------------------------------------------- 10.527761936187744
+
+-------------Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9718
+Averaged Train Loss (Regular Model): 0.0014
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0353
+Std Test AUC: 0.0091
+-------------------------------------------------- 10.85749363899231
+
+-------------Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0012
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0091
+-------------------------------------------------- 10.749641418457031
+
+-------------Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9716
+Averaged Train Loss (Regular Model): 0.0025
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0104
+-------------------------------------------------- 10.437745571136475
+
+-------------Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0020
+Averaged Test AUC: 0.9905
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0091
+-------------------------------------------------- 10.48912000656128
+
+-------------Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9718
+Averaged Train Loss (Regular Model): 0.0020
+Averaged Test AUC: 0.9906
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0092
+-------------------------------------------------- 10.789807081222534
+
+-------------Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0020
+Averaged Test AUC: 0.9905
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0094
+-------------------------------------------------- 10.624395847320557
+
+-------------Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0015
+Averaged Test AUC: 0.9904
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0094
+-------------------------------------------------- 10.431848764419556
+
+-------------Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0013
+Averaged Test AUC: 0.9901
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0095
+-------------------------------------------------- 10.446752786636353
+
+-------------Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0014
+Averaged Test AUC: 0.9904
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0096
+-------------------------------------------------- 10.449826002120972
+
+-------------Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9647
+Averaged Train Loss (Regular Model): 0.0079
+Averaged Test AUC: 0.9898
+Std Test Accurancy: 0.0455
+Std Test AUC: 0.0097
+-------------------------------------------------- 12.273272037506104
+
+-------------Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9718
+Averaged Train Loss (Regular Model): 0.0022
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0097
+-------------------------------------------------- 12.645664930343628
+
+-------------Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0017
+Averaged Test AUC: 0.9903
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0096
+-------------------------------------------------- 12.588409662246704
+
+-------------Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0016
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0096
+-------------------------------------------------- 12.547929286956787
+
+-------------Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0013
+Averaged Test AUC: 0.9895
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0098
+-------------------------------------------------- 10.850374460220337
+
+-------------Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0026
+Averaged Test AUC: 0.9900
+Std Test Accurancy: 0.0339
+Std Test AUC: 0.0097
+-------------------------------------------------- 11.89681363105774
+
+-------------Round number: 101-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0012
+Averaged Test AUC: 0.9900
+Std Test Accurancy: 0.0342
+Std Test AUC: 0.0097
+-------------------------------------------------- 12.612021207809448
+
+-------------Round number: 102-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0017
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0098
+-------------------------------------------------- 12.592714071273804
+
+-------------Round number: 103-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0011
+Averaged Test AUC: 0.9899
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0098
+-------------------------------------------------- 12.646028518676758
+
+-------------Round number: 104-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0098
+-------------------------------------------------- 12.890002727508545
+
+-------------Round number: 105-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0098
+-------------------------------------------------- 12.852954149246216
+
+-------------Round number: 106-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9896
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0099
+-------------------------------------------------- 12.678430795669556
+
+-------------Round number: 107-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0024
+Averaged Test AUC: 0.9891
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0103
+-------------------------------------------------- 12.80476975440979
+
+-------------Round number: 108-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0018
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0133
+-------------------------------------------------- 12.856022357940674
+
+-------------Round number: 109-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0015
+Averaged Test AUC: 0.9894
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0101
+-------------------------------------------------- 11.224740266799927
+
+-------------Round number: 110-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0012
+Averaged Test AUC: 0.9897
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0099
+-------------------------------------------------- 11.139130592346191
+
+-------------Round number: 111-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9726
+Averaged Train Loss (Regular Model): 0.0011
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0115
+-------------------------------------------------- 10.923599004745483
+
+-------------Round number: 112-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9681
+Averaged Train Loss (Regular Model): 0.0038
+Averaged Test AUC: 0.9882
+Std Test Accurancy: 0.0380
+Std Test AUC: 0.0118
+-------------------------------------------------- 10.326022386550903
+
+-------------Round number: 113-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0032
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0146
+-------------------------------------------------- 12.147131204605103
+
+-------------Round number: 114-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0010
+Averaged Test AUC: 0.9902
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0101
+-------------------------------------------------- 12.657474517822266
+
+-------------Round number: 115-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9895
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0101
+-------------------------------------------------- 12.632298469543457
+
+-------------Round number: 116-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9877
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0131
+-------------------------------------------------- 12.58807635307312
+
+-------------Round number: 117-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9896
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0102
+-------------------------------------------------- 12.666611909866333
+
+-------------Round number: 118-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0139
+-------------------------------------------------- 11.121729135513306
+
+-------------Round number: 119-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0351
+Std Test AUC: 0.0113
+-------------------------------------------------- 12.468168258666992
+
+-------------Round number: 120-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9880
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0121
+-------------------------------------------------- 12.737255096435547
+
+-------------Round number: 121-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0128
+-------------------------------------------------- 12.646274089813232
+
+-------------Round number: 122-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0010
+Averaged Test AUC: 0.9869
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0147
+-------------------------------------------------- 12.653918266296387
+
+-------------Round number: 123-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9891
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0103
+-------------------------------------------------- 12.686511039733887
+
+-------------Round number: 124-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9871
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0139
+-------------------------------------------------- 12.667100667953491
+
+-------------Round number: 125-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0352
+Std Test AUC: 0.0103
+-------------------------------------------------- 12.739303350448608
+
+-------------Round number: 126-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9871
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0139
+-------------------------------------------------- 12.744549751281738
+
+-------------Round number: 127-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0110
+-------------------------------------------------- 12.728403329849243
+
+-------------Round number: 128-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9867
+Std Test Accurancy: 0.0338
+Std Test AUC: 0.0149
+-------------------------------------------------- 10.870131969451904
+
+-------------Round number: 129-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9869
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0141
+-------------------------------------------------- 10.788369178771973
+
+-------------Round number: 130-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9886
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0107
+-------------------------------------------------- 11.55538821220398
+
+-------------Round number: 131-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9693
+Averaged Train Loss (Regular Model): 0.0086
+Averaged Test AUC: 0.9860
+Std Test Accurancy: 0.0359
+Std Test AUC: 0.0169
+-------------------------------------------------- 12.498359441757202
+
+-------------Round number: 132-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9899
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0102
+-------------------------------------------------- 12.644887685775757
+
+-------------Round number: 133-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9892
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0102
+-------------------------------------------------- 12.675307035446167
+
+-------------Round number: 134-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0133
+-------------------------------------------------- 12.417501211166382
+
+-------------Round number: 135-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9880
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0116
+-------------------------------------------------- 12.645965099334717
+
+-------------Round number: 136-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9870
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0140
+-------------------------------------------------- 11.98720097541809
+
+-------------Round number: 137-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9888
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0105
+-------------------------------------------------- 10.651377439498901
+
+-------------Round number: 138-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9861
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0166
+-------------------------------------------------- 10.506797313690186
+
+-------------Round number: 139-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9896
+Std Test Accurancy: 0.0342
+Std Test AUC: 0.0104
+-------------------------------------------------- 11.070077896118164
+
+-------------Round number: 140-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9877
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0120
+-------------------------------------------------- 10.845033645629883
+
+-------------Round number: 141-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9870
+Std Test Accurancy: 0.0348
+Std Test AUC: 0.0137
+-------------------------------------------------- 10.856053829193115
+
+-------------Round number: 142-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9870
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0138
+-------------------------------------------------- 10.896152257919312
+
+-------------Round number: 143-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9867
+Std Test Accurancy: 0.0341
+Std Test AUC: 0.0145
+-------------------------------------------------- 11.218144178390503
+
+-------------Round number: 144-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0129
+-------------------------------------------------- 12.682023763656616
+
+-------------Round number: 145-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9873
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0130
+-------------------------------------------------- 12.702373504638672
+
+-------------Round number: 146-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9868
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0143
+-------------------------------------------------- 12.774070739746094
+
+-------------Round number: 147-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9724
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9867
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0143
+-------------------------------------------------- 12.837921619415283
+
+-------------Round number: 148-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9869
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0140
+-------------------------------------------------- 12.750737190246582
+
+-------------Round number: 149-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0125
+-------------------------------------------------- 12.670946836471558
+
+-------------Round number: 150-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9725
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9872
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0130
+-------------------------------------------------- 12.69403338432312
+
+-------------Round number: 151-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0005
+Averaged Test AUC: 0.9872
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0130
+-------------------------------------------------- 12.677442789077759
+
+-------------Round number: 152-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0005
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0350
+Std Test AUC: 0.0124
+-------------------------------------------------- 12.661688566207886
+
+-------------Round number: 153-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9723
+Averaged Train Loss (Regular Model): 0.0005
+Averaged Test AUC: 0.9874
+Std Test Accurancy: 0.0344
+Std Test AUC: 0.0127
+-------------------------------------------------- 12.75338077545166
+
+-------------Round number: 154-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0004
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0351
+Std Test AUC: 0.0123
+-------------------------------------------------- 12.664155960083008
+
+-------------Round number: 155-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0004
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0125
+-------------------------------------------------- 12.67425274848938
+
+-------------Round number: 156-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0346
+Std Test AUC: 0.0123
+-------------------------------------------------- 12.645648717880249
+
+-------------Round number: 157-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9720
+Averaged Train Loss (Regular Model): 0.0008
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0122
+-------------------------------------------------- 11.437020540237427
+
+-------------Round number: 158-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0007
+Averaged Test AUC: 0.9890
+Std Test Accurancy: 0.0343
+Std Test AUC: 0.0107
+-------------------------------------------------- 12.666741847991943
+
+-------------Round number: 159-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9722
+Averaged Train Loss (Regular Model): 0.0006
+Averaged Test AUC: 0.9876
+Std Test Accurancy: 0.0345
+Std Test AUC: 0.0121
+-------------------------------------------------- 12.701127529144287
+
+-------------Round number: 160-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9717
+Averaged Train Loss (Regular Model): 0.0015
+Averaged Test AUC: 0.9884
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0110
+-------------------------------------------------- 11.753127336502075
+
+-------------Round number: 161-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0011
+Averaged Test AUC: 0.9883
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0112
+-------------------------------------------------- 12.74884557723999
+
+-------------Round number: 162-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9719
+Averaged Train Loss (Regular Model): 0.0010
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0349
+Std Test AUC: 0.0122
+-------------------------------------------------- 12.725927114486694
+
+-------------Round number: 163-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9721
+Averaged Train Loss (Regular Model): 0.0009
+Averaged Test AUC: 0.9875
+Std Test Accurancy: 0.0347
+Std Test AUC: 0.0123
+-------------------------------------------------- 12.62473464012146
+
+-------------Round number: 164-------------
+
+Evaluate heterogeneous models
+Traceback (most recent call last):
+  File "main.py", line 511, in <module>
+    run(args)
+  File "main.py", line 270, in run
+    server.train()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/servergh.py", line 56, in train
+    self.evaluate()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 455, in evaluate
+    stats = self.test_metrics()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/servers/serverbase.py", line 352, in test_metrics
+    ct, ns, auc = c.test_metrics()
+  File "/root/autodl-tmp/SAE-FedProto-CEC/system/flcore/clients/clientbase.py", line 193, in test_metrics
+    auc = metrics.roc_auc_score(y_true, y_prob, average="micro")
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/_param_validation.py", line 214, in wrapper
+    return func(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/metrics/_ranking.py", line 606, in roc_auc_score
+    y_score = check_array(y_score, ensure_2d=False)
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 957, in check_array
+    _assert_all_finite(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 122, in _assert_all_finite
+    _assert_all_finite_element_wise(
+  File "/root/miniconda3/lib/python3.8/site-packages/sklearn/utils/validation.py", line 171, in _assert_all_finite_element_wise
+    raise ValueError(msg_err)
+ValueError: Input contains NaN.
