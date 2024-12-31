@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import json
 
-iters = ["1st","2nd","3rd","4th","5th","6th","7th", "8th"]
+iters = ["1st","2nd","3rd","4th","5th","6th","7th", "8th", "9th"]
 # iters = ["8th"]
 def cpu_plot(iter):
     file_path = f"./MNIST_{iter}_model_DVFS.json"
@@ -17,7 +17,7 @@ def cpu_plot(iter):
 
 
     # 定义修正模型函数
-    Tmin = min(execution_times)
+    Tmin = execution_times[0]
     maxFreq = max(frequencies)
     def adjusted_model(frequencies, alpha):
         return Tmin * (maxFreq / frequencies)**(alpha)
