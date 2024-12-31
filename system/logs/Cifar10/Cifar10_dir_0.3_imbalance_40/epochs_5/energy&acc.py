@@ -50,7 +50,8 @@ def extract_loss_data(log_file):
 log_files = [
     # "./FedProto_fd_1024_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
     # "./FedSAE_fd_1024_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    "./FedSAE_fd_256_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out"
+    "./FedTGP_fd_64_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "./FedSAE_fd_64_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out"
     # "./Local_fd_1024_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
     # "./FedSAE_gam_0.2_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out"
     # "./FedSAE_fd_64_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
