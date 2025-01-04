@@ -301,7 +301,7 @@ if __name__ == "__main__":
     total_start = time.time()
     num_edges = 10
     edge_ratio = 1.0
-    buffer_size = int(num_edges * edge_ratio)
+    # buffer_size = 
 
     parser = argparse.ArgumentParser()
     # general
@@ -314,6 +314,9 @@ if __name__ == "__main__":
     parser.add_argument("-did", "--device_id", type=str, default="0")
     parser.add_argument(
         "-data", "--dataset", type=str, default="MNIST_dir_0.3_imbalance_40"
+    )
+    parser.add_argument(
+        "-DVFS", "--DVFS", type=int, default=0
     )
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_40"
@@ -346,16 +349,20 @@ if __name__ == "__main__":
         default=10,
         help="Multiple update steps in one local epoch.",
     )
-    # parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
-    # parser.add_argument("-algo", "--algorithm", type=str, default="FedSAE")
-    parser.add_argument("-algo", "--algorithm", type=str, default="FedTGP")
+    parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
     parser.add_argument(
         "-jr",
         "--join_ratio",
         type=float,
         default=1.0,
-        # default=0.8,
         help="Ratio of clients per round",
+    )
+    parser.add_argument(
+        "-ejr",
+        "--edge_join_ratio",
+        type=float,
+        default=1.0,
+        help="Ratio of edges per round",
     )
     parser.add_argument(
         "-rjr",
@@ -368,7 +375,7 @@ if __name__ == "__main__":
         "-nc", "--num_clients", type=int, default=40, help="Total number of clients"
     )
     parser.add_argument(
-        "-ne", "--num_edges", type=int, default=num_edges, help="Total number of edges"
+        "-ne", "--num_edges", type=int, default=10, help="Total number of edges"
     )
 
     parser.add_argument(
@@ -438,19 +445,13 @@ if __name__ == "__main__":
 
     # FedSAE
     parser.add_argument(
-        "-bs", "--buffersize", type=int, default=buffer_size
+        "-bs", "--buffersize", type=int, default=int(num_edges * edge_ratio)
     )  # 与边缘数量相等则等价于全同步
     parser.add_argument("-gl_use_clients", "--gl_use_clients", type=int, default=1)
     parser.add_argument(
         "-tugl", "--test_useglclassifier", type=int, default=1
     )
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
-    # parser.add_argument("-tam", "--tgpaddmse", type=int, default=0)
-    # parser.add_argument("-addmse", "--addmse", type=int, default=0)
-
-    # parser.add_argument("-usb", "--use_beta", type=bool, default=True)
-    # parser.add_argument("-addTGP", "--addTGP", type=int, default=0)
-    # parser.add_argument("-SAEbeta", "--SAEbeta", type=float, default=0)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)
     parser.add_argument("-drawround", "--drawround", type=int, default=20)
 
@@ -497,6 +498,13 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
+        
+    if args.DVFS == 1:
+        print("DVFS is on, train on CPU and no plots\n")
+        args.device = "cpu"
+        args.drawtsne = 0
+    
+    args.buffer_size = int(args.num_edges * edge_ratio)
 
     if args.use_decay_scheduler:
         print("use scheduler lr decay")
