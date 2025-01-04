@@ -76,8 +76,10 @@ def separate_data(
 
     dataset_content, dataset_label = data
     # guarantee that each client must have at least one batch of data for testing.
-    least_samples = int(min(batch_size / (1-train_ratio), len(dataset_label) / num_clients / 2))
-    # least_samples = int(min(batch_size / (1-train_ratio), len(dataset_label) / num_clients / 4))
+    if alpha != 0.1:
+        least_samples = int(min(batch_size / (1-train_ratio), len(dataset_label) / num_clients / 2))
+    else:
+        least_samples = int(min(batch_size / (1-train_ratio), len(dataset_label) / num_clients / 4))
 
     dataidx_map = {}
 

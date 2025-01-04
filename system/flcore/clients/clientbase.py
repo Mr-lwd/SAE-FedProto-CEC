@@ -36,6 +36,7 @@ class Client(object):
         self.local_epochs = args.local_epochs
         self.args = args
         self.involve_count = 0
+        self.num_workers = self.args.num_workers
 
         # 创建client model
         if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
@@ -62,7 +63,8 @@ class Client(object):
         self.dvfs_data = self.create_objects_from_json()
         self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
-    def load_train_data(self, batch_size=None, num_workers=0):
+
+    def load_train_data(self, batch_size=None):
         if batch_size == None:
             batch_size = self.batch_size
         train_data = read_client_data(self.dataset, self.id, is_train=True)
@@ -71,7 +73,7 @@ class Client(object):
             batch_size,
             drop_last=False,
             shuffle=True,
-            num_workers=num_workers
+            num_workers=self.num_workers,
         )
 
     def load_test_data(self, batch_size=None):

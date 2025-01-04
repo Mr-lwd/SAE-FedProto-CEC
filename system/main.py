@@ -328,11 +328,12 @@ if __name__ == "__main__":
     parser.add_argument("-m", "--model_family", type=str, default="HCNNs8")
     # parser.add_argument("-m", "--model_family", type=str, default="HtM10")
     parser.add_argument("-lbs", "--batch_size", type=int, default=256)
+    parser.add_argument("-nw", "--num_workers", type=int, default=0)
     parser.add_argument(
         "-lr",
         "--local_learning_rate",
         type=float,
-        default=0.02,
+        default=0.06,
         help="Local learning rate",
     )
     parser.add_argument("-usche", "--use_decay_scheduler", type=bool, default=False)

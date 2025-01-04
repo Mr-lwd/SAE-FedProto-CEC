@@ -1,0 +1,2232 @@
+==================================================
+goal = test
+device = cuda
+device_id = 0
+dataset = Cifar10_dir_0.3_imbalance_40
+num_classes = 10
+model_family = HtFE8
+batch_size = 256
+num_workers = 0
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 200
+edge_epochs = 1
+local_epochs = 5
+algorithm = FedGen
+join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 1024
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+gl_use_clients = 1
+test_useglclassifier = 1
+gamma = 1
+drawtsne = 1
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.0001
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {3: 400, 7: 347, 4: 179, 6: 87, 1: 47, 2: 1, 8: 41, 0: 2, 5: 2, 9: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {2: 855, 4: 327, 3: 3, 0: 5})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {2: 95, 8: 162, 0: 23, 4: 177, 5: 141, 7: 49, 9: 71, 6: 36, 1: 9, 3: 2})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {7: 415, 5: 394, 9: 347, 4: 88, 8: 32, 2: 15, 0: 3})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {2: 591, 1: 3, 8: 172, 5: 234, 4: 18, 0: 18, 3: 83, 7: 30})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {5: 565, 0: 841, 1: 70, 3: 35})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {9: 43, 8: 143, 3: 381, 0: 93, 6: 154, 1: 15, 7: 1, 4: 2, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {0: 78, 9: 1519, 2: 76, 3: 115, 7: 79, 4: 349, 5: 29, 1: 6, 6: 1})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {4: 425, 3: 83, 8: 161, 7: 92, 2: 115, 1: 15, 6: 5, 9: 10, 0: 4, 5: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {2: 80, 7: 286, 4: 95, 5: 7, 1: 64, 9: 28, 3: 14, 0: 7})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {0: 830, 8: 906, 4: 108, 1: 17, 2: 10, 5: 5, 3: 11, 6: 6})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {8: 208, 2: 238, 1: 227, 3: 16, 9: 48, 7: 8, 6: 2, 4: 1, 5: 2})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {3: 4, 6: 681, 1: 47, 4: 354, 0: 50, 5: 1, 2: 2})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {6: 426, 0: 464, 2: 271, 1: 67, 3: 90, 4: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {4: 104, 1: 509, 5: 746, 0: 30, 3: 17, 2: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {4: 973, 2: 843, 3: 45, 0: 75, 1: 155})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {9: 202, 8: 77, 6: 120, 3: 448, 5: 71, 4: 43, 0: 8, 1: 2})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {2: 130, 7: 978, 4: 48, 3: 84, 5: 9, 6: 42, 0: 8})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {0: 260, 4: 82, 1: 196, 7: 8, 8: 51, 3: 53, 5: 179, 2: 2, 6: 3})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 456, 8: 150, 9: 86, 2: 46, 5: 56, 3: 7, 6: 20, 7: 10})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {3: 362, 6: 242, 8: 358, 7: 24, 0: 218, 2: 17, 4: 48, 5: 6})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {4: 131, 1: 276, 0: 436, 3: 93, 2: 72, 8: 33, 5: 44, 6: 2, 9: 2})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {5: 64, 8: 459, 9: 131, 1: 82, 6: 159, 7: 22, 3: 97, 2: 1, 4: 2})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {3: 373, 1: 205, 0: 170, 2: 510})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {4: 111, 7: 407, 6: 231, 1: 151, 9: 44, 3: 19, 8: 68, 2: 21, 0: 4})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {5: 197, 1: 353, 7: 336, 4: 100, 6: 83, 3: 29, 2: 11, 9: 2, 0: 2, 8: 3})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {9: 885, 8: 57, 0: 276, 5: 59, 3: 116, 1: 18, 6: 2, 4: 3})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {5: 140, 6: 360, 2: 15, 9: 54, 1: 24, 4: 28, 3: 12})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {4: 71, 6: 12, 5: 486, 0: 87, 1: 148, 7: 29, 8: 31, 2: 2, 3: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {7: 932, 5: 380, 1: 46, 4: 10, 3: 54, 6: 48, 2: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {6: 555, 3: 724, 2: 19, 5: 89, 0: 95, 4: 8, 1: 1})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {0: 185, 5: 41, 1: 130, 9: 201, 7: 52, 6: 65, 2: 12, 4: 61, 3: 7})
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {5: 339, 3: 3, 8: 81, 2: 65, 0: 33, 9: 53, 6: 11, 1: 9, 7: 1})
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {1: 688, 4: 82, 8: 63, 6: 249, 7: 39, 5: 32, 0: 10, 2: 2})
+mobilenet_v2(pretrained=False, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {1: 196, 8: 782, 6: 180, 3: 124, 4: 26, 7: 25, 2: 5})
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {2: 255, 7: 151, 9: 362, 8: 12, 0: 69, 3: 64, 1: 7, 6: 20, 4: 8})
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {5: 152, 8: 159, 4: 109, 1: 70, 9: 83, 2: 15, 7: 10, 0: 1})
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {1: 171, 6: 519, 3: 58, 4: 82, 0: 116, 5: 16, 9: 20, 2: 10, 7: 10})
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {8: 27, 2: 125, 5: 29, 3: 111, 1: 29, 7: 141, 6: 156, 9: 20, 0: 6})
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {4: 217, 9: 312, 3: 345, 8: 216, 5: 5, 2: 1, 0: 3, 7: 4, 1: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+------------------------- time cost ------------------------- 137.60263967514038
+
+-------------Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.4616
+Averaged Train Loss (Regular Model): 1.7709
+Averaged Test AUC: 0.8395
+Std Test Accurancy: 0.1554
+Std Test AUC: 0.0877
+------------------------- time cost ------------------------- 135.56125259399414
+
+-------------Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5209
+Averaged Train Loss (Regular Model): 1.4195
+Averaged Test AUC: 0.8855
+Std Test Accurancy: 0.1521
+Std Test AUC: 0.0703
+------------------------- time cost ------------------------- 136.969957113266
+
+-------------Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5684
+Averaged Train Loss (Regular Model): 1.1462
+Averaged Test AUC: 0.8951
+Std Test Accurancy: 0.1475
+Std Test AUC: 0.0754
+------------------------- time cost ------------------------- 136.4651563167572
+
+-------------Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5644
+Averaged Train Loss (Regular Model): 0.9999
+Averaged Test AUC: 0.9027
+Std Test Accurancy: 0.1445
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 136.44571232795715
+
+-------------Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5849
+Averaged Train Loss (Regular Model): 0.8978
+Averaged Test AUC: 0.9061
+Std Test Accurancy: 0.1518
+Std Test AUC: 0.0600
+------------------------- time cost ------------------------- 135.60567045211792
+
+-------------Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5984
+Averaged Train Loss (Regular Model): 0.7265
+Averaged Test AUC: 0.9053
+Std Test Accurancy: 0.1266
+Std Test AUC: 0.0506
+------------------------- time cost ------------------------- 136.53399634361267
+
+-------------Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5980
+Averaged Train Loss (Regular Model): 0.6733
+Averaged Test AUC: 0.8992
+Std Test Accurancy: 0.1199
+Std Test AUC: 0.0455
+------------------------- time cost ------------------------- 136.84427070617676
+
+-------------Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5934
+Averaged Train Loss (Regular Model): 0.6215
+Averaged Test AUC: 0.8896
+Std Test Accurancy: 0.1317
+Std Test AUC: 0.0605
+------------------------- time cost ------------------------- 137.0986828804016
+
+-------------Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6014
+Averaged Train Loss (Regular Model): 0.5042
+Averaged Test AUC: 0.8996
+Std Test Accurancy: 0.1130
+Std Test AUC: 0.0495
+------------------------- time cost ------------------------- 137.3651888370514
+
+-------------Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6113
+Averaged Train Loss (Regular Model): 0.4455
+Averaged Test AUC: 0.8974
+Std Test Accurancy: 0.1134
+Std Test AUC: 0.0524
+------------------------- time cost ------------------------- 136.9649031162262
+
+-------------Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6031
+Averaged Train Loss (Regular Model): 0.3914
+Averaged Test AUC: 0.8918
+Std Test Accurancy: 0.1155
+Std Test AUC: 0.0463
+------------------------- time cost ------------------------- 137.48086714744568
+
+-------------Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6071
+Averaged Train Loss (Regular Model): 0.3596
+Averaged Test AUC: 0.8885
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0557
+------------------------- time cost ------------------------- 135.71218395233154
+
+-------------Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6131
+Averaged Train Loss (Regular Model): 0.3085
+Averaged Test AUC: 0.8900
+Std Test Accurancy: 0.1127
+Std Test AUC: 0.0497
+------------------------- time cost ------------------------- 133.22001123428345
+
+-------------Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6133
+Averaged Train Loss (Regular Model): 0.2770
+Averaged Test AUC: 0.8872
+Std Test Accurancy: 0.1220
+Std Test AUC: 0.0608
+------------------------- time cost ------------------------- 134.097727060318
+
+-------------Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6148
+Averaged Train Loss (Regular Model): 0.2359
+Averaged Test AUC: 0.8886
+Std Test Accurancy: 0.1170
+Std Test AUC: 0.0565
+------------------------- time cost ------------------------- 132.22880792617798
+
+-------------Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6234
+Averaged Train Loss (Regular Model): 0.2210
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.1085
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 133.06956839561462
+
+-------------Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6116
+Averaged Train Loss (Regular Model): 0.2860
+Averaged Test AUC: 0.8802
+Std Test Accurancy: 0.1197
+Std Test AUC: 0.0771
+------------------------- time cost ------------------------- 133.40008425712585
+
+-------------Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6188
+Averaged Train Loss (Regular Model): 0.1767
+Averaged Test AUC: 0.8864
+Std Test Accurancy: 0.1117
+Std Test AUC: 0.0562
+------------------------- time cost ------------------------- 134.37077474594116
+
+-------------Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6264
+Averaged Train Loss (Regular Model): 0.1970
+Averaged Test AUC: 0.8905
+Std Test Accurancy: 0.1090
+Std Test AUC: 0.0559
+------------------------- time cost ------------------------- 130.95685291290283
+
+-------------Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6144
+Averaged Train Loss (Regular Model): 0.2025
+Averaged Test AUC: 0.8823
+Std Test Accurancy: 0.1167
+Std Test AUC: 0.0591
+------------------------- time cost ------------------------- 132.8014419078827
+
+-------------Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6266
+Averaged Train Loss (Regular Model): 0.1811
+Averaged Test AUC: 0.8893
+Std Test Accurancy: 0.1111
+Std Test AUC: 0.0571
+------------------------- time cost ------------------------- 134.82730531692505
+
+-------------Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6259
+Averaged Train Loss (Regular Model): 0.1754
+Averaged Test AUC: 0.8895
+Std Test Accurancy: 0.1101
+Std Test AUC: 0.0597
+------------------------- time cost ------------------------- 132.41854596138
+
+-------------Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6222
+Averaged Train Loss (Regular Model): 0.1423
+Averaged Test AUC: 0.8892
+Std Test Accurancy: 0.1057
+Std Test AUC: 0.0549
+------------------------- time cost ------------------------- 132.00677680969238
+
+-------------Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6235
+Averaged Train Loss (Regular Model): 0.1653
+Averaged Test AUC: 0.8868
+Std Test Accurancy: 0.1129
+Std Test AUC: 0.0589
+------------------------- time cost ------------------------- 131.8947069644928
+
+-------------Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6250
+Averaged Train Loss (Regular Model): 0.1699
+Averaged Test AUC: 0.8908
+Std Test Accurancy: 0.1078
+Std Test AUC: 0.0600
+------------------------- time cost ------------------------- 132.68856048583984
+
+-------------Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6240
+Averaged Train Loss (Regular Model): 0.1367
+Averaged Test AUC: 0.8898
+Std Test Accurancy: 0.1014
+Std Test AUC: 0.0552
+------------------------- time cost ------------------------- 132.25345468521118
+
+-------------Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6300
+Averaged Train Loss (Regular Model): 0.1172
+Averaged Test AUC: 0.8930
+Std Test Accurancy: 0.1032
+Std Test AUC: 0.0515
+------------------------- time cost ------------------------- 133.56589078903198
+
+-------------Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6227
+Averaged Train Loss (Regular Model): 0.1443
+Averaged Test AUC: 0.8887
+Std Test Accurancy: 0.1121
+Std Test AUC: 0.0603
+------------------------- time cost ------------------------- 133.28877353668213
+
+-------------Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6256
+Averaged Train Loss (Regular Model): 0.1502
+Averaged Test AUC: 0.8862
+Std Test Accurancy: 0.1153
+Std Test AUC: 0.0682
+------------------------- time cost ------------------------- 134.12810111045837
+
+-------------Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6324
+Averaged Train Loss (Regular Model): 0.1192
+Averaged Test AUC: 0.8911
+Std Test Accurancy: 0.1006
+Std Test AUC: 0.0546
+------------------------- time cost ------------------------- 133.1101849079132
+
+-------------Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6332
+Averaged Train Loss (Regular Model): 0.1068
+Averaged Test AUC: 0.8920
+Std Test Accurancy: 0.1048
+Std Test AUC: 0.0559
+------------------------- time cost ------------------------- 132.95867466926575
+
+-------------Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6341
+Averaged Train Loss (Regular Model): 0.1046
+Averaged Test AUC: 0.8915
+Std Test Accurancy: 0.1055
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 133.83151149749756
+
+-------------Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6292
+Averaged Train Loss (Regular Model): 0.1176
+Averaged Test AUC: 0.8862
+Std Test Accurancy: 0.1032
+Std Test AUC: 0.0556
+------------------------- time cost ------------------------- 132.6206476688385
+
+-------------Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6288
+Averaged Train Loss (Regular Model): 0.0830
+Averaged Test AUC: 0.8912
+Std Test Accurancy: 0.1000
+Std Test AUC: 0.0573
+------------------------- time cost ------------------------- 132.515709400177
+
+-------------Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6238
+Averaged Train Loss (Regular Model): 0.1239
+Averaged Test AUC: 0.8885
+Std Test Accurancy: 0.1107
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 132.91641640663147
+
+-------------Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6294
+Averaged Train Loss (Regular Model): 0.1591
+Averaged Test AUC: 0.8909
+Std Test Accurancy: 0.1050
+Std Test AUC: 0.0570
+------------------------- time cost ------------------------- 132.67485642433167
+
+-------------Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6311
+Averaged Train Loss (Regular Model): 0.1357
+Averaged Test AUC: 0.8902
+Std Test Accurancy: 0.1040
+Std Test AUC: 0.0552
+------------------------- time cost ------------------------- 132.3215000629425
+
+-------------Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6334
+Averaged Train Loss (Regular Model): 0.0990
+Averaged Test AUC: 0.8906
+Std Test Accurancy: 0.0999
+Std Test AUC: 0.0568
+------------------------- time cost ------------------------- 132.69631242752075
+
+-------------Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6244
+Averaged Train Loss (Regular Model): 0.1259
+Averaged Test AUC: 0.8848
+Std Test Accurancy: 0.1096
+Std Test AUC: 0.0587
+------------------------- time cost ------------------------- 132.68251538276672
+
+-------------Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6230
+Averaged Train Loss (Regular Model): 0.1104
+Averaged Test AUC: 0.8828
+Std Test Accurancy: 0.1058
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 132.6899859905243
+
+-------------Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6325
+Averaged Train Loss (Regular Model): 0.0926
+Averaged Test AUC: 0.8916
+Std Test Accurancy: 0.1023
+Std Test AUC: 0.0550
+------------------------- time cost ------------------------- 132.72340893745422
+
+-------------Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6346
+Averaged Train Loss (Regular Model): 0.1124
+Averaged Test AUC: 0.8928
+Std Test Accurancy: 0.1005
+Std Test AUC: 0.0546
+------------------------- time cost ------------------------- 132.6542615890503
+
+-------------Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6282
+Averaged Train Loss (Regular Model): 0.0831
+Averaged Test AUC: 0.8878
+Std Test Accurancy: 0.1091
+Std Test AUC: 0.0582
+------------------------- time cost ------------------------- 132.46521401405334
+
+-------------Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6293
+Averaged Train Loss (Regular Model): 0.0962
+Averaged Test AUC: 0.8895
+Std Test Accurancy: 0.1047
+Std Test AUC: 0.0566
+------------------------- time cost ------------------------- 132.4315106868744
+
+-------------Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6340
+Averaged Train Loss (Regular Model): 0.0820
+Averaged Test AUC: 0.8908
+Std Test Accurancy: 0.1058
+Std Test AUC: 0.0586
+------------------------- time cost ------------------------- 132.47108006477356
+
+-------------Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6266
+Averaged Train Loss (Regular Model): 0.0766
+Averaged Test AUC: 0.8921
+Std Test Accurancy: 0.1055
+Std Test AUC: 0.0562
+------------------------- time cost ------------------------- 130.825288772583
+
+-------------Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6322
+Averaged Train Loss (Regular Model): 0.0740
+Averaged Test AUC: 0.8923
+Std Test Accurancy: 0.1021
+Std Test AUC: 0.0559
+------------------------- time cost ------------------------- 132.16855549812317
+
+-------------Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6346
+Averaged Train Loss (Regular Model): 0.0749
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.1023
+Std Test AUC: 0.0545
+------------------------- time cost ------------------------- 132.83593153953552
+
+-------------Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6340
+Averaged Train Loss (Regular Model): 0.0840
+Averaged Test AUC: 0.8898
+Std Test Accurancy: 0.1034
+Std Test AUC: 0.0544
+------------------------- time cost ------------------------- 132.27035641670227
+
+-------------Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Train Loss (Regular Model): 0.0554
+Averaged Test AUC: 0.8913
+Std Test Accurancy: 0.1025
+Std Test AUC: 0.0553
+------------------------- time cost ------------------------- 131.8298749923706
+
+-------------Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6315
+Averaged Train Loss (Regular Model): 0.0695
+Averaged Test AUC: 0.8909
+Std Test Accurancy: 0.1042
+Std Test AUC: 0.0542
+------------------------- time cost ------------------------- 132.45352458953857
+
+-------------Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6323
+Averaged Train Loss (Regular Model): 0.0830
+Averaged Test AUC: 0.8886
+Std Test Accurancy: 0.1049
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 132.77692675590515
+
+-------------Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6384
+Averaged Train Loss (Regular Model): 0.0796
+Averaged Test AUC: 0.8925
+Std Test Accurancy: 0.1007
+Std Test AUC: 0.0553
+------------------------- time cost ------------------------- 132.42637610435486
+
+-------------Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6353
+Averaged Train Loss (Regular Model): 0.0674
+Averaged Test AUC: 0.8921
+Std Test Accurancy: 0.0981
+Std Test AUC: 0.0548
+------------------------- time cost ------------------------- 131.90545272827148
+
+-------------Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6386
+Averaged Train Loss (Regular Model): 0.0538
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.1011
+Std Test AUC: 0.0552
+------------------------- time cost ------------------------- 132.1148931980133
+
+-------------Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6258
+Averaged Train Loss (Regular Model): 0.0622
+Averaged Test AUC: 0.8830
+Std Test Accurancy: 0.1144
+Std Test AUC: 0.0664
+------------------------- time cost ------------------------- 131.65602326393127
+
+-------------Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6400
+Averaged Train Loss (Regular Model): 0.1004
+Averaged Test AUC: 0.8949
+Std Test Accurancy: 0.0997
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 132.17751002311707
+
+-------------Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6340
+Averaged Train Loss (Regular Model): 0.0755
+Averaged Test AUC: 0.8904
+Std Test Accurancy: 0.0968
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 131.39849519729614
+
+-------------Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6358
+Averaged Train Loss (Regular Model): 0.0727
+Averaged Test AUC: 0.8937
+Std Test Accurancy: 0.1017
+Std Test AUC: 0.0545
+------------------------- time cost ------------------------- 131.66487002372742
+
+-------------Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6286
+Averaged Train Loss (Regular Model): 0.0925
+Averaged Test AUC: 0.8877
+Std Test Accurancy: 0.1192
+Std Test AUC: 0.0643
+------------------------- time cost ------------------------- 133.57214307785034
+
+-------------Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6372
+Averaged Train Loss (Regular Model): 0.0655
+Averaged Test AUC: 0.8944
+Std Test Accurancy: 0.1042
+Std Test AUC: 0.0556
+------------------------- time cost ------------------------- 134.80662608146667
+
+-------------Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6379
+Averaged Train Loss (Regular Model): 0.0639
+Averaged Test AUC: 0.8946
+Std Test Accurancy: 0.1037
+Std Test AUC: 0.0538
+------------------------- time cost ------------------------- 135.0077726840973
+
+-------------Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6321
+Averaged Train Loss (Regular Model): 0.0795
+Averaged Test AUC: 0.8924
+Std Test Accurancy: 0.0994
+Std Test AUC: 0.0543
+------------------------- time cost ------------------------- 134.75098729133606
+
+-------------Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6399
+Averaged Train Loss (Regular Model): 0.0671
+Averaged Test AUC: 0.8944
+Std Test Accurancy: 0.0996
+Std Test AUC: 0.0541
+------------------------- time cost ------------------------- 134.41568112373352
+
+-------------Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6360
+Averaged Train Loss (Regular Model): 0.0584
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.1005
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 134.68097758293152
+
+-------------Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6372
+Averaged Train Loss (Regular Model): 0.0549
+Averaged Test AUC: 0.8945
+Std Test Accurancy: 0.0982
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 134.80069851875305
+
+-------------Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6352
+Averaged Train Loss (Regular Model): 0.0572
+Averaged Test AUC: 0.8940
+Std Test Accurancy: 0.1003
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 134.86622381210327
+
+-------------Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6430
+Averaged Train Loss (Regular Model): 0.0447
+Averaged Test AUC: 0.8945
+Std Test Accurancy: 0.0979
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 135.2242259979248
+
+-------------Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6401
+Averaged Train Loss (Regular Model): 0.0383
+Averaged Test AUC: 0.8944
+Std Test Accurancy: 0.0980
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 140.8104600906372
+
+-------------Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6362
+Averaged Train Loss (Regular Model): 0.0447
+Averaged Test AUC: 0.8939
+Std Test Accurancy: 0.0995
+Std Test AUC: 0.0527
+------------------------- time cost ------------------------- 137.51372528076172
+
+-------------Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6433
+Averaged Train Loss (Regular Model): 0.0352
+Averaged Test AUC: 0.8945
+Std Test Accurancy: 0.0973
+Std Test AUC: 0.0542
+------------------------- time cost ------------------------- 137.28941917419434
+
+-------------Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6416
+Averaged Train Loss (Regular Model): 0.0572
+Averaged Test AUC: 0.8943
+Std Test Accurancy: 0.1018
+Std Test AUC: 0.0536
+------------------------- time cost ------------------------- 137.2442831993103
+
+-------------Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6435
+Averaged Train Loss (Regular Model): 0.0470
+Averaged Test AUC: 0.8946
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0544
+------------------------- time cost ------------------------- 138.04194498062134
+
+-------------Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6417
+Averaged Train Loss (Regular Model): 0.0362
+Averaged Test AUC: 0.8919
+Std Test Accurancy: 0.0975
+Std Test AUC: 0.0534
+------------------------- time cost ------------------------- 137.18304872512817
+
+-------------Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6416
+Averaged Train Loss (Regular Model): 0.0476
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.0978
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 135.76864886283875
+
+-------------Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6405
+Averaged Train Loss (Regular Model): 0.0373
+Averaged Test AUC: 0.8916
+Std Test Accurancy: 0.0979
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 135.63315224647522
+
+-------------Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6409
+Averaged Train Loss (Regular Model): 0.0336
+Averaged Test AUC: 0.8935
+Std Test Accurancy: 0.0968
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 133.4574704170227
+
+-------------Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6400
+Averaged Train Loss (Regular Model): 0.0241
+Averaged Test AUC: 0.8928
+Std Test Accurancy: 0.0995
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 134.57352924346924
+
+-------------Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6432
+Averaged Train Loss (Regular Model): 0.0217
+Averaged Test AUC: 0.8934
+Std Test Accurancy: 0.0977
+Std Test AUC: 0.0524
+------------------------- time cost ------------------------- 135.25199627876282
+
+-------------Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6400
+Averaged Train Loss (Regular Model): 0.0261
+Averaged Test AUC: 0.8917
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 135.69147086143494
+
+-------------Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6452
+Averaged Train Loss (Regular Model): 0.0251
+Averaged Test AUC: 0.8922
+Std Test Accurancy: 0.0968
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 136.74800944328308
+
+-------------Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6426
+Averaged Train Loss (Regular Model): 0.0320
+Averaged Test AUC: 0.8919
+Std Test Accurancy: 0.0993
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 135.14610314369202
+
+-------------Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6488
+Averaged Train Loss (Regular Model): 0.0150
+Averaged Test AUC: 0.8943
+Std Test Accurancy: 0.0962
+Std Test AUC: 0.0524
+------------------------- time cost ------------------------- 133.35376453399658
+
+-------------Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6450
+Averaged Train Loss (Regular Model): 0.0214
+Averaged Test AUC: 0.8926
+Std Test Accurancy: 0.0961
+Std Test AUC: 0.0533
+------------------------- time cost ------------------------- 132.80097079277039
+
+-------------Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6463
+Averaged Train Loss (Regular Model): 0.0131
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.0963
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 134.67209553718567
+
+-------------Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6460
+Averaged Train Loss (Regular Model): 0.0214
+Averaged Test AUC: 0.8914
+Std Test Accurancy: 0.0982
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 134.21256470680237
+
+-------------Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6446
+Averaged Train Loss (Regular Model): 0.0144
+Averaged Test AUC: 0.8904
+Std Test Accurancy: 0.0967
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 145.9069676399231
+
+-------------Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6466
+Averaged Train Loss (Regular Model): 0.0198
+Averaged Test AUC: 0.8929
+Std Test Accurancy: 0.0963
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 134.62019658088684
+
+-------------Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6459
+Averaged Train Loss (Regular Model): 0.0142
+Averaged Test AUC: 0.8925
+Std Test Accurancy: 0.0983
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 135.0785768032074
+
+-------------Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6484
+Averaged Train Loss (Regular Model): 0.0290
+Averaged Test AUC: 0.8916
+Std Test Accurancy: 0.0987
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 139.7676064968109
+
+-------------Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6434
+Averaged Train Loss (Regular Model): 0.0236
+Averaged Test AUC: 0.8911
+Std Test Accurancy: 0.0991
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 131.11492943763733
+
+-------------Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6451
+Averaged Train Loss (Regular Model): 0.0283
+Averaged Test AUC: 0.8909
+Std Test Accurancy: 0.0984
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 134.15971422195435
+
+-------------Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6451
+Averaged Train Loss (Regular Model): 0.0210
+Averaged Test AUC: 0.8930
+Std Test Accurancy: 0.0972
+Std Test AUC: 0.0521
+------------------------- time cost ------------------------- 132.36668133735657
+
+-------------Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6474
+Averaged Train Loss (Regular Model): 0.0123
+Averaged Test AUC: 0.8934
+Std Test Accurancy: 0.0957
+Std Test AUC: 0.0516
+------------------------- time cost ------------------------- 130.75559210777283
+
+-------------Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6468
+Averaged Train Loss (Regular Model): 0.0112
+Averaged Test AUC: 0.8928
+Std Test Accurancy: 0.0956
+Std Test AUC: 0.0502
+------------------------- time cost ------------------------- 131.31769728660583
+
+-------------Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6474
+Averaged Train Loss (Regular Model): 0.0133
+Averaged Test AUC: 0.8936
+Std Test Accurancy: 0.0942
+Std Test AUC: 0.0509
+------------------------- time cost ------------------------- 130.63399457931519
+
+-------------Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6446
+Averaged Train Loss (Regular Model): 0.0146
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.1017
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 131.19622802734375
+
+-------------Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6482
+Averaged Train Loss (Regular Model): 0.0207
+Averaged Test AUC: 0.8942
+Std Test Accurancy: 0.0961
+Std Test AUC: 0.0519
+------------------------- time cost ------------------------- 130.13302874565125
+
+-------------Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6467
+Averaged Train Loss (Regular Model): 0.0363
+Averaged Test AUC: 0.8938
+Std Test Accurancy: 0.0991
+Std Test AUC: 0.0524
+------------------------- time cost ------------------------- 132.11962151527405
+
+-------------Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6477
+Averaged Train Loss (Regular Model): 0.0201
+Averaged Test AUC: 0.8961
+Std Test Accurancy: 0.1017
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 138.12187576293945
+
+-------------Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6496
+Averaged Train Loss (Regular Model): 0.0186
+Averaged Test AUC: 0.8956
+Std Test Accurancy: 0.1015
+Std Test AUC: 0.0539
+------------------------- time cost ------------------------- 134.58623671531677
+
+-------------Round number: 101-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6498
+Averaged Train Loss (Regular Model): 0.0189
+Averaged Test AUC: 0.8948
+Std Test Accurancy: 0.0991
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 136.619154214859
+
+-------------Round number: 102-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6482
+Averaged Train Loss (Regular Model): 0.0165
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.1004
+Std Test AUC: 0.0549
+------------------------- time cost ------------------------- 140.03242683410645
+
+-------------Round number: 103-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6465
+Averaged Train Loss (Regular Model): 0.0154
+Averaged Test AUC: 0.8940
+Std Test Accurancy: 0.0985
+Std Test AUC: 0.0521
+------------------------- time cost ------------------------- 141.3026041984558
+
+-------------Round number: 104-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6466
+Averaged Train Loss (Regular Model): 0.0121
+Averaged Test AUC: 0.8942
+Std Test Accurancy: 0.0998
+Std Test AUC: 0.0550
+------------------------- time cost ------------------------- 139.25070095062256
+
+-------------Round number: 105-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6503
+Averaged Train Loss (Regular Model): 0.0151
+Averaged Test AUC: 0.8939
+Std Test Accurancy: 0.1013
+Std Test AUC: 0.0560
+------------------------- time cost ------------------------- 135.8846127986908
+
+-------------Round number: 106-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6499
+Averaged Train Loss (Regular Model): 0.0082
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.0957
+Std Test AUC: 0.0515
+------------------------- time cost ------------------------- 134.09756183624268
+
+-------------Round number: 107-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6501
+Averaged Train Loss (Regular Model): 0.0165
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.0977
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 138.05844855308533
+
+-------------Round number: 108-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6490
+Averaged Train Loss (Regular Model): 0.0145
+Averaged Test AUC: 0.8950
+Std Test Accurancy: 0.1005
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 135.0024802684784
+
+-------------Round number: 109-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6491
+Averaged Train Loss (Regular Model): 0.0125
+Averaged Test AUC: 0.8955
+Std Test Accurancy: 0.0959
+Std Test AUC: 0.0508
+------------------------- time cost ------------------------- 135.55542469024658
+
+-------------Round number: 110-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6508
+Averaged Train Loss (Regular Model): 0.0137
+Averaged Test AUC: 0.8953
+Std Test Accurancy: 0.0958
+Std Test AUC: 0.0515
+------------------------- time cost ------------------------- 134.9191918373108
+
+-------------Round number: 111-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6450
+Averaged Train Loss (Regular Model): 0.0153
+Averaged Test AUC: 0.8940
+Std Test Accurancy: 0.0964
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 134.36600255966187
+
+-------------Round number: 112-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6474
+Averaged Train Loss (Regular Model): 0.0136
+Averaged Test AUC: 0.8942
+Std Test Accurancy: 0.0941
+Std Test AUC: 0.0545
+------------------------- time cost ------------------------- 133.7951123714447
+
+-------------Round number: 113-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6467
+Averaged Train Loss (Regular Model): 0.0067
+Averaged Test AUC: 0.8949
+Std Test Accurancy: 0.0983
+Std Test AUC: 0.0541
+------------------------- time cost ------------------------- 135.4527976512909
+
+-------------Round number: 114-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6492
+Averaged Train Loss (Regular Model): 0.0069
+Averaged Test AUC: 0.8936
+Std Test Accurancy: 0.0969
+Std Test AUC: 0.0541
+------------------------- time cost ------------------------- 134.11200308799744
+
+-------------Round number: 115-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6486
+Averaged Train Loss (Regular Model): 0.0144
+Averaged Test AUC: 0.8935
+Std Test Accurancy: 0.0993
+Std Test AUC: 0.0543
+------------------------- time cost ------------------------- 134.24911284446716
+
+-------------Round number: 116-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6492
+Averaged Train Loss (Regular Model): 0.0125
+Averaged Test AUC: 0.8945
+Std Test Accurancy: 0.0975
+Std Test AUC: 0.0546
+------------------------- time cost ------------------------- 133.72335076332092
+
+-------------Round number: 117-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6490
+Averaged Train Loss (Regular Model): 0.0102
+Averaged Test AUC: 0.8940
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 134.99932408332825
+
+-------------Round number: 118-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6476
+Averaged Train Loss (Regular Model): 0.0143
+Averaged Test AUC: 0.8927
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0548
+------------------------- time cost ------------------------- 134.9994831085205
+
+-------------Round number: 119-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6507
+Averaged Train Loss (Regular Model): 0.0088
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.0999
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 135.45430612564087
+
+-------------Round number: 120-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6466
+Averaged Train Loss (Regular Model): 0.0106
+Averaged Test AUC: 0.8939
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 135.95561504364014
+
+-------------Round number: 121-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6457
+Averaged Train Loss (Regular Model): 0.0116
+Averaged Test AUC: 0.8941
+Std Test Accurancy: 0.0992
+Std Test AUC: 0.0544
+------------------------- time cost ------------------------- 136.82399034500122
+
+-------------Round number: 122-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6488
+Averaged Train Loss (Regular Model): 0.0165
+Averaged Test AUC: 0.8945
+Std Test Accurancy: 0.0981
+Std Test AUC: 0.0536
+------------------------- time cost ------------------------- 137.05582404136658
+
+-------------Round number: 123-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6480
+Averaged Train Loss (Regular Model): 0.0137
+Averaged Test AUC: 0.8955
+Std Test Accurancy: 0.1000
+Std Test AUC: 0.0550
+------------------------- time cost ------------------------- 136.8446078300476
+
+-------------Round number: 124-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6486
+Averaged Train Loss (Regular Model): 0.0124
+Averaged Test AUC: 0.8960
+Std Test Accurancy: 0.1019
+Std Test AUC: 0.0546
+------------------------- time cost ------------------------- 130.46458745002747
+
+-------------Round number: 125-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6448
+Averaged Train Loss (Regular Model): 0.0145
+Averaged Test AUC: 0.8943
+Std Test Accurancy: 0.1041
+Std Test AUC: 0.0542
+------------------------- time cost ------------------------- 132.76673793792725
+
+-------------Round number: 126-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6481
+Averaged Train Loss (Regular Model): 0.0104
+Averaged Test AUC: 0.8969
+Std Test Accurancy: 0.1007
+Std Test AUC: 0.0541
+------------------------- time cost ------------------------- 131.5949285030365
+
+-------------Round number: 127-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6481
+Averaged Train Loss (Regular Model): 0.0068
+Averaged Test AUC: 0.8968
+Std Test Accurancy: 0.0999
+Std Test AUC: 0.0546
+------------------------- time cost ------------------------- 133.18767786026
+
+-------------Round number: 128-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6513
+Averaged Train Loss (Regular Model): 0.0108
+Averaged Test AUC: 0.8966
+Std Test Accurancy: 0.1024
+Std Test AUC: 0.0547
+------------------------- time cost ------------------------- 132.765376329422
+
+-------------Round number: 129-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6498
+Averaged Train Loss (Regular Model): 0.0122
+Averaged Test AUC: 0.8955
+Std Test Accurancy: 0.1007
+Std Test AUC: 0.0544
+------------------------- time cost ------------------------- 130.58802103996277
+
+-------------Round number: 130-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6501
+Averaged Train Loss (Regular Model): 0.0162
+Averaged Test AUC: 0.8961
+Std Test Accurancy: 0.0972
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 130.85603094100952
+
+-------------Round number: 131-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6503
+Averaged Train Loss (Regular Model): 0.0058
+Averaged Test AUC: 0.8962
+Std Test Accurancy: 0.0967
+Std Test AUC: 0.0531
+------------------------- time cost ------------------------- 136.36769771575928
+
+-------------Round number: 132-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6510
+Averaged Train Loss (Regular Model): 0.0105
+Averaged Test AUC: 0.8959
+Std Test Accurancy: 0.0965
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 138.31070232391357
+
+-------------Round number: 133-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6504
+Averaged Train Loss (Regular Model): 0.0058
+Averaged Test AUC: 0.8973
+Std Test Accurancy: 0.0957
+Std Test AUC: 0.0527
+------------------------- time cost ------------------------- 138.66298079490662
+
+-------------Round number: 134-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6480
+Averaged Train Loss (Regular Model): 0.0071
+Averaged Test AUC: 0.8946
+Std Test Accurancy: 0.0943
+Std Test AUC: 0.0524
+------------------------- time cost ------------------------- 137.8383309841156
+
+-------------Round number: 135-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6437
+Averaged Train Loss (Regular Model): 0.0119
+Averaged Test AUC: 0.8948
+Std Test Accurancy: 0.1009
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 138.664546251297
+
+-------------Round number: 136-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6480
+Averaged Train Loss (Regular Model): 0.0090
+Averaged Test AUC: 0.8959
+Std Test Accurancy: 0.0973
+Std Test AUC: 0.0525
+------------------------- time cost ------------------------- 136.0637526512146
+
+-------------Round number: 137-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6473
+Averaged Train Loss (Regular Model): 0.0117
+Averaged Test AUC: 0.8957
+Std Test Accurancy: 0.0972
+Std Test AUC: 0.0536
+------------------------- time cost ------------------------- 134.39234805107117
+
+-------------Round number: 138-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6474
+Averaged Train Loss (Regular Model): 0.0104
+Averaged Test AUC: 0.8952
+Std Test Accurancy: 0.0983
+Std Test AUC: 0.0533
+------------------------- time cost ------------------------- 134.72495913505554
+
+-------------Round number: 139-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6480
+Averaged Train Loss (Regular Model): 0.0101
+Averaged Test AUC: 0.8951
+Std Test Accurancy: 0.0979
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 135.4006335735321
+
+-------------Round number: 140-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6491
+Averaged Train Loss (Regular Model): 0.0115
+Averaged Test AUC: 0.8948
+Std Test Accurancy: 0.0969
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 134.2495093345642
+
+-------------Round number: 141-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6487
+Averaged Train Loss (Regular Model): 0.0065
+Averaged Test AUC: 0.8947
+Std Test Accurancy: 0.0964
+Std Test AUC: 0.0520
+------------------------- time cost ------------------------- 133.87426900863647
+
+-------------Round number: 142-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6462
+Averaged Train Loss (Regular Model): 0.0127
+Averaged Test AUC: 0.8956
+Std Test Accurancy: 0.0960
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 135.49739146232605
+
+-------------Round number: 143-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6483
+Averaged Train Loss (Regular Model): 0.0075
+Averaged Test AUC: 0.8970
+Std Test Accurancy: 0.0944
+Std Test AUC: 0.0526
+------------------------- time cost ------------------------- 135.90436244010925
+
+-------------Round number: 144-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6488
+Averaged Train Loss (Regular Model): 0.0048
+Averaged Test AUC: 0.8964
+Std Test Accurancy: 0.0962
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 135.56008958816528
+
+-------------Round number: 145-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6496
+Averaged Train Loss (Regular Model): 0.0091
+Averaged Test AUC: 0.8967
+Std Test Accurancy: 0.0975
+Std Test AUC: 0.0531
+------------------------- time cost ------------------------- 133.79461812973022
+
+-------------Round number: 146-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6498
+Averaged Train Loss (Regular Model): 0.0059
+Averaged Test AUC: 0.8971
+Std Test Accurancy: 0.0929
+Std Test AUC: 0.0527
+------------------------- time cost ------------------------- 134.96806716918945
+
+-------------Round number: 147-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6486
+Averaged Train Loss (Regular Model): 0.0106
+Averaged Test AUC: 0.8966
+Std Test Accurancy: 0.0941
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 136.57180547714233
+
+-------------Round number: 148-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6506
+Averaged Train Loss (Regular Model): 0.0140
+Averaged Test AUC: 0.8976
+Std Test Accurancy: 0.0969
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 134.1730020046234
+
+-------------Round number: 149-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6486
+Averaged Train Loss (Regular Model): 0.0042
+Averaged Test AUC: 0.8976
+Std Test Accurancy: 0.0944
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 136.21146082878113
+
+-------------Round number: 150-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6472
+Averaged Train Loss (Regular Model): 0.0048
+Averaged Test AUC: 0.8963
+Std Test Accurancy: 0.0956
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 135.17750477790833
+
+-------------Round number: 151-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6478
+Averaged Train Loss (Regular Model): 0.0063
+Averaged Test AUC: 0.8977
+Std Test Accurancy: 0.0972
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 134.8101463317871
+
+-------------Round number: 152-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6456
+Averaged Train Loss (Regular Model): 0.0053
+Averaged Test AUC: 0.8965
+Std Test Accurancy: 0.0947
+Std Test AUC: 0.0527
+------------------------- time cost ------------------------- 135.17599868774414
+
+-------------Round number: 153-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6453
+Averaged Train Loss (Regular Model): 0.0083
+Averaged Test AUC: 0.8965
+Std Test Accurancy: 0.0970
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 135.32400178909302
+
+-------------Round number: 154-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6488
+Averaged Train Loss (Regular Model): 0.0046
+Averaged Test AUC: 0.8969
+Std Test Accurancy: 0.0961
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 134.5634605884552
+
+-------------Round number: 155-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6471
+Averaged Train Loss (Regular Model): 0.0057
+Averaged Test AUC: 0.8968
+Std Test Accurancy: 0.0956
+Std Test AUC: 0.0538
+------------------------- time cost ------------------------- 132.94603824615479
+
+-------------Round number: 156-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6464
+Averaged Train Loss (Regular Model): 0.0070
+Averaged Test AUC: 0.8973
+Std Test Accurancy: 0.0940
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 132.91956424713135
+
+-------------Round number: 157-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6479
+Averaged Train Loss (Regular Model): 0.0111
+Averaged Test AUC: 0.8970
+Std Test Accurancy: 0.0964
+Std Test AUC: 0.0535
+------------------------- time cost ------------------------- 132.9602484703064
+
+-------------Round number: 158-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6486
+Averaged Train Loss (Regular Model): 0.0046
+Averaged Test AUC: 0.8973
+Std Test Accurancy: 0.0986
+Std Test AUC: 0.0540
+------------------------- time cost ------------------------- 133.563481092453
+
+-------------Round number: 159-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6482
+Averaged Train Loss (Regular Model): 0.0020
+Averaged Test AUC: 0.8963
+Std Test Accurancy: 0.0983
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 133.60436153411865
+
+-------------Round number: 160-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6490
+Averaged Train Loss (Regular Model): 0.0073
+Averaged Test AUC: 0.8968
+Std Test Accurancy: 0.0986
+Std Test AUC: 0.0531
+------------------------- time cost ------------------------- 133.6748731136322
+
+-------------Round number: 161-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6492
+Averaged Train Loss (Regular Model): 0.0071
+Averaged Test AUC: 0.8969
+Std Test Accurancy: 0.0980
+Std Test AUC: 0.0531
+------------------------- time cost ------------------------- 133.2869644165039
+
+-------------Round number: 162-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6513
+Averaged Train Loss (Regular Model): 0.0041
+Averaged Test AUC: 0.8968
+Std Test Accurancy: 0.0974
+Std Test AUC: 0.0527
+------------------------- time cost ------------------------- 133.95595908164978
+
+-------------Round number: 163-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6513
+Averaged Train Loss (Regular Model): 0.0091
+Averaged Test AUC: 0.8952
+Std Test Accurancy: 0.0993
+Std Test AUC: 0.0529
+------------------------- time cost ------------------------- 132.75493264198303
+
+-------------Round number: 164-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6469
+Averaged Train Loss (Regular Model): 0.0479
+Averaged Test AUC: 0.8939
+Std Test Accurancy: 0.0992
+Std Test AUC: 0.0550
+------------------------- time cost ------------------------- 133.42653846740723
+
+-------------Round number: 165-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6537
+Averaged Train Loss (Regular Model): 0.0140
+Averaged Test AUC: 0.8980
+Std Test Accurancy: 0.0962
+Std Test AUC: 0.0536
+------------------------- time cost ------------------------- 134.40635132789612
+
+-------------Round number: 166-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6559
+Averaged Train Loss (Regular Model): 0.0114
+Averaged Test AUC: 0.8983
+Std Test Accurancy: 0.0957
+Std Test AUC: 0.0541
+------------------------- time cost ------------------------- 134.20948433876038
+
+-------------Round number: 167-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6522
+Averaged Train Loss (Regular Model): 0.0080
+Averaged Test AUC: 0.8978
+Std Test Accurancy: 0.0957
+Std Test AUC: 0.0539
+------------------------- time cost ------------------------- 134.3052339553833
+
+-------------Round number: 168-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6517
+Averaged Train Loss (Regular Model): 0.0067
+Averaged Test AUC: 0.8972
+Std Test Accurancy: 0.0943
+Std Test AUC: 0.0536
+------------------------- time cost ------------------------- 134.36841821670532
+
+-------------Round number: 169-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6527
+Averaged Train Loss (Regular Model): 0.0088
+Averaged Test AUC: 0.8983
+Std Test Accurancy: 0.0958
+Std Test AUC: 0.0543
+------------------------- time cost ------------------------- 132.89504027366638
+
+-------------Round number: 170-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6527
+Averaged Train Loss (Regular Model): 0.0042
+Averaged Test AUC: 0.8988
+Std Test Accurancy: 0.0983
+Std Test AUC: 0.0534
+------------------------- time cost ------------------------- 132.98978972434998
+
+-------------Round number: 171-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6522
+Averaged Train Loss (Regular Model): 0.0088
+Averaged Test AUC: 0.8985
+Std Test Accurancy: 0.0961
+Std Test AUC: 0.0538
+------------------------- time cost ------------------------- 131.90080642700195
+
+-------------Round number: 172-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6535
+Averaged Train Loss (Regular Model): 0.0216
+Averaged Test AUC: 0.8975
+Std Test Accurancy: 0.0976
+Std Test AUC: 0.0533
+------------------------- time cost ------------------------- 134.4215030670166
+
+-------------Round number: 173-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6533
+Averaged Train Loss (Regular Model): 0.0073
+Averaged Test AUC: 0.8982
+Std Test Accurancy: 0.0954
+Std Test AUC: 0.0528
+------------------------- time cost ------------------------- 135.59403777122498
+
+-------------Round number: 174-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6506
+Averaged Train Loss (Regular Model): 0.0095
+Averaged Test AUC: 0.8975
+Std Test Accurancy: 0.0947
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 137.54415655136108
+
+-------------Round number: 175-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6519
+Averaged Train Loss (Regular Model): 0.0066
+Averaged Test AUC: 0.8972
+Std Test Accurancy: 0.0988
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 135.1361379623413
+
+-------------Round number: 176-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6467
+Averaged Train Loss (Regular Model): 0.0135
+Averaged Test AUC: 0.8889
+Std Test Accurancy: 0.1143
+Std Test AUC: 0.0878
+------------------------- time cost ------------------------- 133.09601950645447
+
+-------------Round number: 177-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6533
+Averaged Train Loss (Regular Model): 0.0121
+Averaged Test AUC: 0.8972
+Std Test Accurancy: 0.0972
+Std Test AUC: 0.0532
+------------------------- time cost ------------------------- 131.932959318161
+
+-------------Round number: 178-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6518
+Averaged Train Loss (Regular Model): 0.0113
+Averaged Test AUC: 0.8966
+Std Test Accurancy: 0.0966
+Std Test AUC: 0.0534
+------------------------- time cost ------------------------- 132.5946445465088
+
+-------------Round number: 179-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6519
+Averaged Train Loss (Regular Model): 0.0118
+Averaged Test AUC: 0.8961
+Std Test Accurancy: 0.0956
+Std Test AUC: 0.0537
+------------------------- time cost ------------------------- 131.26131796836853
+
+-------------Round number: 180-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6539
+Averaged Train Loss (Regular Model): 0.0054
+Averaged Test AUC: 0.8965
+Std Test Accurancy: 0.0971
+Std Test AUC: 0.0551
+------------------------- time cost ------------------------- 131.09795928001404
+
+-------------Round number: 181-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6543
+Averaged Train Loss (Regular Model): 0.0094
+Averaged Test AUC: 0.8975
+Std Test Accurancy: 0.0940
+Std Test AUC: 0.0531
+------------------------- time cost ------------------------- 132.60146403312683
+
+-------------Round number: 182-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6527
+Averaged Train Loss (Regular Model): 0.0052
+Averaged Test AUC: 0.8980
+Std Test Accurancy: 0.0962
+Std Test AUC: 0.0530
+------------------------- time cost ------------------------- 131.7318606376648
+
+-------------Round number: 183-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6540
+Averaged Train Loss (Regular Model): 0.0165
+Averaged Test AUC: 0.8971
+Std Test Accurancy: 0.0929
+Std Test AUC: 0.0534
+------------------------- time cost ------------------------- 132.34440898895264
+
+-------------Round number: 184-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6508
+Averaged Train Loss (Regular Model): 0.0388
+Averaged Test AUC: 0.8942
+Std Test Accurancy: 0.0985
+Std Test AUC: 0.0607
+------------------------- time cost ------------------------- 131.79939603805542
+
+-------------Round number: 185-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6547
+Averaged Train Loss (Regular Model): 0.0161
+Averaged Test AUC: 0.8971
+Std Test Accurancy: 0.0950
+Std Test AUC: 0.0520
+------------------------- time cost ------------------------- 132.06801223754883
+
+-------------Round number: 186-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6540
+Averaged Train Loss (Regular Model): 0.0118
+Averaged Test AUC: 0.8978
+Std Test Accurancy: 0.0931
+Std Test AUC: 0.0512
+------------------------- time cost ------------------------- 134.57300996780396
+
+-------------Round number: 187-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6542
+Averaged Train Loss (Regular Model): 0.0104
+Averaged Test AUC: 0.8985
+Std Test Accurancy: 0.0926
+Std Test AUC: 0.0505
+------------------------- time cost ------------------------- 142.64691996574402
+
+-------------Round number: 188-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6585
+Averaged Train Loss (Regular Model): 0.0061
+Averaged Test AUC: 0.8992
+Std Test Accurancy: 0.0922
+Std Test AUC: 0.0518
+------------------------- time cost ------------------------- 136.93282556533813
+
+-------------Round number: 189-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6548
+Averaged Train Loss (Regular Model): 0.0089
+Averaged Test AUC: 0.8985
+Std Test Accurancy: 0.0911
+Std Test AUC: 0.0517
+------------------------- time cost ------------------------- 135.23719120025635
+
+-------------Round number: 190-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6549
+Averaged Train Loss (Regular Model): 0.0051
+Averaged Test AUC: 0.8976
+Std Test Accurancy: 0.0923
+Std Test AUC: 0.0509
+------------------------- time cost ------------------------- 137.3441436290741
+
+-------------Round number: 191-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6551
+Averaged Train Loss (Regular Model): 0.0070
+Averaged Test AUC: 0.8983
+Std Test Accurancy: 0.0910
+Std Test AUC: 0.0509
+------------------------- time cost ------------------------- 136.77708673477173
+
+-------------Round number: 192-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6551
+Averaged Train Loss (Regular Model): 0.0072
+Averaged Test AUC: 0.8984
+Std Test Accurancy: 0.0890
+Std Test AUC: 0.0509
+------------------------- time cost ------------------------- 137.5168492794037
+
+-------------Round number: 193-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6561
+Averaged Train Loss (Regular Model): 0.0057
+Averaged Test AUC: 0.8978
+Std Test Accurancy: 0.0911
+Std Test AUC: 0.0508
+------------------------- time cost ------------------------- 137.1517848968506
+
+-------------Round number: 194-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6581
+Averaged Train Loss (Regular Model): 0.0037
+Averaged Test AUC: 0.8986
+Std Test Accurancy: 0.0915
+Std Test AUC: 0.0513
+------------------------- time cost ------------------------- 137.97754669189453
+
+-------------Round number: 195-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6575
+Averaged Train Loss (Regular Model): 0.0045
+Averaged Test AUC: 0.8988
+Std Test Accurancy: 0.0937
+Std Test AUC: 0.0516
+------------------------- time cost ------------------------- 137.77832651138306
+
+-------------Round number: 196-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6537
+Averaged Train Loss (Regular Model): 0.0058
+Averaged Test AUC: 0.8981
+Std Test Accurancy: 0.0944
+Std Test AUC: 0.0516
+------------------------- time cost ------------------------- 140.0080726146698
+
+-------------Round number: 197-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6557
+Averaged Train Loss (Regular Model): 0.0037
+Averaged Test AUC: 0.8987
+Std Test Accurancy: 0.0931
+Std Test AUC: 0.0517
+------------------------- time cost ------------------------- 138.76633286476135
+
+-------------Round number: 198-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6545
+Averaged Train Loss (Regular Model): 0.0116
+Averaged Test AUC: 0.8977
+Std Test Accurancy: 0.0905
+Std Test AUC: 0.0512
+------------------------- time cost ------------------------- 137.4693946838379
+
+-------------Round number: 199-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6543
+Averaged Train Loss (Regular Model): 0.0073
+Averaged Test AUC: 0.8988
+Std Test Accurancy: 0.0925
+Std Test AUC: 0.0517
+------------------------- time cost ------------------------- 137.99391794204712
+
+-------------Round number: 200-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6581
+Averaged Train Loss (Regular Model): 0.0074
+Averaged Test AUC: 0.8989
+Std Test Accurancy: 0.0930
+Std Test AUC: 0.0523
+
+Best accuracy.
+0.6585414585414585
+
+Average time cost per round.
+134.54277268648147
+File path: ../results/Cifar10_dir_0.3_imbalance_40_FedGen_test_0.h5
+
+Average time cost: 28247.68s.
+Length:  201
+std for best accurancy: 0.0
+mean for best accurancy: 0.6585414585414585
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 10650 	Used Memory: 60.50K
+-------------------------------------------------------------------------------
+
+Storage on cuda:0
+-------------------------------------------------------------------------------
+Total Tensors: 820000 	Used Memory: 3.16M
+The allocated memory on cuda:0: 3.16M
+-------------------------------------------------------------------------------

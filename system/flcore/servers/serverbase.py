@@ -41,7 +41,7 @@ class Server(object):
         self.top_cnt = 100
         self.auto_break = args.auto_break
         self.role = "Server"
-        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
             args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
@@ -220,7 +220,7 @@ class Server(object):
 
         agg_protos_label = None
         if self.args.algorithm != "FedSAE":
-            agg_protos_label = defaultdict(default_tensor)
+            agg_protos_label = self.default_tensor()
             for j in range(self.num_classes):
                 for id in cloud_clientProtos.keys():
                     if (
@@ -249,7 +249,7 @@ class Server(object):
         return agg_protos_label
 
     def proto_aggregation(self, edge_protos_list):
-        agg_protos_label = defaultdict(default_tensor)
+        agg_protos_label = self.default_tensor()
         if self.agg_type == 0:  # 按数据量平均
             for j in range(self.args.num_classes):
                 for edge in self.edges:
@@ -570,7 +570,7 @@ class Server(object):
         """
         生成并保存包含本地和聚合原型的 t-SNE 图。
         """
-        prefix_path = f"{base_path}/{args.dataset}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        prefix_path = f"{base_path}/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.algorithm == "FedSAE":
             save_folder = f"{prefix_path}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{drawtype}"
         else:
@@ -696,6 +696,12 @@ class Server(object):
             proto_clusters[k] = torch.mean(protos, dim=0).detach()
 
         return proto_clusters
+    
+    def default_tensor(self):
+        agg_protos_label =  defaultdict(list)
+        for i in range(self.num_classes):
+            agg_protos_label[i] = torch.zeros(self.feature_dim)
+        return agg_protos_label
 
         # agg_protos_label = defaultdict(list)
         # for local_protos in protos_list:
