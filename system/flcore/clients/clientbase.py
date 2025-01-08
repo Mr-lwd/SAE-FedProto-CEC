@@ -12,7 +12,7 @@ from flcore.trainmodel.models import BaseHeadSplit
 from collections import defaultdict
 import random
 import math
-
+import json
 
 class Client(object):
     """
@@ -59,6 +59,9 @@ class Client(object):
         self.optimizer = self.args.optimizer
         self.local_model_loss = 0
         self.local_all_loss = 0
+        
+        self.dvfs_data = self.create_objects_from_json()
+        self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
 
     def load_train_data(self, batch_size=None):
@@ -77,7 +80,7 @@ class Client(object):
         if batch_size == None:
             batch_size = self.batch_size
         test_data = read_client_data(self.dataset, self.id, is_train=False)
-        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False)
+        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False, num_workers=4)
 
     def clone_model(self, model, target):
         for param, target_param in zip(model.parameters(), target.parameters()):
@@ -91,8 +94,17 @@ class Client(object):
     def test_metrics_proto(self):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
-        model = model.to(self.device)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.DVFS == 1:
+            model = model.to("cuda")
+            for label, tensor in global_protos.items():
+                if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
+                    global_protos[label] = tensor.to("cuda")
+                else:
+                    raise TypeError(f"Value for label '{label}' is not a torch.Tensor. Type: {type(tensor)}")
+        else:
+            model = model.to(self.device)
+            
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
@@ -110,7 +122,10 @@ class Client(object):
                 }
                 correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
                 for images, labels in testloader:
-                    images, labels = images.to(self.device), labels.to(self.device)
+                    if self.args.DVFS == 1:
+                        images, labels = images.to("cuda"), labels.to("cuda")
+                    else:
+                        images, labels = images.to(self.device), labels.to(self.device)
 
                     # Regular model inference
                     outputs = model(images)
@@ -129,9 +144,14 @@ class Client(object):
                         rep = model.base(
                             images
                         )  # Extract the representation for prototypes
-                        output = float("inf") * torch.ones(
-                            labels.shape[0], self.num_classes
-                        ).to(self.device)
+                        if self.args.DVFS == 1:
+                            output = float("inf") * torch.ones(
+                                labels.shape[0], self.num_classes
+                            ).to("cuda")
+                        else:
+                            output = float("inf") * torch.ones(
+                                labels.shape[0], self.num_classes
+                            ).to(self.device)
 
                         for i, r in enumerate(rep):
                             for j, pro in global_protos.items():
@@ -252,6 +272,12 @@ class Client(object):
         # self.model.shared_layers.load_state_dict(self.receiver_buffer)
         self.model.update_model(self.receiver_buffer)
         return None
+    
+    def create_objects_from_json(self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"):
+        objects = None
+        with open(file_path, "r") as file:
+            objects = json.load(file)
+        return objects
 
 
 def save_item(item, role, item_name, item_path=None):

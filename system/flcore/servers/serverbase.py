@@ -436,6 +436,11 @@ class Server(object):
         print("Averaged Test Accuracy (Prototype Model): {:.4f}".format(proto_acc))
         print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
         print("Averaged Train Loss (Regular + Proto): {:.4f}".format(avg_all_loss))
+        if self.args.DVFS == 1:
+            all_energy = sum(
+                [client.energy for client in self.clients]
+            )
+            print("All Energy: {:.4f}".format(all_energy))
 
         # 计算标准差
         accs = [a / n for a, n in zip(tot_regular_correct, num_samples)]

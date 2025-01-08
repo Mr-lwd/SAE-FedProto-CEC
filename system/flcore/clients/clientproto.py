@@ -6,6 +6,8 @@ import time
 from flcore.clients.clientbase import Client, load_item, save_item
 from utils.func_utils import *
 from collections import defaultdict
+from .measure_power import *
+import json
 
 
 class clientProto(Client):
@@ -19,6 +21,7 @@ class clientProto(Client):
         self.cshared_protos_global = None
         self.train_time = 0
         self.trans_time = 0
+        self.energy = 0
 
 
     def train(self):
@@ -48,7 +51,11 @@ class clientProto(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
+        if self.args.DVFS == 1:
+            pl = PowerLogger(interval=1.0, nodes=getNodesByName(['module/cpu']))
         for step in range(max_local_epochs):
+            if self.args.DVFS == 1 and step == 1:
+                pl.start()
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -61,10 +68,12 @@ class clientProto(Client):
                 if self.train_slow:
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
+                # print("rep", rep)
                 rep = rep.squeeze(1)
                 output = model.head(rep)
+                output = output.double( )
                 loss = self.loss(output, y)
-
+                # print("loss", loss.item())
                 self.local_model_loss += loss.item()
                 if global_protos is not None:
                     proto_new = copy.deepcopy(rep.detach())
@@ -86,9 +95,14 @@ class clientProto(Client):
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
+        if self.args.DVFS == 1:
+            pl.stop()
+            averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
+            self.energy += local_train_time * averagePower/1e3 #s * w = J
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
-        # print("local_model_loss", local_model_loss)
+        
+        # print("local_model_loss", self.local_model_loss)
         # print("local_gl_loss", local_gl_loss)\
         # 计算每个 512 维张量的大小（单位：字节）
         # 计算字典中所有张量的总大小（单位：字节）

@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # 定义文件路径
-file_path = './FedProto_DVFS_1_lr_0.06_mo_0.8_lam_1_batch_256.out'
+file_path = './gr_100_FedProto_DVFS_1_lr_0.06_mo_0.8_lam_1_batch_256.out'
 
 # 初始化列表来存储提取的数据
 global_rounds = []
@@ -71,13 +71,13 @@ print(f"All Energy R^2: {all_energy_r2:.4f}")
 plt.figure(figsize=(10, 6))
 
 # 绘制原始数据和拟合线
-plt.plot(global_rounds, server_global_times, label='Server Global Time (Original)', color='blue')
+plt.plot(global_rounds, server_global_times, label='Server Global Time (Original)', color='blue', alpha=0.5)
 plt.plot(global_rounds, server_global_time_pred, label='Server Global Time (Linear Fit)', linestyle='--', color='blue')
 
-plt.plot(global_rounds, only_train_times, label='Only Train Time (Original)', color='green')
+plt.plot(global_rounds, only_train_times, label='Only Train Time (Original)', color='green', alpha=0.5)
 plt.plot(global_rounds, only_train_time_pred, label='Only Train Time (Linear Fit)', linestyle='--', color='green')
 
-plt.plot(global_rounds, all_energies, label='All Energy (Original)', color='red')
+plt.plot(global_rounds, all_energies, label='All Energy (Original)', color='red', alpha=0.5)
 plt.plot(global_rounds, all_energy_pred, label='All Energy (Linear Fit)', linestyle='--', color='red')
 
 # 添加标题和标签
