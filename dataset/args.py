@@ -4,13 +4,13 @@ from sre_parse import parse
 
 def args_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--niid', type=str, default="noniid", help="non-iid distribution")
-    parser.add_argument('--balance', type=str, default="imbalance", help="balance data size per client")
-    parser.add_argument('--partition', type=str, default="dir", help="partition distribution, dir|pat｜exdir")
+    parser.add_argument('--niid', type=str, default="iid", help="non-iid distribution")
+    parser.add_argument('--balance', type=str, default="balance", help="balance data size per client")
+    parser.add_argument('--partition', type=str, default="pat", help="partition distribution, dir|pat｜exdir")
     parser.add_argument('--num_users', type=int, default=40, help="number of users")
     parser.add_argument('--alpha', type=float, default=0.1, help="the degree of imbalance in dir partition")
 
-    parser.add_argument('--class_per_client', type=int, default=4, help="number of classes per client")
+    parser.add_argument('--class_per_client', type=int, default=10, help="number of classes per client")
 
     parser.add_argument('--seed', type=int, default=42, help="random seed")
 
