@@ -148,6 +148,70 @@ class FedSAE(Server):
         # global_protos = self.proto_aggregation_clients()
 
         sampled_features = self.cal_meancov_and_saveglprotos()
+        if self.args.drawGMM == 1 and self.current_epoch == 1:
+            origin_features = defaultdict(list)
+            # Select a class for visualization
+            label_to_vis = 0
+            for client in self.clients:
+                client_features = load_item(client.role, "features", client.save_folder_name)
+                features = client_features[label_to_vis]
+                # Handle CUDA tensors properly
+                if isinstance(features, torch.Tensor):
+                    features = features.detach().cpu().numpy()
+                elif isinstance(features, list):
+                    # If it's a list of tensors, convert each tensor
+                    features = [f.detach().cpu().numpy() if isinstance(f, torch.Tensor) else f for f in features]
+                origin_features[label_to_vis].extend(features)
+            
+            # Prepare data
+            sampled_data = np.array(sampled_features[label_to_vis])
+            origin_data = np.array(origin_features[label_to_vis])
+            
+            # Fit Gaussian distribution to original features
+            mean = np.mean(origin_data, axis=0)
+            cov = np.cov(origin_data.T)
+            gaussian_samples = np.random.multivariate_normal(mean, cov, size=4000)
+            
+            # Plot original vs Gaussian samples
+            tsne = TSNE(n_components=2, random_state=42)
+            combined_data = np.vstack([gaussian_samples, origin_data])
+            labels = np.array(['gaussian samples'] * len(gaussian_samples) + ['original features'] * len(origin_data))
+            reduced_data = tsne.fit_transform(combined_data)
+            
+            plt.figure(figsize=(10, 8))
+            colors = {'gaussian samples': '#2ecc71', 'original features': '#ff7f0e'}
+            for label, marker, alpha in [('gaussian samples', 'o', 0.8), ('original features', '^', 0.8)]:
+                mask = labels == label
+                plt.scatter(reduced_data[mask, 0], reduced_data[mask, 1],
+                          label=label, marker=marker, alpha=alpha, color=colors[label],
+                          edgecolor='white', linewidth=0.5)
+
+            plt.title(f't-SNE: Original vs Gaussian Generated Features (Class {label_to_vis})', fontsize=12)
+            plt.legend(frameon=True, framealpha=0.8)
+            plt.grid(False)
+            plt.savefig(f'./gaussian_vs_original_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
+            plt.close()
+
+            # Plot original vs sampled features
+            combined_data = np.vstack([sampled_data, origin_data])
+            labels = np.array(['virtual features'] * len(sampled_data) + ['original features'] * len(origin_data))
+            reduced_data = tsne.fit_transform(combined_data)
+            
+            plt.figure(figsize=(10, 8))
+            colors = {'virtual features': '#9b59b6', 'original features': '#ff7f0e'}
+            for label, marker, alpha in [('virtual features', 'o', 0.8), ('original features', '^', 0.8)]:
+                mask = labels == label
+                plt.scatter(reduced_data[mask, 0], reduced_data[mask, 1],
+                          label=label, marker=marker, alpha=alpha, color=colors[label],
+                          edgecolor='white', linewidth=0.5)
+
+            plt.title(f't-SNE: Virtual vs Original Features (Class {label_to_vis})', fontsize=12)
+            plt.legend(frameon=True, framealpha=0.8)
+            plt.grid(False)
+            plt.savefig(f'./tsne_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
+            plt.close()
+            exit()
+
         # sampler = GaussianSampler(self.args)
         # sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
         self.train_global_classifier(sampled_features)
@@ -162,6 +226,7 @@ class FedSAE(Server):
             drawtype="clientavgproto",
             current_epoch=self.current_epoch,
         )
+        
         # self.save_tsne_with_agg(
         #     args=self.args,
         #     base_path="./tsneplot",
