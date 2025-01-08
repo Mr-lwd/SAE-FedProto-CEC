@@ -39,8 +39,12 @@ def run(args):
     reporter = MemReporter()
 
     for i in range(args.prev, args.times):
-        print(f"\n============= Running time: {i}th =============")
-        print("Creating server and clients ...")
+        if args.goal == "test":
+            print(f"\n============= Running time: {i}th =============")
+            print("Creating server and clients ...")
+        elif args.goal == "gltest":
+            print(f"\n============= test clients on all test data =============")
+            print("Testing on all clients ...")
         start = time.time()
 
         # Generate args.models
@@ -267,6 +271,9 @@ def run(args):
         else:
             raise NotImplementedError
 
+        if args.goal == "gltest":
+            server.evaluate_proto()
+            exit()
         server.train()
 
         time_list.append(time.time() - start)
@@ -308,6 +315,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-go", "--goal", type=str, default="test", help="The goal for this experiment"
     )
+    #if goal is gltest, client test on the all test data
     parser.add_argument(
         "-dev", "--device", type=str, default="cuda", choices=["cpu", "cuda"]
     )
@@ -393,6 +401,7 @@ if __name__ == "__main__":
         "-eg", "--eval_gap", type=int, default=1, help="Rounds gap for evaluation"
     )
     parser.add_argument("-sfn", "--save_folder_name", type=str, default="temp")
+    #if save_folder_name == "static", not time.time() is end
     parser.add_argument("-ab", "--auto_break", type=bool, default=False)
     parser.add_argument("-fd", "--feature_dim", type=int, default=512)
     parser.add_argument("-vs", "--vocab_size", type=int, default=98635)

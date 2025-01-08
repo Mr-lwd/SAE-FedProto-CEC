@@ -61,12 +61,12 @@ class FedSAE(Server):
         self.server_hidden_dim = self.feature_dim
 
         self.TGP_uploaded_protos = []
-        if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
-            PROTO = Trainable_prototypes(
-                self.num_classes, self.server_hidden_dim, self.feature_dim, self.device
-            ).to(self.device)
-            save_item(PROTO, self.role, "PROTO", self.save_folder_name)
-            print(PROTO)
+        # if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
+        #     PROTO = Trainable_prototypes(
+        #         self.num_classes, self.server_hidden_dim, self.feature_dim, self.device
+        #     ).to(self.device)
+        #     save_item(PROTO, self.role, "PROTO", self.save_folder_name)
+        #     print(PROTO)
         self.CEloss = nn.CrossEntropyLoss()
         self.MSEloss = nn.MSELoss()
 
@@ -335,11 +335,6 @@ class FedSAE(Server):
     def send_to_edge(self, edge):
         edge.receive_from_cloudserver(copy.deepcopy(self.shared_protos))
         return None
-
-    def compute_glprotos_invol_dataset(self):
-        for client in self.clients:
-            for key in client.label_counts.keys():
-                self.glprotos_invol_dataset[key] += client.label_counts[key]
 
     def trans_aggedges_from_readyList(self):
         while (

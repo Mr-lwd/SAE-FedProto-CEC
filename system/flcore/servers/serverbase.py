@@ -41,13 +41,15 @@ class Server(object):
         self.top_cnt = 100
         self.auto_break = args.auto_break
         self.role = "Server"
-        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        self.model_folder_prefix = f"temp/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/{time.time()}"
+            # args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/notTemp"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/"
+        print(args.save_folder_name_full)
         self.save_folder_name = args.save_folder_name_full
 
         self.selected_edges = []
@@ -320,7 +322,12 @@ class Server(object):
                 server_param.data += client_param.data.clone() * w
 
         save_item(global_model, self.role, "global_model", self.save_folder_name)
-
+        
+    def compute_glprotos_invol_dataset(self):
+        for client in self.clients:
+            for key in client.label_counts.keys():
+                self.glprotos_invol_dataset[key] += client.label_counts[key]
+                
     def save_results(self):
         algo = self.dataset + "_" + self.algorithm
         result_path = "../results/"

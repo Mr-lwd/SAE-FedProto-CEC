@@ -14,6 +14,7 @@ import random
 import math
 import json
 
+
 class Client(object):
     """
     Base class for clients in federated learning.
@@ -39,7 +40,7 @@ class Client(object):
         self.num_workers = self.args.num_workers
 
         # 创建client model
-        if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
+        if args.goal == "test" and (args.save_folder_name == "temp" or "temp" not in args.save_folder_name):
             model = BaseHeadSplit(args, self.id).to(self.device)
             save_item(model, self.role, "model", self.save_folder_name)
 
@@ -63,7 +64,6 @@ class Client(object):
             self.dvfs_data = self.create_objects_from_json()
             self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
-
     def load_train_data(self, batch_size=None):
         if batch_size == None:
             batch_size = self.batch_size
@@ -79,8 +79,56 @@ class Client(object):
     def load_test_data(self, batch_size=None):
         if batch_size == None:
             batch_size = self.batch_size
-        test_data = read_client_data(self.dataset, self.id, is_train=False)
-        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False, num_workers=4)
+
+        if self.args.goal == "gltest":
+            # Directly load the full test dataset
+            test_data_dir = "../dataset"
+            from torchvision import datasets, transforms
+
+            if "FashionMNIST" in self.args.dataset:
+                transform = transforms.Compose(
+                    [transforms.ToTensor(), transforms.Normalize([0.5], [0.5])]
+                )
+                test_data = datasets.FashionMNIST(
+                    root=f"{test_data_dir}/FashionMNIST",
+                    train=False,
+                    download=False,
+                    transform=transform,
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            elif "Cifar10" in self.args.dataset:
+                transform = transforms.Compose(
+                    [
+                        transforms.ToTensor(),
+                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                    ]
+                )
+                test_data = datasets.CIFAR10(
+                    root=test_data_dir, train=False, download=False, transform=transform
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            elif "MNIST" in self.args.dataset:
+                transform = transforms.Compose(
+                    [transforms.ToTensor(), transforms.Normalize([0.5], [0.5])]
+                )
+                test_data = datasets.MNIST(
+                    root=f"{test_data_dir}/MNIST/rawdata",
+                    train=False,
+                    download=False,
+                    transform=transform,
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            else:
+                raise ValueError(
+                    f"Dataset {self.args.dataset} not supported for global testing"
+                )
+        else:
+            # Original code for client-specific testing
+            test_data = read_client_data(self.dataset, self.id, is_train=False)
+
+        return DataLoader(
+            test_data, batch_size, drop_last=False, shuffle=False, num_workers=0
+        )
 
     def clone_model(self, model, target):
         for param, target_param in zip(model.parameters(), target.parameters()):
@@ -95,16 +143,23 @@ class Client(object):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
+        if self.args.test_useglclassifier == 1:
+            client_classifier = model.head  # 假设客户端分类器存储在 head 属性
+            glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
+            if glclassifier is not None:
+                client_classifier.load_state_dict(glclassifier.state_dict())
         if self.args.DVFS == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
                     global_protos[label] = tensor.to("cuda")
                 else:
-                    raise TypeError(f"Value for label '{label}' is not a torch.Tensor. Type: {type(tensor)}")
+                    raise TypeError(
+                        f"Value for label '{label}' is not a torch.Tensor. Type: {type(tensor)}"
+                    )
         else:
             model = model.to(self.device)
-            
+
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
@@ -164,12 +219,13 @@ class Client(object):
                             correct_class_count_proto[label] += 1
 
                         # 打印统计结果
-                # print("-" * 30)
-                # print(f"client id {self.id}")
-                # print("Regular Model Correct Classifications:")
-                # print(correct_class_count_regular)
-                # print("Prototype-Based Model Correct Classifications:")
-                # print(correct_class_count_proto)
+            if self.args.goal == "gltest":
+                print("-" * 30)
+                print(f"client id {self.id}")
+                print("Regular Model Correct Classifications:")
+                print(correct_class_count_regular)
+                print("Prototype-Based Model Correct Classifications:")
+                print(correct_class_count_proto)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5
@@ -209,7 +265,7 @@ class Client(object):
 
         y_prob = np.concatenate(y_prob, axis=0)
         y_true = np.concatenate(y_true, axis=0)
-        
+
         auc = metrics.roc_auc_score(y_true, y_prob, average="micro")
 
         return test_acc, test_num, auc
@@ -272,8 +328,10 @@ class Client(object):
         # self.model.shared_layers.load_state_dict(self.receiver_buffer)
         self.model.update_model(self.receiver_buffer)
         return None
-    
-    def create_objects_from_json(self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"):
+
+    def create_objects_from_json(
+        self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"
+    ):
         objects = None
         with open(file_path, "r") as file:
             objects = json.load(file)
