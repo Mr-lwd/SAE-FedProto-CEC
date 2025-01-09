@@ -351,6 +351,7 @@ if __name__ == "__main__":
         help="Multiple update steps in one local epoch.",
     )
     parser.add_argument("-algo", "--algorithm", type=str, default="FedProto")
+    parser.add_argument("-jetson", "--jetson", type=int, default=0)
     parser.add_argument(
         "-jr",
         "--join_ratio",

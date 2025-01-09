@@ -59,9 +59,9 @@ class Client(object):
         self.optimizer = self.args.optimizer
         self.local_model_loss = 0
         self.local_all_loss = 0
-        
-        self.dvfs_data = self.create_objects_from_json()
-        self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
+        if self.args.jetson == 1:
+            self.dvfs_data = self.create_objects_from_json()
+            self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
 
     def load_train_data(self, batch_size=None):
