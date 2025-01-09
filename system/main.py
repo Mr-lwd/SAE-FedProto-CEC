@@ -129,7 +129,17 @@ def run(args):
                 "Head(hidden_dims=[512, 256], num_classes=args.num_classes)",
                 "Head(hidden_dims=[512, 128], num_classes=args.num_classes)",
             ]
-
+        elif args.model_family == "HCNN1":
+            args.models = [
+                # "CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)",
+                "CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)",
+            ]
         elif args.model_family == "HCNNs8":
             args.models = [
                 "CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)",

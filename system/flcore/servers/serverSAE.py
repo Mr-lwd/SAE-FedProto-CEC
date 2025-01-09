@@ -179,7 +179,7 @@ class FedSAE(Server):
             reduced_data = tsne.fit_transform(combined_data)
             
             plt.figure(figsize=(10, 8))
-            colors = {'gaussian samples': '#2ecc71', 'original features': '#ff7f0e'}
+            colors = {'gaussian samples': '#87CEEB', 'original features': '#ff7f0e'}
             for label, marker, alpha in [('gaussian samples', 'o', 0.8), ('original features', '^', 0.8)]:
                 mask = labels == label
                 plt.scatter(reduced_data[mask, 0], reduced_data[mask, 1],
@@ -198,7 +198,7 @@ class FedSAE(Server):
             reduced_data = tsne.fit_transform(combined_data)
             
             plt.figure(figsize=(10, 8))
-            colors = {'virtual features': '#9b59b6', 'original features': '#ff7f0e'}
+            colors = {'virtual features': '#0000FF', 'original features': '#ff7f0e'}
             for label, marker, alpha in [('virtual features', 'o', 0.8), ('original features', '^', 0.8)]:
                 mask = labels == label
                 plt.scatter(reduced_data[mask, 0], reduced_data[mask, 1],
