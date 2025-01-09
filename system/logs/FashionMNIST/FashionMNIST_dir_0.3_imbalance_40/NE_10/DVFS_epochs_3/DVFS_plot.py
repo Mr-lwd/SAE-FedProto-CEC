@@ -5,7 +5,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # 定义文件路径
-file_path = './gr_100_FedProto_DVFS_1_lr_0.06_mo_0.8_lam_1_batch_256.out'
+file_path = './gr_100_FedProto_lr_0.06_mo_0.8_lam_1_batch_256.out'
+# file_path='./DVFS_Fedproto.out'
 
 # 初始化列表来存储提取的数据
 global_rounds = []
