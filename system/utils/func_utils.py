@@ -4,8 +4,11 @@ import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
 from collections import defaultdict
-from flcore.clients.clientbase import load_item, save_item
-
+from utils.io_utils import load_item, save_item
+import matplotlib.pyplot as plt
+import umap
+from sklearn.preprocessing import StandardScaler
+from sklearn.manifold import TSNE
 
 
 
@@ -195,3 +198,59 @@ class Trainable_prototypes(nn.Module):
         out = self.fc(mid)
 
         return out
+
+
+def generate_and_plot_umap(n_classes=10, 
+                          X=[],
+                          Y=[],
+                          save_path="umap_visualization.png"):
+    """
+    visualize using UMAP
+    """
+    np.random.seed(42)
+
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Standardize and apply UMAP
+    # scaler = StandardScaler()
+    # X_scaled = scaler.fit_transform(X)
+    reducer = umap.UMAP(n_neighbors=30, min_dist=0.3, n_components=2, random_state=42)
+    X_embedded = reducer.fit_transform(X)
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=1, alpha=0.5)
+    plt.gca().set_aspect("equal", "datalim")
+    # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    
+    
+def generate_and_plot_tsne(X=[],
+                          Y=[],
+                          save_path="tsne_visualization.png"):
+    """
+    visualize using TSNE
+    """
+    np.random.seed(42)
+
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Standardize and apply TSNE
+    # scaler = StandardScaler()
+    # X_scaled = scaler.fit_transform(X)
+    reducer = TSNE(n_components=2, random_state=42)
+    X_embedded = reducer.fit_transform(X)
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=1, alpha=0.8)
+    plt.gca().set_aspect("equal", "datalim")
+    # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+

@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import numpy as np
 import time
-from flcore.clients.clientbase import Client, load_item, save_item
-
+from flcore.clients.clientbase import Client
+from utils.io_utils import load_item, save_item
 
 class clientLocal(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):

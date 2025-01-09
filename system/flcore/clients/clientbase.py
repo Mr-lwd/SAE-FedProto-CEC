@@ -5,6 +5,7 @@ import numpy as np
 import os
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from utils.func_utils import generate_and_plot_umap
 from sklearn.preprocessing import label_binarize
 from sklearn import metrics
 from utils.data_utils import read_client_data
@@ -13,6 +14,7 @@ from collections import defaultdict
 import random
 import math
 import json
+from utils.io_utils import load_item, save_item
 
 
 class Client(object):
@@ -168,6 +170,8 @@ class Client(object):
         regular_num = 0
         proto_acc = 0
         proto_num = 0
+        X = []
+        Y = []
 
         # Regular model inference
         if global_protos is not None:
@@ -183,7 +187,8 @@ class Client(object):
                         images, labels = images.to(self.device), labels.to(self.device)
 
                     # Regular model inference
-                    outputs = model(images)
+                    rep = model.base(images)
+                    outputs = model.head(rep)
                     outputs = outputs.squeeze(1)  # Remove the extra dimension
 
                     # Calculate correct predictions for regular model
@@ -191,6 +196,11 @@ class Client(object):
                     pred_labels = pred_labels.view(-1)
                     regular_acc += torch.sum(pred_labels == labels).item()
                     regular_num += len(labels)
+
+                    if self.args.goal == "gltest_umap":
+                        rep=rep.squeeze(1)
+                        X.extend(rep.cpu().numpy())
+                        Y.extend(labels.cpu().numpy())
 
                     for label in labels[pred_labels == labels].tolist():
                         correct_class_count_regular[label] += 1
@@ -226,6 +236,12 @@ class Client(object):
                 print(correct_class_count_regular)
                 print("Prototype-Based Model Correct Classifications:")
                 print(correct_class_count_proto)
+            if self.args.goal == "gltest_umap":
+                features = {}
+                features["X"] = X
+                features["Y"] = Y
+                print(f"X shape: {np.array(X).shape}, Y shape: {np.array(Y).shape}")
+                save_item(features, self.role, "umap_features", self.save_folder_name)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5

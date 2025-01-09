@@ -375,6 +375,7 @@ class Server(object):
 
         # 收集每个客户端的测试结果
         for c in self.clients:
+            # if c.id > 5: break
             regular_acc, regular_num, proto_acc, proto_num = c.test_metrics_proto()
 
             # 计算每个客户端的准确率
@@ -457,6 +458,22 @@ class Server(object):
         print("Std Test Accuracy (Regular Model): {:.4f}".format(np.std(accs)))
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
+        if self.args.goal == "gltest_umap":
+            print("umap_features map")
+            X=[]
+            Y=[]
+            for client in self.clients:
+                # if client.id > 5: break
+                features = load_item(client.role, "umap_features", client.save_folder_name)
+                X.extend(features["X"])
+                Y.extend(features["Y"])
+            save_folder = f"umap/{self.dataset}"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            if not os.path.exists(save_folder):
+                os.makedirs(save_folder)
+            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)
