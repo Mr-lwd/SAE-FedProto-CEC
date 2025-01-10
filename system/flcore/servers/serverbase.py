@@ -43,7 +43,7 @@ class Server(object):
         self.role = "Server"
         self.model_folder_prefix = f"temp/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_extraloss_{args.extra_loss}_usegltest_1/{time.time()}"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/{time.time()}"
             # args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
@@ -459,20 +459,21 @@ class Server(object):
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
         if self.args.goal == "gltest_umap":
+            prefix_folder = f"umap/{self.dataset}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
             print("umap_features map")
-            # X=[]
-            # Y=[]
-            # for client in self.clients:
-            #     features = load_item(client.role, "test_features", client.save_folder_name)
-            #     X.extend(features["X"])
-            #     Y.extend(features["Y"])
-            # save_folder = f"umap/{self.dataset}/features/testset"
-            # save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
-            # if not os.path.exists(save_folder):
-            #     os.makedirs(save_folder)
-            # generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
-            # save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
-            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            X=[]
+            Y=[]
+            for client in self.clients:
+                features = load_item(client.role, "test_features", client.save_folder_name)
+                X.extend(features["X"])
+                Y.extend(features["Y"])
+            save_folder = f"{prefix_folder}/features/testset"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            if not os.path.exists(save_folder):
+                os.makedirs(save_folder)
+            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
             
             X=[]
             Y=[]
@@ -481,7 +482,7 @@ class Server(object):
                 for key in protos.keys():
                     X.append(protos[key])
                     Y.append(key)
-            save_folder = f"umap/{self.dataset}/avgprotos/testset"
+            save_folder = f"{prefix_folder}/avgprotos/testset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)

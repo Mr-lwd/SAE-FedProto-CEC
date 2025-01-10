@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from collections import defaultdict
 from utils.io_utils import load_item, save_item
 import matplotlib.pyplot as plt
+# from importlib_metadata import version, PackageNotFoundError
 import umap
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
