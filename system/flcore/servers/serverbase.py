@@ -43,7 +43,7 @@ class Server(object):
         self.role = "Server"
         self.model_folder_prefix = f"temp/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/{time.time()}"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_extraloss_{args.extra_loss}_usegltest_1/{time.time()}"
             # args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
