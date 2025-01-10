@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import umap
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
+from sklearn.random_projection import SparseRandomProjection
 
 
 
@@ -201,70 +202,78 @@ class Trainable_prototypes(nn.Module):
         return out
 
 
-def generate_and_plot_umap(n_classes=10, 
-                          X=[],
-                          Y=[],
-                          save_path="umap_visualization.png"):
+def generate_and_plot_umap(n_classes=10, X=[], Y=[], save_path="umap_visualization.png"):
     """
-    visualize using UMAP
+    Visualize using sparse random projection followed by UMAP
     """
     np.random.seed(42)
-
     X = np.vstack(X)
     Y = np.array(Y)
     
-    # Standardize and apply UMAP
-    # scaler = StandardScaler()
-    # X_scaled = scaler.fit_transform(X)
-    reducer = umap.UMAP(n_neighbors=30, min_dist=0.3, n_components=2, random_state=42)
-    X_embedded = reducer.fit_transform(X)
+    # Calculate projection dimension based on Johnson-Lindenstrauss lemma
+    n_samples, n_features = X.shape
+    # d = int(2 * np.log2(n_features))  # d = 2 * log2(n)
+    d = int(math.log(n_samples)/((0.5)**2))
+    print(f"d: {d}")
+    # Apply sparse random projection
+    transformer = SparseRandomProjection(n_components=d, random_state=42)
+    X_projected = transformer.fit_transform(X)
+    
+    # Apply UMAP on projected data
+    reducer = umap.UMAP(min_dist=0.3, n_components=2, random_state=42)
+    X_embedded = reducer.fit_transform(X_projected)
     
     # Create visualization
     plt.figure(figsize=(10, 8))
-    if "protos" in save_path:
-        S = 5
-    else:
-        S = 1
+    S = 5 if "protos" in save_path else 1
     plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
     plt.gca().set_aspect("equal", "datalim")
-    # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
     
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
     plt.close()
-    
-    
-def generate_and_plot_tsne(X=[],
-                          Y=[],
-                          save_path="tsne_visualization.png"):
+
+
+def generate_and_plot_tsne(X=[], Y=[], save_path="tsne_visualization.png"):
     """
-    visualize using TSNE
+    Visualize using sparse random projection followed by t-SNE
     """
     np.random.seed(42)
-
     X = np.vstack(X)
     Y = np.array(Y)
     
-    # Standardize and apply TSNE
-    # scaler = StandardScaler()
-    # X_scaled = scaler.fit_transform(X)
-    # tsne = TSNE(n_components=2, random_state=42)
+    # Calculate projection dimension based on Johnson-Lindenstrauss lemma
+    n_samples, n_features = X.shape
+    # d = int( 2 * np.log2(n_features))  # d = 2 * log2(n)
+    d = int(math.log(n_samples)/((0.5)**2))
+    print(f"d: {d}")
+    
+    # Apply sparse random projection
+    transformer = SparseRandomProjection(n_components=d, random_state=42)
+    X_projected = transformer.fit_transform(X)
+    
+    # Apply t-SNE on projected data
     tsne = TSNE(n_components=2, 
                 random_state=42,
-                n_iter=1000,           # Reduce iterations if acceptable
-                method='barnes_hut',   # Faster approximation method
-                n_jobs=-1)             # Use all available CPU cores
-    X_embedded = tsne.fit_transform(X)
+                n_iter=1000,
+                method='barnes_hut',
+                n_jobs=-1)
+    X_embedded = tsne.fit_transform(X_projected)
     
     # Create visualization
-    if "protos" in save_path:
-        S = 5
-    else:
-        S = 1
     plt.figure(figsize=(10, 8))
+    S = 5 if "protos" in save_path else 1
     plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
-    # plt.gca().set_aspect("equal", "datalim")
-    # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
     
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
     plt.close()
+
+
+def default_tensor(feature_dim, num_classes):
+    """
+    Create a default tensor dictionary for prototypes
+    """
+    agg_protos_label = defaultdict(list)
+    for i in range(num_classes):
+        agg_protos_label[i] = torch.zeros(feature_dim)
+    return agg_protos_label
 

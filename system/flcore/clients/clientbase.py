@@ -127,10 +127,10 @@ class Client(object):
                 )
         else:
             # Original code for client-specific testing
-            if self.args.goal == "gltest_umap":
-                test_data = read_client_data(self.dataset, self.id, is_train=True)
-            else:
-                test_data = read_client_data(self.dataset, self.id, is_train=False)
+            # if self.args.goal == "gltest_umap":
+            #     test_data = read_client_data(self.dataset, self.id, is_train=True)
+            # else:
+            test_data = read_client_data(self.dataset, self.id, is_train=False)
 
         return DataLoader(
             test_data, batch_size, drop_last=False, shuffle=False, num_workers=0
@@ -364,11 +364,11 @@ class Client(object):
         return objects
 
 
-def save_item(item, role, item_name, item_path=None):
-    if not os.path.exists(item_path):
-        os.makedirs(item_path)
-    file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
-    torch.save(item, file_path)
+# def save_item(item, role, item_name, item_path=None):
+#     if not os.path.exists(item_path):
+#         os.makedirs(item_path)
+#     file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
+#     torch.save(item, file_path)
 
     # 查看保存后的文件大小（单位：字节）
     # if item_name == "CCVR":
@@ -382,12 +382,12 @@ def save_item(item, role, item_name, item_path=None):
     #     print(f"File size: {file_size_mb:.2f} MB")
 
 
-def load_item(role, item_name, item_path=None):
-    try:
-        return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
-    except FileNotFoundError:
-        print(role, item_name, "Not Found")
-        return None
+# def load_item(role, item_name, item_path=None):
+#     try:
+#         return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
+#     except FileNotFoundError:
+#         print(role, item_name, "Not Found")
+#         return None
     
 def agg_func(protos):
     """

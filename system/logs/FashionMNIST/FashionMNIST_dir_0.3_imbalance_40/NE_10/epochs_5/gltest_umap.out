@@ -17,7 +17,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedProto
+algorithm = FedSAE
 join_ratio = 1.0
 edge_join_ratio = 1.0
 random_join_ratio = False
@@ -45,7 +45,7 @@ agg_type = 0
 buffersize = 10
 gl_use_clients = 1
 test_useglclassifier = 1
-gamma = 1
+gamma = 1.0
 extra_loss = 0
 delta = 1
 drawtsne = 1
@@ -77,7 +77,7 @@ CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-temp/FashionMNIST_dir_0.3_imbalance_40/NE_10/featuredim_512/FedProto/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
+temp/FashionMNIST_dir_0.3_imbalance_40/NE_10/featuredim_512/FedSAE/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1.0_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {9: 545, 2: 98, 0: 287, 1: 338, 3: 26, 5: 106, 6: 3, 4: 1})
 id 1
@@ -161,3 +161,52 @@ label_counts: defaultdict(<class 'int'>, {2: 387, 8: 501, 6: 233, 5: 12, 1: 41, 
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
+X shape: (468, 512), Y shape: (468,)
+X shape: (475, 512), Y shape: (475,)
+X shape: (292, 512), Y shape: (292,)
+X shape: (312, 512), Y shape: (312,)
+X shape: (505, 512), Y shape: (505,)
+X shape: (442, 512), Y shape: (442,)
+X shape: (381, 512), Y shape: (381,)
+X shape: (544, 512), Y shape: (544,)
+X shape: (310, 512), Y shape: (310,)
+X shape: (445, 512), Y shape: (445,)
+X shape: (484, 512), Y shape: (484,)
+X shape: (288, 512), Y shape: (288,)
+X shape: (333, 512), Y shape: (333,)
+X shape: (475, 512), Y shape: (475,)
+X shape: (284, 512), Y shape: (284,)
+X shape: (444, 512), Y shape: (444,)
+X shape: (503, 512), Y shape: (503,)
+X shape: (445, 512), Y shape: (445,)
+X shape: (299, 512), Y shape: (299,)
+X shape: (523, 512), Y shape: (523,)
+X shape: (585, 512), Y shape: (585,)
+X shape: (372, 512), Y shape: (372,)
+X shape: (280, 512), Y shape: (280,)
+X shape: (236, 512), Y shape: (236,)
+X shape: (397, 512), Y shape: (397,)
+X shape: (464, 512), Y shape: (464,)
+X shape: (494, 512), Y shape: (494,)
+X shape: (380, 512), Y shape: (380,)
+X shape: (242, 512), Y shape: (242,)
+X shape: (408, 512), Y shape: (408,)
+X shape: (282, 512), Y shape: (282,)
+X shape: (472, 512), Y shape: (472,)
+X shape: (602, 512), Y shape: (602,)
+X shape: (456, 512), Y shape: (456,)
+X shape: (662, 512), Y shape: (662,)
+X shape: (348, 512), Y shape: (348,)
+X shape: (486, 512), Y shape: (486,)
+X shape: (1120, 512), Y shape: (1120,)
+X shape: (577, 512), Y shape: (577,)
+X shape: (399, 512), Y shape: (399,)
+Averaged Test Accuracy (Regular Model): 0.8897
+Averaged Test Accuracy (Prototype Model): 0.8645
+Averaged Train Loss (Regular Model): 0.0000
+Averaged Train Loss (Regular + Proto): 0.0000
+Std Test Accuracy (Regular Model): 0.0800
+Std Test Accuracy (Prototype Model): 0.0897
+umap_features map
+d: 39
+d: 39

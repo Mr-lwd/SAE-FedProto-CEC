@@ -9,7 +9,9 @@ import time
 import random
 import shutil
 from utils.data_utils import read_client_data
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
+# from flcore.clients.clientbase import load_item, save_item
+
 from utils.func_utils import *
 from collections import defaultdict
 import torch.nn as nn
@@ -467,7 +469,7 @@ class Server(object):
                 features = load_item(client.role, "test_features", client.save_folder_name)
                 X.extend(features["X"])
                 Y.extend(features["Y"])
-            save_folder = f"{prefix_folder}/features/trainset"
+            save_folder = f"{prefix_folder}/features/testset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
@@ -482,7 +484,7 @@ class Server(object):
                 for key in protos.keys():
                     X.append(protos[key])
                     Y.append(key)
-            save_folder = f"{prefix_folder}/avgprotos/trainset"
+            save_folder = f"{prefix_folder}/avgprotos/testset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
@@ -737,27 +739,4 @@ class Server(object):
         return proto_clusters
     
     def default_tensor(self):
-        agg_protos_label =  defaultdict(list)
-        for i in range(self.num_classes):
-            agg_protos_label[i] = torch.zeros(self.feature_dim)
-        return agg_protos_label
-
-        # agg_protos_label = defaultdict(list)
-        # for local_protos in protos_list:
-        #     for label in local_protos["protos"].keys():
-        #         agg_protos_label[label].append(
-        #             local_protos["protos"][label]
-        #             * local_protos["client"].label_counts[label]
-        #         )
-
-        # for [label, proto_list] in agg_protos_label.items():
-        #     if len(proto_list) > 1:
-        #         proto = 0 * proto_list[0].data
-        #         for i in proto_list:
-        #             proto += i.data
-        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #     else:
-        #         agg_protos_label[label] = (
-        #             proto_list[0].data / self.glprotos_invol_dataset[label]
-        #         )
-        # return agg_protos_label
+        return default_tensor(self.feature_dim, self.num_classes)
