@@ -459,7 +459,7 @@ class Server(object):
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
         if self.args.goal == "gltest_umap":
-            prefix_folder = f"umap/{self.dataset}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
+            prefix_folder = f"umap/{self.dataset}/fd_{self.args.feature_dim}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
             print("umap_features map")
             X=[]
             Y=[]
@@ -467,7 +467,7 @@ class Server(object):
                 features = load_item(client.role, "test_features", client.save_folder_name)
                 X.extend(features["X"])
                 Y.extend(features["Y"])
-            save_folder = f"{prefix_folder}/features/testset"
+            save_folder = f"{prefix_folder}/features/trainset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
@@ -482,7 +482,7 @@ class Server(object):
                 for key in protos.keys():
                     X.append(protos[key])
                     Y.append(key)
-            save_folder = f"{prefix_folder}/avgprotos/testset"
+            save_folder = f"{prefix_folder}/avgprotos/trainset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)

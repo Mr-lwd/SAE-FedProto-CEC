@@ -79,6 +79,7 @@ class Client(object):
         )
 
     def load_test_data(self, batch_size=None):
+        
         if batch_size == None:
             batch_size = self.batch_size
 
@@ -126,7 +127,10 @@ class Client(object):
                 )
         else:
             # Original code for client-specific testing
-            test_data = read_client_data(self.dataset, self.id, is_train=False)
+            if self.args.goal == "gltest_umap":
+                test_data = read_client_data(self.dataset, self.id, is_train=True)
+            else:
+                test_data = read_client_data(self.dataset, self.id, is_train=False)
 
         return DataLoader(
             test_data, batch_size, drop_last=False, shuffle=False, num_workers=0
