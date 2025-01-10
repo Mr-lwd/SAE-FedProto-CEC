@@ -4,8 +4,8 @@ import torch.nn as nn
 import numpy as np
 import time
 import torch.nn.functional as F
-from flcore.clients.clientbase import Client, load_item, save_item
-
+from flcore.clients.clientbase import Client
+from utils.io_utils import load_item, save_item
 
 class clientKD(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):

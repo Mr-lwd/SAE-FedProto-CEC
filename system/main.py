@@ -281,7 +281,7 @@ def run(args):
         else:
             raise NotImplementedError
 
-        if args.goal == "gltest":
+        if args.goal == "gltest" or args.goal == "gltest_umap":
             server.evaluate_proto()
             exit()
         server.train()
