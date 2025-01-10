@@ -220,7 +220,11 @@ def generate_and_plot_umap(n_classes=10,
     
     # Create visualization
     plt.figure(figsize=(10, 8))
-    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=1, alpha=0.5)
+    if "protos" in save_path:
+        S = 5
+    else:
+        S = 1
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
     plt.gca().set_aspect("equal", "datalim")
     # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
     
@@ -242,13 +246,22 @@ def generate_and_plot_tsne(X=[],
     # Standardize and apply TSNE
     # scaler = StandardScaler()
     # X_scaled = scaler.fit_transform(X)
-    reducer = TSNE(n_components=2, random_state=42)
-    X_embedded = reducer.fit_transform(X)
+    # tsne = TSNE(n_components=2, random_state=42)
+    tsne = TSNE(n_components=2, 
+                random_state=42,
+                n_iter=1000,           # Reduce iterations if acceptable
+                method='barnes_hut',   # Faster approximation method
+                n_jobs=-1)             # Use all available CPU cores
+    X_embedded = tsne.fit_transform(X)
     
     # Create visualization
+    if "protos" in save_path:
+        S = 5
+    else:
+        S = 1
     plt.figure(figsize=(10, 8))
-    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=1, alpha=0.8)
-    plt.gca().set_aspect("equal", "datalim")
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    # plt.gca().set_aspect("equal", "datalim")
     # plt.colorbar(boundaries=np.arange(n_classes + 1) - 0.5).set_ticks(np.arange(n_classes))
     
     plt.savefig(save_path, dpi=300, bbox_inches="tight")

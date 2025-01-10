@@ -17,7 +17,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedTGP
+algorithm = FedProto
 join_ratio = 1.0
 edge_join_ratio = 1.0
 random_join_ratio = False
@@ -75,7 +75,7 @@ CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-temp/MNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedTGP/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
+temp/MNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedProto/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {4: 158, 9: 289, 2: 4, 6: 121})
 id 1
@@ -159,16 +159,6 @@ label_counts: defaultdict(<class 'int'>, {8: 484, 1: 1, 6: 107, 7: 1, 4: 1, 2: 1
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
-Trainable_prototypes(
-  (embedings): Embedding(10, 512)
-  (middle): Sequential(
-    (0): Sequential(
-      (0): Linear(in_features=512, out_features=512, bias=True)
-      (1): ReLU()
-    )
-  )
-  (fc): Linear(in_features=512, out_features=512, bias=True)
-)
 Server glclassifier Not Found
 X shape: (191, 512), Y shape: (191,)
 Server glclassifier Not Found
@@ -249,10 +239,10 @@ Server glclassifier Not Found
 X shape: (118, 512), Y shape: (118,)
 Server glclassifier Not Found
 X shape: (199, 512), Y shape: (199,)
-Averaged Test Accuracy (Regular Model): 0.0985
-Averaged Test Accuracy (Prototype Model): 0.0985
+Averaged Test Accuracy (Regular Model): 0.9910
+Averaged Test Accuracy (Prototype Model): 0.9910
 Averaged Train Loss (Regular Model): 0.0000
 Averaged Train Loss (Regular + Proto): 0.0000
-Std Test Accuracy (Regular Model): 0.2688
-Std Test Accuracy (Prototype Model): 0.2688
+Std Test Accuracy (Regular Model): 0.0103
+Std Test Accuracy (Prototype Model): 0.0102
 umap_features map

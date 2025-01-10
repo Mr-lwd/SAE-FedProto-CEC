@@ -142,6 +142,9 @@ class Client(object):
             param.data = new_param.data.clone()
 
     def test_metrics_proto(self):
+        # if self.args.goal == "gltest_umap":
+        #     testloader = self.load_train_data()
+        # else:
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
@@ -172,6 +175,7 @@ class Client(object):
         proto_num = 0
         X = []
         Y = []
+        protos = defaultdict(list)
 
         # Regular model inference
         if global_protos is not None:
@@ -219,6 +223,7 @@ class Client(object):
                             ).to(self.device)
 
                         for i, r in enumerate(rep):
+                            protos[labels[i].item()].append(r.cpu().detach().data)
                             for j, pro in global_protos.items():
                                 if type(pro) != type([]):
                                     output[i, j] = self.loss_mse(r, pro)
@@ -241,7 +246,8 @@ class Client(object):
                 features["X"] = X
                 features["Y"] = Y
                 print(f"X shape: {np.array(X).shape}, Y shape: {np.array(Y).shape}")
-                save_item(features, self.role, "umap_features", self.save_folder_name)
+                save_item(features, self.role, "test_features", self.save_folder_name)
+                save_item(agg_func(protos), self.role, "test_protos", self.save_folder_name)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5
@@ -378,3 +384,19 @@ def load_item(role, item_name, item_path=None):
     except FileNotFoundError:
         print(role, item_name, "Not Found")
         return None
+    
+def agg_func(protos):
+    """
+    Returns the average of the weights.
+    """
+
+    for [label, proto_list] in protos.items():
+        if len(proto_list) > 1:
+            proto = 0 * proto_list[0].detach()
+            for i in proto_list:
+                proto += i.detach()
+            protos[label] = proto / len(proto_list)
+        else:
+            protos[label] = proto_list[0].detach()
+        # 平滑
+    return protos

@@ -460,14 +460,28 @@ class Server(object):
 
         if self.args.goal == "gltest_umap":
             print("umap_features map")
+            # X=[]
+            # Y=[]
+            # for client in self.clients:
+            #     features = load_item(client.role, "test_features", client.save_folder_name)
+            #     X.extend(features["X"])
+            #     Y.extend(features["Y"])
+            # save_folder = f"umap/{self.dataset}/features/testset"
+            # save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            # if not os.path.exists(save_folder):
+            #     os.makedirs(save_folder)
+            # generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            
             X=[]
             Y=[]
             for client in self.clients:
-                # if client.id > 5: break
-                features = load_item(client.role, "umap_features", client.save_folder_name)
-                X.extend(features["X"])
-                Y.extend(features["Y"])
-            save_folder = f"umap/{self.dataset}"
+                protos = load_item(client.role, "test_protos", client.save_folder_name)
+                for key in protos.keys():
+                    X.append(protos[key])
+                    Y.append(key)
+            save_folder = f"umap/{self.dataset}/avgprotos/testset"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
