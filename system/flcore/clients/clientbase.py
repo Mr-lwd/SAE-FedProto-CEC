@@ -145,7 +145,7 @@ class Client(object):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.test_useglclassifier == 1:
+        if self.args.test_useglclassifier == 1 and self.algorithm=="FedSAE":
             client_classifier = model.head  # 假设客户端分类器存储在 head 属性
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
