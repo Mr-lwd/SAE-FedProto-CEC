@@ -80,6 +80,9 @@ class clientSAE(Client):
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
                     loss += global_loss
+                    if self.args.extra_loss == 1:
+                        consistency_loss = torch.nn.functional.mse_loss(output, global_outputs)
+                        loss += self.args.delta * consistency_loss
                 else:
                     loss = self.loss(output, y)
                 self.local_model_loss += loss.item()
