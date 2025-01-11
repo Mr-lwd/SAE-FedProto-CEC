@@ -476,6 +476,8 @@ class Server(object):
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
             save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
             generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
+            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
             
             X=[]
             Y=[]
@@ -491,6 +493,8 @@ class Server(object):
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
             save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
             generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
+            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)

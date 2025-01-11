@@ -11,6 +11,7 @@ import umap
 from sklearn.preprocessing import StandardScaler
 from sklearn.manifold import TSNE
 from sklearn.random_projection import SparseRandomProjection
+from sklearn.decomposition import PCA
 
 
 
@@ -276,4 +277,36 @@ def default_tensor(feature_dim, num_classes):
     for i in range(num_classes):
         agg_protos_label[i] = torch.zeros(feature_dim)
     return agg_protos_label
+
+
+def generate_and_plot_PCA(X=[], Y=[], save_path="pca_visualization.png"):
+    """
+    Visualize using PCA (Principal Component Analysis)
+    """
+    np.random.seed(42)
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Standardize the features
+    # scaler = StandardScaler()
+    # X_scaled = scaler.fit_transform(X)
+    
+    # Apply PCA
+    pca = PCA(n_components=2, random_state=42)
+    X_embedded = pca.fit_transform(X)
+    
+    # Calculate explained variance ratio
+    explained_var_ratio = pca.explained_variance_ratio_
+    print(f"Explained variance ratio: {explained_var_ratio}")
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    S = 5 if "protos" in save_path else 1
+    scatter = plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    
+    # Add title with explained variance
+    plt.title(f'PCA visualization\nExplained variance ratio: {explained_var_ratio[0]:.3f}, {explained_var_ratio[1]:.3f}')
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
 
