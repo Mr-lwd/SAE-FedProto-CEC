@@ -17,7 +17,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedProto
+algorithm = FedSAE
 join_ratio = 1.0
 edge_join_ratio = 1.0
 random_join_ratio = False
@@ -26,7 +26,7 @@ num_edges = 10
 prev = 0
 times = 1
 eval_gap = 1
-save_folder_name = static
+save_folder_name = STATIC
 auto_break = False
 feature_dim = 512
 vocab_size = 98635
@@ -45,7 +45,9 @@ agg_type = 0
 buffersize = 10
 gl_use_clients = 1
 test_useglclassifier = 1
-gamma = 1
+gamma = 1.0
+extra_loss = 0
+delta = 1
 drawtsne = 1
 drawround = 20
 noise_dim = 512
@@ -75,7 +77,7 @@ CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
 CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-temp/MNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedProto/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
+temp/MNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedSAE/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1.0_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {4: 158, 9: 289, 2: 4, 6: 121})
 id 1
@@ -159,90 +161,56 @@ label_counts: defaultdict(<class 'int'>, {8: 484, 1: 1, 6: 107, 7: 1, 4: 1, 2: 1
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
-Server glclassifier Not Found
 X shape: (191, 512), Y shape: (191,)
-Server glclassifier Not Found
 X shape: (725, 512), Y shape: (725,)
-Server glclassifier Not Found
 X shape: (1090, 512), Y shape: (1090,)
-Server glclassifier Not Found
 X shape: (412, 512), Y shape: (412,)
-Server glclassifier Not Found
 X shape: (690, 512), Y shape: (690,)
-Server glclassifier Not Found
 X shape: (560, 512), Y shape: (560,)
-Server glclassifier Not Found
 X shape: (529, 512), Y shape: (529,)
-Server glclassifier Not Found
 X shape: (392, 512), Y shape: (392,)
-Server glclassifier Not Found
 X shape: (599, 512), Y shape: (599,)
-Server glclassifier Not Found
 X shape: (331, 512), Y shape: (331,)
-Server glclassifier Not Found
 X shape: (276, 512), Y shape: (276,)
-Server glclassifier Not Found
 X shape: (468, 512), Y shape: (468,)
-Server glclassifier Not Found
 X shape: (559, 512), Y shape: (559,)
-Server glclassifier Not Found
 X shape: (438, 512), Y shape: (438,)
-Server glclassifier Not Found
 X shape: (224, 512), Y shape: (224,)
-Server glclassifier Not Found
 X shape: (150, 512), Y shape: (150,)
-Server glclassifier Not Found
 X shape: (220, 512), Y shape: (220,)
-Server glclassifier Not Found
 X shape: (838, 512), Y shape: (838,)
-Server glclassifier Not Found
 X shape: (631, 512), Y shape: (631,)
-Server glclassifier Not Found
 X shape: (130, 512), Y shape: (130,)
-Server glclassifier Not Found
 X shape: (359, 512), Y shape: (359,)
-Server glclassifier Not Found
 X shape: (397, 512), Y shape: (397,)
-Server glclassifier Not Found
 X shape: (269, 512), Y shape: (269,)
-Server glclassifier Not Found
 X shape: (637, 512), Y shape: (637,)
-Server glclassifier Not Found
 X shape: (273, 512), Y shape: (273,)
-Server glclassifier Not Found
 X shape: (488, 512), Y shape: (488,)
-Server glclassifier Not Found
 X shape: (467, 512), Y shape: (467,)
-Server glclassifier Not Found
 X shape: (625, 512), Y shape: (625,)
-Server glclassifier Not Found
 X shape: (234, 512), Y shape: (234,)
-Server glclassifier Not Found
 X shape: (720, 512), Y shape: (720,)
-Server glclassifier Not Found
 X shape: (151, 512), Y shape: (151,)
-Server glclassifier Not Found
 X shape: (917, 512), Y shape: (917,)
-Server glclassifier Not Found
 X shape: (340, 512), Y shape: (340,)
-Server glclassifier Not Found
 X shape: (322, 512), Y shape: (322,)
-Server glclassifier Not Found
 X shape: (622, 512), Y shape: (622,)
-Server glclassifier Not Found
 X shape: (276, 512), Y shape: (276,)
-Server glclassifier Not Found
 X shape: (129, 512), Y shape: (129,)
-Server glclassifier Not Found
 X shape: (521, 512), Y shape: (521,)
-Server glclassifier Not Found
 X shape: (118, 512), Y shape: (118,)
-Server glclassifier Not Found
 X shape: (199, 512), Y shape: (199,)
-Averaged Test Accuracy (Regular Model): 0.9910
-Averaged Test Accuracy (Prototype Model): 0.9910
+Averaged Test Accuracy (Regular Model): 0.9922
+Averaged Test Accuracy (Prototype Model): 0.9924
 Averaged Train Loss (Regular Model): 0.0000
 Averaged Train Loss (Regular + Proto): 0.0000
-Std Test Accuracy (Regular Model): 0.0103
-Std Test Accuracy (Prototype Model): 0.0102
+Std Test Accuracy (Regular Model): 0.0093
+Std Test Accuracy (Prototype Model): 0.0098
 umap_features map
+d: 39
+d: 39
+Explained variance ratio: [0.17478514 0.15132387]
+d: 20
+d: 20
+Explained variance ratio: [0.1541113  0.13112512]

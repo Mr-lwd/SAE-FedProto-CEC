@@ -221,7 +221,7 @@ def generate_and_plot_umap(n_classes=10, X=[], Y=[], save_path="umap_visualizati
     X_projected = transformer.fit_transform(X)
     
     # Apply UMAP on projected data
-    reducer = umap.UMAP(min_dist=0.3, n_components=2, random_state=42)
+    reducer = umap.UMAP(n_components=2, random_state=42)
     X_embedded = reducer.fit_transform(X_projected)
     
     # Create visualization
