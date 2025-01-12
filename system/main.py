@@ -10,6 +10,7 @@ import logging
 import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
+from flcore.servers.serverproto_DVFS import FedProto_DVFS
 from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverSAE import FedSAE
 from flcore.servers.servergen import FedGen
@@ -244,6 +245,9 @@ def run(args):
 
         elif args.algorithm == "FedProto":
             server = FedProto(args, i)
+            
+        elif args.algorithm == "FedProto_DVFS":
+            server = FedProto_DVFS(args, i)
 
         elif args.algorithm == "FedSAE":
             server = FedSAE(args, i)
@@ -518,9 +522,9 @@ if __name__ == "__main__":
     if args.device == "cuda" and not torch.cuda.is_available():
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
-
-    if args.DVFS == 1:
-        print("DVFS is on, train on CPU and no plots\n")
+        
+    if args.jetson == 1 or args.DVFS==1:
+        print("it is on jetson, train on CPU and no plots\n")
         args.device = "cpu"
         args.drawtsne = 0
 

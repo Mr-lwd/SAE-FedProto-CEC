@@ -15,7 +15,7 @@ from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from collections import defaultdict
 import torch.nn as nn
-
+import json
 
 class Server(object):
     def __init__(self, args, times):
@@ -98,6 +98,9 @@ class Server(object):
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
         self.buffersize = args.buffersize
         self.N_cloud = defaultdict(int)
+        
+        self.dvfs_data = self.create_objects_from_json()
+        self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
     def set_clients(self, clientObj):
         # 加载数据集
@@ -446,7 +449,7 @@ class Server(object):
         print("Averaged Test Accuracy (Prototype Model): {:.4f}".format(proto_acc))
         print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
         print("Averaged Train Loss (Regular + Proto): {:.4f}".format(avg_all_loss))
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1:
             all_energy = sum(
                 [client.energy for client in self.clients]
             )

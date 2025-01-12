@@ -52,10 +52,10 @@ class clientProto(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1:
             pl = PowerLogger(interval=1.0, nodes=getNodesByName(['module/cpu']))
         for step in range(max_local_epochs):
-            if self.args.DVFS == 1 and step == 1:
+            if self.args.jetson == 1 and step == 1:
                 pl.start()
             self.local_model_loss = 0
             self.local_all_loss = 0
@@ -72,7 +72,7 @@ class clientProto(Client):
                 # print("rep", rep)
                 rep = rep.squeeze(1)
                 output = model.head(rep)
-                output = output.double( )
+                output = output.double()
                 loss = self.loss(output, y)
                 # print("loss", loss.item())
                 self.local_model_loss += loss.item()
@@ -96,7 +96,7 @@ class clientProto(Client):
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1:
             pl.stop()
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
             self.energy += local_train_time * averagePower/1e3 #s * w = J
@@ -108,11 +108,13 @@ class clientProto(Client):
         # 计算每个 512 维张量的大小（单位：字节）
         # 计算字典中所有张量的总大小（单位：字节）
 
-        all_bytes = 0
-        all_bytes += get_theory_bytes(protos)
-        agg_protos = self.agg_func(protos)
-        all_bytes += get_theory_bytes(agg_protos)
+        # all_bytes = 0
+        # all_bytes += get_theory_bytes(protos)
+        
+        # all_bytes += get_theory_bytes(agg_protos)
         # print(f"Tensor size: {all_bytes} bytes")
+        
+        agg_protos = self.agg_func(protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
 

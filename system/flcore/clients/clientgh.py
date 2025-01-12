@@ -2,7 +2,6 @@ import torch
 import numpy as np
 import time
 from flcore.clients.clientbase import Client, load_item, save_item
-from flcore.clients.clientbase import Client
 from utils.io_utils import load_item, save_item
 
 class clientGH(Client):

@@ -157,7 +157,7 @@ class Client(object):
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
                 client_classifier.load_state_dict(glclassifier.state_dict())
-        if self.args.DVFS == 1:
+        if and self.args.jetson == 1 and self.args.DVFS == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
@@ -189,7 +189,7 @@ class Client(object):
                 }
                 correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
                 for images, labels in testloader:
-                    if self.args.DVFS == 1:
+                    if self.args.jetson == 1:
                         images, labels = images.to("cuda"), labels.to("cuda")
                     else:
                         images, labels = images.to(self.device), labels.to(self.device)
@@ -217,7 +217,7 @@ class Client(object):
                         rep = model.base(
                             images
                         )  # Extract the representation for prototypes
-                        if self.args.DVFS == 1:
+                        if self.args.jetson == 1:
                             output = float("inf") * torch.ones(
                                 labels.shape[0], self.num_classes
                             ).to("cuda")
