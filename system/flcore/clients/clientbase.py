@@ -80,7 +80,7 @@ class Client(object):
         if batch_size == None:
             batch_size = self.batch_size
         test_data = read_client_data(self.dataset, self.id, is_train=False)
-        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False, num_workers=4)
+        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False, num_workers=0)
 
     def clone_model(self, model, target):
         for param, target_param in zip(model.parameters(), target.parameters()):
@@ -95,7 +95,7 @@ class Client(object):
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
@@ -122,7 +122,7 @@ class Client(object):
                 }
                 correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
                 for images, labels in testloader:
-                    if self.args.DVFS == 1:
+                    if self.args.jetson == 1:
                         images, labels = images.to("cuda"), labels.to("cuda")
                     else:
                         images, labels = images.to(self.device), labels.to(self.device)
@@ -144,7 +144,7 @@ class Client(object):
                         rep = model.base(
                             images
                         )  # Extract the representation for prototypes
-                        if self.args.DVFS == 1:
+                        if self.args.jetson == 1:
                             output = float("inf") * torch.ones(
                                 labels.shape[0], self.num_classes
                             ).to("cuda")

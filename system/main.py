@@ -10,6 +10,7 @@ import logging
 import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
+from flcore.servers.serverproto_DVFS import FedProto_DVFS
 from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverSAE import FedSAE
 from flcore.servers.servergen import FedGen
@@ -230,6 +231,9 @@ def run(args):
 
         elif args.algorithm == "FedProto":
             server = FedProto(args, i)
+            
+        elif args.algorithm == "FedProto_DVFS":
+            server = FedProto_DVFS(args, i)
 
         elif args.algorithm == "FedSAE":
             server = FedSAE(args, i)
@@ -316,7 +320,7 @@ if __name__ == "__main__":
         "-data", "--dataset", type=str, default="MNIST_dir_0.3_imbalance_40"
     )
     parser.add_argument(
-        "-DVFS", "--DVFS", type=int, default=0
+        "-jetson", "--jetson", type=int, default=0
     )
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_40"
@@ -500,8 +504,8 @@ if __name__ == "__main__":
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
         
-    if args.DVFS == 1:
-        print("DVFS is on, train on CPU and no plots\n")
+    if args.jetson == 1:
+        print("it is on jetson, train on CPU and no plots\n")
         args.device = "cpu"
         args.drawtsne = 0
     
