@@ -40,8 +40,12 @@ def run(args):
     reporter = MemReporter()
 
     for i in range(args.prev, args.times):
-        print(f"\n============= Running time: {i}th =============")
-        print("Creating server and clients ...")
+        if args.goal == "test":
+            print(f"\n============= Running time: {i}th =============")
+            print("Creating server and clients ...")
+        elif args.goal == "gltest":
+            print(f"\n============= test clients on all test data =============")
+            print("Testing on all clients ...")
         start = time.time()
 
         # Generate args.models
@@ -126,7 +130,17 @@ def run(args):
                 "Head(hidden_dims=[512, 256], num_classes=args.num_classes)",
                 "Head(hidden_dims=[512, 128], num_classes=args.num_classes)",
             ]
-
+        elif args.model_family == "HCNN1":
+            args.models = [
+                # "CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)",
+                "CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)",
+                # "CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)",
+            ]
         elif args.model_family == "HCNNs8":
             args.models = [
                 "CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)",
@@ -271,6 +285,9 @@ def run(args):
         else:
             raise NotImplementedError
 
+        if args.goal == "gltest" or args.goal == "gltest_umap":
+            server.evaluate_proto()
+            exit()
         server.train()
 
         time_list.append(time.time() - start)
@@ -305,13 +322,14 @@ if __name__ == "__main__":
     total_start = time.time()
     num_edges = 10
     edge_ratio = 1.0
-    # buffer_size = 
+    # buffer_size =
 
     parser = argparse.ArgumentParser()
     # general
     parser.add_argument(
         "-go", "--goal", type=str, default="test", help="The goal for this experiment"
     )
+    # if goal is gltest, client test on the all test data
     parser.add_argument(
         "-dev", "--device", type=str, default="cuda", choices=["cpu", "cuda"]
     )
@@ -319,9 +337,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "-data", "--dataset", type=str, default="MNIST_dir_0.3_imbalance_40"
     )
-    parser.add_argument(
-        "-jetson", "--jetson", type=int, default=0
-    )
+    parser.add_argument("-jetson", "--jetson", type=int, default=0)
+    parser.add_argument("-DVFS", "--DVFS", type=int, default=0)
+    parser.add_argument("-drawGMM", "--drawGMM", type=int, default=0)
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_40"
     # )
@@ -391,6 +409,7 @@ if __name__ == "__main__":
         "-eg", "--eval_gap", type=int, default=1, help="Rounds gap for evaluation"
     )
     parser.add_argument("-sfn", "--save_folder_name", type=str, default="temp")
+    # if save_folder_name == "static", not time.time() is end
     parser.add_argument("-ab", "--auto_break", type=bool, default=False)
     parser.add_argument("-fd", "--feature_dim", type=int, default=512)
     parser.add_argument("-vs", "--vocab_size", type=int, default=98635)
@@ -453,10 +472,10 @@ if __name__ == "__main__":
         "-bs", "--buffersize", type=int, default=int(num_edges * edge_ratio)
     )  # 与边缘数量相等则等价于全同步
     parser.add_argument("-gl_use_clients", "--gl_use_clients", type=int, default=1)
-    parser.add_argument(
-        "-tugl", "--test_useglclassifier", type=int, default=1
-    )
+    parser.add_argument("-tugl", "--test_useglclassifier", type=int, default=1)
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
+    parser.add_argument("-el", "--extra_loss", type=int, default=0)
+    parser.add_argument("-delta", "--delta", type=float, default=1)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)
     parser.add_argument("-drawround", "--drawround", type=int, default=20)
 
@@ -504,11 +523,11 @@ if __name__ == "__main__":
         print("\ncuda is not avaiable.\n")
         args.device = "cpu"
         
-    if args.jetson == 1:
+    if args.jetson == 1 or args.DVFS==1:
         print("it is on jetson, train on CPU and no plots\n")
         args.device = "cpu"
         args.drawtsne = 0
-    
+
     args.buffer_size = int(args.num_edges * edge_ratio)
 
     if args.use_decay_scheduler:

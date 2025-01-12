@@ -5,6 +5,7 @@ import numpy as np
 import os
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from utils.func_utils import generate_and_plot_umap
 from sklearn.preprocessing import label_binarize
 from sklearn import metrics
 from utils.data_utils import read_client_data
@@ -13,6 +14,8 @@ from collections import defaultdict
 import random
 import math
 import json
+from utils.io_utils import load_item, save_item
+
 
 class Client(object):
     """
@@ -39,7 +42,7 @@ class Client(object):
         self.num_workers = self.args.num_workers
 
         # 创建client model
-        if args.save_folder_name == "temp" or "temp" not in args.save_folder_name:
+        if args.goal == "test" and (args.save_folder_name == "temp" or "temp" not in args.save_folder_name):
             model = BaseHeadSplit(args, self.id).to(self.device)
             save_item(model, self.role, "model", self.save_folder_name)
 
@@ -59,10 +62,9 @@ class Client(object):
         self.optimizer = self.args.optimizer
         self.local_model_loss = 0
         self.local_all_loss = 0
-        
-        self.dvfs_data = self.create_objects_from_json()
-        self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
-
+        if self.args.jetson == 1:
+            self.dvfs_data = self.create_objects_from_json()
+            self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
     def load_train_data(self, batch_size=None):
         if batch_size == None:
@@ -77,10 +79,62 @@ class Client(object):
         )
 
     def load_test_data(self, batch_size=None):
+        
         if batch_size == None:
             batch_size = self.batch_size
-        test_data = read_client_data(self.dataset, self.id, is_train=False)
-        return DataLoader(test_data, batch_size, drop_last=False, shuffle=False, num_workers=0)
+
+        if self.args.goal == "gltest":
+            # Directly load the full test dataset
+            test_data_dir = "../dataset"
+            from torchvision import datasets, transforms
+
+            if "FashionMNIST" in self.args.dataset:
+                transform = transforms.Compose(
+                    [transforms.ToTensor(), transforms.Normalize([0.5], [0.5])]
+                )
+                test_data = datasets.FashionMNIST(
+                    root=f"{test_data_dir}/FashionMNIST",
+                    train=False,
+                    download=False,
+                    transform=transform,
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            elif "Cifar10" in self.args.dataset:
+                transform = transforms.Compose(
+                    [
+                        transforms.ToTensor(),
+                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                    ]
+                )
+                test_data = datasets.CIFAR10(
+                    root=test_data_dir, train=False, download=False, transform=transform
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            elif "MNIST" in self.args.dataset:
+                transform = transforms.Compose(
+                    [transforms.ToTensor(), transforms.Normalize([0.5], [0.5])]
+                )
+                test_data = datasets.MNIST(
+                    root=f"{test_data_dir}/MNIST/rawdata",
+                    train=False,
+                    download=False,
+                    transform=transform,
+                )
+                print(f"{self.args.dataset},len(test_data): {len(test_data)}")
+            else:
+                raise ValueError(
+                    f"Dataset {self.args.dataset} not supported for global testing"
+                )
+        else:
+            # Original code for client-specific testing
+            # if self.args.goal == "gltest_umap":
+            #     test_data = read_client_data(self.dataset, self.id, is_train=True)
+            # else:
+            test_data = read_client_data(self.dataset, self.id, is_train=False)
+
+        return DataLoader(
+            test_data, batch_size, drop_last=False, shuffle=False, num_workers=0
+        )
 
     def clone_model(self, model, target):
         for param, target_param in zip(model.parameters(), target.parameters()):
@@ -92,19 +146,29 @@ class Client(object):
             param.data = new_param.data.clone()
 
     def test_metrics_proto(self):
+        # if self.args.goal == "gltest_umap":
+        #     testloader = self.load_train_data()
+        # else:
         testloader = self.load_test_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.args.jetson == 1:
+        if self.args.test_useglclassifier == 1 and self.algorithm=="FedSAE":
+            client_classifier = model.head  # 假设客户端分类器存储在 head 属性
+            glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
+            if glclassifier is not None:
+                client_classifier.load_state_dict(glclassifier.state_dict())
+        if and self.args.jetson == 1 and self.args.DVFS == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
                     global_protos[label] = tensor.to("cuda")
                 else:
-                    raise TypeError(f"Value for label '{label}' is not a torch.Tensor. Type: {type(tensor)}")
+                    raise TypeError(
+                        f"Value for label '{label}' is not a torch.Tensor. Type: {type(tensor)}"
+                    )
         else:
             model = model.to(self.device)
-            
+
         # global_protos = load_item("Server", "global_protos", self.save_folder_name)
         model.eval()
 
@@ -113,6 +177,9 @@ class Client(object):
         regular_num = 0
         proto_acc = 0
         proto_num = 0
+        X = []
+        Y = []
+        protos = defaultdict(list)
 
         # Regular model inference
         if global_protos is not None:
@@ -128,7 +195,8 @@ class Client(object):
                         images, labels = images.to(self.device), labels.to(self.device)
 
                     # Regular model inference
-                    outputs = model(images)
+                    rep = model.base(images)
+                    outputs = model.head(rep)
                     outputs = outputs.squeeze(1)  # Remove the extra dimension
 
                     # Calculate correct predictions for regular model
@@ -136,6 +204,11 @@ class Client(object):
                     pred_labels = pred_labels.view(-1)
                     regular_acc += torch.sum(pred_labels == labels).item()
                     regular_num += len(labels)
+
+                    if self.args.goal == "gltest_umap":
+                        rep=rep.squeeze(1)
+                        X.extend(rep.cpu().numpy())
+                        Y.extend(labels.cpu().numpy())
 
                     for label in labels[pred_labels == labels].tolist():
                         correct_class_count_regular[label] += 1
@@ -154,6 +227,7 @@ class Client(object):
                             ).to(self.device)
 
                         for i, r in enumerate(rep):
+                            protos[labels[i].item()].append(r.cpu().detach().data)
                             for j, pro in global_protos.items():
                                 if type(pro) != type([]):
                                     output[i, j] = self.loss_mse(r, pro)
@@ -164,12 +238,20 @@ class Client(object):
                             correct_class_count_proto[label] += 1
 
                         # 打印统计结果
-                # print("-" * 30)
-                # print(f"client id {self.id}")
-                # print("Regular Model Correct Classifications:")
-                # print(correct_class_count_regular)
-                # print("Prototype-Based Model Correct Classifications:")
-                # print(correct_class_count_proto)
+            if self.args.goal == "gltest":
+                print("-" * 30)
+                print(f"client id {self.id}")
+                print("Regular Model Correct Classifications:")
+                print(correct_class_count_regular)
+                print("Prototype-Based Model Correct Classifications:")
+                print(correct_class_count_proto)
+            if self.args.goal == "gltest_umap":
+                features = {}
+                features["X"] = X
+                features["Y"] = Y
+                print(f"X shape: {np.array(X).shape}, Y shape: {np.array(Y).shape}")
+                save_item(features, self.role, "test_features", self.save_folder_name)
+                save_item(agg_func(protos), self.role, "test_protos", self.save_folder_name)
             return regular_acc, regular_num, proto_acc, proto_num
         else:
             return 0, 1e-5, 0, 1e-5
@@ -209,7 +291,7 @@ class Client(object):
 
         y_prob = np.concatenate(y_prob, axis=0)
         y_true = np.concatenate(y_true, axis=0)
-        
+
         auc = metrics.roc_auc_score(y_true, y_prob, average="micro")
 
         return test_acc, test_num, auc
@@ -272,19 +354,21 @@ class Client(object):
         # self.model.shared_layers.load_state_dict(self.receiver_buffer)
         self.model.update_model(self.receiver_buffer)
         return None
-    
-    def create_objects_from_json(self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"):
+
+    def create_objects_from_json(
+        self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"
+    ):
         objects = None
         with open(file_path, "r") as file:
             objects = json.load(file)
         return objects
 
 
-def save_item(item, role, item_name, item_path=None):
-    if not os.path.exists(item_path):
-        os.makedirs(item_path)
-    file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
-    torch.save(item, file_path)
+# def save_item(item, role, item_name, item_path=None):
+#     if not os.path.exists(item_path):
+#         os.makedirs(item_path)
+#     file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
+#     torch.save(item, file_path)
 
     # 查看保存后的文件大小（单位：字节）
     # if item_name == "CCVR":
@@ -298,9 +382,25 @@ def save_item(item, role, item_name, item_path=None):
     #     print(f"File size: {file_size_mb:.2f} MB")
 
 
-def load_item(role, item_name, item_path=None):
-    try:
-        return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
-    except FileNotFoundError:
-        print(role, item_name, "Not Found")
-        return None
+# def load_item(role, item_name, item_path=None):
+#     try:
+#         return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
+#     except FileNotFoundError:
+#         print(role, item_name, "Not Found")
+#         return None
+    
+def agg_func(protos):
+    """
+    Returns the average of the weights.
+    """
+
+    for [label, proto_list] in protos.items():
+        if len(proto_list) > 1:
+            proto = 0 * proto_list[0].detach()
+            for i in proto_list:
+                proto += i.detach()
+            protos[label] = proto / len(proto_list)
+        else:
+            protos[label] = proto_list[0].detach()
+        # 平滑
+    return protos

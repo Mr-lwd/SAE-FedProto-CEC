@@ -3,7 +3,8 @@ import torch
 import torch.nn as nn
 import numpy as np
 import time
-from flcore.clients.clientbase import Client, load_item, save_item
+from flcore.clients.clientbase import Client
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from collections import defaultdict
 
@@ -80,6 +81,9 @@ class clientSAE(Client):
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
                     loss += global_loss
+                    if self.args.extra_loss == 1:
+                        consistency_loss = torch.nn.functional.mse_loss(output, global_outputs)
+                        loss += self.args.delta * consistency_loss
                 else:
                     loss = self.loss(output, y)
                 self.local_model_loss += loss.item()
@@ -107,6 +111,8 @@ class clientSAE(Client):
         # print("local_model_loss", local_model_loss.item())
         # save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
         self.cal_mean_and_covariance(protos)
+        if self.args.drawGMM == 1:
+            save_item(protos, self.role, "features", self.save_folder_name)
         agg_protos = self.agg_func(protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
         save_item(model, self.role, "model", self.save_folder_name)
@@ -232,76 +238,77 @@ class clientSAE(Client):
 
         return protos
     
-    def test_metrics_proto(self):
-        testloader = self.load_test_data()
-        model = load_item(self.role, "model", self.save_folder_name)
-        if self.args.test_useglclassifier == 1:
-            client_classifier = model.head  # 假设客户端分类器存储在 head 属性
-            glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
-            if glclassifier is not None:
-                client_classifier.load_state_dict(glclassifier.state_dict())
+    # def test_metrics_proto(self):
+    #     testloader = self.load_test_data()
+    #     model = load_item(self.role, "model", self.save_folder_name)
+    #     if self.args.test_useglclassifier == 1:
+    #         client_classifier = model.head  # 假设客户端分类器存储在 head 属性
+    #         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
+    #         if glclassifier is not None:
+    #             client_classifier.load_state_dict(glclassifier.state_dict())
                 
-        global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        model = model.to(self.device)
-        model.eval()
+    #     global_protos = load_item("Server", "global_protos", self.save_folder_name)
+    #     model = model.to(self.device)
+    #     model.eval()
 
-        # Regular inference accuracy (baseline accuracy using the model alone)
-        regular_acc = 0
-        regular_num = 0
-        proto_acc = 0
-        proto_num = 0
+    #     # Regular inference accuracy (baseline accuracy using the model alone)
+    #     regular_acc = 0
+    #     regular_num = 0
+    #     proto_acc = 0
+    #     proto_num = 0
 
-        # Regular model inference
-        if global_protos is not None:
-            with torch.no_grad():
-                correct_class_count_regular = {
-                    cls: 0 for cls in range(self.num_classes)
-                }
-                correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
-                for images, labels in testloader:
-                    images, labels = images.to(self.device), labels.to(self.device)
+    #     # Regular model inference
+    #     if global_protos is not None:
+    #         with torch.no_grad():
+    #             correct_class_count_regular = {
+    #                 cls: 0 for cls in range(self.num_classes)
+    #             }
+    #             correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
+    #             for images, labels in testloader:
+    #                 images, labels = images.to(self.device), labels.to(self.device)
 
-                    # Regular model inference
-                    outputs = model(images)
-                    outputs = outputs.squeeze(1)  # Remove the extra dimension
+    #                 # Regular model inference
+    #                 outputs = model(images)
+    #                 outputs = outputs.squeeze(1)  # Remove the extra dimension
 
-                    # Calculate correct predictions for regular model
-                    _, pred_labels = torch.max(outputs, dim=1)
-                    pred_labels = pred_labels.view(-1)
-                    regular_acc += torch.sum(pred_labels == labels).item()
-                    regular_num += len(labels)
+    #                 # Calculate correct predictions for regular model
+    #                 _, pred_labels = torch.max(outputs, dim=1)
+    #                 pred_labels = pred_labels.view(-1)
+    #                 regular_acc += torch.sum(pred_labels == labels).item()
+    #                 regular_num += len(labels)
 
-                    for label in labels[pred_labels == labels].tolist():
-                        correct_class_count_regular[label] += 1
-                    # Prototype-based inference accuracy (using global_protos)
-                    if global_protos is not None:
-                        rep = model.base(
-                            images
-                        )  # Extract the representation for prototypes
-                        output = float("inf") * torch.ones(
-                            labels.shape[0], self.num_classes
-                        ).to(self.device)
+    #                 for label in labels[pred_labels == labels].tolist():
+    #                     correct_class_count_regular[label] += 1
+    #                 # Prototype-based inference accuracy (using global_protos)
+    #                 if global_protos is not None:
+    #                     rep = model.base(
+    #                         images
+    #                     )  # Extract the representation for prototypes
+    #                     output = float("inf") * torch.ones(
+    #                         labels.shape[0], self.num_classes
+    #                     ).to(self.device)
 
-                        for i, r in enumerate(rep):
-                            for j, pro in global_protos.items():
-                                if type(pro) != type([]):
-                                    output[i, j] = self.loss_mse(r, pro)
-                        proto_predictions = torch.argmin(output, dim=1)
-                        proto_acc += torch.sum(proto_predictions == labels).item()
-                        proto_num += len(labels)
-                        for label in labels[proto_predictions == labels].tolist():
-                            correct_class_count_proto[label] += 1
+    #                     for i, r in enumerate(rep):
+    #                         for j, pro in global_protos.items():
+    #                             if type(pro) != type([]):
+    #                                 output[i, j] = self.loss_mse(r, pro)
+    #                     proto_predictions = torch.argmin(output, dim=1)
+    #                     proto_acc += torch.sum(proto_predictions == labels).item()
+    #                     proto_num += len(labels)
+    #                     for label in labels[proto_predictions == labels].tolist():
+    #                         correct_class_count_proto[label] += 1
 
-                        # 打印统计结果
-                # print("-" * 30)
-                # print(f"client id {self.id}")
-                # print("Regular Model Correct Classifications:")
-                # print(correct_class_count_regular)
-                # print("Prototype-Based Model Correct Classifications:")
-                # print(correct_class_count_proto)
-            return regular_acc, regular_num, proto_acc, proto_num
-        else:
-            return 0, 1e-5, 0, 1e-5
+    #                     # 打印统计结果
+    #         if self.args.goal == "gltest":
+    #             print("-" * 30)
+    #             print(f"client id {self.id}")
+    #             print("Regular Model Correct Classifications:")
+    #             print(correct_class_count_regular)
+    #             print("Prototype-Based Model Correct Classifications:")
+    #             print(correct_class_count_proto)
+    #         return regular_acc, regular_num, proto_acc, proto_num
+    #     else:
+    #         return 0, 1e-5, 0, 1e-5
 
 
 def prepare_item(mean_dict, cov_dict, counts):

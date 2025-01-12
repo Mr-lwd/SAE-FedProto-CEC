@@ -4,8 +4,14 @@ import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
 from collections import defaultdict
-from flcore.clients.clientbase import load_item, save_item
-
+from utils.io_utils import load_item, save_item
+import matplotlib.pyplot as plt
+# from importlib_metadata import version, PackageNotFoundError
+import umap
+from sklearn.preprocessing import StandardScaler
+from sklearn.manifold import TSNE
+from sklearn.random_projection import SparseRandomProjection
+from sklearn.decomposition import PCA
 
 
 
@@ -195,3 +201,112 @@ class Trainable_prototypes(nn.Module):
         out = self.fc(mid)
 
         return out
+
+
+def generate_and_plot_umap(n_classes=10, X=[], Y=[], save_path="umap_visualization.png"):
+    """
+    Visualize using sparse random projection followed by UMAP
+    """
+    np.random.seed(42)
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Calculate projection dimension based on Johnson-Lindenstrauss lemma
+    n_samples, n_features = X.shape
+    # d = int(2 * np.log2(n_features))  # d = 2 * log2(n)
+    d = int(math.log(n_samples)/((0.5)**2))
+    print(f"d: {d}")
+    # Apply sparse random projection
+    transformer = SparseRandomProjection(n_components=d, random_state=42)
+    X_projected = transformer.fit_transform(X)
+    
+    # Apply UMAP on projected data
+    reducer = umap.UMAP(min_dist=0.3, n_components=2, random_state=42)
+    X_embedded = reducer.fit_transform(X_projected)
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    S = 5 if "protos" in save_path else 1
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    plt.gca().set_aspect("equal", "datalim")
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+
+
+def generate_and_plot_tsne(X=[], Y=[], save_path="tsne_visualization.png"):
+    """
+    Visualize using sparse random projection followed by t-SNE
+    """
+    np.random.seed(42)
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Calculate projection dimension based on Johnson-Lindenstrauss lemma
+    n_samples, n_features = X.shape
+    # d = int( 2 * np.log2(n_features))  # d = 2 * log2(n)
+    d = int(math.log(n_samples)/((0.5)**2))
+    print(f"d: {d}")
+    
+    # Apply sparse random projection
+    transformer = SparseRandomProjection(n_components=d, random_state=42)
+    X_projected = transformer.fit_transform(X)
+    
+    # Apply t-SNE on projected data
+    tsne = TSNE(n_components=2, 
+                random_state=42,
+                n_iter=1000,
+                method='barnes_hut',
+                n_jobs=-1)
+    X_embedded = tsne.fit_transform(X_projected)
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    S = 5 if "protos" in save_path else 1
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+
+
+def default_tensor(feature_dim, num_classes):
+    """
+    Create a default tensor dictionary for prototypes
+    """
+    agg_protos_label = defaultdict(list)
+    for i in range(num_classes):
+        agg_protos_label[i] = torch.zeros(feature_dim)
+    return agg_protos_label
+
+
+def generate_and_plot_PCA(X=[], Y=[], save_path="pca_visualization.png"):
+    """
+    Visualize using PCA (Principal Component Analysis)
+    """
+    np.random.seed(42)
+    X = np.vstack(X)
+    Y = np.array(Y)
+    
+    # Standardize the features
+    # scaler = StandardScaler()
+    # X_scaled = scaler.fit_transform(X)
+    
+    # Apply PCA
+    pca = PCA(n_components=2, random_state=42)
+    X_embedded = pca.fit_transform(X)
+    
+    # Calculate explained variance ratio
+    explained_var_ratio = pca.explained_variance_ratio_
+    print(f"Explained variance ratio: {explained_var_ratio}")
+    
+    # Create visualization
+    plt.figure(figsize=(10, 8))
+    S = 5 if "protos" in save_path else 1
+    scatter = plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    
+    # Add title with explained variance
+    plt.title(f'PCA visualization\nExplained variance ratio: {explained_var_ratio[0]:.3f}, {explained_var_ratio[1]:.3f}')
+    
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+

@@ -146,10 +146,6 @@ class FedProto(Server):
         edge.receive_from_cloudserver(copy.deepcopy(self.shared_protos))
         return None
 
-    def compute_glprotos_invol_dataset(self):
-        for client in self.clients:
-            for key in client.label_counts.keys():
-                self.glprotos_invol_dataset[key] += client.label_counts[key]
 
     def trans_aggedges_from_readyList(self):
         while (

@@ -9,7 +9,9 @@ import time
 import random
 import shutil
 from utils.data_utils import read_client_data
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
+# from flcore.clients.clientbase import load_item, save_item
+
 from utils.func_utils import *
 from collections import defaultdict
 import torch.nn as nn
@@ -41,13 +43,15 @@ class Server(object):
         self.top_cnt = 100
         self.auto_break = args.auto_break
         self.role = "Server"
-        self.model_folder_prefix = f"{args.save_folder_name}/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
+        self.model_folder_prefix = f"temp/{args.dataset}/NE_{args.num_edges}/featuredim_{args.feature_dim}/{args.algorithm}/{args.optimizer}/lr_{args.local_learning_rate}/wd_{args.weight_decay}/momentum_{args.momentum}/lbs_{args.batch_size}/lamda_{args.lamda}/localepoch_{args.local_epochs}/buffer_{args.buffersize}"
         if args.save_folder_name == "temp":
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/{time.time()}"
+            # args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/{time.time()}"
         elif "temp" in args.save_folder_name:
             args.save_folder_name_full = args.save_folder_name
         else:
-            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_{args.test_useglclassifier}/notTemp"
+            args.save_folder_name_full = f"{self.model_folder_prefix}/gamma_{args.gamma}_usegltest_1/"
+        print(args.save_folder_name_full)
         self.save_folder_name = args.save_folder_name_full
 
         self.selected_edges = []
@@ -323,7 +327,12 @@ class Server(object):
                 server_param.data += client_param.data.clone() * w
 
         save_item(global_model, self.role, "global_model", self.save_folder_name)
-
+        
+    def compute_glprotos_invol_dataset(self):
+        for client in self.clients:
+            for key in client.label_counts.keys():
+                self.glprotos_invol_dataset[key] += client.label_counts[key]
+                
     def save_results(self):
         algo = self.dataset + "_" + self.algorithm
         result_path = "../results/"
@@ -371,6 +380,7 @@ class Server(object):
 
         # 收集每个客户端的测试结果
         for c in self.clients:
+            # if c.id > 5: break
             regular_acc, regular_num, proto_acc, proto_num = c.test_metrics_proto()
 
             # 计算每个客户端的准确率
@@ -453,6 +463,41 @@ class Server(object):
         print("Std Test Accuracy (Regular Model): {:.4f}".format(np.std(accs)))
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
+        if self.args.goal == "gltest_umap":
+            prefix_folder = f"umap/{self.dataset}/fd_{self.args.feature_dim}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
+            print("umap_features map")
+            X=[]
+            Y=[]
+            for client in self.clients:
+                features = load_item(client.role, "test_features", client.save_folder_name)
+                X.extend(features["X"])
+                Y.extend(features["Y"])
+            save_folder = f"{prefix_folder}/features/testset"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            if not os.path.exists(save_folder):
+                os.makedirs(save_folder)
+            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
+            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
+            
+            X=[]
+            Y=[]
+            for client in self.clients:
+                protos = load_item(client.role, "test_protos", client.save_folder_name)
+                for key in protos.keys():
+                    X.append(protos[key])
+                    Y.append(key)
+            save_folder = f"{prefix_folder}/avgprotos/testset"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            if not os.path.exists(save_folder):
+                os.makedirs(save_folder)
+            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
+            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)
@@ -701,33 +746,4 @@ class Server(object):
         return proto_clusters
     
     def default_tensor(self):
-        agg_protos_label =  defaultdict(list)
-        for i in range(self.num_classes):
-            agg_protos_label[i] = torch.zeros(self.feature_dim)
-        return agg_protos_label
-    
-    def create_objects_from_json(self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"):
-        objects = None
-        with open(file_path, "r") as file:
-            objects = json.load(file)
-        return objects
-
-        # agg_protos_label = defaultdict(list)
-        # for local_protos in protos_list:
-        #     for label in local_protos["protos"].keys():
-        #         agg_protos_label[label].append(
-        #             local_protos["protos"][label]
-        #             * local_protos["client"].label_counts[label]
-        #         )
-
-        # for [label, proto_list] in agg_protos_label.items():
-        #     if len(proto_list) > 1:
-        #         proto = 0 * proto_list[0].data
-        #         for i in proto_list:
-        #             proto += i.data
-        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #     else:
-        #         agg_protos_label[label] = (
-        #             proto_list[0].data / self.glprotos_invol_dataset[label]
-        #         )
-        # return agg_protos_label
+        return default_tensor(self.feature_dim, self.num_classes)
