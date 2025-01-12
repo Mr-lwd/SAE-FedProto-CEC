@@ -473,31 +473,31 @@ class Server(object):
                 X.extend(features["X"])
                 Y.extend(features["Y"])
             save_folder = f"{prefix_folder}/features/testset"
-            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
-            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
-            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
-            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
-            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
+            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
+            # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
             
-            X=[]
-            Y=[]
-            for client in self.clients:
-                protos = load_item(client.role, "test_protos", client.save_folder_name)
-                for key in protos.keys():
-                    X.append(protos[key])
-                    Y.append(key)
-            save_folder = f"{prefix_folder}/avgprotos/testset"
-            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
-            if not os.path.exists(save_folder):
-                os.makedirs(save_folder)
-            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
-            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
-            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
-            save_path = f"{save_folder}/{self.algorithm}_pca_visualization.png"
-            generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
+            # X=[]
+            # Y=[]
+            # for client in self.clients:
+            #     protos = load_item(client.role, "test_protos", client.save_folder_name)
+            #     for key in protos.keys():
+            #         X.append(protos[key])
+            #         Y.append(key)
+            # save_folder = f"{prefix_folder}/avgprotos/testset"
+            # save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
+            # if not os.path.exists(save_folder):
+            #     os.makedirs(save_folder)
+            # generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
+            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
+            # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)
@@ -747,3 +747,11 @@ class Server(object):
     
     def default_tensor(self):
         return default_tensor(self.feature_dim, self.num_classes)
+
+    def create_objects_from_json(
+        self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"
+    ):
+        objects = None
+        with open(file_path, "r") as file:
+            objects = json.load(file)
+        return objects

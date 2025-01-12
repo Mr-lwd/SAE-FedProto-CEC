@@ -214,20 +214,23 @@ def generate_and_plot_umap(n_classes=10, X=[], Y=[], save_path="umap_visualizati
     # Calculate projection dimension based on Johnson-Lindenstrauss lemma
     n_samples, n_features = X.shape
     # d = int(2 * np.log2(n_features))  # d = 2 * log2(n)
-    d = int(math.log(n_samples)/((0.5)**2))
-    print(f"d: {d}")
-    # Apply sparse random projection
-    transformer = SparseRandomProjection(n_components=d, random_state=42)
-    X_projected = transformer.fit_transform(X)
+    # d = int(math.log(n_samples)/((0.5)**2))
+    # print(f"d: {d}")
+    # # Apply sparse random projection
+    # transformer = SparseRandomProjection(n_components=d, random_state=42)
+    # X_projected = transformer.fit_transform(X)
     
     # Apply UMAP on projected data
-    reducer = umap.UMAP(n_components=2, random_state=42)
-    X_embedded = reducer.fit_transform(X_projected)
+    reducer = umap.UMAP(n_components=2, random_state=42, densmap=True)
+    X_embedded = reducer.fit_transform(X)
+    # X_embedded = reducer.transform(X_projected)
+    # X_embedded = X
     
     # Create visualization
     plt.figure(figsize=(10, 8))
     S = 5 if "protos" in save_path else 1
-    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    ALPHA = 0.7 if "protos" in save_path else 0.4
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=ALPHA)
     plt.gca().set_aspect("equal", "datalim")
     
     plt.savefig(save_path, dpi=300, bbox_inches="tight")

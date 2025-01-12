@@ -11,10 +11,6 @@ from .multibp_algo import get_dvfs_set
 import json
 import ctypes 
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(current_dir, 'change_config_noprint.so')
-# 加载共享库
-cLib = ctypes.CDLL(lib_path)
 
 class clientProto_DVFS(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
@@ -30,6 +26,13 @@ class clientProto_DVFS(Client):
         self.leave_frequency_set=[]
         self.energy = 0
         self.leave_local_epochs = self.local_epochs - 1
+        
+        if self.args.jetson == 1:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            lib_path = os.path.join(current_dir, 'change_config_noprint.so')
+            # 加载共享库
+            print("lib_path", lib_path)
+            self.cLib = ctypes.CDLL(lib_path)
 
 
     def train(self, firstlocaltrain=False, longest_time=0):
@@ -78,10 +81,10 @@ class clientProto_DVFS(Client):
         leave_freq_counter = 0
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
             if(self.leave_frequency_set==[]):
-                cLib.changeCpuFreq(self.maxCPUfreq)
+                self.cLib.changeCpuFreq(self.maxCPUfreq)
                 # print("frequency scale:",self.maxCPUfreq)
             else:
-                cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1
             if self.args.jetson == 1:

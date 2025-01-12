@@ -20,10 +20,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 import ctypes 
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(current_dir, 'change_config_noprint.so')
-# 加载共享库
-cLib = ctypes.CDLL(lib_path)
+
 
 
 class FedProto_DVFS(Server):
@@ -52,6 +49,13 @@ class FedProto_DVFS(Server):
         self.tobetrained = DynamicBuffer(self.num_edges)
         self.aggregation_buffer = DynamicBuffer(self.num_edges)
         [self.edge_register(edge=edge) for edge in self.edges]
+        
+        if self.args.jetson == 1:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            lib_path = os.path.join(current_dir, 'change_config_noprint.so')
+            # 加载共享库
+            print("lib_path", lib_path)
+            self.cLib = ctypes.CDLL(lib_path)
 
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次
@@ -86,7 +90,7 @@ class FedProto_DVFS(Server):
             self.current_epoch += 1
 
             if i % self.eval_gap == 0:
-                cLib.changeCpuFreq(self.maxCPUfreq)
+                self.cLib.changeCpuFreq(self.maxCPUfreq)
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
                 self.evaluate_proto()
