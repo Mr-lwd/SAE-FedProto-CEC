@@ -463,21 +463,25 @@ class Server(object):
         print("Std Test Accuracy (Regular Model): {:.4f}".format(np.std(accs)))
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
-        if self.args.goal == "gltest_umap":
+
+        if "gltest_umap" in self.args.goal:
             prefix_folder = f"umap/{self.dataset}/fd_{self.args.feature_dim}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
+            save_dataset_path = "testset_onlytrue"
             print("umap_features map")
             X=[]
             Y=[]
             for client in self.clients:
                 features = load_item(client.role, "test_features", client.save_folder_name)
-                X.extend(features["X"])
-                Y.extend(features["Y"])
-            save_folder = f"{prefix_folder}/features/testset"
+                # X.extend(features["X"])
+                # Y.extend(features["Y"])
+                X.extend(features["X_true"])
+                Y.extend(features["Y_true"])
+            save_folder = f"{prefix_folder}/features/{save_dataset_path}"
             save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
-            # save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
+            save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
             # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
             # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
             # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
@@ -489,7 +493,7 @@ class Server(object):
             #     for key in protos.keys():
             #         X.append(protos[key])
             #         Y.append(key)
-            # save_folder = f"{prefix_folder}/avgprotos/testset"
+            # save_folder = f"{prefix_folder}/avgprotos/{save_dataset_path}"
             # save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
             # if not os.path.exists(save_folder):
             #     os.makedirs(save_folder)

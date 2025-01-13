@@ -221,15 +221,15 @@ def generate_and_plot_umap(n_classes=10, X=[], Y=[], save_path="umap_visualizati
     # X_projected = transformer.fit_transform(X)
     
     # Apply UMAP on projected data
-    reducer = umap.UMAP(n_components=2, random_state=42, densmap=True)
+    reducer = umap.UMAP(n_components=2, random_state=42, n_neighbors=50, min_dist=0.3, n_epochs=500)
     X_embedded = reducer.fit_transform(X)
     # X_embedded = reducer.transform(X_projected)
     # X_embedded = X
     
     # Create visualization
     plt.figure(figsize=(10, 8))
-    S = 5 if "protos" in save_path else 1
-    ALPHA = 0.7 if "protos" in save_path else 0.4
+    S = 15 if "protos" in save_path else 2
+    ALPHA = 0.8 if "protos" in save_path else 0.4
     plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=ALPHA)
     plt.gca().set_aspect("equal", "datalim")
     
@@ -248,25 +248,27 @@ def generate_and_plot_tsne(X=[], Y=[], save_path="tsne_visualization.png"):
     # Calculate projection dimension based on Johnson-Lindenstrauss lemma
     n_samples, n_features = X.shape
     # d = int( 2 * np.log2(n_features))  # d = 2 * log2(n)
-    d = int(math.log(n_samples)/((0.5)**2))
-    print(f"d: {d}")
+    # d = int(math.log(n_samples)/((0.5)**2))
+    # print(f"d: {d}")
     
     # Apply sparse random projection
-    transformer = SparseRandomProjection(n_components=d, random_state=42)
-    X_projected = transformer.fit_transform(X)
+    # transformer = SparseRandomProjection(n_components=d, random_state=42)
+    # X_projected = transformer.fit_transform(X)
     
     # Apply t-SNE on projected data
     tsne = TSNE(n_components=2, 
                 random_state=42,
                 n_iter=1000,
-                method='barnes_hut',
+                # method='barnes_hut',
                 n_jobs=-1)
-    X_embedded = tsne.fit_transform(X_projected)
+    # X_embedded = tsne.fit_transform(X_projected)
+    X_embedded = tsne.fit_transform(X)
     
     # Create visualization
     plt.figure(figsize=(10, 8))
-    S = 5 if "protos" in save_path else 1
-    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    S = 15 if "protos" in save_path else 2
+    ALPHA = 0.8 if "protos" in save_path else 0.4
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=ALPHA)
     
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -304,8 +306,9 @@ def generate_and_plot_PCA(X=[], Y=[], save_path="pca_visualization.png"):
     
     # Create visualization
     plt.figure(figsize=(10, 8))
-    S = 5 if "protos" in save_path else 1
-    scatter = plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=0.5)
+    S = 15 if "protos" in save_path else 2
+    ALPHA = 0.8 if "protos" in save_path else 0.4
+    plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=Y, cmap="tab10", s=S, alpha=ALPHA)
     
     # Add title with explained variance
     plt.title(f'PCA visualization\nExplained variance ratio: {explained_var_ratio[0]:.3f}, {explained_var_ratio[1]:.3f}')

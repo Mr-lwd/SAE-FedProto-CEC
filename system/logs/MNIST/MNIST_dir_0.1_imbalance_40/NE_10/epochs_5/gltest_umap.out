@@ -7,7 +7,7 @@ jetson = 0
 DVFS = 0
 drawGMM = 0
 num_classes = 10
-model_family = HCNNs8
+model_family = HtFE8
 batch_size = 256
 num_workers = 0
 local_learning_rate = 0.06
@@ -69,14 +69,14 @@ mu = 50.0
 buffer_size = 10
 ==================================================
 Random seed set as 42
-CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
 temp/MNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedSAE/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1.0_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {4: 158, 9: 289, 2: 4, 6: 121})
@@ -208,9 +208,3 @@ Averaged Train Loss (Regular + Proto): 0.0000
 Std Test Accuracy (Regular Model): 0.0093
 Std Test Accuracy (Prototype Model): 0.0098
 umap_features map
-d: 39
-d: 39
-Explained variance ratio: [0.17478514 0.15132387]
-d: 20
-d: 20
-Explained variance ratio: [0.1541113  0.13112512]

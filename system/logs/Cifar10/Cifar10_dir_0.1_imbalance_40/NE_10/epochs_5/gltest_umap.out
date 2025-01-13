@@ -7,7 +7,7 @@ jetson = 0
 DVFS = 0
 drawGMM = 0
 num_classes = 10
-model_family = HCNNs8
+model_family = HtFE8
 batch_size = 256
 num_workers = 0
 local_learning_rate = 0.06
@@ -17,7 +17,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedTGP
+algorithm = FedSAE
 join_ratio = 1.0
 edge_join_ratio = 1.0
 random_join_ratio = False
@@ -26,7 +26,7 @@ num_edges = 10
 prev = 0
 times = 1
 eval_gap = 1
-save_folder_name = static
+save_folder_name = STATIC
 auto_break = False
 feature_dim = 512
 vocab_size = 98635
@@ -45,7 +45,9 @@ agg_type = 0
 buffersize = 10
 gl_use_clients = 1
 test_useglclassifier = 1
-gamma = 1
+gamma = 1.0
+extra_loss = 0
+delta = 1
 drawtsne = 1
 drawround = 20
 noise_dim = 512
@@ -67,15 +69,15 @@ mu = 50.0
 buffer_size = 10
 ==================================================
 Random seed set as 42
-CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-temp/Cifar10_dir_0.1_imbalance_40/NE_10/featuredim_512/FedTGP/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+temp/Cifar10_dir_0.1_imbalance_40/NE_10/featuredim_512/FedSAE/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1.0_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {3: 759, 1: 17, 8: 61, 9: 4})
 id 1
@@ -159,100 +161,91 @@ label_counts: defaultdict(<class 'int'>, {4: 647, 7: 97, 3: 11, 1: 6, 2: 1, 5: 1
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
-Trainable_prototypes(
-  (embedings): Embedding(10, 512)
-  (middle): Sequential(
-    (0): Sequential(
-      (0): Linear(in_features=512, out_features=512, bias=True)
-      (1): ReLU()
-    )
-  )
-  (fc): Linear(in_features=512, out_features=512, bias=True)
-)
-Server glclassifier Not Found
 X shape: (281, 512), Y shape: (281,)
-Server glclassifier Not Found
+X_true shape: (269, 512), Y_true shape: (269,)
 X shape: (462, 512), Y shape: (462,)
-Server glclassifier Not Found
+X_true shape: (389, 512), Y_true shape: (389,)
 X shape: (243, 512), Y shape: (243,)
-Server glclassifier Not Found
+X_true shape: (234, 512), Y_true shape: (234,)
 X shape: (438, 512), Y shape: (438,)
-Server glclassifier Not Found
+X_true shape: (332, 512), Y_true shape: (332,)
 X shape: (577, 512), Y shape: (577,)
-Server glclassifier Not Found
+X_true shape: (486, 512), Y_true shape: (486,)
 X shape: (505, 512), Y shape: (505,)
-Server glclassifier Not Found
+X_true shape: (425, 512), Y_true shape: (425,)
 X shape: (372, 512), Y shape: (372,)
-Server glclassifier Not Found
+X_true shape: (302, 512), Y_true shape: (302,)
 X shape: (720, 512), Y shape: (720,)
-Server glclassifier Not Found
+X_true shape: (607, 512), Y_true shape: (607,)
 X shape: (478, 512), Y shape: (478,)
-Server glclassifier Not Found
+X_true shape: (401, 512), Y_true shape: (401,)
 X shape: (340, 512), Y shape: (340,)
-Server glclassifier Not Found
+X_true shape: (284, 512), Y_true shape: (284,)
 X shape: (393, 512), Y shape: (393,)
-Server glclassifier Not Found
+X_true shape: (370, 512), Y_true shape: (370,)
 X shape: (484, 512), Y shape: (484,)
-Server glclassifier Not Found
+X_true shape: (317, 512), Y_true shape: (317,)
 X shape: (107, 512), Y shape: (107,)
-Server glclassifier Not Found
+X_true shape: (80, 512), Y_true shape: (80,)
 X shape: (537, 512), Y shape: (537,)
-Server glclassifier Not Found
+X_true shape: (328, 512), Y_true shape: (328,)
 X shape: (153, 512), Y shape: (153,)
-Server glclassifier Not Found
+X_true shape: (152, 512), Y_true shape: (152,)
 X shape: (228, 512), Y shape: (228,)
-Server glclassifier Not Found
+X_true shape: (158, 512), Y_true shape: (158,)
 X shape: (667, 512), Y shape: (667,)
-Server glclassifier Not Found
+X_true shape: (667, 512), Y_true shape: (667,)
 X shape: (470, 512), Y shape: (470,)
-Server glclassifier Not Found
+X_true shape: (468, 512), Y_true shape: (468,)
 X shape: (553, 512), Y shape: (553,)
-Server glclassifier Not Found
+X_true shape: (540, 512), Y_true shape: (540,)
 X shape: (228, 512), Y shape: (228,)
-Server glclassifier Not Found
+X_true shape: (182, 512), Y_true shape: (182,)
 X shape: (822, 512), Y shape: (822,)
-Server glclassifier Not Found
+X_true shape: (667, 512), Y_true shape: (667,)
 X shape: (113, 512), Y shape: (113,)
-Server glclassifier Not Found
+X_true shape: (54, 512), Y_true shape: (54,)
 X shape: (111, 512), Y shape: (111,)
-Server glclassifier Not Found
+X_true shape: (54, 512), Y_true shape: (54,)
 X shape: (485, 512), Y shape: (485,)
-Server glclassifier Not Found
+X_true shape: (365, 512), Y_true shape: (365,)
 X shape: (606, 512), Y shape: (606,)
-Server glclassifier Not Found
+X_true shape: (505, 512), Y_true shape: (505,)
 X shape: (419, 512), Y shape: (419,)
-Server glclassifier Not Found
+X_true shape: (321, 512), Y_true shape: (321,)
 X shape: (623, 512), Y shape: (623,)
-Server glclassifier Not Found
+X_true shape: (429, 512), Y_true shape: (429,)
 X shape: (230, 512), Y shape: (230,)
-Server glclassifier Not Found
+X_true shape: (176, 512), Y_true shape: (176,)
 X shape: (218, 512), Y shape: (218,)
-Server glclassifier Not Found
+X_true shape: (175, 512), Y_true shape: (175,)
 X shape: (100, 512), Y shape: (100,)
-Server glclassifier Not Found
+X_true shape: (50, 512), Y_true shape: (50,)
 X shape: (212, 512), Y shape: (212,)
-Server glclassifier Not Found
+X_true shape: (158, 512), Y_true shape: (158,)
 X shape: (394, 512), Y shape: (394,)
-Server glclassifier Not Found
+X_true shape: (309, 512), Y_true shape: (309,)
 X shape: (322, 512), Y shape: (322,)
-Server glclassifier Not Found
+X_true shape: (264, 512), Y_true shape: (264,)
 X shape: (379, 512), Y shape: (379,)
-Server glclassifier Not Found
+X_true shape: (343, 512), Y_true shape: (343,)
 X shape: (511, 512), Y shape: (511,)
-Server glclassifier Not Found
+X_true shape: (485, 512), Y_true shape: (485,)
 X shape: (238, 512), Y shape: (238,)
-Server glclassifier Not Found
+X_true shape: (206, 512), Y_true shape: (206,)
 X shape: (110, 512), Y shape: (110,)
-Server glclassifier Not Found
+X_true shape: (78, 512), Y_true shape: (78,)
 X shape: (478, 512), Y shape: (478,)
-Server glclassifier Not Found
+X_true shape: (351, 512), Y_true shape: (351,)
 X shape: (152, 512), Y shape: (152,)
-Server glclassifier Not Found
+X_true shape: (126, 512), Y_true shape: (126,)
 X shape: (255, 512), Y shape: (255,)
-Averaged Test Accuracy (Regular Model): 0.8032
-Averaged Test Accuracy (Prototype Model): 0.7797
+X_true shape: (216, 512), Y_true shape: (216,)
+Averaged Test Accuracy (Regular Model): 0.8208
+Averaged Test Accuracy (Prototype Model): 0.8206
 Averaged Train Loss (Regular Model): 0.0000
 Averaged Train Loss (Regular + Proto): 0.0000
-Std Test Accuracy (Regular Model): 0.1434
-Std Test Accuracy (Prototype Model): 0.1696
+Std Test Accuracy (Regular Model): 0.1292
+Std Test Accuracy (Prototype Model): 0.1285
 umap_features map
+Explained variance ratio: [0.18000764 0.15712492]

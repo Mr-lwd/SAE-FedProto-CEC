@@ -285,10 +285,12 @@ def run(args):
         else:
             raise NotImplementedError
 
-        if args.goal == "gltest" or args.goal == "gltest_umap":
+        if "gltest" in args.goal:
             server.evaluate_proto()
             exit()
-        server.train()
+        elif args.goal == "test":
+            server.train()
+
 
         time_list.append(time.time() - start)
 
