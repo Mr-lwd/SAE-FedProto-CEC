@@ -467,7 +467,8 @@ class Server(object):
                 features = load_item(client.role, "test_features", client.save_folder_name)
                 X.extend(features["X"])
                 Y.extend(features["Y"])
-            save_folder = f"{prefix_folder}/features/trainset"
+            set="trainset"
+            save_folder = f"{prefix_folder}/features/{set}"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
@@ -482,7 +483,7 @@ class Server(object):
                 for key in protos.keys():
                     X.append(protos[key])
                     Y.append(key)
-            save_folder = f"{prefix_folder}/avgprotos/trainset"
+            save_folder = f"{prefix_folder}/avgprotos/{set}"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)

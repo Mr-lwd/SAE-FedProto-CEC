@@ -2,6 +2,28 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import re
 
+# Custom color palette
+COLORS = [
+    '#1f77b4',  # Blue
+    '#ff7f0e',  # Orange
+    '#2ca02c',  # Green
+    '#d62728',  # Red
+    '#9467bd',  # Purple
+    '#8c564b',  # Brown
+    '#7f7f7f',  # Gray
+    '#17becf',  # Light blue
+]
+
+# Add these settings near the top of the file, after the imports
+plt.rcParams.update({
+    'font.size': 14,
+    'axes.labelsize': 16,
+    'axes.titlesize': 16,
+    'xtick.labelsize': 14,
+    'ytick.labelsize': 14,
+    'legend.fontsize': 12
+})
+
 # 定义一个函数来读取日志文件并提取数据
 def extract_data(log_file, time_type="all_clients_time_cost", model_type="Prototype"):
     accuracies = []
@@ -48,7 +70,14 @@ def extract_loss_data(log_file):
 
 # 定义文件路径
 log_files = [
-    "FedTGP_fd_512_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out"
+    "FedSAE_gam_0.2_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_0.5_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_0.7_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "Local_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedProto_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedTGP_fd_512_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedGen_lr_0.06_mo_0.8_lam_1_batch_256.out",
     ]
 
 time_model_configs = [ 
@@ -68,32 +97,55 @@ time_model_configs = [
     },
 ]
 
+# Add a dictionary to map file names to shorter labels
+ALGORITHM_LABELS = {
+    "FedSAE_gam_0.2": "FedSAE (γ=0.2)",
+    "FedSAE_gam_0.5": "FedSAE (γ=0.5)",
+    "FedSAE_gam_0.7": "FedSAE (γ=0.7)",
+    "FedSAE_gam_1": "FedSAE (γ=1)",
+    "Local": "Local Train",
+    "FedProto": "FedProto",
+    "FedTGP": "FedTGP",
+    "FedGen": "FedGen"
+}
+
+# Define markers for different algorithms
+MARKERS = ['o', 's', '^', 'D', 'v', '<', '>']
+
+# Define line styles for different algorithms
+LINE_STYLES = ['-', '--', ':', '-.', '-', '-.', '--', ':']
+
 # 绘制时间成本和测试准确性图表
-for config in time_model_configs:
-    time_type = config["time_type"]
-    for model_type, save_path in config["models"]:
-        plt.figure(figsize=(10, 6))
+# for config in time_model_configs:
+#     time_type = config["time_type"]
+#     for model_type, save_path in config["models"]:
+#         plt.figure(figsize=(12, 7))
 
-        # 从每个日志文件中提取数据
-        for file in log_files:
-            # 去掉 .out 后缀
-            legend_label = file.rsplit(".", 1)[0]
+#         # Extract data from each log file
+#         for idx, file in enumerate(log_files):
+#             # Get algorithm name from file name (everything before first underscore)
+#             algo_name = file.split('_')[0]
+#             if algo_name == "FedSAE":
+#                 # For FedSAE, include gamma value
+#                 gamma = file.split('_')[2]
+#                 algo_name = f"FedSAE_gam_{gamma}"
+            
+#             legend_label = ALGORITHM_LABELS[algo_name]
+#             time_costs, accuracies = extract_data(file, time_type, model_type)
+#             plt.plot(time_costs, accuracies, label=legend_label, marker=MARKERS[idx], markevery=5)
 
-            time_costs, accuracies = extract_data(file, time_type, model_type)
-            plt.plot(time_costs, accuracies, label=legend_label)
+#         plt.xlabel("Time Cost")
+#         plt.ylabel("Averaged Test Accuracy")
+#         plt.title(f"Training Log Analysis ({model_type} Model)")
+#         plt.legend()
+#         plt.grid()
 
-        plt.xlabel("Time Cost")
-        plt.ylabel("Averaged Test Accuracy")
-        plt.title(f"Training Log Analysis ({model_type} Model)")
-        plt.legend()
-        plt.grid()
+#         # 保存图表
+#         plt.savefig(save_path)
+#         print(f"Chart saved to {save_path}")
 
-        # 保存图表
-        plt.savefig(save_path)
-        print(f"Chart saved to {save_path}")
-
-        # 清除当前图形以便下一个循环可以重新绘图
-        plt.clf()
+#         # 清除当前图形以便下一个循环可以重新绘图
+#         plt.clf()
 
 # 绘制训练损失图表
 # plt.figure(figsize=(10, 6))
@@ -125,16 +177,24 @@ for config in time_model_configs:
 # 绘制单独的 Regular 和 Regular + Proto 损失图表
 plt.figure(figsize=(10, 6))
 
-for file in log_files:
-    # 去掉 .out 后缀
-    legend_label = file.rsplit(".", 1)[0]
-
+for idx, file in enumerate(log_files):
+    algo_name = file.split('_')[0]
+    if algo_name == "FedSAE":
+        gamma = file.split('_')[2]
+        algo_name = f"FedSAE_gam_{gamma}"
+    
+    legend_label = ALGORITHM_LABELS[algo_name]
     regular_losses, _ = extract_loss_data(file)
-    plt.plot(range(1, len(regular_losses) + 1), regular_losses, label=f"{legend_label}")
+    
+    # Only keep first 200 points
+    regular_losses = regular_losses[:200]
+    
+    plt.plot(range(1, len(regular_losses) + 1), regular_losses, 
+             label=legend_label, linestyle=LINE_STYLES[idx], color=COLORS[idx])
 
 plt.xlabel("Iteration")
-plt.ylabel("Averaged Train Loss (Regular)")
-plt.title("Training Loss Analysis (Regular Model)")
+plt.ylabel("Average Train Model Loss")
+# plt.title("Training Loss Analysis (Model)")
 plt.legend()
 plt.grid()
 
