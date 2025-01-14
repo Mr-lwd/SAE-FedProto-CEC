@@ -7,6 +7,8 @@ from flcore.clients.clientbase import Client
 from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from collections import defaultdict
+from .measure_power import *
+import json
 
 
 class clientSAE(Client):
@@ -35,6 +37,7 @@ class clientSAE(Client):
         #     )
         glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
         if glclassifier is not None:  # 固定参数
+            glclassifier.to(self.device)
             for param in glclassifier.parameters():
                 param.requires_grad = False
         self.client_protos = load_item(self.role, "protos", self.save_folder_name)
@@ -60,7 +63,11 @@ class clientSAE(Client):
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
+        if self.args.jetson == 1:
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
         for step in range(max_local_epochs):
+            if self.args.jetson == 1 and step == 1:
+                pl.start()
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -75,6 +82,8 @@ class clientSAE(Client):
                 rep = model.base(x)
                 rep = rep.squeeze(1)
                 output = model.head(rep)
+                if self.args.jetson == 1:
+                    output = output.double()
                 # loss = self.loss(output, y)
                 if glclassifier is not None:
                     loss = self.loss(output, y) * (1 - self.args.gamma)
@@ -106,6 +115,10 @@ class clientSAE(Client):
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time
+        if self.args.jetson == 1:
+            pl.stop()
+            averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
+            self.energy += local_train_time * averagePower/1e3 #s * w = J
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss =self.local_all_loss / len(trainloader)
         # print("local_model_loss", local_model_loss.item())
@@ -216,7 +229,7 @@ class clientSAE(Client):
         combined_meancov = prepare_item(mean_dict, cov_dict, counts)
 
         # 保存
-        save_item(combined_meancov, role=self.role, item_name="mean_cov", item_path=self.save_folder_name)
+        save_item(combined_meancov, self.role, "mean_cov", self.save_folder_name)
         # return mean_dict, cov_dict
             
 

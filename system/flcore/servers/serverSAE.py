@@ -3,7 +3,8 @@ import numpy as np
 from flcore.clients.clientSAE import clientSAE
 from flcore.edges.edgeSAE import Edge_FedSAE
 from flcore.servers.serverbase import Server
-from flcore.clients.clientbase import load_item, save_item
+# from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from utils.data_utils import read_client_data
 from threading import Thread
@@ -235,8 +236,15 @@ class FedSAE(Server):
         # )
 
     def train_global_classifier(self, retrain_vr):
+        if self.args.jetson == 1:
+            device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        else:
+            device = self.device
+        
         glclassifier_time_start = time.perf_counter()
         self.global_classifier = copy.deepcopy(self.global_classifier_init)
+        self.global_classifier = self.global_classifier.to(device)
+        
         for param in self.global_classifier.parameters():
             param.requires_grad = True
         features = []
@@ -248,14 +256,14 @@ class FedSAE(Server):
         optimizer = torch.optim.Adam(self.global_classifier.parameters(), lr=0.001)
 
         features = torch.stack(
-            [torch.tensor(feature) for feature in features]
+            [torch.tensor(feature, device=device) for feature in features]
         )  # 将每个特征向量转换为张量，并堆叠成一个 Tensor
 
-        labels = torch.tensor(labels)
+        labels = torch.tensor(labels, device=device)
 
         # 确保 features 和 labels 都在正确的设备上
-        features = features.to(self.device)
-        labels = labels.to(self.device)
+        # features = features.to(device)
+        # labels = labels.to(device)
         # 创建数据加载器
         dataset = TensorDataset(features, labels)
         data_loader = DataLoader(dataset, batch_size=1024, shuffle=True)
@@ -263,13 +271,12 @@ class FedSAE(Server):
         # 训练过程
         epochs = 10
         print("train global classifier")
+        self.global_classifier.train()
         for epoch in range(epochs):
-            self.global_classifier.to(self.device)
-            self.global_classifier.train()
             for batch_features, batch_labels in data_loader:
                 # 前向传播
-                batch_features = batch_features.to(self.device)
-                batch_labels = batch_labels.to(self.device)
+                batch_features = batch_features.to(device)
+                batch_labels = batch_labels.to(device)
 
                 outputs = self.global_classifier(batch_features)
                 loss = criterion(outputs, batch_labels)
@@ -293,8 +300,8 @@ class FedSAE(Server):
         with torch.no_grad():  # 禁用梯度计算
             # 使用训练集进行验证
             for val_features, val_labels in data_loader:
-                val_features = val_features.to(self.device)
-                val_labels = val_labels.to(self.device)
+                val_features = val_features.to(device)
+                val_labels = val_labels.to(device)
 
                 # 前向传播
                 val_outputs = self.global_classifier(val_features)
@@ -358,6 +365,8 @@ class FedSAE(Server):
         sampled_features = defaultdict(list)
         for label, item in cloud_mean_cov.items():
             if item is not None:
+                print("item[mean]", item["mean"])
+                print("item[cov]", item["cov"])
                 sampled_features[label] = self._gaussian_sampling(
                     item["mean"].cpu().numpy(), item["cov"].cpu().numpy(), 4000
                 )
@@ -448,9 +457,9 @@ class FedSAE(Server):
             cloud_mean_cov[label]["cov"] = edge_cov
         save_item(
             cloud_mean_cov,
-            role=self.role,
-            item_name="mean_cov",
-            item_path=self.save_folder_name,
+            self.role,
+            "mean_cov",
+            self.save_folder_name,
         )
 
         global_protos = defaultdict(list)

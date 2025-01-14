@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # 定义文件路径
-file_path = './gr_100_FedProto_lr_0.06_mo_0.8_lam_1_batch_256.out'
+file_path = './JET_FedProto_fd_64_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out'
 # file_path='./DVFS_Fedproto.out'
 
 # 初始化列表来存储提取的数据
@@ -82,13 +82,13 @@ plt.plot(global_rounds, all_energies, label='All Energy (Original)', color='red'
 plt.plot(global_rounds, all_energy_pred, label='All Energy (Linear Fit)', linestyle='--', color='red')
 
 # 添加标题和标签
-plt.title('Global Round vs Time and Energy with Linear Fit')
-plt.xlabel('Global Round Number')
-plt.ylabel('Values')
+plt.title('Time and Energy with Linear Fit')
+plt.xlabel('Iterations')
+plt.ylabel('Values (Time(s) / Energy(J)')
 plt.legend()
 
 # 显示图形
-plt.grid(True)
+# plt.grid(True)
 plt.tight_layout()
 # plt.show()
 plt.savefig("./DVFS_with_fit_and_R2.png", dpi=300)

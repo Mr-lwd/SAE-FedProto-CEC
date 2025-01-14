@@ -4,7 +4,8 @@ import numpy as np
 from flcore.clients.clientproto import clientProto
 from flcore.edges.edgeproto import Edge_FedProto
 from flcore.servers.serverbase import Server
-from flcore.clients.clientbase import load_item, save_item
+# from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from utils.data_utils import read_client_data
 from threading import Thread

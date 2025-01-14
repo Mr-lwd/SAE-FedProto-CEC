@@ -65,6 +65,8 @@ class Client(object):
         if self.args.jetson == 1:
             self.dvfs_data = self.create_objects_from_json()
             self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
+        self.energy = 0
+
 
     def load_train_data(self, batch_size=None):
         if batch_size == None:
@@ -157,7 +159,7 @@ class Client(object):
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
                 client_classifier.load_state_dict(glclassifier.state_dict())
-        if and self.args.jetson == 1 and self.args.DVFS == 1:
+        if self.args.jetson == 1 or self.args.DVFS == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量

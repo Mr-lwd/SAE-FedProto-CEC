@@ -4,7 +4,8 @@ import numpy as np
 from flcore.clients.clientproto_DVFS import clientProto_DVFS
 from flcore.edges.edgeproto_DVFS import Edge_FedProto_DVFS
 from flcore.servers.serverbase import Server
-from flcore.clients.clientbase import load_item, save_item
+# 
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from utils.data_utils import read_client_data
 from threading import Thread

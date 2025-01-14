@@ -747,3 +747,12 @@ class Server(object):
     
     def default_tensor(self):
         return default_tensor(self.feature_dim, self.num_classes)
+    
+    
+    def create_objects_from_json(
+        self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"
+    ):
+        objects = None
+        with open(file_path, "r") as file:
+            objects = json.load(file)
+        return objects

@@ -28,7 +28,6 @@ class clientProto_DVFS(Client):
         self.train_time = 0
         self.trans_time = 0
         self.leave_frequency_set=[]
-        self.energy = 0
         self.leave_local_epochs = self.local_epochs - 1
 
 
@@ -101,7 +100,8 @@ class clientProto_DVFS(Client):
                 # print("rep", rep)
                 rep = rep.squeeze(1)
                 output = model.head(rep)
-                output = output.double()
+                if self.args.jetson == 1:
+                    output = output.double()
                 loss = self.loss(output, y)
                 # print("loss", loss.item())
                 self.local_model_loss += loss.item()

@@ -10,7 +10,7 @@ from collections import defaultdict
 import copy
 import random
 from flcore.edges.edgebase import Edge
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 import torch
 import numpy as np
@@ -225,8 +225,8 @@ class Edge_FedSAE(Edge):
                 edge_mean_cov[label]["cov"] = edge_cov
         save_item(
             edge_mean_cov,
-            role=self.role,
-            item_name="mean_cov",
-            item_path=self.save_folder_name,
+            self.role,
+            "mean_cov",
+            self.save_folder_name,
         )
         return edge_mean_cov

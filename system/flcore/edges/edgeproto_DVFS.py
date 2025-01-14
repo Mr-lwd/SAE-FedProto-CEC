@@ -10,7 +10,7 @@ from collections import defaultdict
 import copy
 import random
 from flcore.edges.edgebase import Edge
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
 
 import torch
 import numpy as np
