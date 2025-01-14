@@ -7,7 +7,7 @@ jetson = 0
 DVFS = 0
 drawGMM = 0
 num_classes = 10
-model_family = HCNNs8
+model_family = HtFE8
 batch_size = 256
 num_workers = 0
 local_learning_rate = 0.06
@@ -17,7 +17,7 @@ learning_rate_decay_gamma = 0.99
 global_rounds = 200
 edge_epochs = 1
 local_epochs = 5
-algorithm = FedTGP
+algorithm = FedSAE
 join_ratio = 1.0
 edge_join_ratio = 1.0
 random_join_ratio = False
@@ -26,7 +26,7 @@ num_edges = 10
 prev = 0
 times = 1
 eval_gap = 1
-save_folder_name = static
+save_folder_name = STATIC
 auto_break = False
 feature_dim = 512
 vocab_size = 98635
@@ -45,7 +45,9 @@ agg_type = 0
 buffersize = 10
 gl_use_clients = 1
 test_useglclassifier = 1
-gamma = 1
+gamma = 0.7
+extra_loss = 0
+delta = 1
 drawtsne = 1
 drawround = 20
 noise_dim = 512
@@ -67,15 +69,15 @@ mu = 50.0
 buffer_size = 10
 ==================================================
 Random seed set as 42
-CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
-temp/FashionMNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedTGP/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_1_usegltest_1/
+FedAvgCNN(in_features=3, num_classes=args.num_classes, dim=1600)
+torchvision.models.googlenet(pretrained=False, aux_logits=False, num_classes=args.num_classes)
+mobilenet_v2(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet18(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet34(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet50(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet101(pretrained=False, num_classes=args.num_classes)
+torchvision.models.resnet152(pretrained=False, num_classes=args.num_classes)
+temp/FashionMNIST_dir_0.1_imbalance_40/NE_10/featuredim_512/FedSAE/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_5/buffer_10/gamma_0.7_usegltest_1/
 id 0
 label_counts: defaultdict(<class 'int'>, {7: 1486, 2: 18, 6: 1})
 id 1
@@ -159,15 +161,50 @@ label_counts: defaultdict(<class 'int'>, {4: 256, 8: 1743, 7: 32, 6: 15, 3: 1, 5
 
 Join ratio / total clients: 1.0 / 40
 Finished creating server and clients.
-Trainable_prototypes(
-  (embedings): Embedding(10, 512)
-  (middle): Sequential(
-    (0): Sequential(
-      (0): Linear(in_features=512, out_features=512, bias=True)
-      (1): ReLU()
-    )
-  )
-  (fc): Linear(in_features=512, out_features=512, bias=True)
-)
-Client_0 model Not Found
-Server global_protos Not Found
+X shape: (502, 512), Y shape: (502,)
+X shape: (446, 512), Y shape: (446,)
+X shape: (485, 512), Y shape: (485,)
+X shape: (220, 512), Y shape: (220,)
+X shape: (283, 512), Y shape: (283,)
+X shape: (616, 512), Y shape: (616,)
+X shape: (361, 512), Y shape: (361,)
+X shape: (393, 512), Y shape: (393,)
+X shape: (417, 512), Y shape: (417,)
+X shape: (531, 512), Y shape: (531,)
+X shape: (134, 512), Y shape: (134,)
+X shape: (131, 512), Y shape: (131,)
+X shape: (754, 512), Y shape: (754,)
+X shape: (438, 512), Y shape: (438,)
+X shape: (118, 512), Y shape: (118,)
+X shape: (469, 512), Y shape: (469,)
+X shape: (216, 512), Y shape: (216,)
+X shape: (149, 512), Y shape: (149,)
+X shape: (132, 512), Y shape: (132,)
+X shape: (247, 512), Y shape: (247,)
+X shape: (293, 512), Y shape: (293,)
+X shape: (1353, 512), Y shape: (1353,)
+X shape: (828, 512), Y shape: (828,)
+X shape: (143, 512), Y shape: (143,)
+X shape: (358, 512), Y shape: (358,)
+X shape: (895, 512), Y shape: (895,)
+X shape: (970, 512), Y shape: (970,)
+X shape: (201, 512), Y shape: (201,)
+X shape: (338, 512), Y shape: (338,)
+X shape: (314, 512), Y shape: (314,)
+X shape: (449, 512), Y shape: (449,)
+X shape: (225, 512), Y shape: (225,)
+X shape: (451, 512), Y shape: (451,)
+X shape: (476, 512), Y shape: (476,)
+X shape: (496, 512), Y shape: (496,)
+X shape: (1044, 512), Y shape: (1044,)
+X shape: (461, 512), Y shape: (461,)
+X shape: (319, 512), Y shape: (319,)
+X shape: (171, 512), Y shape: (171,)
+X shape: (684, 512), Y shape: (684,)
+Averaged Test Accuracy (Regular Model): 0.9756
+Averaged Test Accuracy (Prototype Model): 0.9761
+Averaged Train Loss (Regular Model): 0.0000
+Averaged Train Loss (Regular + Proto): 0.0000
+Std Test Accuracy (Regular Model): 0.0305
+Std Test Accuracy (Prototype Model): 0.0293
+umap_features map

@@ -181,6 +181,8 @@ class Client(object):
         proto_num = 0
         X = []
         Y = []
+        X_true = []
+        Y_true = []
         protos = defaultdict(list)
 
         # Regular model inference
@@ -208,9 +210,16 @@ class Client(object):
                     regular_num += len(labels)
 
                     if self.args.goal == "gltest_umap":
-                        rep=rep.squeeze(1)
+                        rep = rep.squeeze(1)
                         X.extend(rep.cpu().numpy())
                         Y.extend(labels.cpu().numpy())
+                        
+                        # Store only correctly classified samples
+                        correct_mask = (pred_labels == labels)
+                        correct_rep = rep[correct_mask]
+                        correct_labels = labels[correct_mask]
+                        X_true.extend(correct_rep.cpu().numpy())
+                        Y_true.extend(correct_labels.cpu().numpy())
 
                     for label in labels[pred_labels == labels].tolist():
                         correct_class_count_regular[label] += 1
@@ -234,6 +243,7 @@ class Client(object):
                                 if type(pro) != type([]):
                                     output[i, j] = self.loss_mse(r, pro)
                         proto_predictions = torch.argmin(output, dim=1)
+                        
                         proto_acc += torch.sum(proto_predictions == labels).item()
                         proto_num += len(labels)
                         for label in labels[proto_predictions == labels].tolist():
@@ -251,7 +261,10 @@ class Client(object):
                 features = {}
                 features["X"] = X
                 features["Y"] = Y
+                features["X_true"] = X_true  # Add correctly classified samples
+                features["Y_true"] = Y_true  # Add their corresponding labels
                 print(f"X shape: {np.array(X).shape}, Y shape: {np.array(Y).shape}")
+                print(f"X_true shape: {np.array(X_true).shape}, Y_true shape: {np.array(Y_true).shape}")
                 save_item(features, self.role, "test_features", self.save_folder_name)
                 save_item(agg_func(protos), self.role, "test_protos", self.save_folder_name)
             return regular_acc, regular_num, proto_acc, proto_num
