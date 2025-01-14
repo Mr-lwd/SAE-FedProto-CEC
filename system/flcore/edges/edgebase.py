@@ -9,7 +9,7 @@
 from collections import defaultdict
 import copy
 from flcore.edges.average import average_weights
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 
 

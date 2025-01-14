@@ -65,6 +65,8 @@ class Client(object):
         if self.args.jetson == 1:
             self.dvfs_data = self.create_objects_from_json()
             self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
+        self.energy = 0
+
 
     def load_train_data(self, batch_size=None):
         if batch_size == None:
@@ -127,10 +129,10 @@ class Client(object):
                 )
         else:
             # Original code for client-specific testing
-            if self.args.goal == "gltest_umap":
-                test_data = read_client_data(self.dataset, self.id, is_train=True)
-            else:
-                test_data = read_client_data(self.dataset, self.id, is_train=False)
+            # if self.args.goal == "gltest_umap":
+            #     test_data = read_client_data(self.dataset, self.id, is_train=True)
+            # else:
+            test_data = read_client_data(self.dataset, self.id, is_train=False)
 
         return DataLoader(
             test_data, batch_size, drop_last=False, shuffle=False, num_workers=0
@@ -157,7 +159,7 @@ class Client(object):
             glclassifier = load_item("Server", "glclassifier", self.save_folder_name)
             if glclassifier is not None:
                 client_classifier.load_state_dict(glclassifier.state_dict())
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1 or self.args.DVFS == 1:
             model = model.to("cuda")
             for label, tensor in global_protos.items():
                 if isinstance(tensor, torch.Tensor):  # 确认值是 PyTorch 张量
@@ -179,6 +181,8 @@ class Client(object):
         proto_num = 0
         X = []
         Y = []
+        X_true = []
+        Y_true = []
         protos = defaultdict(list)
 
         # Regular model inference
@@ -189,7 +193,7 @@ class Client(object):
                 }
                 correct_class_count_proto = {cls: 0 for cls in range(self.num_classes)}
                 for images, labels in testloader:
-                    if self.args.DVFS == 1:
+                    if self.args.jetson == 1:
                         images, labels = images.to("cuda"), labels.to("cuda")
                     else:
                         images, labels = images.to(self.device), labels.to(self.device)
@@ -206,9 +210,16 @@ class Client(object):
                     regular_num += len(labels)
 
                     if self.args.goal == "gltest_umap":
-                        rep=rep.squeeze(1)
+                        rep = rep.squeeze(1)
                         X.extend(rep.cpu().numpy())
                         Y.extend(labels.cpu().numpy())
+                        
+                        # Store only correctly classified samples
+                        correct_mask = (pred_labels == labels)
+                        correct_rep = rep[correct_mask]
+                        correct_labels = labels[correct_mask]
+                        X_true.extend(correct_rep.cpu().numpy())
+                        Y_true.extend(correct_labels.cpu().numpy())
 
                     for label in labels[pred_labels == labels].tolist():
                         correct_class_count_regular[label] += 1
@@ -217,7 +228,7 @@ class Client(object):
                         rep = model.base(
                             images
                         )  # Extract the representation for prototypes
-                        if self.args.DVFS == 1:
+                        if self.args.jetson == 1:
                             output = float("inf") * torch.ones(
                                 labels.shape[0], self.num_classes
                             ).to("cuda")
@@ -232,6 +243,7 @@ class Client(object):
                                 if type(pro) != type([]):
                                     output[i, j] = self.loss_mse(r, pro)
                         proto_predictions = torch.argmin(output, dim=1)
+                        
                         proto_acc += torch.sum(proto_predictions == labels).item()
                         proto_num += len(labels)
                         for label in labels[proto_predictions == labels].tolist():
@@ -249,7 +261,10 @@ class Client(object):
                 features = {}
                 features["X"] = X
                 features["Y"] = Y
+                features["X_true"] = X_true  # Add correctly classified samples
+                features["Y_true"] = Y_true  # Add their corresponding labels
                 print(f"X shape: {np.array(X).shape}, Y shape: {np.array(Y).shape}")
+                print(f"X_true shape: {np.array(X_true).shape}, Y_true shape: {np.array(Y_true).shape}")
                 save_item(features, self.role, "test_features", self.save_folder_name)
                 save_item(agg_func(protos), self.role, "test_protos", self.save_folder_name)
             return regular_acc, regular_num, proto_acc, proto_num
@@ -364,11 +379,11 @@ class Client(object):
         return objects
 
 
-def save_item(item, role, item_name, item_path=None):
-    if not os.path.exists(item_path):
-        os.makedirs(item_path)
-    file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
-    torch.save(item, file_path)
+# def save_item(item, role, item_name, item_path=None):
+#     if not os.path.exists(item_path):
+#         os.makedirs(item_path)
+#     file_path = os.path.join(item_path, role + "_" + item_name + ".pt")
+#     torch.save(item, file_path)
 
     # 查看保存后的文件大小（单位：字节）
     # if item_name == "CCVR":
@@ -382,12 +397,12 @@ def save_item(item, role, item_name, item_path=None):
     #     print(f"File size: {file_size_mb:.2f} MB")
 
 
-def load_item(role, item_name, item_path=None):
-    try:
-        return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
-    except FileNotFoundError:
-        print(role, item_name, "Not Found")
-        return None
+# def load_item(role, item_name, item_path=None):
+#     try:
+#         return torch.load(os.path.join(item_path, role + "_" + item_name + ".pt"))
+#     except FileNotFoundError:
+#         print(role, item_name, "Not Found")
+#         return None
     
 def agg_func(protos):
     """

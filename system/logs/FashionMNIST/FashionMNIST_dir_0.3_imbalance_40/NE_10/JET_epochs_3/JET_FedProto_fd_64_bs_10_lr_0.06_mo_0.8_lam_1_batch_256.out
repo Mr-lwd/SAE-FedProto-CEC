@@ -1,0 +1,3253 @@
+it is on jetson, train on CPU and no plots
+
+==================================================
+goal = test
+device = cpu
+device_id = 0
+dataset = FashionMNIST_dir_0.3_imbalance_40
+jetson = 1
+DVFS = 0
+drawGMM = 0
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+num_workers = 0
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 100
+edge_epochs = 1
+local_epochs = 3
+algorithm = FedProto
+join_ratio = 1.0
+edge_join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 1
+save_folder_name = temp
+auto_break = False
+feature_dim = 64
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.8
+agg_type = 0
+buffersize = 10
+gl_use_clients = 1
+test_useglclassifier = 1
+gamma = 1
+extra_loss = 0
+delta = 1
+drawtsne = 0
+drawround = 20
+noise_dim = 512
+generator_learning_rate = 0.0001
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+buffer_size = 10
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+temp/FashionMNIST_dir_0.3_imbalance_40/NE_10/featuredim_64/FedProto/SGD/lr_0.06/wd_0/momentum_0.8/lbs_256/lamda_1.0/localepoch_3/buffer_10/gamma_1_usegltest_1/1736681435.143337
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {9: 545, 2: 98, 0: 287, 1: 338, 5: 106, 3: 26, 6: 3, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {4: 630, 1: 507, 7: 199, 5: 47, 2: 18, 0: 18, 6: 2, 3: 3})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {9: 99, 7: 312, 5: 157, 3: 30, 0: 190, 8: 6, 6: 67, 4: 11, 2: 3})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {2: 395, 3: 171, 8: 190, 4: 51, 9: 19, 6: 100, 0: 3, 5: 4})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {1: 428, 2: 202, 5: 553, 0: 327, 4: 5})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {6: 633, 1: 100, 4: 421, 2: 58, 8: 45, 5: 13, 3: 41, 7: 11, 0: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {9: 425, 8: 384, 4: 260, 3: 24, 6: 31, 1: 12, 2: 6, 7: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {0: 36, 9: 477, 8: 645, 4: 53, 6: 335, 3: 38, 5: 13, 1: 11, 7: 16, 2: 7})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {2: 81, 4: 502, 0: 124, 9: 102, 6: 63, 8: 26, 5: 17, 1: 3, 3: 9})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 943, 1: 139, 0: 75, 2: 177})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {4: 883, 8: 445, 0: 32, 5: 19, 2: 57, 3: 12, 7: 1, 6: 1, 1: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {1: 58, 9: 88, 8: 220, 4: 230, 7: 8, 6: 147, 5: 54, 3: 44, 2: 13})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {1: 263, 0: 206, 6: 248, 3: 165, 5: 101, 9: 14, 7: 1, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {2: 795, 3: 402, 7: 197, 0: 11, 1: 7, 4: 7, 5: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {0: 312, 9: 218, 2: 44, 3: 131, 1: 57, 5: 65, 4: 21, 8: 3})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {6: 980, 0: 83, 5: 215, 1: 39, 3: 12, 4: 2})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {8: 280, 1: 860, 0: 140, 5: 68, 4: 58, 3: 83, 7: 1, 6: 18})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {5: 490, 0: 104, 2: 16, 8: 642, 6: 21, 3: 30, 4: 28, 1: 2, 7: 1})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {7: 229, 8: 391, 4: 108, 5: 27, 1: 105, 3: 33, 6: 2, 2: 1, 0: 1})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 364, 0: 1204})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 858, 5: 157, 1: 290, 7: 131, 4: 216, 0: 37, 3: 1, 6: 44, 2: 19, 8: 1})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {1: 383, 6: 225, 4: 288, 0: 136, 3: 62, 8: 4, 9: 1, 7: 16, 5: 1})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {5: 243, 7: 387, 1: 102, 6: 68, 8: 15, 0: 12, 2: 9, 4: 1, 3: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {5: 40, 0: 232, 8: 141, 9: 256, 1: 32, 6: 1, 3: 2, 7: 1})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {0: 62, 9: 235, 3: 447, 4: 309, 5: 120, 8: 15, 1: 2})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 222, 3: 388, 5: 505, 2: 154, 1: 34, 4: 7, 0: 81})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {8: 568, 0: 443, 7: 172, 4: 139, 2: 116, 5: 5, 3: 26, 1: 10})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {5: 530, 2: 186, 6: 253, 0: 88, 3: 75, 4: 5, 7: 1})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {7: 176, 8: 93, 4: 1, 9: 281, 0: 22, 2: 50, 1: 63, 3: 24, 5: 14, 6: 2})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {7: 363, 5: 337, 3: 170, 1: 20, 8: 138, 9: 164, 2: 27, 4: 2, 6: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {0: 243, 7: 302, 9: 43, 8: 229, 5: 24, 1: 2, 3: 2, 2: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {2: 510, 4: 583, 0: 98, 1: 223})
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {9: 1142, 5: 146, 1: 20, 2: 276, 3: 51, 0: 31, 7: 49, 6: 75, 8: 12, 4: 1})
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {7: 122, 3: 276, 6: 254, 2: 405, 0: 151, 1: 76, 4: 83})
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {6: 870, 0: 172, 2: 880, 1: 42, 3: 12, 4: 9})
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {5: 70, 4: 312, 8: 1, 2: 90, 0: 300, 6: 18, 7: 36, 3: 121, 9: 70, 1: 25})
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {2: 127, 7: 124, 3: 364, 8: 221, 6: 412, 9: 158, 1: 41, 4: 5, 0: 3})
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {7: 2178, 3: 1002, 5: 11, 6: 142, 2: 20, 0: 1, 4: 3})
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {5: 1124, 1: 545, 2: 23, 3: 21, 0: 14, 4: 1})
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {1: 41, 2: 387, 8: 501, 6: 233, 5: 12, 0: 13, 9: 3, 3: 2, 7: 2, 4: 1})
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+Edge 8 begin training
+Edge 7 begin training
+Edge 6 begin training
+Edge 5 begin training
+Edge 4 begin training
+Edge 3 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 0 begin training
+readyList:
+[7, 5, 6, 1, 2, 0, 4, 8, 3, 9]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 0, 4, 8, 3, 9]
+end Update
+server_global_time: 97.24954527800037
+only_train_time: 1055.2565196630085
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.6330
+Averaged Test Accuracy (Prototype Model): 0.4482
+Averaged Train Loss (Regular Model): 1.3123
+Averaged Train Loss (Regular + Proto): 1.3123
+All Energy: 2503.6659
+Std Test Accuracy (Regular Model): 0.2067
+Std Test Accuracy (Prototype Model): 0.2471
+tobetrained:
+[7, 5, 6, 1, 2, 0, 4, 8, 3, 9]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 8 begin training
+Edge 3 begin training
+Edge 9 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+end Update
+server_global_time: 158.64903600800062
+only_train_time: 1955.5371784480076
+
+-------------Global Round number: 1-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.7500
+Averaged Test Accuracy (Prototype Model): 0.6682
+Averaged Train Loss (Regular Model): 0.9159
+Averaged Train Loss (Regular + Proto): 1.0189
+All Energy: 4536.8412
+Std Test Accuracy (Regular Model): 0.1830
+Std Test Accuracy (Prototype Model): 0.2274
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 219.7166295520019
+only_train_time: 2803.162975784012
+
+-------------Global Round number: 2-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.7986
+Averaged Test Accuracy (Prototype Model): 0.7370
+Averaged Train Loss (Regular Model): 0.6787
+Averaged Train Loss (Regular + Proto): 0.7575
+All Energy: 6447.1746
+Std Test Accuracy (Regular Model): 0.1626
+Std Test Accuracy (Prototype Model): 0.2009
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 279.9034717500035
+only_train_time: 3649.6096352810137
+
+-------------Global Round number: 3-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8429
+Averaged Test Accuracy (Prototype Model): 0.7752
+Averaged Train Loss (Regular Model): 0.5425
+Averaged Train Loss (Regular + Proto): 0.6168
+All Energy: 8355.9066
+Std Test Accuracy (Regular Model): 0.1018
+Std Test Accuracy (Prototype Model): 0.1683
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 340.3225913410042
+only_train_time: 4493.749452107007
+
+-------------Global Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8602
+Averaged Test Accuracy (Prototype Model): 0.8135
+Averaged Train Loss (Regular Model): 0.4592
+Averaged Train Loss (Regular + Proto): 0.5300
+All Energy: 10259.5638
+Std Test Accuracy (Regular Model): 0.0937
+Std Test Accuracy (Prototype Model): 0.1285
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 400.47591705400555
+only_train_time: 5336.390098062008
+
+-------------Global Round number: 5-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8770
+Averaged Test Accuracy (Prototype Model): 0.8374
+Averaged Train Loss (Regular Model): 0.4078
+Averaged Train Loss (Regular + Proto): 0.4745
+All Energy: 12164.5924
+Std Test Accuracy (Regular Model): 0.0828
+Std Test Accuracy (Prototype Model): 0.1101
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 460.68979203700474
+only_train_time: 6180.675640306
+
+-------------Global Round number: 6-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8823
+Averaged Test Accuracy (Prototype Model): 0.8470
+Averaged Train Loss (Regular Model): 0.3690
+Averaged Train Loss (Regular + Proto): 0.4332
+All Energy: 14063.7325
+Std Test Accuracy (Regular Model): 0.0824
+Std Test Accuracy (Prototype Model): 0.0997
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 520.7027494170052
+only_train_time: 7025.388799933992
+
+-------------Global Round number: 7-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8884
+Averaged Test Accuracy (Prototype Model): 0.8612
+Averaged Train Loss (Regular Model): 0.3432
+Averaged Train Loss (Regular + Proto): 0.4039
+All Energy: 15967.7986
+Std Test Accuracy (Regular Model): 0.0756
+Std Test Accuracy (Prototype Model): 0.0919
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 581.0347735360046
+only_train_time: 7868.496853156991
+
+-------------Global Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8951
+Averaged Test Accuracy (Prototype Model): 0.8646
+Averaged Train Loss (Regular Model): 0.3202
+Averaged Train Loss (Regular + Proto): 0.3777
+All Energy: 17876.2258
+Std Test Accuracy (Regular Model): 0.0696
+Std Test Accuracy (Prototype Model): 0.0851
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 641.360160941007
+only_train_time: 8713.32351374699
+
+-------------Global Round number: 9-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8992
+Averaged Test Accuracy (Prototype Model): 0.8733
+Averaged Train Loss (Regular Model): 0.2933
+Averaged Train Loss (Regular + Proto): 0.3480
+All Energy: 19778.6014
+Std Test Accuracy (Regular Model): 0.0682
+Std Test Accuracy (Prototype Model): 0.0826
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 701.1241522290074
+only_train_time: 9555.342406526986
+
+-------------Global Round number: 10-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8999
+Averaged Test Accuracy (Prototype Model): 0.8754
+Averaged Train Loss (Regular Model): 0.2781
+Averaged Train Loss (Regular + Proto): 0.3305
+All Energy: 21680.9406
+Std Test Accuracy (Regular Model): 0.0704
+Std Test Accuracy (Prototype Model): 0.0820
+tobetrained:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 761.7544601290065
+only_train_time: 10403.069852462006
+
+-------------Global Round number: 11-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9033
+Averaged Test Accuracy (Prototype Model): 0.8800
+Averaged Train Loss (Regular Model): 0.2624
+Averaged Train Loss (Regular + Proto): 0.3129
+All Energy: 23591.1868
+Std Test Accuracy (Regular Model): 0.0685
+Std Test Accuracy (Prototype Model): 0.0781
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 822.4442860810086
+only_train_time: 11247.535045950022
+
+-------------Global Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9050
+Averaged Test Accuracy (Prototype Model): 0.8836
+Averaged Train Loss (Regular Model): 0.2472
+Averaged Train Loss (Regular + Proto): 0.2959
+All Energy: 25503.9138
+Std Test Accuracy (Regular Model): 0.0660
+Std Test Accuracy (Prototype Model): 0.0756
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+end Update
+server_global_time: 882.8858435670081
+only_train_time: 12091.499350807015
+
+-------------Global Round number: 13-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9085
+Averaged Test Accuracy (Prototype Model): 0.8863
+Averaged Train Loss (Regular Model): 0.2319
+Averaged Train Loss (Regular + Proto): 0.2785
+All Energy: 27410.3851
+Std Test Accuracy (Regular Model): 0.0634
+Std Test Accuracy (Prototype Model): 0.0749
+tobetrained:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 943.1159173190099
+only_train_time: 12935.071799718018
+
+-------------Global Round number: 14-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9101
+Averaged Test Accuracy (Prototype Model): 0.8898
+Averaged Train Loss (Regular Model): 0.2145
+Averaged Train Loss (Regular + Proto): 0.2596
+All Energy: 29310.9057
+Std Test Accuracy (Regular Model): 0.0625
+Std Test Accuracy (Prototype Model): 0.0720
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1003.466749579009
+only_train_time: 13780.798863963002
+
+-------------Global Round number: 15-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9094
+Averaged Test Accuracy (Prototype Model): 0.8909
+Averaged Train Loss (Regular Model): 0.2027
+Averaged Train Loss (Regular + Proto): 0.2463
+All Energy: 31203.2050
+Std Test Accuracy (Regular Model): 0.0614
+Std Test Accuracy (Prototype Model): 0.0680
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1064.2626747240065
+only_train_time: 14625.999198038011
+
+-------------Global Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9134
+Averaged Test Accuracy (Prototype Model): 0.8929
+Averaged Train Loss (Regular Model): 0.1987
+Averaged Train Loss (Regular + Proto): 0.2413
+All Energy: 33093.6836
+Std Test Accuracy (Regular Model): 0.0573
+Std Test Accuracy (Prototype Model): 0.0684
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1123.8266494020063
+only_train_time: 15467.575702700022
+
+-------------Global Round number: 17-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9115
+Averaged Test Accuracy (Prototype Model): 0.8953
+Averaged Train Loss (Regular Model): 0.1874
+Averaged Train Loss (Regular + Proto): 0.2289
+All Energy: 34981.8019
+Std Test Accuracy (Regular Model): 0.0615
+Std Test Accuracy (Prototype Model): 0.0659
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 2, 9, 8, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 2, 9, 8, 6, 0, 4, 3]
+end Update
+server_global_time: 1184.8964259850072
+only_train_time: 16316.06523148802
+
+-------------Global Round number: 18-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9141
+Averaged Test Accuracy (Prototype Model): 0.8969
+Averaged Train Loss (Regular Model): 0.1742
+Averaged Train Loss (Regular + Proto): 0.2149
+All Energy: 36877.0261
+Std Test Accuracy (Regular Model): 0.0580
+Std Test Accuracy (Prototype Model): 0.0675
+tobetrained:
+[7, 5, 1, 2, 9, 8, 6, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 6 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1246.3139286210062
+only_train_time: 17172.82662020804
+
+-------------Global Round number: 19-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9185
+Averaged Test Accuracy (Prototype Model): 0.9002
+Averaged Train Loss (Regular Model): 0.1680
+Averaged Train Loss (Regular + Proto): 0.2072
+All Energy: 38781.5827
+Std Test Accuracy (Regular Model): 0.0551
+Std Test Accuracy (Prototype Model): 0.0666
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 9, 6, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 9, 6, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1309.6825088310034
+only_train_time: 18030.843880571054
+
+-------------Global Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9149
+Averaged Test Accuracy (Prototype Model): 0.9013
+Averaged Train Loss (Regular Model): 0.1536
+Averaged Train Loss (Regular + Proto): 0.1918
+All Energy: 40694.3342
+Std Test Accuracy (Regular Model): 0.0581
+Std Test Accuracy (Prototype Model): 0.0626
+tobetrained:
+[7, 5, 9, 6, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 9 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1371.0867481380046
+only_train_time: 18884.809204231053
+
+-------------Global Round number: 21-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9165
+Averaged Test Accuracy (Prototype Model): 0.9016
+Averaged Train Loss (Regular Model): 0.1511
+Averaged Train Loss (Regular + Proto): 0.1884
+All Energy: 42596.2647
+Std Test Accuracy (Regular Model): 0.0569
+Std Test Accuracy (Prototype Model): 0.0638
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1431.8607278300042
+only_train_time: 19737.075515897042
+
+-------------Global Round number: 22-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9189
+Averaged Test Accuracy (Prototype Model): 0.9021
+Averaged Train Loss (Regular Model): 0.1408
+Averaged Train Loss (Regular + Proto): 0.1773
+All Energy: 44497.6944
+Std Test Accuracy (Regular Model): 0.0542
+Std Test Accuracy (Prototype Model): 0.0660
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1492.2625863630055
+only_train_time: 20587.21063846202
+
+-------------Global Round number: 23-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9182
+Averaged Test Accuracy (Prototype Model): 0.9066
+Averaged Train Loss (Regular Model): 0.1345
+Averaged Train Loss (Regular + Proto): 0.1704
+All Energy: 46400.3562
+Std Test Accuracy (Regular Model): 0.0560
+Std Test Accuracy (Prototype Model): 0.0620
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1552.9342787860078
+only_train_time: 21438.943510145014
+
+-------------Global Round number: 24-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9207
+Averaged Test Accuracy (Prototype Model): 0.9082
+Averaged Train Loss (Regular Model): 0.1218
+Averaged Train Loss (Regular + Proto): 0.1570
+All Energy: 48299.8384
+Std Test Accuracy (Regular Model): 0.0539
+Std Test Accuracy (Prototype Model): 0.0592
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1613.8107191580057
+only_train_time: 22287.326635772017
+
+-------------Global Round number: 25-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9214
+Averaged Test Accuracy (Prototype Model): 0.9101
+Averaged Train Loss (Regular Model): 0.1162
+Averaged Train Loss (Regular + Proto): 0.1508
+All Energy: 50205.2868
+Std Test Accuracy (Regular Model): 0.0506
+Std Test Accuracy (Prototype Model): 0.0584
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1674.6666107910023
+only_train_time: 23138.520824320007
+
+-------------Global Round number: 26-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9210
+Averaged Test Accuracy (Prototype Model): 0.9112
+Averaged Train Loss (Regular Model): 0.1073
+Averaged Train Loss (Regular + Proto): 0.1414
+All Energy: 52098.9101
+Std Test Accuracy (Regular Model): 0.0555
+Std Test Accuracy (Prototype Model): 0.0586
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1735.822565227998
+only_train_time: 23985.62802030998
+
+-------------Global Round number: 27-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9234
+Averaged Test Accuracy (Prototype Model): 0.9117
+Averaged Train Loss (Regular Model): 0.0992
+Averaged Train Loss (Regular + Proto): 0.1320
+All Energy: 54000.3921
+Std Test Accuracy (Regular Model): 0.0493
+Std Test Accuracy (Prototype Model): 0.0555
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1797.1416714749976
+only_train_time: 24831.509050626977
+
+-------------Global Round number: 28-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9223
+Averaged Test Accuracy (Prototype Model): 0.9113
+Averaged Train Loss (Regular Model): 0.0920
+Averaged Train Loss (Regular + Proto): 0.1243
+All Energy: 55914.9286
+Std Test Accuracy (Regular Model): 0.0514
+Std Test Accuracy (Prototype Model): 0.0577
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1859.125694598999
+only_train_time: 25680.718846259966
+
+-------------Global Round number: 29-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9231
+Averaged Test Accuracy (Prototype Model): 0.9129
+Averaged Train Loss (Regular Model): 0.0956
+Averaged Train Loss (Regular + Proto): 0.1280
+All Energy: 57843.2432
+Std Test Accuracy (Regular Model): 0.0499
+Std Test Accuracy (Prototype Model): 0.0562
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1919.492041223999
+only_train_time: 26526.238985999968
+
+-------------Global Round number: 30-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9243
+Averaged Test Accuracy (Prototype Model): 0.9153
+Averaged Train Loss (Regular Model): 0.0860
+Averaged Train Loss (Regular + Proto): 0.1173
+All Energy: 59766.0198
+Std Test Accuracy (Regular Model): 0.0486
+Std Test Accuracy (Prototype Model): 0.0539
+tobetrained:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1980.8458415530004
+only_train_time: 27378.670486270967
+
+-------------Global Round number: 31-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9250
+Averaged Test Accuracy (Prototype Model): 0.9154
+Averaged Train Loss (Regular Model): 0.0845
+Averaged Train Loss (Regular + Proto): 0.1151
+All Energy: 61702.8038
+Std Test Accuracy (Regular Model): 0.0483
+Std Test Accuracy (Prototype Model): 0.0519
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2041.692222036003
+only_train_time: 28229.448153764002
+
+-------------Global Round number: 32-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9265
+Averaged Test Accuracy (Prototype Model): 0.9180
+Averaged Train Loss (Regular Model): 0.0748
+Averaged Train Loss (Regular + Proto): 0.1049
+All Energy: 63626.0135
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0513
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2102.789958366997
+only_train_time: 29079.25879579399
+
+-------------Global Round number: 33-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9253
+Averaged Test Accuracy (Prototype Model): 0.9185
+Averaged Train Loss (Regular Model): 0.0743
+Averaged Train Loss (Regular + Proto): 0.1039
+All Energy: 65552.4819
+Std Test Accuracy (Regular Model): 0.0489
+Std Test Accuracy (Prototype Model): 0.0499
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2163.996486907996
+only_train_time: 29927.183732767975
+
+-------------Global Round number: 34-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9221
+Averaged Test Accuracy (Prototype Model): 0.9150
+Averaged Train Loss (Regular Model): 0.0652
+Averaged Train Loss (Regular + Proto): 0.0941
+All Energy: 67474.6174
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0496
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2225.1575007870015
+only_train_time: 30776.48981100496
+
+-------------Global Round number: 35-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9267
+Averaged Test Accuracy (Prototype Model): 0.9194
+Averaged Train Loss (Regular Model): 0.0664
+Averaged Train Loss (Regular + Proto): 0.0956
+All Energy: 69400.8924
+Std Test Accuracy (Regular Model): 0.0471
+Std Test Accuracy (Prototype Model): 0.0501
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2285.921886238004
+only_train_time: 31627.656847853956
+
+-------------Global Round number: 36-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9265
+Averaged Test Accuracy (Prototype Model): 0.9205
+Averaged Train Loss (Regular Model): 0.0566
+Averaged Train Loss (Regular + Proto): 0.0843
+All Energy: 71333.6138
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0497
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2347.4691743500043
+only_train_time: 32477.591985736937
+
+-------------Global Round number: 37-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9256
+Averaged Test Accuracy (Prototype Model): 0.9197
+Averaged Train Loss (Regular Model): 0.0540
+Averaged Train Loss (Regular + Proto): 0.0812
+All Energy: 73273.5463
+Std Test Accuracy (Regular Model): 0.0477
+Std Test Accuracy (Prototype Model): 0.0500
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2408.0732245540094
+only_train_time: 33323.62472469491
+
+-------------Global Round number: 38-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9270
+Averaged Test Accuracy (Prototype Model): 0.9215
+Averaged Train Loss (Regular Model): 0.0529
+Averaged Train Loss (Regular + Proto): 0.0798
+All Energy: 75200.1387
+Std Test Accuracy (Regular Model): 0.0466
+Std Test Accuracy (Prototype Model): 0.0477
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2468.769522660008
+only_train_time: 34173.657316684934
+
+-------------Global Round number: 39-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9258
+Averaged Test Accuracy (Prototype Model): 0.9230
+Averaged Train Loss (Regular Model): 0.0505
+Averaged Train Loss (Regular + Proto): 0.0771
+All Energy: 77133.4985
+Std Test Accuracy (Regular Model): 0.0494
+Std Test Accuracy (Prototype Model): 0.0476
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2529.453217832004
+only_train_time: 35023.21813209095
+
+-------------Global Round number: 40-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9282
+Averaged Test Accuracy (Prototype Model): 0.9221
+Averaged Train Loss (Regular Model): 0.0499
+Averaged Train Loss (Regular + Proto): 0.0760
+All Energy: 79051.7098
+Std Test Accuracy (Regular Model): 0.0444
+Std Test Accuracy (Prototype Model): 0.0476
+tobetrained:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2590.1564482700087
+only_train_time: 35891.55603418897
+
+-------------Global Round number: 41-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9275
+Averaged Test Accuracy (Prototype Model): 0.9226
+Averaged Train Loss (Regular Model): 0.0442
+Averaged Train Loss (Regular + Proto): 0.0700
+All Energy: 81020.8756
+Std Test Accuracy (Regular Model): 0.0491
+Std Test Accuracy (Prototype Model): 0.0481
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 1, 6, 9, 5, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 1, 6, 9, 5, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2651.466831892005
+only_train_time: 36752.27504188695
+
+-------------Global Round number: 42-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9281
+Averaged Test Accuracy (Prototype Model): 0.9245
+Averaged Train Loss (Regular Model): 0.0397
+Averaged Train Loss (Regular + Proto): 0.0647
+All Energy: 82965.8435
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0474
+tobetrained:
+[7, 1, 6, 9, 5, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 5 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2712.8478872860032
+only_train_time: 37608.744849799965
+
+-------------Global Round number: 43-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9278
+Averaged Test Accuracy (Prototype Model): 0.9233
+Averaged Train Loss (Regular Model): 0.0380
+Averaged Train Loss (Regular + Proto): 0.0628
+All Energy: 84911.4968
+Std Test Accuracy (Regular Model): 0.0508
+Std Test Accuracy (Prototype Model): 0.0498
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2774.745604948006
+only_train_time: 38462.01965587899
+
+-------------Global Round number: 44-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9278
+Averaged Test Accuracy (Prototype Model): 0.9247
+Averaged Train Loss (Regular Model): 0.0360
+Averaged Train Loss (Regular + Proto): 0.0603
+All Energy: 86838.4337
+Std Test Accuracy (Regular Model): 0.0466
+Std Test Accuracy (Prototype Model): 0.0470
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2835.301775681004
+only_train_time: 39311.89223457801
+
+-------------Global Round number: 45-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9289
+Averaged Test Accuracy (Prototype Model): 0.9247
+Averaged Train Loss (Regular Model): 0.0324
+Averaged Train Loss (Regular + Proto): 0.0563
+All Energy: 88764.9585
+Std Test Accuracy (Regular Model): 0.0468
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 2896.4513934860042
+only_train_time: 40162.31204873501
+
+-------------Global Round number: 46-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9285
+Averaged Test Accuracy (Prototype Model): 0.9244
+Averaged Train Loss (Regular Model): 0.0334
+Averaged Train Loss (Regular + Proto): 0.0569
+All Energy: 90686.9860
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0486
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 2958.1463872990025
+only_train_time: 41017.370485806015
+
+-------------Global Round number: 47-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9273
+Averaged Test Accuracy (Prototype Model): 0.9249
+Averaged Train Loss (Regular Model): 0.0314
+Averaged Train Loss (Regular + Proto): 0.0547
+All Energy: 92627.0554
+Std Test Accuracy (Regular Model): 0.0476
+Std Test Accuracy (Prototype Model): 0.0468
+tobetrained:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3018.758395109002
+only_train_time: 41864.86979636999
+
+-------------Global Round number: 48-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9282
+Averaged Test Accuracy (Prototype Model): 0.9246
+Averaged Train Loss (Regular Model): 0.0306
+Averaged Train Loss (Regular + Proto): 0.0536
+All Energy: 94549.7867
+Std Test Accuracy (Regular Model): 0.0476
+Std Test Accuracy (Prototype Model): 0.0473
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3080.1250327960042
+only_train_time: 42718.15510080098
+
+-------------Global Round number: 49-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9285
+Averaged Test Accuracy (Prototype Model): 0.9254
+Averaged Train Loss (Regular Model): 0.0307
+Averaged Train Loss (Regular + Proto): 0.0532
+All Energy: 96478.4686
+Std Test Accuracy (Regular Model): 0.0485
+Std Test Accuracy (Prototype Model): 0.0480
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 3141.2403240650056
+only_train_time: 43573.56238227797
+
+-------------Global Round number: 50-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9284
+Averaged Test Accuracy (Prototype Model): 0.9249
+Averaged Train Loss (Regular Model): 0.0262
+Averaged Train Loss (Regular + Proto): 0.0482
+All Energy: 98411.3997
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0473
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 3203.5004837510096
+only_train_time: 44425.74151505997
+
+-------------Global Round number: 51-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9281
+Averaged Test Accuracy (Prototype Model): 0.9250
+Averaged Train Loss (Regular Model): 0.0261
+Averaged Train Loss (Regular + Proto): 0.0478
+All Energy: 100325.9592
+Std Test Accuracy (Regular Model): 0.0468
+Std Test Accuracy (Prototype Model): 0.0477
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3264.890706842012
+only_train_time: 45275.639679910986
+
+-------------Global Round number: 52-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9285
+Averaged Test Accuracy (Prototype Model): 0.9269
+Averaged Train Loss (Regular Model): 0.0245
+Averaged Train Loss (Regular + Proto): 0.0458
+All Energy: 102262.1299
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0459
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 3324.9729171310137
+only_train_time: 46126.55606082602
+
+-------------Global Round number: 53-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9290
+Averaged Test Accuracy (Prototype Model): 0.9261
+Averaged Train Loss (Regular Model): 0.0227
+Averaged Train Loss (Regular + Proto): 0.0438
+All Energy: 104203.3216
+Std Test Accuracy (Regular Model): 0.0476
+Std Test Accuracy (Prototype Model): 0.0469
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3386.4877472000117
+only_train_time: 46979.33759554702
+
+-------------Global Round number: 54-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9286
+Averaged Test Accuracy (Prototype Model): 0.9253
+Averaged Train Loss (Regular Model): 0.0226
+Averaged Train Loss (Regular + Proto): 0.0433
+All Energy: 106152.8215
+Std Test Accuracy (Regular Model): 0.0468
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3447.3518300310134
+only_train_time: 47833.94040202201
+
+-------------Global Round number: 55-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9261
+Averaged Train Loss (Regular Model): 0.0208
+Averaged Train Loss (Regular + Proto): 0.0412
+All Energy: 108112.6056
+Std Test Accuracy (Regular Model): 0.0454
+Std Test Accuracy (Prototype Model): 0.0470
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+end Update
+server_global_time: 3508.460647026008
+only_train_time: 48690.78399823301
+
+-------------Global Round number: 56-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9294
+Averaged Test Accuracy (Prototype Model): 0.9268
+Averaged Train Loss (Regular Model): 0.0198
+Averaged Train Loss (Regular + Proto): 0.0399
+All Energy: 110077.0394
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0463
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 4, 0, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 4 begin training
+Edge 0 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3569.169613951006
+only_train_time: 49543.157481309005
+
+-------------Global Round number: 57-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9289
+Averaged Test Accuracy (Prototype Model): 0.9262
+Averaged Train Loss (Regular Model): 0.0193
+Averaged Train Loss (Regular + Proto): 0.0390
+All Energy: 112032.4263
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3630.391391028006
+only_train_time: 50397.61399120301
+
+-------------Global Round number: 58-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9287
+Averaged Test Accuracy (Prototype Model): 0.9266
+Averaged Train Loss (Regular Model): 0.0186
+Averaged Train Loss (Regular + Proto): 0.0379
+All Energy: 114002.1718
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0471
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3691.1013995020076
+only_train_time: 51248.750283735026
+
+-------------Global Round number: 59-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9296
+Averaged Test Accuracy (Prototype Model): 0.9273
+Averaged Train Loss (Regular Model): 0.0177
+Averaged Train Loss (Regular + Proto): 0.0369
+All Energy: 115979.2157
+Std Test Accuracy (Regular Model): 0.0450
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3752.0880316550138
+only_train_time: 52095.85750480703
+
+-------------Global Round number: 60-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9275
+Averaged Train Loss (Regular Model): 0.0172
+Averaged Train Loss (Regular + Proto): 0.0361
+All Energy: 117990.6520
+Std Test Accuracy (Regular Model): 0.0466
+Std Test Accuracy (Prototype Model): 0.0459
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 3811.9428476620124
+only_train_time: 52942.637213558
+
+-------------Global Round number: 61-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9291
+Averaged Test Accuracy (Prototype Model): 0.9271
+Averaged Train Loss (Regular Model): 0.0177
+Averaged Train Loss (Regular + Proto): 0.0363
+All Energy: 120001.3026
+Std Test Accuracy (Regular Model): 0.0478
+Std Test Accuracy (Prototype Model): 0.0470
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3872.8627668530135
+only_train_time: 53792.69671613499
+
+-------------Global Round number: 62-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9300
+Averaged Test Accuracy (Prototype Model): 0.9270
+Averaged Train Loss (Regular Model): 0.0161
+Averaged Train Loss (Regular + Proto): 0.0345
+All Energy: 122015.4711
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0461
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 3932.8599937490108
+only_train_time: 54641.61262221696
+
+-------------Global Round number: 63-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9291
+Averaged Test Accuracy (Prototype Model): 0.9272
+Averaged Train Loss (Regular Model): 0.0156
+Averaged Train Loss (Regular + Proto): 0.0337
+All Energy: 124040.4124
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 3993.6199015610073
+only_train_time: 55492.20322865388
+
+-------------Global Round number: 64-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9276
+Averaged Train Loss (Regular Model): 0.0154
+Averaged Train Loss (Regular + Proto): 0.0332
+All Energy: 126062.5867
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0467
+tobetrained:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4054.443833939007
+only_train_time: 56337.7811484809
+
+-------------Global Round number: 65-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9287
+Averaged Test Accuracy (Prototype Model): 0.9279
+Averaged Train Loss (Regular Model): 0.0148
+Averaged Train Loss (Regular + Proto): 0.0324
+All Energy: 128073.2239
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0463
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4116.693443926011
+only_train_time: 57191.1397664889
+
+-------------Global Round number: 66-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9273
+Averaged Train Loss (Regular Model): 0.0147
+Averaged Train Loss (Regular + Proto): 0.0321
+All Energy: 130094.5447
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0470
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4178.109231830011
+only_train_time: 58041.415470351894
+
+-------------Global Round number: 67-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9277
+Averaged Train Loss (Regular Model): 0.0150
+Averaged Train Loss (Regular + Proto): 0.0323
+All Energy: 132105.1732
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0465
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4239.582246475013
+only_train_time: 58892.12183925292
+
+-------------Global Round number: 68-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9298
+Averaged Test Accuracy (Prototype Model): 0.9277
+Averaged Train Loss (Regular Model): 0.0135
+Averaged Train Loss (Regular + Proto): 0.0305
+All Energy: 134111.8075
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0462
+tobetrained:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4301.443122195011
+only_train_time: 59740.14309670192
+
+-------------Global Round number: 69-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9292
+Averaged Test Accuracy (Prototype Model): 0.9283
+Averaged Train Loss (Regular Model): 0.0129
+Averaged Train Loss (Regular + Proto): 0.0295
+All Energy: 136103.1707
+Std Test Accuracy (Regular Model): 0.0469
+Std Test Accuracy (Prototype Model): 0.0458
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4362.762530966011
+only_train_time: 60589.23534791091
+
+-------------Global Round number: 70-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9293
+Averaged Test Accuracy (Prototype Model): 0.9282
+Averaged Train Loss (Regular Model): 0.0130
+Averaged Train Loss (Regular + Proto): 0.0295
+All Energy: 138107.2537
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0466
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4424.236187429011
+only_train_time: 61439.71525330391
+
+-------------Global Round number: 71-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9291
+Averaged Test Accuracy (Prototype Model): 0.9283
+Averaged Train Loss (Regular Model): 0.0125
+Averaged Train Loss (Regular + Proto): 0.0287
+All Energy: 140114.4059
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0468
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4485.787428290005
+only_train_time: 62287.916819691956
+
+-------------Global Round number: 72-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9285
+Averaged Train Loss (Regular Model): 0.0129
+Averaged Train Loss (Regular + Proto): 0.0290
+All Energy: 142132.1642
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0462
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4546.7681191190095
+only_train_time: 63137.90764254897
+
+-------------Global Round number: 73-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9294
+Averaged Test Accuracy (Prototype Model): 0.9281
+Averaged Train Loss (Regular Model): 0.0127
+Averaged Train Loss (Regular + Proto): 0.0285
+All Energy: 144149.2350
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0461
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4608.296695162007
+only_train_time: 63985.9085545769
+
+-------------Global Round number: 74-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9287
+Averaged Train Loss (Regular Model): 0.0116
+Averaged Train Loss (Regular + Proto): 0.0272
+All Energy: 146166.1895
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4670.059637629009
+only_train_time: 64835.17185733794
+
+-------------Global Round number: 75-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9298
+Averaged Test Accuracy (Prototype Model): 0.9288
+Averaged Train Loss (Regular Model): 0.0113
+Averaged Train Loss (Regular + Proto): 0.0268
+All Energy: 148198.3541
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0460
+tobetrained:
+[7, 5, 1, 6, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4730.292714190018
+only_train_time: 65679.7752108329
+
+-------------Global Round number: 76-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9298
+Averaged Test Accuracy (Prototype Model): 0.9290
+Averaged Train Loss (Regular Model): 0.0117
+Averaged Train Loss (Regular + Proto): 0.0270
+All Energy: 150215.5088
+Std Test Accuracy (Regular Model): 0.0468
+Std Test Accuracy (Prototype Model): 0.0456
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4791.087734722027
+only_train_time: 66527.02406617186
+
+-------------Global Round number: 77-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9294
+Averaged Train Loss (Regular Model): 0.0109
+Averaged Train Loss (Regular + Proto): 0.0260
+All Energy: 152226.0306
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 4851.465806972021
+only_train_time: 67373.03158528684
+
+-------------Global Round number: 78-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9297
+Averaged Test Accuracy (Prototype Model): 0.9291
+Averaged Train Loss (Regular Model): 0.0109
+Averaged Train Loss (Regular + Proto): 0.0258
+All Energy: 154250.2398
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4911.8358626450245
+only_train_time: 68216.54743722087
+
+-------------Global Round number: 79-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9305
+Averaged Test Accuracy (Prototype Model): 0.9295
+Averaged Train Loss (Regular Model): 0.0105
+Averaged Train Loss (Regular + Proto): 0.0252
+All Energy: 156263.0185
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 4972.684166687035
+only_train_time: 69062.6232015228
+
+-------------Global Round number: 80-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9299
+Averaged Test Accuracy (Prototype Model): 0.9289
+Averaged Train Loss (Regular Model): 0.0102
+Averaged Train Loss (Regular + Proto): 0.0247
+All Energy: 158287.8614
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5033.77188483904
+only_train_time: 69912.3671401328
+
+-------------Global Round number: 81-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9293
+Averaged Train Loss (Regular Model): 0.0103
+Averaged Train Loss (Regular + Proto): 0.0247
+All Energy: 160260.5730
+Std Test Accuracy (Regular Model): 0.0464
+Std Test Accuracy (Prototype Model): 0.0454
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5094.81476501904
+only_train_time: 70763.68921446078
+
+-------------Global Round number: 82-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9297
+Averaged Train Loss (Regular Model): 0.0098
+Averaged Train Loss (Regular + Proto): 0.0240
+All Energy: 162186.5034
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5156.132200083044
+only_train_time: 71615.8900742888
+
+-------------Global Round number: 83-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9300
+Averaged Test Accuracy (Prototype Model): 0.9294
+Averaged Train Loss (Regular Model): 0.0098
+Averaged Train Loss (Regular + Proto): 0.0238
+All Energy: 164122.9773
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5217.744955323058
+only_train_time: 72468.30568701086
+
+-------------Global Round number: 84-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9293
+Averaged Train Loss (Regular Model): 0.0095
+Averaged Train Loss (Regular + Proto): 0.0235
+All Energy: 166051.7721
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0448
+tobetrained:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5278.990351345059
+only_train_time: 73320.36874129788
+
+-------------Global Round number: 85-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9299
+Averaged Test Accuracy (Prototype Model): 0.9293
+Averaged Train Loss (Regular Model): 0.0095
+Averaged Train Loss (Regular + Proto): 0.0233
+All Energy: 167982.5085
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5339.808807315061
+only_train_time: 74177.27058211087
+
+-------------Global Round number: 86-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9303
+Averaged Test Accuracy (Prototype Model): 0.9295
+Averaged Train Loss (Regular Model): 0.0094
+Averaged Train Loss (Regular + Proto): 0.0230
+All Energy: 169921.7099
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0450
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5400.61997097405
+only_train_time: 75029.1030491568
+
+-------------Global Round number: 87-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9299
+Averaged Train Loss (Regular Model): 0.0089
+Averaged Train Loss (Regular + Proto): 0.0224
+All Energy: 171851.5627
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0449
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5461.589407069045
+only_train_time: 75876.43171906882
+
+-------------Global Round number: 88-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9295
+Averaged Train Loss (Regular Model): 0.0089
+Averaged Train Loss (Regular + Proto): 0.0223
+All Energy: 173765.7216
+Std Test Accuracy (Regular Model): 0.0460
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5522.716764446046
+only_train_time: 76732.14713630789
+
+-------------Global Round number: 89-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9294
+Averaged Train Loss (Regular Model): 0.0089
+Averaged Train Loss (Regular + Proto): 0.0221
+All Energy: 175701.9232
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5583.470050320047
+only_train_time: 77582.29568776791
+
+-------------Global Round number: 90-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9303
+Averaged Test Accuracy (Prototype Model): 0.9298
+Averaged Train Loss (Regular Model): 0.0085
+Averaged Train Loss (Regular + Proto): 0.0216
+All Energy: 177630.9412
+Std Test Accuracy (Regular Model): 0.0459
+Std Test Accuracy (Prototype Model): 0.0442
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5644.151338254047
+only_train_time: 78432.0112953389
+
+-------------Global Round number: 91-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9298
+Averaged Train Loss (Regular Model): 0.0085
+Averaged Train Loss (Regular + Proto): 0.0215
+All Energy: 179536.8027
+Std Test Accuracy (Regular Model): 0.0465
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5705.339897181042
+only_train_time: 79284.63951150682
+
+-------------Global Round number: 92-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9301
+Averaged Test Accuracy (Prototype Model): 0.9305
+Averaged Train Loss (Regular Model): 0.0085
+Averaged Train Loss (Regular + Proto): 0.0214
+All Energy: 181454.6765
+Std Test Accuracy (Regular Model): 0.0461
+Std Test Accuracy (Prototype Model): 0.0441
+tobetrained:
+[7, 5, 6, 9, 1, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5766.944044188032
+only_train_time: 80136.1807093608
+
+-------------Global Round number: 93-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9304
+Averaged Test Accuracy (Prototype Model): 0.9297
+Averaged Train Loss (Regular Model): 0.0081
+Averaged Train Loss (Regular + Proto): 0.0209
+All Energy: 183360.4441
+Std Test Accuracy (Regular Model): 0.0452
+Std Test Accuracy (Prototype Model): 0.0441
+tobetrained:
+[7, 5, 6, 1, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 5828.0781055470325
+only_train_time: 80985.16945615875
+
+-------------Global Round number: 94-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9300
+Averaged Test Accuracy (Prototype Model): 0.9301
+Averaged Train Loss (Regular Model): 0.0081
+Averaged Train Loss (Regular + Proto): 0.0207
+All Energy: 185258.0585
+Std Test Accuracy (Regular Model): 0.0463
+Std Test Accuracy (Prototype Model): 0.0452
+tobetrained:
+[7, 5, 1, 6, 2, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 1 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 5888.836702786026
+only_train_time: 81833.79201843574
+
+-------------Global Round number: 95-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9303
+Averaged Train Loss (Regular Model): 0.0081
+Averaged Train Loss (Regular + Proto): 0.0206
+All Energy: 187156.3597
+Std Test Accuracy (Regular Model): 0.0462
+Std Test Accuracy (Prototype Model): 0.0442
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 9, 1, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 9, 1, 8, 0, 4, 3]
+end Update
+server_global_time: 5949.574208218026
+only_train_time: 82681.11044383078
+
+-------------Global Round number: 96-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9304
+Averaged Test Accuracy (Prototype Model): 0.9303
+Averaged Train Loss (Regular Model): 0.0079
+Averaged Train Loss (Regular + Proto): 0.0203
+All Energy: 189075.6630
+Std Test Accuracy (Regular Model): 0.0455
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[7, 5, 6, 2, 9, 1, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 9 begin training
+Edge 1 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 6010.247973474037
+only_train_time: 83530.21836216276
+
+-------------Global Round number: 97-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9303
+Averaged Test Accuracy (Prototype Model): 0.9308
+Averaged Train Loss (Regular Model): 0.0077
+Averaged Train Loss (Regular + Proto): 0.0199
+All Energy: 190996.2789
+Std Test Accuracy (Regular Model): 0.0457
+Std Test Accuracy (Prototype Model): 0.0441
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 6070.564569379032
+only_train_time: 84379.5548249118
+
+-------------Global Round number: 98-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9302
+Averaged Test Accuracy (Prototype Model): 0.9303
+Averaged Train Loss (Regular Model): 0.0075
+Averaged Train Loss (Regular + Proto): 0.0195
+All Energy: 192916.7281
+Std Test Accuracy (Regular Model): 0.0456
+Std Test Accuracy (Prototype Model): 0.0447
+tobetrained:
+[7, 5, 6, 2, 1, 9, 8, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 2 begin training
+Edge 1 begin training
+Edge 9 begin training
+Edge 8 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+end Update
+server_global_time: 6131.048546465045
+only_train_time: 85231.70196976082
+
+-------------Global Round number: 99-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9304
+Averaged Test Accuracy (Prototype Model): 0.9306
+Averaged Train Loss (Regular Model): 0.0077
+Averaged Train Loss (Regular + Proto): 0.0197
+All Energy: 194845.2506
+Std Test Accuracy (Regular Model): 0.0458
+Std Test Accuracy (Prototype Model): 0.0446
+tobetrained:
+[7, 5, 6, 1, 2, 8, 9, 0, 4, 3]
+Edge 7 begin training
+Edge 5 begin training
+Edge 6 begin training
+Edge 1 begin training
+Edge 2 begin training
+Edge 8 begin training
+Edge 9 begin training
+Edge 0 begin training
+Edge 4 begin training
+Edge 3 begin training
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 6192.425499555047
+only_train_time: 86083.11237331781
+
+-------------Global Round number: 100-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.9314
+Averaged Test Accuracy (Prototype Model): 0.9305
+Averaged Train Loss (Regular Model): 0.0073
+Averaged Train Loss (Regular + Proto): 0.0191
+All Energy: 196771.8617
+Std Test Accuracy (Regular Model): 0.0451
+Std Test Accuracy (Prototype Model): 0.0447
+
+Best accuracy.
+0.9314262875413954
+File path: ../results/FashionMNIST_dir_0.3_imbalance_40_FedProto_test_0.h5
+
+Average time cost: 91763.09s.
+Length:  101
+std for best accurancy: 0.0
+mean for best accurancy: 0.9314262875413954
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 650 	Used Memory: 3.00K
+-------------------------------------------------------------------------------

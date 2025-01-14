@@ -9,11 +9,13 @@ import time
 import random
 import shutil
 from utils.data_utils import read_client_data
-from flcore.clients.clientbase import load_item, save_item
+from utils.io_utils import load_item, save_item
+# from flcore.clients.clientbase import load_item, save_item
+
 from utils.func_utils import *
 from collections import defaultdict
 import torch.nn as nn
-
+import json
 
 class Server(object):
     def __init__(self, args, times):
@@ -96,6 +98,9 @@ class Server(object):
         self.global_classifier = nn.Linear(self.feature_dim, self.num_classes)
         self.buffersize = args.buffersize
         self.N_cloud = defaultdict(int)
+        
+        self.dvfs_data = self.create_objects_from_json()
+        self.maxCPUfreq = max([item["frequency"] for item in self.dvfs_data])
 
     def set_clients(self, clientObj):
         # 加载数据集
@@ -444,7 +449,7 @@ class Server(object):
         print("Averaged Test Accuracy (Prototype Model): {:.4f}".format(proto_acc))
         print("Averaged Train Loss (Regular Model): {:.4f}".format(avg_model_loss))
         print("Averaged Train Loss (Regular + Proto): {:.4f}".format(avg_all_loss))
-        if self.args.DVFS == 1:
+        if self.args.jetson == 1:
             all_energy = sum(
                 [client.energy for client in self.clients]
             )
@@ -458,24 +463,38 @@ class Server(object):
         print("Std Test Accuracy (Regular Model): {:.4f}".format(np.std(accs)))
         print("Std Test Accuracy (Prototype Model): {:.4f}".format(np.std(proto_accs)))
 
-        if self.args.goal == "gltest_umap":
+
+        if "gltest_umap" in self.args.goal:
             prefix_folder = f"umap/{self.dataset}/fd_{self.args.feature_dim}/lam_{self.args.lamda}/local_epochs_{self.local_epochs}_bf_{self.args.buffersize}"
+            save_dataset_path = "testset_onlytrue"
             print("umap_features map")
             X=[]
             Y=[]
             for client in self.clients:
                 features = load_item(client.role, "test_features", client.save_folder_name)
+<<<<<<< HEAD
                 X.extend(features["X"])
                 Y.extend(features["Y"])
             set="trainset"
             save_folder = f"{prefix_folder}/features/{set}"
             save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+=======
+                # X.extend(features["X"])
+                # Y.extend(features["Y"])
+                X.extend(features["X_true"])
+                Y.extend(features["Y_true"])
+            save_folder = f"{prefix_folder}/features/{save_dataset_path}"
+            save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
+>>>>>>> 278a55622e909aa883b35d62263af3c72f626b4e
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
-            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
-            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
+            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
+            # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
             
+<<<<<<< HEAD
             X=[]
             Y=[]
             for client in self.clients:
@@ -490,6 +509,24 @@ class Server(object):
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
             save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
             generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+=======
+            # X=[]
+            # Y=[]
+            # for client in self.clients:
+            #     protos = load_item(client.role, "test_protos", client.save_folder_name)
+            #     for key in protos.keys():
+            #         X.append(protos[key])
+            #         Y.append(key)
+            # save_folder = f"{prefix_folder}/avgprotos/{save_dataset_path}"
+            # save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
+            # if not os.path.exists(save_folder):
+            #     os.makedirs(save_folder)
+            # generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/tsne_{self.algorithm}_visualization.png"
+            # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+            # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
+            # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
+>>>>>>> 278a55622e909aa883b35d62263af3c72f626b4e
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)
@@ -738,27 +775,12 @@ class Server(object):
         return proto_clusters
     
     def default_tensor(self):
-        agg_protos_label =  defaultdict(list)
-        for i in range(self.num_classes):
-            agg_protos_label[i] = torch.zeros(self.feature_dim)
-        return agg_protos_label
-
-        # agg_protos_label = defaultdict(list)
-        # for local_protos in protos_list:
-        #     for label in local_protos["protos"].keys():
-        #         agg_protos_label[label].append(
-        #             local_protos["protos"][label]
-        #             * local_protos["client"].label_counts[label]
-        #         )
-
-        # for [label, proto_list] in agg_protos_label.items():
-        #     if len(proto_list) > 1:
-        #         proto = 0 * proto_list[0].data
-        #         for i in proto_list:
-        #             proto += i.data
-        #         agg_protos_label[label] = proto / self.glprotos_invol_dataset[label]
-        #     else:
-        #         agg_protos_label[label] = (
-        #             proto_list[0].data / self.glprotos_invol_dataset[label]
-        #         )
-        # return agg_protos_label
+        return default_tensor(self.feature_dim, self.num_classes)
+    
+    def create_objects_from_json(
+        self, file_path="./DVFS/mutibackpack_algo/extracted_data.json"
+    ):
+        objects = None
+        with open(file_path, "r") as file:
+            objects = json.load(file)
+        return objects
