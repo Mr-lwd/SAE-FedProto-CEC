@@ -78,6 +78,10 @@ class FedProto_DVFS(Server):
             self.readyList.printTimeinfo()
             self.trans_aggedges_from_readyList()
             self.global_time = self.aggregation_buffer.buffer[-1].eglobal_time
+            
+            time.sleep(1)
+            self.cLib.changeCpuFreq(self.maxCPUfreq)
+            time.sleep(1)
             # 直接计算从id_registration读取id，读取triple
             self.cloudUpdate()
             print("end Update")
@@ -91,7 +95,6 @@ class FedProto_DVFS(Server):
             self.current_epoch += 1
 
             if i % self.eval_gap == 0:
-                self.cLib.changeCpuFreq(self.maxCPUfreq)
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
                 self.evaluate_proto()
