@@ -113,7 +113,7 @@ ALGORITHM_LABELS = {
 MARKERS = ['o', 's', '^', 'D', 'v', '<', '>']
 
 # Define line styles for different algorithms
-LINE_STYLES = ['-', '--', ':', '-.', '-', '-.', '--', ':']
+LINE_STYLES = ['-', '--', ':', '-', '-', '-.', '--', ':']
 
 # 绘制时间成本和测试准确性图表
 # for config in time_model_configs:
@@ -196,9 +196,53 @@ plt.xlabel("Iteration")
 plt.ylabel("Average Train Model Loss")
 # plt.title("Training Loss Analysis (Model)")
 plt.legend()
-plt.grid()
+# plt.grid()
 
-plt.savefig("./Model_loss.png")
+plt.savefig("./Model_loss.png",bbox_inches='tight')
 print("Chart saved to ./Model_loss.png")
+
+plt.clf()
+
+# Create the main figure
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Create an inset axes
+axins = ax.inset_axes([0.30, 0.40, 0.35, 0.35])  # [x, y, width, height] in relative coordinates
+
+for idx, file in enumerate(log_files):
+    algo_name = file.split('_')[0]
+    if algo_name == "FedSAE":
+        gamma = file.split('_')[2]
+        algo_name = f"FedSAE_gam_{gamma}"
+    
+    legend_label = ALGORITHM_LABELS[algo_name]
+    _, accuracies = extract_data(file, "all_clients_time_cost", "Regular")
+    
+    # Only keep first 200 points
+    accuracies = accuracies[:200]
+    
+    # Plot in main axes
+    ax.plot(range(1, len(accuracies) + 1), accuracies, 
+           label=legend_label, linestyle=LINE_STYLES[idx], color=COLORS[idx])
+    
+    # Plot in inset axes
+    axins.plot(range(181, 201), accuracies[180:200], 
+              linestyle=LINE_STYLES[idx], color=COLORS[idx])
+
+# Configure main plot
+ax.set_xlabel("Iteration")
+ax.set_ylabel("Average Test Accuracy")
+ax.legend()
+# ax.grid(True)
+
+# Configure inset plot
+axins.set_xlim(180, 200)
+# axins.grid(True)
+
+# Draw box around the zoomed region
+ax.indicate_inset_zoom(axins)
+
+plt.savefig("./Model_acc.png",bbox_inches='tight')
+print("Chart saved to ./Model_acc.png")
 
 plt.clf()

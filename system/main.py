@@ -11,6 +11,7 @@ import random
 from flcore.servers.serverlocal import Local
 from flcore.servers.serverproto import FedProto
 from flcore.servers.serverproto_DVFS import FedProto_DVFS
+from flcore.servers.serverSAE_DVFS import FedSAE_DVFS
 from flcore.servers.servertgp import FedTGP
 from flcore.servers.serverSAE import FedSAE
 from flcore.servers.servergen import FedGen
@@ -248,6 +249,9 @@ def run(args):
             
         elif args.algorithm == "FedProto_DVFS":
             server = FedProto_DVFS(args, i)
+            
+        elif args.algorithm == "FedSAE_DVFS":
+            server = FedSAE_DVFS(args, i)
 
         elif args.algorithm == "FedSAE":
             server = FedSAE(args, i)

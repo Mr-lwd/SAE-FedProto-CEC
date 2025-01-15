@@ -21,8 +21,8 @@ def get_transmission_time(W=0):
     B = 1 * 10**6  # 信道带宽，1 MHz = 10^6 Hz
     h = 10**-8  # 信道增益
     p = 0.5  # 发射功率，0.5 W
-    sigma = 10**-10  # 噪声功率，10^-10 W
-    division = 51  # 1 + (h * p) / sigma = 51
+    N_0 = 10**-10  # 噪声功率，10^-10 W
+    division = 51  # 1 + (h * p) / N_0 = 51
     # 计算通信延迟
     T_comm = W / (B * math.log2(division))  # 计算通信延迟
     E_comm = p * T_comm  # 计算通信能耗

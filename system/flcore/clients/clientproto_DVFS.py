@@ -136,15 +136,6 @@ class clientProto_DVFS(Client):
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
         
-        # print("local_model_loss", self.local_model_loss)
-        # print("local_gl_loss", local_gl_loss)\
-        # 计算每个 512 维张量的大小（单位：字节）
-        # 计算字典中所有张量的总大小（单位：字节）
-
-        # all_bytes = 0
-        # all_bytes += get_theory_bytes(protos)
-        # all_bytes += get_theory_bytes(agg_protos)
-        # print(f"Tensor size: {all_bytes} bytes")
         self.train_time = local_train_time
         
         save_item(model, self.role, "model", self.save_folder_name)

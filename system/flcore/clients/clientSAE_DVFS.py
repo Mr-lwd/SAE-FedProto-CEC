@@ -8,10 +8,11 @@ from utils.io_utils import load_item, save_item
 from utils.func_utils import *
 from collections import defaultdict
 from .measure_power import *
+from .multibp_algo import get_dvfs_set
 import json
+import ctypes 
 
-
-class clientSAE(Client):
+class clientSAE_DVFS(Client):
     def __init__(self, args, id, train_samples, test_samples, **kwargs):
         super().__init__(args, id, train_samples, test_samples, **kwargs)
         torch.manual_seed(0)
@@ -23,10 +24,18 @@ class clientSAE(Client):
         self.featureAndlabels = None
         self.train_time = 0
         self.trans_time = 0
-        self.local_model_loss = 0
-        self.local_all_loss = 0
+        self.leave_frequency_set=[]
+        self.leave_local_epochs = self.local_epochs - 1
+        self.storeoptimizer = None
+        
+        if self.args.jetson == 1:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            lib_path = os.path.join(current_dir, 'change_config_noprint.so')
+            # 加载共享库
+            print("lib_path", lib_path)
+            self.cLib = ctypes.CDLL(lib_path)
 
-    def train(self):
+    def train(self, firstlocaltrain=False, longest_time=0):
         self.receive_from_edgeserver()
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
@@ -41,6 +50,7 @@ class clientSAE(Client):
             for param in glclassifier.parameters():
                 param.requires_grad = False
         # self.client_protos = load_item(self.role, "protos", self.save_folder_name)
+        # if firstlocaltrain is True:
         if self.optimizer == "SGD":
             optimizer = torch.optim.SGD(
                 model.parameters(),
@@ -57,17 +67,39 @@ class clientSAE(Client):
         # optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate,momentum=self.args.momentum)
         model.to(self.device)
         model.train()
+        
+        if firstlocaltrain is True:
+            self.leave_frequency_set=[]
 
-        max_local_epochs = self.local_epochs
-        if self.train_slow:
-            max_local_epochs = np.random.randint(1, max_local_epochs // 2)
+        if firstlocaltrain is False:
+            self.leave_train_time = longest_time * self.local_epochs - self.first_localepoch_time
+            # print("self.first_localepoch_time", self.first_localepoch_time)
+            # print("longest_time", longest_time)
+            if (self.first_localepoch_time < longest_time - 0.001):
+                self.leave_frequency_set = get_dvfs_set(self.dvfs_data, self.first_localepoch_time, self.leave_train_time, self.leave_local_epochs)
+                print(f"client {self.id} leave_frequency_set: {self.leave_frequency_set}")
+                # exit(0)
+            else:
+                self.leave_frequency_set = []
+
+        # max_local_epochs = self.local_epochs
+        # if self.train_slow:
+        #     max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         if self.args.jetson == 1:
             pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
-        for step in range(max_local_epochs):
-            if self.args.jetson == 1 and step == 1:
-                pl.start()
+            pl.start()
+        leave_freq_counter = 0
+
+        for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
+            if self.args.jetson == 1:
+                if(self.leave_frequency_set==[]):
+                    self.cLib.changeCpuFreq(self.maxCPUfreq)
+                else:
+                    self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                    leave_freq_counter += 1
+                            
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -123,16 +155,22 @@ class clientSAE(Client):
         self.local_all_loss =self.local_all_loss / len(trainloader)
         # print("local_model_loss", local_model_loss.item())
         # save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
+        self.train_time = local_train_time
+        
+        save_item(model, self.role, "model", self.save_folder_name)
+        
+        if firstlocaltrain is True:
+            self.first_localepoch_time = self.train_time
+            return self.id, self.train_time, self.trans_time
+        
         self.cal_mean_and_covariance(protos)
         if self.args.drawGMM == 1:
             save_item(protos, self.role, "features", self.save_folder_name)
         agg_protos = self.agg_func(protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)
-        save_item(model, self.role, "model", self.save_folder_name)
-
-        self.train_time = local_train_time
+        
         if self.trans_delay_simulate is True:
-            self.trans_time = 0.235 * (self.args.feature_dim/64)**2
+            self.trans_time += self.trans_simu_time
         self.train_time_cost["num_rounds"] += 1
         self.train_time_cost["total_cost"] += local_train_time
         # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)

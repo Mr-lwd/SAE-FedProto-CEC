@@ -1,7 +1,7 @@
 import time
 import numpy as np
-from flcore.clients.clientSAE import clientSAE
-from flcore.edges.edgeSAE import Edge_FedSAE
+from flcore.clients.clientSAE_DVFS import clientSAE_DVFS
+from flcore.edges.edgeSAE_DVFS import Edge_FedSAE_DVFS
 from flcore.servers.serverbase import Server
 # from flcore.clients.clientbase import load_item, save_item
 from utils.io_utils import load_item, save_item
@@ -19,9 +19,9 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 import torch.nn.functional as F
+import ctypes 
 
-
-class FedSAE(Server):
+class FedSAE_DVFS(Server):
     def __init__(self, args, times):
         super().__init__(args, times)
         self.glprotos_invol_dataset = defaultdict(int)
@@ -29,9 +29,9 @@ class FedSAE(Server):
         # select slow clients
         self.set_slow_clients()
         # 初始化所有客户端
-        self.set_clients(clientSAE)
+        self.set_clients(clientSAE_DVFS)
         # 初始化所有边缘服务器
-        self.set_edges(Edge_FedSAE)
+        self.set_edges(Edge_FedSAE_DVFS)
 
         self.compute_glprotos_invol_dataset()
         print(f"\nJoin ratio / total clients: {self.join_ratio} / {self.num_clients}")
@@ -51,6 +51,14 @@ class FedSAE(Server):
         [self.edge_register(edge=edge) for edge in self.edges]
         self.global_classifier_init = nn.Linear(self.feature_dim, self.num_classes)
         self.global_classifier = copy.deepcopy(self.global_classifier_init)
+        
+        if self.args.jetson == 1:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            lib_path = os.path.join(current_dir, 'change_config_noprint.so')
+            # 加载共享库
+            print("lib_path", lib_path)
+            self.cLib = ctypes.CDLL(lib_path)
+        
         # save(item=self.global_classifier, role=self.role, item_name="glclassifier", item_path=self.save_folder_name)
 
         self.server_learning_rate = args.server_learning_rate
@@ -74,6 +82,12 @@ class FedSAE(Server):
         self.gap = torch.ones(self.num_classes, device=self.device) * 1e9
         self.min_gap = None
         self.max_gap = None
+        if self.args.jetson == 1:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            lib_path = os.path.join(current_dir, 'change_config_noprint.so')
+            # 加载共享库
+            print("lib_path", lib_path)
+            self.cLib = ctypes.CDLL(lib_path)
 
     def train(self):
         for i in range(self.global_rounds + 1):  # 总论次

@@ -49,13 +49,13 @@ def extract_loss_data(log_file):
 # 定义文件路径
 log_files = [
     # "./FedProto_fd_64_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    # "./FedSAE_fd_64_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    # "./FedSAE_fd_64_bs_7_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    # "./FedSAE_fd_64_bs_5_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    # "./FedSAE_fd_64_bs_3_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    # "./FedSAE_fd_64_bs_1_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    "el_0_FedSAE_fd_64_bs_10_gam_0.5_tugl_1_lr_0.06_mo_0.8_lam_4_batch_256.out",
-    "el_0_FedProto_fd_64_bs_10_lr_0.06_mo_0.8_lam_4_batch_256.out"
+    "./FedSAE_fd_64_bs_10_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "./FedSAE_fd_64_bs_7_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "./FedSAE_fd_64_bs_5_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "./FedSAE_fd_64_bs_3_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "./FedSAE_fd_64_bs_1_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    # "el_0_FedSAE_fd_64_bs_10_gam_0.5_tugl_1_lr_0.06_mo_0.8_lam_4_batch_256.out",
+    # "el_0_FedProto_fd_64_bs_10_lr_0.06_mo_0.8_lam_4_batch_256.out"
 ]
 
 time_model_configs = [ 

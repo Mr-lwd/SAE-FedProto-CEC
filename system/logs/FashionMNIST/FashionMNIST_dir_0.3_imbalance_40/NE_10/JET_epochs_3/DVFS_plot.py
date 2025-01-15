@@ -14,6 +14,15 @@ server_global_times = []
 only_train_times = []
 all_energies = []
 
+
+plt.rcParams.update({
+    'font.size': 14,
+    'axes.labelsize': 16,
+    'axes.titlesize': 18,
+    'xtick.labelsize': 14,
+    'ytick.labelsize': 14,
+    'legend.fontsize': 12
+})
 # 打开文件并读取
 with open(file_path, 'r') as file:
     content = file.read()
@@ -71,24 +80,45 @@ print(f"All Energy R^2: {all_energy_r2:.4f}")
 # 绘制图形
 plt.figure(figsize=(10, 6))
 
+# New elegant color palette
+color1 = '#2E86AB'  # Steel blue
+color2 = '#7A9E7E'  # Sage green
+color3 = '#B86B77'  # Dusty rose
+
+LINE_WIDTH = 2.5        # 减小实线宽度
+DASH_WIDTH = 3         # 虚线宽度稍大
+ALPHA_SOLID = 0.7      # 实线更透明
+ALPHA_DASH = 1.0       # 虚线更不透明
+MARKER_INTERVAL = 5
+# DASH_STYLE = (5, 3)    # 虚线样式：5个点的线段，3个点的间隔
+
 # 绘制原始数据和拟合线
-plt.plot(global_rounds, server_global_times, label='Server Global Time (Original)', color='blue', alpha=0.5)
-plt.plot(global_rounds, server_global_time_pred, label='Server Global Time (Linear Fit)', linestyle='--', color='blue')
+plt.plot(global_rounds, server_global_times, label='Server Global Time (Original)', 
+         color=color1, alpha=ALPHA_SOLID, linewidth=LINE_WIDTH)
+plt.plot(global_rounds[::MARKER_INTERVAL], server_global_time_pred[::MARKER_INTERVAL], 
+         label='Server Global Time (Linear Fit)', linestyle='--', 
+         color=color1, alpha=ALPHA_DASH, linewidth=DASH_WIDTH, marker='o', markersize=6)
 
-plt.plot(global_rounds, only_train_times, label='Only Train Time (Original)', color='green', alpha=0.5)
-plt.plot(global_rounds, only_train_time_pred, label='Only Train Time (Linear Fit)', linestyle='--', color='green')
+plt.plot(global_rounds, only_train_times, label='Only Train Time (Original)', 
+         color=color2, alpha=ALPHA_SOLID, linewidth=LINE_WIDTH)
+plt.plot(global_rounds[::MARKER_INTERVAL], only_train_time_pred[::MARKER_INTERVAL], 
+         label='Only Train Time (Linear Fit)', linestyle='--', 
+         color=color2, alpha=ALPHA_DASH, linewidth=DASH_WIDTH, marker='s', markersize=6)
 
-plt.plot(global_rounds, all_energies, label='All Energy (Original)', color='red', alpha=0.5)
-plt.plot(global_rounds, all_energy_pred, label='All Energy (Linear Fit)', linestyle='--', color='red')
+plt.plot(global_rounds, all_energies, label='All Energy (Original)', 
+         color=color3, alpha=ALPHA_SOLID, linewidth=LINE_WIDTH)
+plt.plot(global_rounds[::MARKER_INTERVAL], all_energy_pred[::MARKER_INTERVAL], 
+         label='All Energy (Linear Fit)', linestyle='--',
+         color=color3, alpha=ALPHA_DASH, linewidth=DASH_WIDTH, marker='^', markersize=6)
 
 # 添加标题和标签
 plt.title('Time and Energy with Linear Fit')
 plt.xlabel('Iterations')
-plt.ylabel('Values (Time(s) / Energy(J)')
+plt.ylabel('Time(s) / Energy(J)')
 plt.legend()
 
 # 显示图形
 # plt.grid(True)
 plt.tight_layout()
 # plt.show()
-plt.savefig("./DVFS_with_fit_and_R2.png", dpi=300)
+plt.savefig("./100rounds_with_fit_and_R2.png", dpi=300)
