@@ -25,6 +25,7 @@ class clientProto_DVFS(Client):
         self.trans_time = 0
         self.leave_frequency_set=[]
         self.leave_local_epochs = self.local_epochs - 1
+        # self.storeoptimizer = None
         
         if self.args.jetson == 1:
             current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -40,19 +41,24 @@ class clientProto_DVFS(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if self.optimizer == "SGD":
-            optimizer = torch.optim.SGD(
-                model.parameters(),
-                lr=self.learning_rate,
-                momentum=self.args.momentum,
-                weight_decay=self.args.weight_decay,
-            )
-        elif self.optimizer == "Adam":
-            optimizer = torch.optim.SGD(
-                model.parameters(),
-                lr=self.learning_rate,
-                weight_decay=self.args.weight_decay,
-            )
+        if firstlocaltrain is True:
+            if self.optimizer == "SGD":
+                optimizer = torch.optim.SGD(
+                    model.parameters(),
+                    lr=self.learning_rate,
+                    momentum=self.args.momentum,
+                    weight_decay=self.args.weight_decay,
+                )
+            elif self.optimizer == "Adam":
+                optimizer = torch.optim.Adam(
+                    model.parameters(),
+                    lr=self.learning_rate,
+                    weight_decay=self.args.weight_decay,
+                )
+        # else:
+        #     optimizer = load_item(self.role, "optimizer", self.save_folder_name)
+                
+            
         model.to(self.device)
         model.train()
 
@@ -74,20 +80,25 @@ class clientProto_DVFS(Client):
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
+        if self.args.jetson == 1:
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
+        leave_freq_counter = 0
+        sleepTime = 0
+        time.sleep(1)
+        if(self.leave_frequency_set==[]):
+                self.cLib.changeCpuFreq(self.maxCPUfreq)
+        time.sleep(1)    
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=1.0, nodes=getNodesByName(['module/cpu']))
-        leave_freq_counter = 0
+            pl.start()
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
-            if(self.leave_frequency_set==[]):
-                self.cLib.changeCpuFreq(self.maxCPUfreq)
-                # print("frequency scale:",self.maxCPUfreq)
-            else:
-                self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+            time.sleep(1)
+            if(self.leave_frequency_set!=[]):
+                # self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1
-            if self.args.jetson == 1:
-                pl.start()
+            time.sleep(1)    
+            sleepTime+=2 
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -127,7 +138,7 @@ class clientProto_DVFS(Client):
                 optimizer.step()
         if self.device == "cuda":
             torch.cuda.synchronize()
-        local_train_time = time.perf_counter() - local_train_start_time
+        local_train_time = time.perf_counter() - local_train_start_time - sleepTime
         if self.args.jetson == 1:
             pl.stop()
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
@@ -139,6 +150,7 @@ class clientProto_DVFS(Client):
         self.train_time = local_train_time
         
         save_item(model, self.role, "model", self.save_folder_name)
+        # save_item(optimizer, self.role, "optimizer", self.save_folder_name)
         # print("firstlocaltrain", firstlocaltrain)
         if firstlocaltrain is True:
             self.first_localepoch_time = self.train_time
