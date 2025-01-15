@@ -482,7 +482,7 @@ if __name__ == "__main__":
     parser.add_argument("-drawround", "--drawround", type=int, default=20)
 
     # FedGen
-    parser.add_argument("-nd", "--noise_dim", type=int, default=512)
+    parser.add_argument("-nd", "--noise_dim", type=int, default=32)
     parser.add_argument("-glr", "--generator_learning_rate", type=float, default=0.0001)
     parser.add_argument("-hd", "--hidden_dim", type=int, default=512)
     parser.add_argument("-se", "--server_epochs", type=int, default=100)

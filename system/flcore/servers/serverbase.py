@@ -472,12 +472,20 @@ class Server(object):
             Y=[]
             for client in self.clients:
                 features = load_item(client.role, "test_features", client.save_folder_name)
+<<<<<<< HEAD
+                X.extend(features["X"])
+                Y.extend(features["Y"])
+            set="trainset"
+            save_folder = f"{prefix_folder}/features/{set}"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+=======
                 # X.extend(features["X"])
                 # Y.extend(features["Y"])
                 X.extend(features["X_true"])
                 Y.extend(features["Y_true"])
             save_folder = f"{prefix_folder}/features/{save_dataset_path}"
             save_path = f"{save_folder}/umap_{self.algorithm}_visualization.png"
+>>>>>>> 278a55622e909aa883b35d62263af3c72f626b4e
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder)
             generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
@@ -486,6 +494,22 @@ class Server(object):
             # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
             # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
             
+<<<<<<< HEAD
+            X=[]
+            Y=[]
+            for client in self.clients:
+                protos = load_item(client.role, "test_protos", client.save_folder_name)
+                for key in protos.keys():
+                    X.append(protos[key])
+                    Y.append(key)
+            save_folder = f"{prefix_folder}/avgprotos/{set}"
+            save_path = f"{save_folder}/{self.algorithm}_umap_visualization.png"
+            if not os.path.exists(save_folder):
+                os.makedirs(save_folder)
+            generate_and_plot_umap(X=X, Y=Y, save_path=save_path)
+            save_path = f"{save_folder}/{self.algorithm}_tsne_visualization.png"
+            generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
+=======
             # X=[]
             # Y=[]
             # for client in self.clients:
@@ -502,6 +526,7 @@ class Server(object):
             # generate_and_plot_tsne(X=X, Y=Y, save_path=save_path)
             # save_path = f"{save_folder}/pca_{self.algorithm}_visualization.png"
             # generate_and_plot_PCA(X=X, Y=Y, save_path=save_path)
+>>>>>>> 278a55622e909aa883b35d62263af3c72f626b4e
         # 如果需要，记录测试准确率
         if acc is None:
             self.rs_test_acc.append(regular_acc)
