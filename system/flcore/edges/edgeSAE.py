@@ -44,11 +44,10 @@ class Edge_FedSAE(Edge):
         self.etrain_time = 0
         self.etrans_time = 0
         self.eparallel_time = 0
-        self.etrans_simu_time = random.randint(10, 100)
+        # self.etrans_simu_time = random.randint(10, 100)
         # Number of clients in edge l containing class j that have participated in aggregation
 
     def train(self, clients):
-
         print(f"Edge {self.id} begin training")
         selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
         self.join_clients = selected_cnum  # 记录本轮参与训练的客户端数量
@@ -121,8 +120,9 @@ class Edge_FedSAE(Edge):
 
     def receive_from_cloudserver(self, cloud_shared_protos=None, global_time=0):
         self.eglobal_time = global_time
-        if self.args.trans_delay_simulate is True:
-            self.etrans_time += self.etrans_simu_time
+        # if self.args.trans_delay_simulate is True:
+            ##接受来自服务器几乎没有延迟，只有平均原型和全局分类器
+            # self.etrans_time += self.etrans_simu_time
         # self.eshared_protos_global = cloud_shared_protos
         return None
 

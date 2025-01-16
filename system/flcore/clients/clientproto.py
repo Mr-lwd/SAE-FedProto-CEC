@@ -119,8 +119,8 @@ class clientProto(Client):
         save_item(model, self.role, "model", self.save_folder_name)
 
         self.train_time = local_train_time
-        if self.trans_delay_simulate is True:
-            self.trans_time += self.trans_simu_time
+        # if self.trans_delay_simulate is True:
+        #     self.trans_time += self.trans_simu_time
         self.train_time_cost["num_rounds"] += 1
         self.train_time_cost["total_cost"] += local_train_time
         # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)
@@ -169,8 +169,8 @@ class clientProto(Client):
         # client
         self.train_time = 0
         self.trans_time = 0
-        if self.trans_delay_simulate is True:
-            self.trans_time += self.trans_simu_time
+        # if self.trans_delay_simulate is True:
+        #     self.trans_time += self.trans_simu_time
         # self.receive_buffer = eshared_protos_global
         return None
 

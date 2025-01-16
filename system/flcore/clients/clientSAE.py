@@ -81,18 +81,19 @@ class clientSAE(Client):
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
                 rep = rep.squeeze(1)
-                output = model.head(rep)
-                if self.args.jetson == 1:
-                    output = output.double()
+                if self.args.gamma < 1 or glclassifier is None:
+                    output = model.head(rep)
+                    if self.args.jetson == 1:
+                        output = output.double()
                 # loss = self.loss(output, y)
                 if glclassifier is not None:
-                    loss = self.loss(output, y) * (1 - self.args.gamma)
+                    if self.args.gamma < 1:
+                        loss = self.loss(output, y) * (1 - self.args.gamma)
+                    else:
+                        loss = 0
                     global_outputs = glclassifier(rep)
                     global_loss = self.loss(global_outputs, y) * self.args.gamma
                     loss += global_loss
-                    if self.args.extra_loss == 1:
-                        consistency_loss = torch.nn.functional.mse_loss(output, global_outputs)
-                        loss += self.args.delta * consistency_loss
                 else:
                     loss = self.loss(output, y)
                 self.local_model_loss += loss.item()
@@ -132,7 +133,7 @@ class clientSAE(Client):
 
         self.train_time = local_train_time
         if self.trans_delay_simulate is True:
-            self.trans_time = 0.235 * (self.args.feature_dim/64)**2
+            self.trans_time += self.trans_simu_time
         self.train_time_cost["num_rounds"] += 1
         self.train_time_cost["total_cost"] += local_train_time
         # c^l_i, X^l_i直接从本地读取，self.role = "Client_"+str(self.id)

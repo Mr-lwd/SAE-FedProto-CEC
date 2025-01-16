@@ -73,7 +73,7 @@
 \end{IEEEkeywords}
 
 \section{Introduction}
-\IEEEPARstart{C}{urrently}, academia is exploring the vision of Industry 5.0 \cite{zeb2024towards_industry5.0, leng2024unlocking_industry5.0}, which focuses on sustainability, resiliency, and human-centered values. In this context, the core concept of Industry 5.0 is achieving customized production with zero waste and minimized cost through advanced technologies such as the Industrial Internet of Things (IIoT) \cite{zeb2024towards_industry5.0,10440434}, where AI technologies support various tasks, such as pattern recognition and decision making, by processing large amounts of real-time data. This drives industrial processes intelligence, significantly improving productivity \cite{liu2024federated_sensors, de2024spatio_agriculture}. Although the conventional centralized learning paradigm, such as cloud computing, provides benefits, including resource sharing and significant scalability, they simultaneously pose issues related to data privacy and security \cite{boobalan2022fusion}. Furthermore, cloud computing encounters difficulties in fulfilling the immediate processing demands of IIoT data because of elevated transmission costs and delays, which in turn have a direct influence on energy consumption and carbon emissions.
+\IEEEPARstart{C}{urrently}, academia is exploring the vision of Industry 5.0 \cite{zeb2024towards_industry5.0,leng2024unlocking_industry5.0}, which focuses on sustainability, resiliency, and human-centered values. In this context, the core concept of Industry 5.0 is achieving customized production with zero waste and minimized cost through advanced technologies such as the Industrial Internet of Things (IIoT) \cite{zeb2024towards_industry5.0,10440434}, where AI technologies support various tasks, such as pattern recognition and decision making, by processing large amounts of real-time data. This drives industrial processes intelligence, significantly improving productivity \cite{liu2024federated_sensors, de2024spatio_agriculture}. Although the conventional centralized learning paradigm, such as cloud computing, provides benefits, including resource sharing and significant scalability, they simultaneously pose issues related to data privacy and security \cite{boobalan2022fusion}. Furthermore, cloud computing encounters difficulties in fulfilling the immediate processing demands of IIoT data because of elevated transmission costs and delays, which in turn have a direct influence on energy consumption and carbon emissions.
 
 %, while addressing global challenges such as environmental protection and social stability \cite{10440434}.  , especially when aggregating user data artificial intelligence, the Internet of Things (IoT), and big data. T is a crucial component of Industry 5.0 
 
@@ -82,11 +82,11 @@ To improve data protection and computation efficiency, Google first introduced f
 
 In FL, computation shifts from the cloud center to the edge, reducing the high-energy consumption of cloud servers. However, the large number of edge devices running for extended periods still results in significant and difficult-to-estimate energy consumption. In the study \cite{liu_hierarchical_2023}, the time and energy consumed for transmitting model parameters far exceed that of the computation. Therefore, in order to further reduce energy consumption and carbon emissions without compromising service quality, an efficient communication method combined with energy-efficient computation is urgently needed.
 
-To address communication challenges, various architectures have been explored. First, the cloud-edge-device hierarchical architecture \cite{abdellatif2022communication_hierarchical,zhou2023hierarchical} balances low latency and efficient learning, effectively resolving the trade-off between communication efficiency and training performance in traditional two-layer systems \cite{liu_hierarchical_2023}. Moreover, to eliminate server communication bottlenecks, decentralized federated learning (DFL) architectures \cite{kalra2023decentralized,al2023decentralized_D2D} enable peer-to-peer collaboration among multiple devices, optimizing two-hop transmission in layered frameworks while further enhancing privacy protection. A large number of energy-efficient algorithms for FL have been proposed. \cite{chen_eefl_2023} and \cite{rashid2023federated_invasion} utilize DVFS (dynamic voltage and frequency scaling) technology to adjust device operating frequency, thereby reducing the high energy consumption caused by high-frequency operations. Lowering the model precision and quantizing can also achieve energy savings, as demonstrated by approaches such as \cite{de2023hed_quantize,chen2022energy_quantize}. 
+To address communication challenges, various architectures have been explored. First, the cloud-edge-device hierarchical architecture \cite{abdellatif2022communication_hierarchical,zhou2023hierarchical} balances low latency and efficient learning, effectively resolving the trade-off between communication efficiency and training performance in traditional two-layer systems \cite{liu_hierarchical_2023}. Moreover, to eliminate server communication bottlenecks, decentralized federated learning (DFL) architectures \cite{kalra2023decentralized,al2023decentralized_D2D} enable peer-to-peer collaboration among multiple devices, optimizing two-hop transmission in layered frameworks while further enhancing privacy protection. A large number of energy-efficient algorithms for FL have been proposed. \cite{rashid2023federated_invasion} and \cite{chen_eefl_2023} utilize DVFS (dynamic voltage and frequency scaling) technology to adjust device operating frequency, thereby reducing the high energy consumption caused by high-frequency operations. Lowering the model precision and quantizing can also achieve energy savings, as demonstrated by approaches such as \cite{de2023hed_quantize,chen2022energy_quantize}. 
 
 However, the introduced architectures still face significant challenges. The global synchronization mechanism struggles to achieve efficient aggregation, particularly in scenarios with heterogeneous device performance and complex communication environments. Furthermore, most architectures \cite{luo2024communication_CEC,wu2023hiflash_CEC} are only suitable for homogeneous models and lack adequate adaptability to heterogeneous model settings. Most existing energy-saving methods rely on static estimations of execution time. However, training time is significantly influenced by factors such as device architecture and workload variations. Theoretical calculations of optimal frequency often results in suboptimal energy efficiency. It is imperative to design architectures capable of balancing model accuracy and energy efficiency in complex scenarios with heterogeneous models and data distributions.
 
-Our proposed method is based on federated prototype learning, which requires clients to upload data distribution information while ensuring privacy protection, effectively addressing data imbalance and model heterogeneity issues. The hierarchical architecture ensures convergence \cite{liu_hierarchical_2023} and significantly reduces the wireless communication overhead. An asynchronous global aggregation approach is proposed, avoiding the time delay caused by global synchronization, thereby reducing the system's energy consumption. Synchronous model aggregation is performed at the edge level, and DVFS technology is introduced to further enhance energy efficiency. 
+Our proposed method is based on federated prototype learning, which requires clients to upload data distribution information while ensuring privacy protection, effectively addressing data imbalance and model heterogeneity issues. The hierarchical architecture ensures convergence \cite{liu_hierarchical_2023} and significantly reduces the wireless communication overhead. An asynchronous global aggregation approach is proposed, avoiding the time delay caused by global synchronization, thereby reducing the system's energy consumption. Synchronous model aggregation is performed at the edge level, and DVFS technology is introduced. 
 
 Specifically, the contributions of this paper are as follows:
 \begin{enumerate}
@@ -98,16 +98,18 @@ Specifically, the contributions of this paper are as follows:
 
 
 \section{Related Work}
-% \subsection{Heterogeneous Federated Learning}
-% \subsection{Federated Prototype Learning}
-With the advancement of digitalization and intelligent technologies, a vast array of IoT devices are dispersed globally, collecting valuable and privacy-sensitive data. Federated Learning (FL) has emerged as a promising paradigm, enabling the training of large models on these edge devices while preserving data privacy. However, traditional FL methods, such as FedAvg\cite{fedavg_google}, face significant performance degradation and increased communication costs when confronted with statistic, model, and device heterogeneity in practical scenarios. Heterogeneous Federated Learning (HtFL)\cite{tan2022fedproto} has been proposed to address these issues, allowing devices to maintain their privacy without sharing private model parameters and accommodating differences in model architectures and data distributions.
+\subsection{Heterogeneous Federated Learning}
+With the advancement of digitalization and intelligent technologies, a vast array of IoT devices are dispersed globally, collecting valuable and privacy-sensitive data. Federated Learning (FL) has emerged as a promising paradigm, enabling the training of large models on these edge devices while preserving data privacy. However, traditional FL methods, such as FedAvg\cite{fedavg_google}, face significant performance degradation and increased communication costs when confronted with statistic, model, and device heterogeneity in practical scenarios. Heterogeneous Federated Learning (HtFL)\cite{tan_fedproto_2021} has been proposed to address these issues, allowing devices to maintain their privacy without sharing private model parameters and accommodating differences in model architectures and data distributions.
 
-Some methods adopt a partially heterogeneous approach, allowing different underlying architectures but sharing the top layer. FedGH\cite{yi2023fedgh} aggregates local feature vectors from clients to train a shared generalized global prediction head, but it overlooks the differences in local features of clients. FedGen\cite{zhu2021data} trains a global representation generator, primarily used to introduce global knowledge to small classifiers. These partially heterogeneous methods allow clients to access limited global knowledge through a smaller global part, leading to performance degradation.
+Some methods adopt a partially heterogeneous approach, allowing different underlying architectures but sharing the top layer. FedGH\cite{yi_fedgh_2023} aggregates local feature vectors from clients to train a shared generalized global prediction head, but it overlooks the significant differences between the local client classification heads and the global prediction head. FedGen\cite{zhu_data-free_fedgen_2021} trains a global representation generator, primarily used to introduce global knowledge to small classifiers. These partially heterogeneous methods allow clients to access limited global knowledge through a smaller global part, leading to performance degradation.
 
-Another set of HtFL methods is fully heterogeneous, achieving this through advanced global knowledge sharing. A classic approach for global knowledge sharing is knowledge distillation. FedDistill\cite{jeong2018communication} shares the model's output logits to train the global model. FedKD\cite{wu2022communication} employs mutual distillation between an auxiliary global model and client models to share knowledge, reducing communication costs. FedKTL\cite{zhang2024upload} transfers knowledge from a pre-trained generator on the server to client models, while sharing task-specific knowledge among clients.
-Another popular approach is sharing compact class representatives, such as prototypes. FedProto\cite{tan2022fedproto} introduces prototypes into federated learning, significantly reducing communication costs, but it still performs suboptimally under heterogeneous data conditions. FedTGP\cite{zhang2024fedtgp} uses contrastive learning to increase the spacing between globally aggregated prototypes, forming more distinct class intervals. However, the spacing between global prototypes continues to increase, and convergence cannot be guaranteed.
+Another set of HtFL methods is fully heterogeneous, achieving this through advanced global knowledge sharing. A classic approach for global knowledge sharing is knowledge distillation. FedDistill\cite{jeong2018communication} shares the model's output logits to train the global model. FedKD \cite{wu2022communication} employs mutual knowledge distillation between an auxiliary global model and client models to share knowledge, reducing communication costs. However, this approach requires edge devices to maintain both the mentor and student models, increasing computational overhead. FedKTL\cite{zhang_upload-efficient_2024} transfers knowledge from a pre-trained generator on the server to client models, while sharing task-specific knowledge among clients. However, edge devices need to download the generated knowledge each round, resulting in significant communication costs.
 
-Addressing the energy constraints characteristic of IoT devices, Dynamic Voltage and Frequency Scaling (DVFS) emerges as a pivotal technique for conserving CPU and GPU energy through the modulation of voltage and frequency levels. This technique finds extensive application in AIoT-related research. You et al. \cite{you2023zeus} introduced a learning-based methodology for DVFS prediction, yielding prediction results of considerable accuracy. Dai et al.\cite{dai2024energy} proposed a dynamic approach to network exit based on the complexity of samples, coupled with corresponding adjustments to GPU frequency. This strategy achieves a significant reduction in power consumption without compromising on timeout constraints.
+\subsection{Federated Prototype Learning}
+One popular approach is sharing compact class representatives, such as prototypes. FedProto\cite{tan_fedproto_2021} introduces prototypes into federated learning, significantly reducing communication costs, but it still performs suboptimally under heterogeneous data conditions. FedTGP\cite{zhang_fedtgp_2024} uses contrastive learning to increase the spacing between globally aggregated prototypes, forming more distinct class intervals. However, while the distance between global prototypes continues to grow, it becomes challenging to bring the few-shot classes closer to the prototype center, and global convergence cannot be guaranteed.
+
+\subsection{Energy Efficiency in IOT}
+Addressing the energy constraints characteristic of IoT devices, Dynamic Voltage and Frequency Scaling (DVFS) emerges as a pivotal technique for conserving CPU and GPU energy through the modulation of voltage and frequency levels. This technique finds extensive application in artificial intelligence of things (AIoT)-related research. You et al. \cite{you2023zeus} introduced a learning-based methodology for DVFS prediction, yielding prediction results of considerable accuracy. Dai et al.\cite{dai2024energy} proposed a dynamic approach to network exit based on the complexity of samples, coupled with corresponding adjustments to GPU frequency. This strategy achieves a significant reduction in power consumption without compromising on timeout constraints.
 
 
 \section{Motivation}
@@ -243,17 +245,28 @@ E_{\text{total}} = \sum_{i=1}^{K} E_{\text{round}, i} = t_{\text{min}}\sum_{i=1}
 \end{equation}
 We employ a dynamic programming algorithm to allocate the optimal frequency for local training in each round, predicting its power consumption and execution time to achieve optimal total energy efficiency.
 
-
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{imgs/structure.png}
+    \caption{General structure of the proposed semi-asynchronous energy-efficient federated prototype learning method}
+    \label{fig:structure}
+\end{figure*}
 
 \subsection{Proposed Algorithm}
 To address the challenges posed by data imbalance, our objective is to improve the classification performance of minority class samples and guide their feature vectors to converge toward the global prototype. Due to the limited effectiveness of simple prototype-based regularization constraints, as illustrated in Fig.\ref{motivation_fedproto_protoagg_noniid}, further guidance is necessary for feature vector updates. Considering the privacy risks associated with direct transmission of raw data, inspired by \cite{luo_no_2021}, we use an estimated Gaussian Mixture Model (GMM) to generate virtual features. An accurate global classifier is then trained on the generated features in the cloud and distributed to all edge servers, ultimately reaching the clients for collaborative training.
 
 The t-SNE visualization of the virtual features and the original features is shown in Figure \ref{tsne_class_0}. We believe that the global classifier can optimize the feature extractor, guiding feature vectors deviating from the center to gradually converge towards the dense regions in the feature space. We follow the assumption that the classifiers are homogeneous \cite{tan_fedproto_2021,zhang_fedtgp_2024}, to reduce complexity.
 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{imgs/tsne_class_0.png}
+  \caption{After the first global round of training, the t-SNE visualization of virtual features and original features on FashionMNIST.}
+  \label{tsne_class_0}
+\end{figure}
 
 % The general framework is shown in Fig.\ref{fig:structure}. First, all clients under edge servers train in parallel, followed by synchronization and aggregation at the edge server level. Each client updates its local model, where the mean used as the local prototype and covariance are computed. After that, the data distribution information is uploaded to the edge server, with the computation defined as follows:  
 % \subsection{General Framework}
-The general framework is shown in Fig.\ref{fig:structure}. First, all clients perform parallel training managed by the edge server, followed by synchronization and aggregation at the edge server side. The local update is carried out in two steps. In the first step, the client completes one round of training at the highest frequency, records the training time for that round, and uploads it to the edge server. The client then waits for the edge server to synchronize with other clients and return the longest training time. In the second step, dynamic programming is used to compute the operating frequency for the subsequent $K-1$ rounds, scaling the operating frequency at the start of each training round. After local training, the mean is computed as the local prototype along with the covariance. The data distribution information is then uploaded to the edge server, with the computation defined as follows:
+The general framework is shown in Fig.\ref{fig:structure}. The details of the proposed algorithm is shown in Algorithm \ref{Algorithm table}. First, all clients perform parallel training managed by the edge server, followed by synchronization and aggregation at the edge server side. The local update is carried out in two steps. In the first step, the client completes one round of training at the highest frequency, records the training time for that round, and uploads it to the edge server. The client then waits for the edge server to synchronize with other clients and return the longest training time. In the second step, dynamic programming is used to compute the operating frequency for the subsequent $K-1$ rounds, scaling the operating frequency at the start of each training round. After local training, the mean is computed as the local prototype along with the covariance. The data distribution information is then uploaded to the edge server, with the computation defined as follows:
 
 \begin{align}
   \label{client mean and covariance}
@@ -294,7 +307,7 @@ At the cloud server side, a semi-asynchronous aggregation strategy is adopted. A
   \end{align}
   
   Then, The global covariance can then be expressed in a manner similar to that of the edge server:
-  \begin{align}
+\begin{align}
   \label{cloud covariance}
   \mathbf{\Sigma}_j &= \frac{1}{\mathcal{N}_{j} - 1} \sum_{l=1}^{L} \Bigg[
   \big(\mathcal{N}^{l,edge}_{j}-1\big) \mathbf{\Sigma}^{l,edge}_{j} + \notag \\
@@ -321,24 +334,11 @@ where $G$ represents the global classifier with parameters $\mathcal{W}$, $\gamm
 % \end{align}
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\linewidth]{imgs/tsne_class_0.png}
-  \caption{After the first global round of training, the t-SNE visualization of virtual features and original features on FashionMNIST.}
-  \label{tsne_class_0}
-\end{figure}
-
-\begin{figure*}[h]
-    \centering
-    \includegraphics[width=1\linewidth]{imgs/structure.png}
-    \caption{General structure of the proposed semi-asynchronous energy-efficient federated prototype learning method}
-    \label{fig:structure}
-\end{figure*}
-
 % \subsection{Details of Algorithm}
 
 % The following is the algorithm.
 \begin{breakablealgorithm}
+\label{Algorithm table}
   \caption{Semi-Asynchronous Energy-Efficient Federated Prototype learning for Client-Edge-Cloud Architectures}
   \begin{algorithmic}[1]
     % \State \textbf{Input: nothing}
@@ -445,15 +445,6 @@ Accuracy tests in Section \ref{Accuracy of Methods} are conducted using a machin
 As described in Section \ref{Energy-Efficient Training}, to validate the energy-saving performance in real-world computation-constrained environments, in Section \ref{Energy Efficiency Experiment} only FashionMNIST and MNIST are tested on NVIDIA Jetson TX2, which has a 6-core ARM CPU and 8GB DDR4 memory. The CPU frequency of Jetson TX2 range spans from 345,600 Hz to 2,035,200 Hz, with a total of 12 discrete frequency values. We utilize the interfaces provided in the NVIDIA documentation to monitor real-time power consumption and scale CPU frequencies.
 
 
-\subsection{Accuracy of Methods}
-\label{Accuracy of Methods}
-As shown in the Table \ref{PC_test}, FedSAE achieves the best performance. In scenarios with high model heterogeneity and a large number of clients, improving accuracy is particularly challenging. During training, FedSAE not only brings difficult-to-classify samples closer to the global prototype but also makes the interclass distances more compact, as illustrated by Fig.\ref{exp_three_tsne}. FedProto shows a suboptimal clustering effect for prototypes, with the averaged prototypes of some clients exhibiting dispersed distributions that do not converge toward the global prototype. FedTGP effectively increases the interclass distance, and the prototype aggregation is better than that of FedProto, but its accuracy is lower.
-
-To illustrate again, the hyperparameter $\gamma$ determines the contribution of the global classifier to the loss during local training. When $\gamma=1$, the global classifier completely replaces the local classifier for training. For MNIST and FashionMNIST, where client models are relatively simple, appropriately tuning the value of $\gamma$ can balance the contributions of global and local classifiers, thus improving training performance. For CIFAR-10, $\gamma=1$ achieves the best performance under various data distributions. We attribute this to the higher model complexity, where relying entirely on the global classifier during training enables more effective adaptation to diverse data distributions.
-
-As shown in Fig.\ref{Cifar10_dir_03_Model_loss}, it can be observed that, except for FedTGP, the loss for other methods stabilizes as training converges. We follow the contrastive learning parameter settings for the cloud server as described in \cite{zhang_fedtgp_2024}, but FedTGP struggles to converge with a larger batch size, indicating that tuned hyperparameters may be necessary to achieve better performance. FedGH fails to train successfully on CIFAR-10. We suppose that this is due to the global classification head being trained solely on the averaged prototypes from clients, resulting in a significant mismatch between the local and global classification heads. Furthermore, the lack of regularization constraints for local training exacerbates this discrepancy, leading to a gradient explosion.
-
-
 \begin{table*}[ht]
     \centering
     % \caption{The number of Edge servers is 10, 4 clients per edge server. Global rounds are set to 200, local epochs are set to 5, batchsize is 256, feature dimension is 512, local learning rate is 0.06, momentum is 0.8, \(\lambda\) is 1. Dirichlet distribution with a concentration parameter is $\alpha$. The buffer size of fedsae matches the number of edge servers.}
@@ -501,12 +492,39 @@ As shown in Fig.\ref{Cifar10_dir_03_Model_loss}, it can be observed that, except
     \end{tabular}
 \end{table*}
 
-\begin{figure}[htbp]
+\subsection{Accuracy of Methods}
+\label{Accuracy of Methods}
+As shown in the Table \ref{PC_test}, FedSAE achieves the best performance. In scenarios with high model heterogeneity and a large number of clients, improving accuracy is particularly challenging. During training, FedSAE not only brings difficult-to-classify samples closer to the global prototype but also makes the interclass distances more compact, as illustrated by Fig.\ref{exp_three_tsne}. FedProto shows a suboptimal clustering effect for prototypes, with the averaged prototypes of some clients exhibiting dispersed distributions that do not converge toward the global prototype. FedTGP effectively increases the interclass distance, and the prototype aggregation is better than that of FedProto, but its accuracy is lower.
+
+To illustrate again, the hyperparameter $\gamma$ determines the contribution of the global classifier to the loss during local training. When $\gamma=1$, the global classifier completely replaces the local classifier for training. For MNIST and FashionMNIST, where client models are relatively simple, appropriately tuning the value of $\gamma$ can balance the contributions of global and local classifiers, thus improving training performance. For CIFAR-10, $\gamma=1$ achieves the best performance under various data distributions. We attribute this to the higher model complexity, where relying entirely on the global classifier during training enables more effective adaptation to diverse data distributions.
+
+
+As shown in Fig.\ref{Cifar10_dir_03_Model_loss}, it can be observed that, except for FedTGP, the loss for other methods stabilizes as training converges. We follow the contrastive learning parameter settings for the cloud server as described in \cite{zhang_fedtgp_2024}, but FedTGP struggles to converge with a larger batch size, indicating that tuned hyperparameters may be necessary to achieve better performance. FedGH fails to train successfully on CIFAR-10. We suppose that this is due to the global classification head being trained solely on the averaged prototypes from clients, resulting in a significant mismatch between the local and global classification heads. Furthermore, the lack of regularization constraints for local training exacerbates this discrepancy. These flaws lead to a gradient explosion.
+
+
+
+\begin{figure*}[htbp]
     \centering
-    \includegraphics[width=0.96\linewidth]{imgs/Cifar10_dir_03_Model_loss.png}
-    \caption{The training loss on CIFAR-10 with $\alpha=0.3$}
-    \label{Cifar10_dir_03_Model_loss}
-\end{figure}
+    \subfloat[Test Accuracy]{%
+        \includegraphics[width=0.45\textwidth]{imgs/Cifar10_dir_03_Model_acc.png}
+        \label{Cifar10_dir_03_Model_acc}
+    }
+    \hfill
+    \subfloat[Train loss]{%
+        \includegraphics[width=0.45\linewidth]{imgs/Cifar10_dir_03_Model_loss.png}
+        \label{Cifar10_dir_03_Model_loss}
+    }
+
+    \caption{Test accuracy and training loss of heterogeneous models on CIFAR-10 with $\alpha=0.3$.}
+    \label{cifar10 train loss and test acc}
+\end{figure*}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=0.96\linewidth]{imgs/Cifar10_dir_03_Model_loss.png}
+%     \caption{The training loss on CIFAR-10 with $\alpha=0.3$}
+%     \label{Cifar10_dir_03_Model_loss}
+% \end{figure}
 
 \begin{figure*}[htbp]
     \centering
@@ -516,10 +534,12 @@ As shown in Fig.\ref{Cifar10_dir_03_Model_loss}, it can be observed that, except
         \label{FedProto_tsne_agg_epoch_200_fd512}
     }
     % 子图2
+    \hfill
     \subfloat[FedSAE($\gamma=1$)]{%
         \includegraphics[width=0.3\textwidth]{imgs/FedSAE_gamma1_bf10_tsne_agg_epoch_200_fd512.png}
         \label{FedSAE_gamma1_bf10_tsne_agg_epoch_200_fd512}
     }
+    \hfill
     \subfloat[FedTGP]{%
         \includegraphics[width=0.3\linewidth]{imgs/FedTGP_tsne_agg_epoch_200_fd512.png}
         \label{FedTGP_tsne_agg_epoch_200_fd512}
@@ -562,9 +582,12 @@ Specifically, for a feature vector with a dimension of 512, where each single-pr
 
 In contrast, for FedSAE, in addition to the average prototypes, the covariance matrix for all categories occupies about 10 MB, leading to a theoretical communication time of 14.8 seconds. To reduce the communication overhead of FedSAE, the dimension of features is set to 64, decreasing the communication time to 0.235 seconds. The global classifier's weights are very small, totaling only 4 KB, so the communication time between the edge and the cloud is approximately 2.35 seconds.
 
-We first run a long-duration FedProto experiment on the Jetson TX2, collecting its energy consumption and runtime data. As shown in Fig.\ref{100rounds_with_fit_and_R2}, it can be observed that when training is performed on the CPU, both runtime and power consumption increase linearly. To enable a more intuitive comparison, we evaluate the metrics for each parameter setting at a specific midpoint, under the same global time conditions. The final accuracy is shown in Table \ref{DVFS_experiment}, with the edge server participating in a total of 1000 updates.
 
-\begin{figure}
+
+We first run a long-duration FedProto experiment on the Jetson TX2, collecting its energy consumption and runtime data. As shown in Fig.\ref{100rounds_with_fit_and_R2}, it can be observed that when training is performed on the CPU, both runtime and power consumption increase linearly. To enable a more intuitive comparison, we collect data from a total of times all edge servers participated in global aggregation is 200. For example, in FedProto, the entire training process consists of 20 global rounds, and we compare the metrics under different parameter settings in Table \ref{DVFS_experiment}. To ensure the consistency of result evaluation, we did not use momentum acceleration.
+
+% The final accuracy is shown in Table \ref{DVFS_experiment}, with the edge server participating in a total of 1000 updates.
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\linewidth]{imgs/100rounds_with_fit_and_R2.png}
   \caption{Train 100 rounds of FedProto on FashionMNIST on Jetson TX2. 10 edges with 4 clients per edge server. The local epochs is 3 and $\alpha$ is 0.3, other experimental settings are consistent with Section \ref{Accuracy of Methods}.}
@@ -574,40 +597,36 @@ We first run a long-duration FedProto experiment on the Jetson TX2, collecting i
 
 \begin{table*}[ht]
     \centering
-    \caption{Local epochs is 3 and Dirichlet distribution parameter $\alpha$ is 0.3. Other Experimental Settings is Consistent with Table \ref{PC_test}. The buffer size (BS) of FedSAE is selected from $\{1, 3, 5, 10\}$. }
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \caption{The total number of times all edge servers participated is 200. Momentum is 0, local epochs is 3 and Dirichlet distribution parameter $\alpha$ is 0.3. Other Experimental Settings is Consistent with Table \ref{PC_test}. The buffer size (BS) of FedSAE is selected from $\{1, 3, 5, 10\}$.}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
-    \textbf{Datasets} & \textbf{Methods} & \textbf{\makecell{Global\\Time(s)}} & \textbf{\makecell{Train\\Time(s)}} & \textbf{\makecell{Prototype\\Acc(\%)}} & \textbf{\makecell{Model\\Acc(\%)}} &\textbf{Energy (kJ)} & \textbf{\makecell{Final prototype\\Acc(\%)}} & \textbf{\makecell{Final model\\Acc(\%)}}\\  
+    \textbf{Datasets} & \textbf{Methods} & \textbf{\makecell{Global\\Time(s)}} & \textbf{\makecell{Train\\Time(s)}} & \textbf{\makecell{Prototype\\Acc(\%)}} & \textbf{\makecell{Model\\Acc(\%)}} &\textbf{Energy (kJ)}\\  
     \hline
     \multirow{6}{*}{MNIST} 
-    & FedSAE($BS=10$) & \multirow{6}{*}{\makecell{1200}} &  &  &  &  &  & \\
-    & FedSAE($BS=5$) &  &  &  &  &  &  & \\
-    & FedSAE($BS=3$) &  &  &  &  &  &  & \\
-    & FedSAE($BS=1$) &  &  &  &  &  &  & \\
+    & FedSAE($BS=10$) &  &  &  &  & \\
+    & FedSAE($BS=5$) &  &  &  &  & \\
+    & FedSAE($BS=3$) &  &  &  &  & \\
+    & FedSAE($BS=1$) &  &  &  &  & \\
     % & Local Train &  &  &  &  &  &  & \\
-    & FedProto &  &  &  &  &  &  & \\
-    & FedProto + DVFS &  &  &  &  &  &  & \\
+    & FedProto &  &  &  &  & \\
+    & FedProto + DVFS &  &  &  &  & \\
     \hline
     \multirow{6}{*}{\makecell{Fashion\\ MNIST}} 
-    & FedSAE($BS=10$) & \multirow{6}{*}{\makecell{1200}} &  &  &  &  & 93.21 & 93.22\\
-    & FedSAE($BS=5$) &  &  &  &  &  & 93.33 & 93.28 \\
-    & FedSAE($BS=3$) &  &  &  &  &  & 93.25 & 93.28\\
-    & FedSAE($BS=1$) &  &  &  &  &  & 93.10 & 93.15 \\
+    & FedSAE($BS=10$) &  &  &  &  & \\
+    & FedSAE($BS=5$) &  &  &  &  &  \\
+    & FedSAE($BS=3$) &  &  &  &  & \\
+    & FedSAE($BS=1$) &  &  &  &  &  \\
     % & Local Train &  &  &  &  &  &  & \\
-    & FedProto &  & 15806 & 89.69 & 91.41 & 3.6877 & 93.00 & 93.01\\
-    & FedProto + DVFS &  &  &  &  &  &  & \\
+    & FedProto & 1252 & 17235 & 85.06 & 88.22 & 4.1161 \\
+    & FedProto + DVFS &  &  &  &  & \\
     \hline
     \end{tabular}
     \label{DVFS_experiment}
 \end{table*}
 
-
-
-% \subsection{Communication Cost}
-
-
-
 \section{Conclusion}
+With the rapid development of the IIoT, achieving high performance and low carbon emissions while ensuring data privacy has become a significant research challenge. In this study, we propose a semi-asynchronous energy-efficient architecture based on federated prototype learning to address the challenges of heterogeneous models and imbalanced data distributions. By utilizing unbiased feature distribution information, virtual features are generated on the cloud server to train a global classifier, which collaborates with local models to enhance model accuracy. By introducing a client-edge-cloud architecture, we significantly reduce communication overhead and achieve energy efficiency optimization through DVFS technology. The experimental results demonstrate that, compared to existing heterogeneous federated learning methods, our approach not only enhances model accuracy but also significantly improves energy efficiency.
+
 
 
 % use section* for acknowledgment

@@ -219,8 +219,9 @@ class clientSAE_DVFS(Client):
         # client
         self.train_time = 0
         self.trans_time = 0
-        if self.trans_delay_simulate is True:
-            self.trans_time += self.trans_simu_time
+        # if self.trans_delay_simulate is True:
+        ##接受来自服务器几乎没有延迟，只有平均原型和全局分类器
+        #     self.trans_time += self.trans_simu_time
         # self.receive_buffer = eshared_protos_global
         return None
 

@@ -44,7 +44,7 @@ class Edge_FedSAE_DVFS(Edge):
         self.etrain_time = 0
         self.etrans_time = 0
         self.eparallel_time = 0
-        self.etrans_simu_time = random.randint(10, 100)
+        # self.etrans_simu_time = random.randint(10, 100)
         # Number of clients in edge l containing class j that have participated in aggregation
 
     def train(self, clients):
@@ -66,7 +66,7 @@ class Edge_FedSAE_DVFS(Edge):
                 # self.send_to_client(clients[selected_cid])
                 id, train_time, trans_time = clients[selected_cid].train(firstlocaltrain=True)
                 self.etrain_time += train_time
-                eparallel_time_list.append((train_time + trans_time))
+                eparallel_time_list.append((train_time))
 
             longest_time_client = max(eparallel_time_list)
             self.eparallel_time += longest_time_client
@@ -83,9 +83,6 @@ class Edge_FedSAE_DVFS(Edge):
             self.eparallel_time += max(eparallel_time_list)
             
         self.eglobal_time += self.eparallel_time
-        if self.args.trans_delay_simulate is True:
-            self.etrans_time += self.etrans_simu_time
-            self.eglobal_time += self.etrans_time
 
         self.edge_update_mean_cov(clients)
 

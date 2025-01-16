@@ -57,7 +57,9 @@ class Client(object):
         self.entropy = 0
         self.initLabels()
         self.trans_delay_simulate = args.trans_delay_simulate
-        self.trans_simu_time = random.randint(1, 10)
+        # self.trans_simu_time = random.randint(1, 10)
+        self.trans_simu_time = 0.235 * (self.args.feature_dim/64)**2
+        print("trans_simu_time", self.trans_simu_time)
         self.receive_buffer = None
         self.optimizer = self.args.optimizer
         self.local_model_loss = 0

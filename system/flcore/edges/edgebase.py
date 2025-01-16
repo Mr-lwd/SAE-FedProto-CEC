@@ -48,6 +48,7 @@ class Edge:
         self.join_clients = 0
         self.save_folder_name = args.save_folder_name_full
         self.device = args.device
+        self.etrans_simu_time = 2.35 * (self.args.feature_dim/64)**2
 
     def refresh_edgeserver(self):
         self.receiver_buffer.clear()
