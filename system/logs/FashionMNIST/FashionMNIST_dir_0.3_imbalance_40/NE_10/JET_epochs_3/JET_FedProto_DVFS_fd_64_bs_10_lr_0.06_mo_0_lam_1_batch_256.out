@@ -1,0 +1,1359 @@
+it is on jetson, train on CPU and no plots
+
+==================================================
+goal = test
+device = cpu
+device_id = 0
+dataset = FashionMNIST_dir_0.3_imbalance_40
+jetson = 1
+DVFS = 0
+drawGMM = 0
+num_classes = 10
+model_family = HCNNs8
+batch_size = 256
+num_workers = 0
+local_learning_rate = 0.06
+use_decay_scheduler = False
+learning_rate_decay = False
+learning_rate_decay_gamma = 0.99
+global_rounds = 20
+edge_epochs = 1
+local_epochs = 3
+algorithm = FedProto_DVFS
+join_ratio = 1.0
+edge_join_ratio = 1.0
+random_join_ratio = False
+num_clients = 40
+num_edges = 10
+prev = 0
+times = 1
+eval_gap = 4
+save_folder_name = temp
+auto_break = False
+feature_dim = 64
+vocab_size = 98635
+max_len = 200
+client_drop_rate = 0.0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_select = False
+time_threthold = 10000
+optimizer = SGD
+lamda = 1.0
+weight_decay = 0
+trans_delay_simulate = False
+momentum = 0.0
+agg_type = 0
+buffersize = 10
+gl_use_clients = 1
+test_useglclassifier = 1
+gamma = 1
+extra_loss = 0
+delta = 1
+drawtsne = 0
+drawround = 20
+noise_dim = 32
+generator_learning_rate = 0.0001
+hidden_dim = 512
+server_epochs = 100
+alpha = 1.0
+beta = 1.0
+mentee_learning_rate = 0.005
+T_start = 0.95
+T_end = 0.98
+server_learning_rate = 0.01
+margin_threthold = 100.0
+generator_path = stylegan/stylegan-xl-models/imagenet64.pkl
+stable_diffusion_prompt = a cat
+server_batch_size = 100
+gen_batch_size = 4
+mu = 50.0
+buffer_size = 10
+==================================================
+Random seed set as 42
+
+============= Running time: 0th =============
+Creating server and clients ...
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes)
+temp/FashionMNIST_dir_0.3_imbalance_40/NE_10/featuredim_64/FedProto_DVFS/SGD/lr_0.06/wd_0/momentum_0.0/lbs_256/lamda_1.0/localepoch_3/buffer_10/gamma_1_usegltest_1/1736949093.5423934
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 0
+label_counts: defaultdict(<class 'int'>, {9: 545, 2: 98, 0: 287, 1: 338, 5: 106, 3: 26, 6: 3, 4: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 1
+label_counts: defaultdict(<class 'int'>, {4: 630, 1: 507, 7: 199, 5: 47, 2: 18, 0: 18, 6: 2, 3: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 2
+label_counts: defaultdict(<class 'int'>, {9: 99, 7: 312, 5: 157, 3: 30, 0: 190, 8: 6, 6: 67, 4: 11, 2: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 3
+label_counts: defaultdict(<class 'int'>, {2: 395, 3: 171, 8: 190, 4: 51, 9: 19, 6: 100, 0: 3, 5: 4})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 4
+label_counts: defaultdict(<class 'int'>, {1: 428, 2: 202, 5: 553, 0: 327, 4: 5})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 5
+label_counts: defaultdict(<class 'int'>, {6: 633, 1: 100, 4: 421, 2: 58, 8: 45, 5: 13, 3: 41, 7: 11, 0: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 6
+label_counts: defaultdict(<class 'int'>, {9: 425, 8: 384, 4: 260, 3: 24, 6: 31, 1: 12, 2: 6, 7: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 7
+label_counts: defaultdict(<class 'int'>, {0: 36, 9: 477, 8: 645, 4: 53, 6: 335, 3: 38, 5: 13, 1: 11, 7: 16, 2: 7})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 8
+label_counts: defaultdict(<class 'int'>, {2: 81, 4: 502, 0: 124, 9: 102, 6: 63, 8: 26, 5: 17, 1: 3, 3: 9})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 9
+label_counts: defaultdict(<class 'int'>, {3: 943, 1: 139, 0: 75, 2: 177})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 10
+label_counts: defaultdict(<class 'int'>, {4: 883, 8: 445, 0: 32, 5: 19, 2: 57, 3: 12, 7: 1, 6: 1, 1: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 11
+label_counts: defaultdict(<class 'int'>, {1: 58, 9: 88, 8: 220, 4: 230, 7: 8, 6: 147, 5: 54, 3: 44, 2: 13})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 12
+label_counts: defaultdict(<class 'int'>, {1: 263, 0: 206, 6: 248, 3: 165, 5: 101, 9: 14, 7: 1, 4: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 13
+label_counts: defaultdict(<class 'int'>, {2: 795, 3: 402, 7: 197, 0: 11, 1: 7, 4: 7, 5: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 14
+label_counts: defaultdict(<class 'int'>, {0: 312, 9: 218, 2: 44, 3: 131, 1: 57, 5: 65, 4: 21, 8: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 15
+label_counts: defaultdict(<class 'int'>, {6: 980, 0: 83, 5: 215, 1: 39, 3: 12, 4: 2})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 16
+label_counts: defaultdict(<class 'int'>, {8: 280, 1: 860, 0: 140, 5: 68, 4: 58, 3: 83, 7: 1, 6: 18})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 17
+label_counts: defaultdict(<class 'int'>, {5: 490, 0: 104, 2: 16, 8: 642, 6: 21, 3: 30, 4: 28, 1: 2, 7: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 18
+label_counts: defaultdict(<class 'int'>, {7: 229, 8: 391, 4: 108, 5: 27, 1: 105, 3: 33, 6: 2, 2: 1, 0: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 19
+label_counts: defaultdict(<class 'int'>, {1: 364, 0: 1204})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 20
+label_counts: defaultdict(<class 'int'>, {9: 858, 5: 157, 1: 290, 7: 131, 4: 216, 0: 37, 3: 1, 6: 44, 2: 19, 8: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 21
+label_counts: defaultdict(<class 'int'>, {1: 383, 6: 225, 4: 288, 0: 136, 3: 62, 8: 4, 9: 1, 7: 16, 5: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 22
+label_counts: defaultdict(<class 'int'>, {5: 243, 7: 387, 1: 102, 6: 68, 8: 15, 0: 12, 2: 9, 4: 1, 3: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 23
+label_counts: defaultdict(<class 'int'>, {5: 40, 0: 232, 8: 141, 9: 256, 1: 32, 6: 1, 3: 2, 7: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 24
+label_counts: defaultdict(<class 'int'>, {0: 62, 9: 235, 3: 447, 4: 309, 5: 120, 8: 15, 1: 2})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 25
+label_counts: defaultdict(<class 'int'>, {7: 222, 3: 388, 5: 505, 2: 154, 1: 34, 4: 7, 0: 81})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 26
+label_counts: defaultdict(<class 'int'>, {8: 568, 0: 443, 7: 172, 4: 139, 2: 116, 5: 5, 3: 26, 1: 10})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 27
+label_counts: defaultdict(<class 'int'>, {5: 530, 2: 186, 6: 253, 0: 88, 3: 75, 4: 5, 7: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 28
+label_counts: defaultdict(<class 'int'>, {7: 176, 8: 93, 4: 1, 9: 281, 0: 22, 2: 50, 1: 63, 3: 24, 5: 14, 6: 2})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 29
+label_counts: defaultdict(<class 'int'>, {7: 363, 5: 337, 3: 170, 1: 20, 8: 138, 9: 164, 2: 27, 4: 2, 6: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 30
+label_counts: defaultdict(<class 'int'>, {0: 243, 7: 302, 9: 43, 8: 229, 5: 24, 1: 2, 3: 2, 2: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 31
+label_counts: defaultdict(<class 'int'>, {2: 510, 4: 583, 0: 98, 1: 223})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 32
+label_counts: defaultdict(<class 'int'>, {9: 1142, 5: 146, 1: 20, 2: 276, 3: 51, 0: 31, 7: 49, 6: 75, 8: 12, 4: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[], in_features=1, num_classes=args.num_classes) model chosen!
+id 33
+label_counts: defaultdict(<class 'int'>, {7: 122, 3: 276, 6: 254, 2: 405, 0: 151, 1: 76, 4: 83})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 34
+label_counts: defaultdict(<class 'int'>, {6: 870, 0: 172, 2: 880, 1: 42, 3: 12, 4: 9})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[512], in_features=1, num_classes=args.num_classes) model chosen!
+id 35
+label_counts: defaultdict(<class 'int'>, {5: 70, 4: 312, 8: 1, 2: 90, 0: 300, 6: 18, 7: 36, 3: 121, 9: 70, 1: 25})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 36
+label_counts: defaultdict(<class 'int'>, {2: 127, 7: 124, 3: 364, 8: 221, 6: 412, 9: 158, 1: 41, 4: 5, 0: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024], in_features=1, num_classes=args.num_classes) model chosen!
+id 37
+label_counts: defaultdict(<class 'int'>, {7: 2178, 3: 1002, 5: 11, 6: 142, 2: 20, 0: 1, 4: 3})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=1, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 38
+label_counts: defaultdict(<class 'int'>, {5: 1124, 1: 545, 2: 23, 3: 21, 0: 14, 4: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+CNN(num_cov=2, hidden_dims=[1024, 512], in_features=1, num_classes=args.num_classes) model chosen!
+id 39
+label_counts: defaultdict(<class 'int'>, {1: 41, 2: 387, 8: 501, 6: 233, 5: 12, 0: 13, 9: 3, 3: 2, 7: 2, 4: 1})
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/clients/change_config_noprint.so
+
+Join ratio / total clients: 1.0 / 40
+Finished creating server and clients.
+lib_path /home/jet/Desktop/SAE_IEEE/SAE-FedProto-CEC/system/flcore/servers/change_config_noprint.so
+tobetrained:
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 34 leave_frequency_set: [1574400, 1574400]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1267200, 1420800]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 39 leave_frequency_set: [1267200, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 11 leave_frequency_set: [1113600, 1113600]
+client 32 leave_frequency_set: [1574400, 1881600]
+client 0 leave_frequency_set: [1113600, 1267200]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1420800]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 25 leave_frequency_set: [1728000, 2035200]
+client 2 leave_frequency_set: [1113600, 1113600]
+client 38 leave_frequency_set: [1574400, 1574400]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1574400, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+client 16 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 2, 8, 9, 6, 1, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 2, 8, 9, 6, 1, 0, 4, 3]
+end Update
+server_global_time: 64.30657849399995
+only_train_time: 1033.0156022160022
+
+-------------Global Round number: 0-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.5392
+Averaged Test Accuracy (Prototype Model): 0.3350
+Averaged Train Loss (Regular Model): 1.7170
+Averaged Train Loss (Regular + Proto): 1.7170
+All Energy: 1590.4925
+Std Test Accuracy (Regular Model): 0.1733
+Std Test Accuracy (Prototype Model): 0.2373
+tobetrained:
+[7, 5, 2, 8, 9, 6, 1, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1574400]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1113600, 1267200]
+Edge 2 begin training
+client 38 leave_frequency_set: [1574400, 1881600]
+client 25 leave_frequency_set: [1728000, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1267200, 1728000]
+client 4 leave_frequency_set: [1113600, 1267200]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 1728000]
+Edge 0 begin training
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+client 26 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 28 leave_frequency_set: [1113600, 1113600]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1267200]
+Edge 3 begin training
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 2, 8, 9, 1, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 2, 8, 9, 1, 6, 0, 4, 3]
+end Update
+server_global_time: 129.00900526199985
+only_train_time: 2079.5110079440014
+tobetrained:
+[7, 5, 2, 8, 9, 1, 6, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+Edge 5 begin training
+client 0 leave_frequency_set: [1113600, 1267200]
+client 29 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1420800, 1881600]
+client 25 leave_frequency_set: [1420800, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1267200, 1267200]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 17 leave_frequency_set: [1728000, 1881600]
+Edge 6 begin training
+client 8 leave_frequency_set: [1113600, 1113600]
+client 4 leave_frequency_set: [1267200, 1267200]
+client 39 leave_frequency_set: [1420800, 1420800]
+Edge 0 begin training
+client 16 leave_frequency_set: [1113600, 1113600]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 2, 1, 8, 6, 9, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 2, 1, 8, 6, 9, 0, 4, 3]
+end Update
+server_global_time: 192.3916541339995
+only_train_time: 3119.1155133289963
+tobetrained:
+[7, 5, 2, 1, 8, 6, 9, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 0 leave_frequency_set: [1267200, 1267200]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 32 leave_frequency_set: [1728000, 1881600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1574400, 1574400]
+client 2 leave_frequency_set: [1113600, 1113600]
+client 5 leave_frequency_set: [1728000, 1728000]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 2035200]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1420800]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1267200, 1267200]
+client 39 leave_frequency_set: [1420800, 1728000]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1420800, 1420800]
+Edge 3 begin training
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 1, 5, 8, 9, 2, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 1, 5, 8, 9, 2, 6, 0, 4, 3]
+end Update
+server_global_time: 255.52802820499983
+only_train_time: 4153.115859725003
+tobetrained:
+[7, 1, 5, 8, 9, 2, 6, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1267200, 1420800]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 2035200]
+Edge 5 begin training
+client 29 leave_frequency_set: [1728000, 1881600]
+client 0 leave_frequency_set: [1113600, 1267200]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1267200]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 38 leave_frequency_set: [1420800, 1574400]
+client 25 leave_frequency_set: [1728000, 1728000]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 39 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1420800]
+client 26 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1420800, 1420800]
+Edge 3 begin training
+client 18 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+end Update
+server_global_time: 318.9833442200006
+only_train_time: 5195.410863012015
+
+-------------Global Round number: 4-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.7454
+Averaged Test Accuracy (Prototype Model): 0.6552
+Averaged Train Loss (Regular Model): 0.8837
+Averaged Train Loss (Regular + Proto): 0.9600
+All Energy: 7994.1603
+Std Test Accuracy (Regular Model): 0.1834
+Std Test Accuracy (Prototype Model): 0.2314
+tobetrained:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+Edge 7 begin training
+client 6 leave_frequency_set: [1113600, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 0 leave_frequency_set: [1113600, 1267200]
+client 29 leave_frequency_set: [1574400, 1574400]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 17 leave_frequency_set: [1728000, 1728000]
+client 24 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 10 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 38 leave_frequency_set: [1420800, 1574400]
+client 5 leave_frequency_set: [1728000, 1728000]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1113600, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1267200]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1267200]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 15 leave_frequency_set: [1574400, 1574400]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 26 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+end Update
+server_global_time: 382.1523156459998
+only_train_time: 6244.2096452510195
+tobetrained:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1267200, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1267200, 1267200]
+Edge 1 begin training
+client 17 leave_frequency_set: [1420800, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 38 leave_frequency_set: [1574400, 1574400]
+client 25 leave_frequency_set: [1728000, 2035200]
+Edge 6 begin training
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1113600, 1267200]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1267200]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 1 leave_frequency_set: [1420800, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 18 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+end Update
+server_global_time: 444.3574474320003
+only_train_time: 7280.593401466023
+tobetrained:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+Edge 7 begin training
+client 6 leave_frequency_set: [1267200, 1420800]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 29 leave_frequency_set: [1728000, 1881600]
+client 0 leave_frequency_set: [1113600, 1267200]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 1728000]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 25 leave_frequency_set: [1728000, 1728000]
+client 38 leave_frequency_set: [1420800, 1574400]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 39 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1267200, 1420800]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 8, 9, 2, 1, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 8, 9, 2, 1, 6, 0, 4, 3]
+end Update
+server_global_time: 509.1760032839984
+only_train_time: 8328.110795711029
+tobetrained:
+[7, 5, 8, 9, 2, 1, 6, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 0 leave_frequency_set: [1113600, 1267200]
+client 29 leave_frequency_set: [1420800, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 5 leave_frequency_set: [1728000, 1728000]
+client 38 leave_frequency_set: [1574400, 1574400]
+Edge 1 begin training
+client 33 leave_frequency_set: [1728000, 1881600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 24 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1267200, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1420800, 1420800]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 1 leave_frequency_set: [1420800, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 18 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 8, 9, 2, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 8, 9, 2, 6, 0, 4, 3]
+end Update
+server_global_time: 572.2355696509994
+only_train_time: 9370.320879394032
+
+-------------Global Round number: 8-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8163
+Averaged Test Accuracy (Prototype Model): 0.7490
+Averaged Train Loss (Regular Model): 0.6112
+Averaged Train Loss (Regular + Proto): 0.6856
+All Energy: 14324.1287
+Std Test Accuracy (Regular Model): 0.1235
+Std Test Accuracy (Prototype Model): 0.1824
+tobetrained:
+[7, 5, 1, 8, 9, 2, 6, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1574400]
+client 0 leave_frequency_set: [1113600, 1267200]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 17 leave_frequency_set: [1728000, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1267200]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 10 leave_frequency_set: [1113600, 1267200]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 25 leave_frequency_set: [1728000, 1881600]
+client 38 leave_frequency_set: [1574400, 1881600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1728000]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 4 leave_frequency_set: [1267200, 1267200]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1574400]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1267200]
+Edge 3 begin training
+client 18 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+end Update
+server_global_time: 634.7085738239994
+only_train_time: 10408.061871678041
+tobetrained:
+[7, 5, 1, 9, 2, 6, 8, 0, 4, 3]
+Edge 7 begin training
+client 6 leave_frequency_set: [1267200, 1420800]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 11 leave_frequency_set: [1113600, 1113600]
+client 29 leave_frequency_set: [1574400, 1574400]
+client 0 leave_frequency_set: [1113600, 1267200]
+Edge 1 begin training
+client 17 leave_frequency_set: [1728000, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1267200, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1574400, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+client 25 leave_frequency_set: [1728000, 1881600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1728000]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 4 leave_frequency_set: [1267200, 1267200]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1420800]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1574400]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 26 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1420800, 1420800]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 36 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 2, 1, 8, 9, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 2, 1, 8, 9, 6, 0, 4, 3]
+end Update
+server_global_time: 698.1845551699998
+only_train_time: 11440.858340461047
+tobetrained:
+[7, 5, 2, 1, 8, 9, 6, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1267200, 1267200]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 5 leave_frequency_set: [1728000, 1881600]
+client 38 leave_frequency_set: [1574400, 1881600]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 1881600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+Edge 9 begin training
+client 14 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1267200, 1267200]
+client 10 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1267200, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1728000]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1420800]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 8, 2, 6, 9, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 8, 2, 6, 9, 0, 4, 3]
+end Update
+server_global_time: 760.8235126640002
+only_train_time: 12479.772965384054
+tobetrained:
+[7, 5, 1, 8, 2, 6, 9, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 0 leave_frequency_set: [1113600, 1267200]
+client 32 leave_frequency_set: [1728000, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 17 leave_frequency_set: [1728000, 1881600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1420800]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1574400, 1881600]
+client 5 leave_frequency_set: [1728000, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 4 leave_frequency_set: [1267200, 1420800]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 16 leave_frequency_set: [1113600, 1113600]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 28 leave_frequency_set: [1113600, 1113600]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1420800]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 2, 8, 9, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 2, 8, 9, 6, 0, 4, 3]
+end Update
+server_global_time: 822.7512675799999
+only_train_time: 13517.892200723069
+
+-------------Global Round number: 12-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8521
+Averaged Test Accuracy (Prototype Model): 0.8055
+Averaged Train Loss (Regular Model): 0.4783
+Averaged Train Loss (Regular + Proto): 0.5531
+All Energy: 20662.2604
+Std Test Accuracy (Regular Model): 0.1012
+Std Test Accuracy (Prototype Model): 0.1282
+tobetrained:
+[7, 5, 1, 2, 8, 9, 6, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1113600, 1267200]
+Edge 1 begin training
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 33 leave_frequency_set: [1728000, 1881600]
+Edge 2 begin training
+client 25 leave_frequency_set: [1728000, 1728000]
+client 38 leave_frequency_set: [1420800, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1267200]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 14 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 4 leave_frequency_set: [1113600, 1267200]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1420800]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1420800, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+end Update
+server_global_time: 886.4217017149977
+only_train_time: 14563.570683324047
+tobetrained:
+[7, 5, 1, 9, 2, 6, 8, 4, 0, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 0 leave_frequency_set: [1113600, 1267200]
+client 29 leave_frequency_set: [1574400, 1574400]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 17 leave_frequency_set: [1728000, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 25 leave_frequency_set: [1420800, 1881600]
+client 38 leave_frequency_set: [1574400, 1574400]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1420800, 1420800]
+Edge 8 begin training
+client 21 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 9, 2, 6, 0, 8, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 9, 2, 6, 0, 8, 4, 3]
+end Update
+server_global_time: 949.7068394320022
+only_train_time: 15608.534766485049
+tobetrained:
+[7, 5, 1, 9, 2, 6, 0, 8, 4, 3]
+Edge 7 begin training
+client 6 leave_frequency_set: [1113600, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 11 leave_frequency_set: [1113600, 1113600]
+client 29 leave_frequency_set: [1574400, 1881600]
+client 0 leave_frequency_set: [1267200, 1267200]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 17 leave_frequency_set: [1420800, 1881600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1267200, 1267200]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 10 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1574400, 1881600]
+client 2 leave_frequency_set: [1113600, 1113600]
+client 25 leave_frequency_set: [1728000, 1881600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 16 leave_frequency_set: [1113600, 1113600]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1113600, 1267200]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1420800, 1420800]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 2, 1, 6, 9, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 2, 1, 6, 9, 8, 0, 4, 3]
+end Update
+server_global_time: 1013.5114556000053
+only_train_time: 16643.580279151018
+tobetrained:
+[7, 5, 2, 1, 6, 9, 8, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 30 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 32 leave_frequency_set: [1420800, 1574400]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1420800, 1574400]
+client 5 leave_frequency_set: [1728000, 1728000]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 12 leave_frequency_set: [1113600, 1113600]
+client 17 leave_frequency_set: [1728000, 2035200]
+client 24 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1267200, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1267200]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1420800]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1420800]
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 20 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 1, 5, 9, 6, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 1, 5, 9, 6, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1076.3047277710039
+only_train_time: 17697.517848127038
+
+-------------Global Round number: 16-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8715
+Averaged Test Accuracy (Prototype Model): 0.8356
+Averaged Train Loss (Regular Model): 0.4101
+Averaged Train Loss (Regular + Proto): 0.4794
+All Energy: 26986.4512
+Std Test Accuracy (Regular Model): 0.0841
+Std Test Accuracy (Prototype Model): 0.1078
+tobetrained:
+[7, 1, 5, 9, 6, 2, 8, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 17 leave_frequency_set: [1728000, 1728000]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 32 leave_frequency_set: [1728000, 1881600]
+client 0 leave_frequency_set: [1113600, 1267200]
+client 11 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 10 leave_frequency_set: [1113600, 1113600]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1420800, 1420800]
+Edge 2 begin training
+client 2 leave_frequency_set: [1113600, 1113600]
+client 38 leave_frequency_set: [1574400, 1574400]
+client 5 leave_frequency_set: [1728000, 2035200]
+Edge 8 begin training
+client 21 leave_frequency_set: [1267200, 1267200]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1420800]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 9, 1, 2, 6, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 9, 1, 2, 6, 8, 0, 4, 3]
+end Update
+server_global_time: 1139.130981749001
+only_train_time: 18740.97688858905
+tobetrained:
+[7, 5, 9, 1, 2, 6, 8, 0, 4, 3]
+Edge 7 begin training
+client 6 leave_frequency_set: [1267200, 1267200]
+client 30 leave_frequency_set: [1113600, 1113600]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1113600, 1267200]
+client 29 leave_frequency_set: [1728000, 1881600]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 33 leave_frequency_set: [1728000, 1728000]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 38 leave_frequency_set: [1420800, 1574400]
+client 5 leave_frequency_set: [1574400, 2035200]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 4 leave_frequency_set: [1113600, 1267200]
+client 39 leave_frequency_set: [1420800, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1420800]
+client 3 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 26 leave_frequency_set: [1113600, 1113600]
+client 15 leave_frequency_set: [1420800, 1574400]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 1 leave_frequency_set: [1267200, 1420800]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 36 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 8, 9, 1, 2, 6, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 8, 9, 1, 2, 6, 0, 4, 3]
+end Update
+server_global_time: 1202.1401707269988
+only_train_time: 19783.960488913057
+tobetrained:
+[7, 5, 8, 9, 1, 2, 6, 0, 4, 3]
+Edge 7 begin training
+client 30 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1267200, 1420800]
+client 23 leave_frequency_set: [1113600, 1113600]
+Edge 5 begin training
+client 32 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1267200, 1267200]
+client 0 leave_frequency_set: [1267200, 1267200]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 22 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 27 leave_frequency_set: [1420800, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+client 10 leave_frequency_set: [1113600, 1113600]
+Edge 1 begin training
+client 33 leave_frequency_set: [1728000, 1881600]
+client 24 leave_frequency_set: [1113600, 1113600]
+client 12 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 25 leave_frequency_set: [1728000, 1728000]
+client 38 leave_frequency_set: [1574400, 1574400]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 6 begin training
+client 39 leave_frequency_set: [1420800, 1728000]
+client 4 leave_frequency_set: [1267200, 1420800]
+client 8 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1420800]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1267200, 1267200]
+client 36 leave_frequency_set: [1113600, 1113600]
+Edge 3 begin training
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+client 18 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+end Update
+server_global_time: 1264.199413454001
+only_train_time: 20823.985251695034
+tobetrained:
+[7, 5, 6, 1, 9, 2, 8, 0, 4, 3]
+Edge 7 begin training
+client 23 leave_frequency_set: [1113600, 1113600]
+client 30 leave_frequency_set: [1113600, 1113600]
+client 6 leave_frequency_set: [1113600, 1420800]
+Edge 5 begin training
+client 29 leave_frequency_set: [1574400, 1881600]
+client 11 leave_frequency_set: [1113600, 1113600]
+client 0 leave_frequency_set: [1113600, 1267200]
+Edge 6 begin training
+client 8 leave_frequency_set: [1113600, 1113600]
+client 39 leave_frequency_set: [1420800, 1420800]
+client 4 leave_frequency_set: [1267200, 1267200]
+Edge 1 begin training
+client 17 leave_frequency_set: [1574400, 1881600]
+client 12 leave_frequency_set: [1113600, 1113600]
+client 24 leave_frequency_set: [1113600, 1113600]
+Edge 9 begin training
+client 10 leave_frequency_set: [1113600, 1113600]
+client 27 leave_frequency_set: [1267200, 1420800]
+client 14 leave_frequency_set: [1113600, 1113600]
+Edge 2 begin training
+client 25 leave_frequency_set: [1728000, 1881600]
+client 38 leave_frequency_set: [1574400, 1574400]
+client 2 leave_frequency_set: [1113600, 1113600]
+Edge 8 begin training
+client 3 leave_frequency_set: [1113600, 1113600]
+client 21 leave_frequency_set: [1267200, 1267200]
+client 22 leave_frequency_set: [1113600, 1113600]
+Edge 0 begin training
+client 15 leave_frequency_set: [1420800, 1574400]
+client 26 leave_frequency_set: [1113600, 1113600]
+client 16 leave_frequency_set: [1113600, 1113600]
+Edge 4 begin training
+client 36 leave_frequency_set: [1113600, 1113600]
+client 28 leave_frequency_set: [1113600, 1113600]
+client 1 leave_frequency_set: [1420800, 1420800]
+Edge 3 begin training
+client 18 leave_frequency_set: [1113600, 1113600]
+client 13 leave_frequency_set: [1113600, 1113600]
+client 20 leave_frequency_set: [1113600, 1113600]
+readyList:
+[7, 5, 1, 2, 9, 6, 8, 0, 4, 3]
+aggregation_buffer:
+[7, 5, 1, 2, 9, 6, 8, 0, 4, 3]
+end Update
+server_global_time: 1326.530498494999
+only_train_time: 21858.64505098803
+
+-------------Global Round number: 20-------------
+
+Evaluate heterogeneous models
+Averaged Test Accuracy (Regular Model): 0.8771
+Averaged Test Accuracy (Prototype Model): 0.8430
+Averaged Train Loss (Regular Model): 0.3693
+Averaged Train Loss (Regular + Proto): 0.4338
+All Energy: 33332.3269
+Std Test Accuracy (Regular Model): 0.0826
+Std Test Accuracy (Prototype Model): 0.1006
+
+Best accuracy.
+0.8771268699326253
+File path: ../results/FashionMNIST_dir_0.3_imbalance_40_FedProto_DVFS_test_0.h5
+
+Average time cost: 28403.65s.
+Length:  6
+std for best accurancy: 0.0
+mean for best accurancy: 0.8771268699326253
+All done!
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 650 	Used Memory: 3.00K
+-------------------------------------------------------------------------------

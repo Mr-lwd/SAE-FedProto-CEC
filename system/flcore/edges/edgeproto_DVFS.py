@@ -65,7 +65,7 @@ class Edge_FedProto_DVFS(Edge):
                 # self.send_to_client(clients[selected_cid])
                 id, train_time, trans_time = clients[selected_cid].train(firstlocaltrain=True)
                 self.etrain_time += train_time
-                eparallel_time_list.append((train_time + trans_time))
+                eparallel_time_list.append((train_time))
 
             longest_time_client = max(eparallel_time_list)
             self.eparallel_time += longest_time_client
