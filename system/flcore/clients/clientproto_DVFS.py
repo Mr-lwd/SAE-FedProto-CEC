@@ -41,20 +41,20 @@ class clientProto_DVFS(Client):
         trainloader = self.load_train_data()
         model = load_item(self.role, "model", self.save_folder_name)
         global_protos = load_item("Server", "global_protos", self.save_folder_name)
-        if firstlocaltrain is True:
-            if self.optimizer == "SGD":
-                optimizer = torch.optim.SGD(
-                    model.parameters(),
-                    lr=self.learning_rate,
-                    momentum=self.args.momentum,
-                    weight_decay=self.args.weight_decay,
-                )
-            elif self.optimizer == "Adam":
-                optimizer = torch.optim.Adam(
-                    model.parameters(),
-                    lr=self.learning_rate,
-                    weight_decay=self.args.weight_decay,
-                )
+        # if firstlocaltrain is True:
+        if self.optimizer == "SGD":
+            optimizer = torch.optim.SGD(
+                model.parameters(),
+                lr=self.learning_rate,
+                momentum=self.args.momentum,
+                weight_decay=self.args.weight_decay,
+            )
+        elif self.optimizer == "Adam":
+            optimizer = torch.optim.Adam(
+                model.parameters(),
+                lr=self.learning_rate,
+                weight_decay=self.args.weight_decay,
+            )
         # else:
         #     optimizer = load_item(self.role, "optimizer", self.save_folder_name)
                 
@@ -87,18 +87,20 @@ class clientProto_DVFS(Client):
         time.sleep(1)
         if(self.leave_frequency_set==[]):
                 self.cLib.changeCpuFreq(self.maxCPUfreq)
-        time.sleep(1)    
+        time.sleep(1)  
+        
+        if firstlocaltrain is False:
+            if(self.leave_frequency_set!=[]):
+                time.sleep(1)
+                self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                time.sleep(1) 
+                # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                leave_freq_counter += 1  
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         if self.args.jetson == 1:
             pl.start()
+            
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
-            time.sleep(1)
-            if(self.leave_frequency_set!=[]):
-                # self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
-                # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
-                leave_freq_counter += 1
-            time.sleep(1)    
-            sleepTime+=2 
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -136,6 +138,15 @@ class clientProto_DVFS(Client):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                
+                if firstlocaltrain is False:
+                    if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
+                        time.sleep(1)
+                        self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                        time.sleep(1) 
+                        # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                        leave_freq_counter += 1  
+                        sleepTime+=2
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time - sleepTime

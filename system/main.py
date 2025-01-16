@@ -412,7 +412,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("-t", "--times", type=int, default=1, help="Running times")
     parser.add_argument(
-        "-eg", "--eval_gap", type=int, default=2, help="Rounds gap for evaluation"
+        "-eg", "--eval_gap", type=int, default=4, help="Rounds gap for evaluation"
     )
     parser.add_argument("-sfn", "--save_folder_name", type=str, default="temp")
     # if save_folder_name == "static", not time.time() is end

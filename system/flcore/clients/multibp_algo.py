@@ -2,7 +2,7 @@ import json
 import copy
 
 
-alpha = 0.7
+alpha = 0.75
 
 class CustomObject:
     def __init__(self, frequency, average_power, infer_time=0):
