@@ -85,21 +85,27 @@ class clientSAE_DVFS(Client):
         # max_local_epochs = self.local_epochs
         # if self.train_slow:
         #     max_local_epochs = np.random.randint(1, max_local_epochs // 2)
-
-        local_train_start_time = time.perf_counter()  # 记录训练开始的时间
+        leave_freq_counter = 0
+        sleepTime = 0
+        
+        if(self.leave_frequency_set==[]):
+            time.sleep(1)
+            self.cLib.changeCpuFreq(self.maxCPUfreq)
+            time.sleep(1)  
+        
+        if firstlocaltrain is False:
+            if(self.leave_frequency_set!=[]):
+                time.sleep(1)
+                self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                time.sleep(1) 
+                # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                leave_freq_counter += 1  
         if self.args.jetson == 1:
             pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
-        leave_freq_counter = 0
-
-        for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
-            if self.args.jetson == 1:
-                if(self.leave_frequency_set==[]):
-                    self.cLib.changeCpuFreq(self.maxCPUfreq)
-                else:
-                    self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
-                    leave_freq_counter += 1
-                            
+        
+        local_train_start_time = time.perf_counter()  # 记录训练开始的时间
+        for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):   
             self.local_model_loss = 0
             self.local_all_loss = 0
             protos = defaultdict(list)
@@ -113,18 +119,21 @@ class clientSAE_DVFS(Client):
                     time.sleep(0.1 * np.abs(np.random.rand()))
                 rep = model.base(x)
                 rep = rep.squeeze(1)
-                output = model.head(rep)
-                if self.args.jetson == 1:
-                    output = output.double()
+                # output = model.head(rep)
+                if self.args.gamma < 1 or glclassifier is None:
+                    output = model.head(rep)
+                    if self.args.jetson == 1:
+                        output = output.double()
                 # loss = self.loss(output, y)
                 if glclassifier is not None:
-                    loss = self.loss(output, y) * (1 - self.args.gamma)
-                    global_outputs = glclassifier(rep)
-                    global_loss = self.loss(global_outputs, y) * self.args.gamma
-                    loss += global_loss
-                    if self.args.extra_loss == 1:
-                        consistency_loss = torch.nn.functional.mse_loss(output, global_outputs)
-                        loss += self.args.delta * consistency_loss
+                    if self.args.gamma < 1:
+                        loss = self.loss(output, y) * (1 - self.args.gamma)
+                        global_outputs = glclassifier(rep)
+                        global_loss = self.loss(global_outputs, y) * self.args.gamma
+                        loss += global_loss
+                    else: # gamma == 1
+                        global_outputs = glclassifier(rep)
+                        loss = self.loss(global_outputs, y)
                 else:
                     loss = self.loss(output, y)
                 self.local_model_loss += loss.item()
@@ -137,13 +146,25 @@ class clientSAE_DVFS(Client):
                             proto_new[i, :] = global_protos[y_c].data
                     loss += self.loss_mse(proto_new, rep) * self.lamda
                 self.local_all_loss += loss.item()
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                
+                if firstlocaltrain is False and step == self.leave_local_epochs - 1:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                
+                if firstlocaltrain is False:
+                    if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
+                        time.sleep(1)
+                        self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                        time.sleep(1) 
+                        # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                        leave_freq_counter += 1  
+                        sleepTime+=2
+                
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time

@@ -85,10 +85,10 @@ class clientProto(Client):
                     loss += self.loss_mse(proto_new, rep) * self.lamda
 
                 self.local_all_loss += loss.item()
-
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                if step == max_local_epochs - 1:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 loss.backward()

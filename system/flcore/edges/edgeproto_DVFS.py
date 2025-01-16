@@ -84,9 +84,9 @@ class Edge_FedProto_DVFS(Edge):
             # self.edgeAggregate(clients)
             # self.edgeUpdate() not implement When edge_epochs is 1
         self.eglobal_time += self.eparallel_time
-        if self.args.trans_delay_simulate is True:
-            self.etrans_time += self.etrans_simu_time
-            self.eglobal_time += self.etrans_time
+        # if self.args.trans_delay_simulate is True:
+            # self.etrans_time += self.etrans_simu_time
+            # self.eglobal_time += self.etrans_time
 
         return self.eglobal_time, self.etrain_time, self.etrans_time
 
@@ -131,8 +131,8 @@ class Edge_FedProto_DVFS(Edge):
 
     def receive_from_cloudserver(self, cloud_shared_protos=None, global_time=0):
         self.eglobal_time = global_time
-        if self.args.trans_delay_simulate is True:
-            self.etrans_time += self.etrans_simu_time
+        # if self.args.trans_delay_simulate is True:
+        #     self.etrans_time += self.etrans_simu_time
         # self.eshared_protos_global = cloud_shared_protos
         return None
 
