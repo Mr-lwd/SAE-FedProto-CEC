@@ -52,6 +52,14 @@
 
 \title{Semi-Asynchronous Energy-Efficient Federated Prototype Learning for Client-Edge-Cloud Architectures}
 
+\author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
+        John~Doe,~\IEEEmembership{Fellow,~OSA,}
+        and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
+\thanks{M. Shell was with the Department
+of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
+\thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
+\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
 % \author{IEEE Publication Technology,~\IEEEmembership{Staff,~IEEE,}
 
 % The paper headers
@@ -65,11 +73,14 @@
 \maketitle
 
 \begin{abstract}
+As Industry 5.0 advances rapidly, the Industrial Internet of Things (IIoT) integrates AI technology to greatly elevate the intelligence of production processes. However, this advancement results in faster data generation and a higher demand for data processing in industrial scenario, leading to sustained high-load operation of edge devices and cloud servers, thereby increasing carbon emissions and raising data security concerns. The implementation of federated learning (FL) in IIoT frameworks effectively distributes the computational burden between the client and server, resolving privacy issues, and enhancing energy efficiency. Furthermore, within an IIoT system marked by heterogeneous AI models and imbalanced data, it is challenging to achieve energy efficiency while improving model performance. To tackle these challenges, we present a semi-asynchronous, energy-efficient federated prototype learning approach tailored for client-edge-cloud architectures. This method uploads data distribution instead of the raw data for privacy protection, employing Dynamic Voltage and Frequency Scaling (DVFS) technology to manage power consumption during training, thus achieving optimal energy efficiency. To boost model performance, we confront data imbalance by collecting feature distribution data from clients on the cloud server, creating virtual samples, and training a global classifier to promote local client learning. Our experiments across various datasets show that the proposed method improves model accuracy and significantly reduces energy use compared to competitive methods.
 
+
+%With the rapid development of Industry 5.0, the Industrial Internet of Things (IIoT), as a core component, integrates AI technology to significantly enhance the intelligence level of production processes. The shift of computing from central clouds to IoT edge devices reduces the energy consumption of high-performance computing. However, the increasing speed of data generation and the growing demand for data processing have led to prolonged high-load operation of edge devices, exacerbating carbon emissions and posing data security risks. The integration of federated learning (FL) with IIoT addresses privacy protection issues and efficiently utilizes the computational capabilities of edge devices to aggregate a powerful model at a global level. In practical environments characterized by heterogeneous models and data imbalance, it is challenging to achieve energy efficiency while improving network model performance. Therefore, we propose a Semi-Asynchronous Energy-Efficient Federated Prototype Learning method for Client-Edge-Cloud Architectures, which aims to reduce communication overhead and introduces Dynamic Voltage and Frequency Scaling (DVFS) technology during training to dynamically manage power consumption, achieving optimal energy efficiency. To enhance model performance, we address data imbalance by aggregating feature distribution information from clients on the cloud server, generating virtual vectors, and training a global classifier to assist local client training. Experiments on various datasets demonstrate that our method can improve model accuracy and significantly reduce energy consumption, outperforming the compared methods.
 \end{abstract}
 
 \begin{IEEEkeywords}
-  Federated Prototype Learning, Hierarchical Architecture, Heterogeneous Models, Asynchronous Communication, Energy Efficiency
+  Federated Prototype Learning, Industrial Internet of Things, Hierarchical Architecture, Energy Efficiency
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -89,12 +100,12 @@ However, the introduced architectures still face significant challenges. The glo
 Our proposed method is based on federated prototype learning, which requires clients to upload data distribution information while ensuring privacy protection, effectively addressing data imbalance and model heterogeneity issues. The hierarchical architecture ensures convergence \cite{liu_hierarchical_2023} and significantly reduces the wireless communication overhead. An asynchronous global aggregation approach is proposed, avoiding the time delay caused by global synchronization, thereby reducing the system's energy consumption. Synchronous model aggregation is performed at the edge level, and DVFS technology is introduced. 
 
 Specifically, the contributions of this paper are as follows:
-\begin{enumerate}
+\begin{itemize}
     \item We collect privacy-independent data distribution information to train a global classifier on the cloud, which guides local client training, thereby enhancing prototype aggregation effectiveness and model accuracy.  
     \item We replace global synchronous aggregation with semi-asynchronous aggregation, which achieves the same model accuracy as synchronous aggregation without the need to account for complex staleness issues.  
     \item During the training process, we synchronize client first-round training time at the edge level and utilize DVFS to dynamically scale frequencies, achieving efficient energy savings.  
     \item Compared to popular heterogeneous federated learning methods, experimental results demonstrate that the proposed approach not only improves model accuracy but also significantly enhances energy efficiency.
-\end{enumerate} 
+\end{itemize} 
 
 
 \section{Related Work}
@@ -247,7 +258,7 @@ We employ a dynamic programming algorithm to allocate the optimal frequency for 
 
 \begin{figure*}[ht]
     \centering
-    \includegraphics[width=1\linewidth]{imgs/structure.png}
+    \includegraphics[width=0.85\linewidth]{imgs/structure.png}
     \caption{General structure of the proposed semi-asynchronous energy-efficient federated prototype learning method}
     \label{fig:structure}
 \end{figure*}
@@ -582,9 +593,36 @@ Specifically, for a feature vector with a dimension of 512, where each single-pr
 
 In contrast, for FedSAE, in addition to the average prototypes, the covariance matrix for all categories occupies about 10 MB, leading to a theoretical communication time of 14.8 seconds. To reduce the communication overhead of FedSAE, the dimension of features is set to 64, decreasing the communication time to 0.235 seconds. The global classifier's weights are very small, totaling only 4 KB, so the communication time between the edge and the cloud is approximately 2.35 seconds.
 
+\begin{table*}[htbp]
+    \centering
+    \caption{The total number of times all edge servers participated is 200. Momentum is 0, local epochs is 3 and Dirichlet distribution parameter $\alpha$ is 0.3. Other Experimental Settings is Consistent with Table \ref{PC_test}. The buffer size (BS) of FedSAE is selected from $\{1, 3, 5, 10\}$.}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Datasets} & \textbf{Methods} & \textbf{\makecell{Global Time(s)}}& \textbf{\makecell{Train Time(s)}}& \textbf{\makecell{Prototype Acc(\%)}}& \textbf{\makecell{Model Acc(\%)}}&\textbf{Energy (kJ)}\\  
+    \hline
+    \multirow{6}{*}{MNIST} 
+    & FedSAE($BS=10$) & 1203 & 20849 & 94.82 & \textbf{95.50} & 29.745 \\
+    & FedSAE($BS=5$) & 981 & 21175 & 94.73 & 95.02 & 28.611 \\
+    & FedSAE($BS=3$) & 920 & 20431 & \textbf{95.03} & 95.17 & 29.487 \\
+    & FedSAE($BS=1$) & 837 & 20382 & 94.91 & 95.21 & 29.673 \\
+    % & Local Train &  &  &  &  &  &  & \\
+    & FedProto & 1058 & 15942 & 84.58 & 93.46 & \textbf{36.491} \\
+    & FedProto + DVFS & 1103 & 19248 & 86.10 & 93.51 & 28.064 \\
+    \hline
+    \multirow{6}{*}{\makecell{Fashion\\ MNIST}} 
+    & FedSAE($BS=10$) & 1509  & 23691  &  \textbf{89.92}&  \textbf{90.05} & 32.013\\
+    & FedSAE($BS=5$) & 1104  & 22874 &  89.45 &  89.56 & 32.976 \\
+    & FedSAE($BS=3$) & 1021 & 23450 &  89.72 &  89.65 & 33.540 \\
+    & FedSAE($BS=1$) & 924 & 23976 &  89.33 &  89.38 & 32.721 \\
+    % & Local Train &  &  &  &  &  &  & \\
+    & FedProto & 1372 & 17235 & 85.06 & 88.22 & \textbf{39.724} \\
+    & FedProto + DVFS & 1397 & 21858 &  84.30&  87.71& 31.853 \\
+    \hline
+    \end{tabular}
+    \label{DVFS_experiment}
+\end{table*}
 
-
-We first run a long-duration FedProto experiment on the Jetson TX2, collecting its energy consumption and runtime data. As shown in Fig.\ref{100rounds_with_fit_and_R2}, it can be observed that when training is performed on the CPU, both runtime and power consumption increase linearly. To enable a more intuitive comparison, we collect data from a total of times all edge servers participated in global aggregation is 200. For example, in FedProto, the entire training process consists of 20 global rounds, and we compare the metrics under different parameter settings in Table \ref{DVFS_experiment}. To ensure the consistency of result evaluation, we did not use momentum acceleration.
+We first run a long-duration FedProto experiment on the Jetson TX2, collecting its energy consumption and runtime data. As shown in Fig.\ref{100rounds_with_fit_and_R2}, it can be observed that when training is performed on the CPU, both runtime and power consumption increase linearly. To enable a more intuitive comparison, we collect data from a total of times all edge servers participated in global aggregation is 200. For example, in FedProto, the entire training process consists of 20 global rounds, and we compare the metrics under different parameter settings in Table \ref{DVFS_experiment}. To ensure the consistency of result evaluation, we did not use momentum acceleration. 
 
 % The final accuracy is shown in Table \ref{DVFS_experiment}, with the edge server participating in a total of 1000 updates.
 \begin{figure}[htbp]
@@ -595,37 +633,11 @@ We first run a long-duration FedProto experiment on the Jetson TX2, collecting i
 \end{figure}
 
 
-\begin{table*}[ht]
-    \centering
-    \caption{The total number of times all edge servers participated is 200. Momentum is 0, local epochs is 3 and Dirichlet distribution parameter $\alpha$ is 0.3. Other Experimental Settings is Consistent with Table \ref{PC_test}. The buffer size (BS) of FedSAE is selected from $\{1, 3, 5, 10\}$.}
-    \begin{tabular}{|c|c|c|c|c|c|c|}
-    \hline
-    \textbf{Datasets} & \textbf{Methods} & \textbf{\makecell{Global\\Time(s)}} & \textbf{\makecell{Train\\Time(s)}} & \textbf{\makecell{Prototype\\Acc(\%)}} & \textbf{\makecell{Model\\Acc(\%)}} &\textbf{Energy (kJ)}\\  
-    \hline
-    \multirow{6}{*}{MNIST} 
-    & FedSAE($BS=10$) &  &  &  &  & \\
-    & FedSAE($BS=5$) &  &  &  &  & \\
-    & FedSAE($BS=3$) &  &  &  &  & \\
-    & FedSAE($BS=1$) &  &  &  &  & \\
-    % & Local Train &  &  &  &  &  &  & \\
-    & FedProto &  &  &  &  & \\
-    & FedProto + DVFS &  &  &  &  & \\
-    \hline
-    \multirow{6}{*}{\makecell{Fashion\\ MNIST}} 
-    & FedSAE($BS=10$) &  &  &  &  & \\
-    & FedSAE($BS=5$) &  &  &  &  &  \\
-    & FedSAE($BS=3$) &  &  &  &  & \\
-    & FedSAE($BS=1$) &  &  &  &  &  \\
-    % & Local Train &  &  &  &  &  &  & \\
-    & FedProto & 1252 & 17235 & 85.06 & 88.22 & 4.1161 \\
-    & FedProto + DVFS &  &  &  &  & \\
-    \hline
-    \end{tabular}
-    \label{DVFS_experiment}
-\end{table*}
+As shown in Table \ref{DVFS_experiment}, the results indicate that FedSAE achieves better overall performance than FedProto in terms of global parallel time, accuracy, and energy consumption. By adjusting the buffer size, FedSAE maintains model accuracy while significantly reducing global time, demonstrating the effectiveness of the asynchronous approach. Meanwhile, the dynamic energy-saving capability of the proposed DVFS method further improves energy efficiency, reducing energy consumption by approximately 18\% compared to FedProto within an acceptable timeout range.
+
 
 \section{Conclusion}
-With the rapid development of the IIoT, achieving high performance and low carbon emissions while ensuring data privacy has become a significant research challenge. In this study, we propose a semi-asynchronous energy-efficient architecture based on federated prototype learning to address the challenges of heterogeneous models and imbalanced data distributions. By utilizing unbiased feature distribution information, virtual features are generated on the cloud server to train a global classifier, which collaborates with local models to enhance model accuracy. By introducing a client-edge-cloud architecture, we significantly reduce communication overhead and achieve energy efficiency optimization through DVFS technology. The experimental results demonstrate that, compared to existing heterogeneous federated learning methods, our approach not only enhances model accuracy but also significantly improves energy efficiency.
+With the rapid development of the IIoT, achieving high performance and low carbon emissions while ensuring data privacy has become a significant research challenge. In this study, we propose a semi-asynchronous energy-efficient architecture based on federated prototype learning to address the challenges of heterogeneous models and imbalanced data distributions. By utilize unbiased feature distribution information, we generate virtual features on the cloud server to train a global classifier, which collaborates with local models to enhance model accuracy. We introduce a client-edge-cloud architecture, and significantly reduce communication overhead and achieve energy efficiency optimization through DVFS technology. The experimental results demonstrate that, compared to existing heterogeneous federated learning methods, our approach not only enhances model accuracy but also significantly improves energy efficiency.
 
 
 
