@@ -80,8 +80,6 @@ class clientProto_DVFS(Client):
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
-        if self.args.jetson == 1:
-            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
         leave_freq_counter = 0
         sleepTime = 0
         time.sleep(1)
@@ -96,10 +94,11 @@ class clientProto_DVFS(Client):
                 time.sleep(1) 
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1  
-        local_train_start_time = time.perf_counter()  # 记录训练开始的时间
+        
         if self.args.jetson == 1:
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
-            
+        local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
             self.local_model_loss = 0
             self.local_all_loss = 0
@@ -130,10 +129,10 @@ class clientProto_DVFS(Client):
                     loss += self.loss_mse(proto_new, rep) * self.lamda
 
                 self.local_all_loss += loss.item()
-
-                for i, yy in enumerate(y):
-                    y_c = yy.item()
-                    protos[y_c].append(rep[i, :].detach().data)
+                if firstlocaltrain is False and step == self.leave_local_epochs - 1:
+                    for i, yy in enumerate(y):
+                        y_c = yy.item()
+                        protos[y_c].append(rep[i, :].detach().data)
 
                 optimizer.zero_grad()
                 loss.backward()
