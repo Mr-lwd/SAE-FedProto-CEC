@@ -2,7 +2,7 @@ import json
 import copy
 
 
-alpha = 0.75
+alpha = 1.0
 
 class CustomObject:
     def __init__(self, frequency, average_power, infer_time=0):
@@ -21,16 +21,17 @@ def knapsack_problem(objects, max_frequency_time, leave_time, num_items=1):
     for item in tempdata:
         if item["frequency"] == max_frequency:
             obj = CustomObject(
-                item["frequency"], item["average_power"], max_frequency_time
+                item["frequency"], item["average_power"], int(round(max_frequency_time))
             )
         else:
             obj = CustomObject(
                 item["frequency"],
                 item["average_power"],
-                max_frequency_time * (max_frequency / item["frequency"]) ** alpha,
+                int(round(max_frequency_time * (max_frequency / item["frequency"]) ** alpha)),
             )
         time_energy_tuple.append(obj)
-    leave_time=int(round(leave_time))
+    leave_time=int(leave_time)
+    print("leave_time",leave_time)
     # dp[t] represents the minimum energy to achieve total time t
     dp = [[float("inf")] * (num_items + 1) for _ in range(leave_time + 1)]
     dp[0][0] = 0

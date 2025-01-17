@@ -70,7 +70,7 @@ class Edge_FedSAE_DVFS(Edge):
             longest_time_client = max(eparallel_time_list)
             self.eparallel_time += longest_time_client
             # train to end
-            
+            print("longest_time_client 1st:", longest_time_client)
             
             eparallel_time_list = []
             for selected_cid in self.id_registration:
@@ -78,6 +78,7 @@ class Edge_FedSAE_DVFS(Edge):
                 id, train_time, trans_time = clients[selected_cid].train(firstlocaltrain=False,longest_time = longest_time_client)
                 self.etrain_time += train_time
                 eparallel_time_list.append((train_time + trans_time))
+            print("eparallel_time_list 2nd:", eparallel_time_list)
             print("theory longest time:", longest_time_client * self.args.local_epochs)
             
             self.eparallel_time += max(eparallel_time_list)
