@@ -48,7 +48,6 @@ class Edge_FedSAE_DVFS(Edge):
         # Number of clients in edge l containing class j that have participated in aggregation
 
     def train(self, clients):
-
         print(f"Edge {self.id} begin training")
         selected_cnum = max(int(self.clients_per_edge * self.args.join_ratio), 1)
         self.join_clients = selected_cnum  # 记录本轮参与训练的客户端数量
@@ -83,6 +82,7 @@ class Edge_FedSAE_DVFS(Edge):
             self.eparallel_time += max(eparallel_time_list)
             
         self.eglobal_time += self.eparallel_time
+        print(f"edge {self.id} global time: {self.eglobal_time}")
 
         self.edge_update_mean_cov(clients)
 
@@ -133,8 +133,8 @@ class Edge_FedSAE_DVFS(Edge):
 
     def receive_from_cloudserver(self, cloud_shared_protos=None, global_time=0):
         self.eglobal_time = global_time
-        if self.args.trans_delay_simulate is True:
-            self.etrans_time += self.etrans_simu_time
+        # if self.args.trans_delay_simulate is True:
+        #     self.etrans_time += self.etrans_simu_time
         # self.eshared_protos_global = cloud_shared_protos
         return None
 

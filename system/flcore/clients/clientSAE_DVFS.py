@@ -70,6 +70,10 @@ class clientSAE_DVFS(Client):
         
         if firstlocaltrain is True:
             self.leave_frequency_set=[]
+            time.sleep(1)
+            self.cLib.changeCpuFreq(self.maxCPUfreq)
+            time.sleep(1)  
+            
 
         if firstlocaltrain is False:
             self.leave_train_time = longest_time * self.local_epochs - self.first_localepoch_time
@@ -88,11 +92,6 @@ class clientSAE_DVFS(Client):
         leave_freq_counter = 0
         sleepTime = 0
         
-        if(self.leave_frequency_set==[]):
-            time.sleep(1)
-            self.cLib.changeCpuFreq(self.maxCPUfreq)
-            time.sleep(1)  
-        
         if firstlocaltrain is False:
             if(self.leave_frequency_set!=[]):
                 time.sleep(1)
@@ -101,7 +100,7 @@ class clientSAE_DVFS(Client):
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1  
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
             pl.start()
         
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
@@ -129,10 +128,14 @@ class clientSAE_DVFS(Client):
                     if self.args.gamma < 1:
                         loss = self.loss(output, y) * (1 - self.args.gamma)
                         global_outputs = glclassifier(rep)
+                        if self.args.jetson == 1:
+                            global_outputs = global_outputs.double()
                         global_loss = self.loss(global_outputs, y) * self.args.gamma
                         loss += global_loss
                     else: # gamma == 1
                         global_outputs = glclassifier(rep)
+                        if self.args.jetson == 1:
+                            global_outputs = global_outputs.double()
                         loss = self.loss(global_outputs, y)
                 else:
                     loss = self.loss(output, y)
@@ -156,22 +159,23 @@ class clientSAE_DVFS(Client):
                 loss.backward()
                 optimizer.step()
                 
-                if firstlocaltrain is False:
-                    if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
-                        time.sleep(1)
-                        self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
-                        time.sleep(1) 
-                        # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
-                        leave_freq_counter += 1  
-                        sleepTime+=2
+            if firstlocaltrain is False:
+                if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
+                    time.sleep(1)
+                    self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                    time.sleep(1) 
+                    # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                    leave_freq_counter += 1  
+                    sleepTime+=2
                 
         if self.device == "cuda":
             torch.cuda.synchronize()
-        local_train_time = time.perf_counter() - local_train_start_time
+        local_train_time = time.perf_counter() - local_train_start_time - sleepTime
         if self.args.jetson == 1:
             pl.stop()
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
             self.energy += local_train_time * averagePower/1e3 #s * w = J
+            print(f"traintime:{local_train_time}, power: {averagePower}, energy: {self.energy}")
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss =self.local_all_loss / len(trainloader)
         # print("local_model_loss", local_model_loss.item())

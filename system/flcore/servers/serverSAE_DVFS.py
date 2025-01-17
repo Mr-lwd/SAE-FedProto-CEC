@@ -110,6 +110,11 @@ class FedSAE_DVFS(Server):
             self.trans_aggedges_from_readyList()
             self.global_time = self.aggregation_buffer.buffer[-1].eglobal_time
             # 直接计算从id_registration读取id，读取triple
+            
+            time.sleep(1)
+            self.cLib.changeCpuFreq(self.maxCPUfreq)
+            time.sleep(1)
+            
             self.cloudUpdate()
             print("end Update")
             self.push_aggclients_to_trainList()
@@ -121,7 +126,7 @@ class FedSAE_DVFS(Server):
             #             self.all_clients_time_cost += self.Budget[-1]
             self.current_epoch += 1
 
-            if i % self.eval_gap == 0:
+            if i % self.eval_gap == 0 or self.global_rounds - i < 4:
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
                 self.evaluate_proto()

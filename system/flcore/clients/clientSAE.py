@@ -89,11 +89,16 @@ class clientSAE(Client):
                 if glclassifier is not None:
                     if self.args.gamma < 1:
                         loss = self.loss(output, y) * (1 - self.args.gamma)
-                    else:
-                        loss = 0
-                    global_outputs = glclassifier(rep)
-                    global_loss = self.loss(global_outputs, y) * self.args.gamma
-                    loss += global_loss
+                        global_outputs = glclassifier(rep)
+                        if self.args.jetson == 1:
+                            global_outputs = global_outputs.double()
+                        global_loss = self.loss(global_outputs, y) * self.args.gamma
+                        loss += global_loss
+                    else: # gamma == 1
+                        global_outputs = glclassifier(rep)
+                        if self.args.jetson == 1:
+                            global_outputs = global_outputs.double()
+                        loss = self.loss(global_outputs, y)
                 else:
                     loss = self.loss(output, y)
                 self.local_model_loss += loss.item()

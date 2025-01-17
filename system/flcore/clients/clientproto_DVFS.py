@@ -96,7 +96,7 @@ class clientProto_DVFS(Client):
                 leave_freq_counter += 1  
         
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=2.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
@@ -138,14 +138,14 @@ class clientProto_DVFS(Client):
                 loss.backward()
                 optimizer.step()
                 
-                if firstlocaltrain is False:
-                    if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
-                        time.sleep(1)
-                        self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
-                        time.sleep(1) 
-                        # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
-                        leave_freq_counter += 1  
-                        sleepTime+=2
+            if firstlocaltrain is False:
+                if(self.leave_frequency_set!=[]) and leave_freq_counter < len(self.leave_frequency_set):
+                    time.sleep(1)
+                    self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
+                    time.sleep(1) 
+                    # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
+                    leave_freq_counter += 1  
+                    sleepTime+=2
         if self.device == "cuda":
             torch.cuda.synchronize()
         local_train_time = time.perf_counter() - local_train_start_time - sleepTime
@@ -154,6 +154,7 @@ class clientProto_DVFS(Client):
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
             self.energy += local_train_time * averagePower/1e3 #s * w = J
             # cLib.changeCpuFreq(self.maxCPUfreq)
+            print(f"power: {averagePower}, energy: {self.energy}")
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
         
