@@ -66,7 +66,7 @@ class clientProto_DVFS(Client):
             self.leave_frequency_set=[]
 
         if firstlocaltrain is False:
-            self.leave_train_time = longest_time * self.local_epochs - self.first_localepoch_time
+            self.leave_train_time = longest_time * (self.local_epochs-1)
             # print("self.first_localepoch_time", self.first_localepoch_time)
             # print("longest_time", longest_time)
             if (self.first_localepoch_time < longest_time - 0.001):
@@ -154,7 +154,7 @@ class clientProto_DVFS(Client):
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
             self.energy += local_train_time * averagePower/1e3 #s * w = J
             # cLib.changeCpuFreq(self.maxCPUfreq)
-            print(f"power: {averagePower}, energy: {self.energy}")
+            print(f"client {self.id} power: {averagePower}, energy: {self.energy}")
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss = self.local_all_loss / len(trainloader)
         

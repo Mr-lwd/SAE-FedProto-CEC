@@ -76,7 +76,7 @@ class clientSAE_DVFS(Client):
             
 
         if firstlocaltrain is False:
-            self.leave_train_time = longest_time * self.local_epochs - self.first_localepoch_time
+            self.leave_train_time = longest_time * (self.local_epochs-1)
             # print("self.first_localepoch_time", self.first_localepoch_time)
             # print("longest_time", longest_time)
             if (self.first_localepoch_time < longest_time - 0.001):
@@ -85,6 +85,9 @@ class clientSAE_DVFS(Client):
                 # exit(0)
             else:
                 self.leave_frequency_set = []
+                time.sleep(1)
+                self.cLib.changeCpuFreq(self.maxCPUfreq)
+                time.sleep(1)  
 
         # max_local_epochs = self.local_epochs
         # if self.train_slow:
@@ -164,7 +167,6 @@ class clientSAE_DVFS(Client):
                     time.sleep(1)
                     self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
                     time.sleep(1) 
-                    # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                     leave_freq_counter += 1  
                     sleepTime+=2
                 
