@@ -71,21 +71,24 @@ class clientProto_DVFS(Client):
             # print("longest_time", longest_time)
             if (self.first_localepoch_time < longest_time - 0.01):
                 self.leave_frequency_set = get_dvfs_set(self.dvfs_data, self.first_localepoch_time, self.leave_train_time, self.leave_local_epochs)
-                print(f"client {self.id} leave_frequency_set: {self.leave_frequency_set}")
-                # exit(0)
+                print(f"client {self.id} leave_frequency_set: {self.leave_frequency_set}")# exit(0)
+                if self.leave_frequency_set == []:
+                    print("hard to get leave_frequency_set, max frequency")
             else:
                 self.leave_frequency_set = []
 
+
+        if(self.leave_frequency_set==[]):
+            time.sleep(1)
+            self.cLib.changeCpuFreq(self.maxCPUfreq)
+            time.sleep(1)  
+            
         max_local_epochs = self.local_epochs
         if self.train_slow:
             max_local_epochs = np.random.randint(1, max_local_epochs // 2)
 
         leave_freq_counter = 0
         sleepTime = 0
-        time.sleep(1)
-        if(self.leave_frequency_set==[]):
-                self.cLib.changeCpuFreq(self.maxCPUfreq)
-        time.sleep(1)  
         
         if firstlocaltrain is False:
             if(self.leave_frequency_set!=[]):
@@ -96,7 +99,7 @@ class clientProto_DVFS(Client):
                 leave_freq_counter += 1  
         
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=2.0, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
             pl.start()
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):

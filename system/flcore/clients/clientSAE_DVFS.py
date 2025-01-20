@@ -82,9 +82,12 @@ class clientSAE_DVFS(Client):
             if (self.first_localepoch_time < longest_time - 0.01):
                 self.leave_frequency_set = get_dvfs_set(self.dvfs_data, self.first_localepoch_time, self.leave_train_time, self.leave_local_epochs)
                 print(f"client {self.id} leave_frequency_set: {self.leave_frequency_set}")
-                # exit(0)
+                if self.leave_frequency_set == []:
+                    print("hard to get frequency set, max frequency")
             else:
                 self.leave_frequency_set = []
+            
+            if self.leave_frequency_set == []:
                 time.sleep(1)
                 self.cLib.changeCpuFreq(self.maxCPUfreq)
                 time.sleep(1)  
