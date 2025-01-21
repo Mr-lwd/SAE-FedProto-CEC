@@ -106,7 +106,7 @@ class clientSAE_DVFS(Client):
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1  
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
         
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间

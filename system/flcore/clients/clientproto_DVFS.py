@@ -99,7 +99,7 @@ class clientProto_DVFS(Client):
                 leave_freq_counter += 1  
         
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):
