@@ -107,7 +107,7 @@ class FedSAE(Server):
             #             self.all_clients_time_cost += self.Budget[-1]
             self.current_epoch += 1
 
-            if i % self.eval_gap == 0 or self.global_rounds - i < 4:
+            if i % self.eval_gap == 0 or self.global_rounds - i < 10:
                 print(f"\n-------------Global Round number: {i}-------------")
                 print("\nEvaluate heterogeneous models")
                 self.evaluate_proto()

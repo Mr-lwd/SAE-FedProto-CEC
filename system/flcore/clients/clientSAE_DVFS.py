@@ -76,15 +76,21 @@ class clientSAE_DVFS(Client):
             
 
         if firstlocaltrain is False:
-            self.leave_train_time = longest_time * self.local_epochs - self.first_localepoch_time
+            self.leave_train_time = longest_time * self.leave_local_epochs
             # print("self.first_localepoch_time", self.first_localepoch_time)
             # print("longest_time", longest_time)
-            if (self.first_localepoch_time < longest_time - 0.001):
+            if (self.first_localepoch_time < longest_time - 0.01):
                 self.leave_frequency_set = get_dvfs_set(self.dvfs_data, self.first_localepoch_time, self.leave_train_time, self.leave_local_epochs)
                 print(f"client {self.id} leave_frequency_set: {self.leave_frequency_set}")
-                # exit(0)
+                if self.leave_frequency_set == []:
+                    print("hard to get frequency set, max frequency")
             else:
                 self.leave_frequency_set = []
+            
+            if self.leave_frequency_set == []:
+                time.sleep(1)
+                self.cLib.changeCpuFreq(self.maxCPUfreq)
+                time.sleep(1)  
 
         # max_local_epochs = self.local_epochs
         # if self.train_slow:
@@ -100,7 +106,7 @@ class clientSAE_DVFS(Client):
                 # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                 leave_freq_counter += 1  
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
             pl.start()
         
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
@@ -164,7 +170,6 @@ class clientSAE_DVFS(Client):
                     time.sleep(1)
                     self.cLib.changeCpuFreq(self.leave_frequency_set[leave_freq_counter])
                     time.sleep(1) 
-                    # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                     leave_freq_counter += 1  
                     sleepTime += 2
                 
@@ -175,7 +180,7 @@ class clientSAE_DVFS(Client):
             pl.stop()
             averagePower = pl.getAveragePower(nodeName='module/cpu')  # 获取平均功耗
             self.energy += local_train_time * averagePower/1e3 #s * w = J
-            print(f"traintime:{local_train_time}, power: {averagePower}, energy: {self.energy}")
+            print(f"client {self.id}, train time: {local_train_time}, power: {averagePower}")
         self.local_model_loss = self.local_model_loss / len(trainloader)
         self.local_all_loss =self.local_all_loss / len(trainloader)
         # print("local_model_loss", local_model_loss.item())
