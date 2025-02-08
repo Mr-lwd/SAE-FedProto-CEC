@@ -166,7 +166,7 @@ class clientSAE_DVFS(Client):
                     time.sleep(1) 
                     # print("frequency scale:",self.leave_frequency_set[leave_freq_counter])
                     leave_freq_counter += 1  
-                    sleepTime+=2
+                    sleepTime += 2
                 
         if self.device == "cuda":
             torch.cuda.synchronize()
