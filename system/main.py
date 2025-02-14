@@ -345,6 +345,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("-jetson", "--jetson", type=int, default=0)
     parser.add_argument("-DVFS", "--DVFS", type=int, default=0)
+    parser.add_argument("-staticE", "--static_estimate", type=int, default=0)
     parser.add_argument("-drawGMM", "--drawGMM", type=int, default=0)
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_40"
