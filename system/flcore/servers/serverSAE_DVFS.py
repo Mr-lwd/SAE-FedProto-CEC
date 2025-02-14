@@ -190,7 +190,7 @@ class FedSAE_DVFS(Server):
             # Fit Gaussian distribution to original features
             mean = np.mean(origin_data, axis=0)
             cov = np.cov(origin_data.T)
-            gaussian_samples = np.random.multivariate_normal(mean, cov, size=4000)
+            gaussian_samples = np.random.multivariate_normal(mean, cov, size=self.args.virtual_feature_numbers)
             
             # Plot original vs Gaussian samples
             tsne = TSNE(n_components=2, random_state=42)
@@ -387,7 +387,7 @@ class FedSAE_DVFS(Server):
                 # print("item[mean]", item["mean"])
                 # print("item[cov]", item["cov"])
                 sampled_features[label] = self._gaussian_sampling(
-                    item["mean"].cpu().numpy(), item["cov"].cpu().numpy(), 4000
+                    item["mean"].cpu().numpy(), item["cov"].cpu().numpy(), self.args.virtual_feature_numbers
                 )
         return sampled_features
 
