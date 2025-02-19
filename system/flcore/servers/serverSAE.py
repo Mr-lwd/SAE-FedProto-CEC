@@ -149,7 +149,7 @@ class FedSAE(Server):
         # global_protos = self.proto_aggregation_clients()
 
         sampled_features = self.cal_meancov_and_saveglprotos()
-        if self.args.drawGMM == 1 and self.current_epoch == 1:
+        if self.args.drawGMM == 1 and self.current_epoch == 0:
             origin_features = defaultdict(list)
             # Select a class for visualization
             label_to_vis = 0
@@ -187,9 +187,11 @@ class FedSAE(Server):
                           label=label, marker=marker, alpha=alpha, color=colors[label],
                           edgecolor='white', linewidth=0.5)
 
-            plt.title(f't-SNE: Original vs Gaussian Generated Features (Class {label_to_vis})', fontsize=12)
-            plt.legend(frameon=True, framealpha=0.8)
+            plt.title(f't-SNE: Original vs Generated Features (Class {label_to_vis})', fontsize=14)
+            plt.legend(frameon=True, framealpha=0.8,  fontsize=12)
             plt.grid(False)
+            plt.xticks(fontsize=14)  # 坐标轴刻度字体大小
+            plt.yticks(fontsize=14)
             plt.savefig(f'./gaussian_vs_original_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
             plt.close()
 
@@ -199,16 +201,18 @@ class FedSAE(Server):
             reduced_data = tsne.fit_transform(combined_data)
             
             plt.figure(figsize=(10, 8))
-            colors = {'virtual features': '#0000FF', 'original features': '#ff7f0e'}
+            colors = {'virtual features': '#5497c5', 'original features': '#ff7f0e'}
             for label, marker, alpha in [('virtual features', 'o', 0.8), ('original features', '^', 0.8)]:
                 mask = labels == label
                 plt.scatter(reduced_data[mask, 0], reduced_data[mask, 1],
                           label=label, marker=marker, alpha=alpha, color=colors[label],
                           edgecolor='white', linewidth=0.5)
 
-            plt.title(f't-SNE: Virtual vs Original Features (Class {label_to_vis})', fontsize=12)
-            plt.legend(frameon=True, framealpha=0.8)
+            plt.title(f't-SNE: Virtual & Original Features (Class {label_to_vis})', fontsize=14)
+            plt.legend(frameon=True, framealpha=0.8,  fontsize=12)
             plt.grid(False)
+            plt.xticks(fontsize=14)  # 坐标轴刻度字体大小
+            plt.yticks(fontsize=14)
             plt.savefig(f'./tsne_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
             plt.close()
             exit()
