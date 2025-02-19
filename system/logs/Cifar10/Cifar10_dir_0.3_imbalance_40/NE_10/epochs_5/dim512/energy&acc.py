@@ -226,13 +226,13 @@ for idx, file in enumerate(log_files):
            label=legend_label, linestyle=LINE_STYLES[idx], color=COLORS[idx])
     
     # Plot in inset axes
-    axins.plot(range(181, 201), accuracies[180:200], 
+    axins.plot(range(180, 201), accuracies[179:200], 
               linestyle=LINE_STYLES[idx], color=COLORS[idx])
 
 # Configure main plot
 ax.set_xlabel("Iteration")
 ax.set_ylabel("Average Test Accuracy")
-ax.legend()
+ax.legend(loc='lower right')
 # ax.grid(True)
 
 # Configure inset plot
@@ -240,7 +240,7 @@ axins.set_xlim(180, 200)
 # axins.grid(True)
 
 # Draw box around the zoomed region
-# ax.indicate_inset_zoom(axins)
+ax.indicate_inset_zoom(axins)
 
 plt.savefig("./Model_acc.png",bbox_inches='tight', dpi=300)
 print("Chart saved to ./Model_acc.png")

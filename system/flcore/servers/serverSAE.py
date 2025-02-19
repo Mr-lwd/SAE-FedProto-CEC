@@ -149,7 +149,7 @@ class FedSAE(Server):
         # global_protos = self.proto_aggregation_clients()
 
         sampled_features = self.cal_meancov_and_saveglprotos()
-        if self.args.drawGMM == 1 and self.current_epoch <= 2:
+        if self.args.drawGMM == 1 and self.current_epoch % 20 == 0:
             origin_features = defaultdict(list)
             # Select a class for visualization
             label_to_vis = 0
@@ -215,8 +215,8 @@ class FedSAE(Server):
             plt.yticks(fontsize=14)
             plt.savefig(f'./gaussion_tsne/{self.args.dataset}_virtual_tsne_class_{label_to_vis}_{self.current_epoch}.png', bbox_inches='tight', dpi=300)
             plt.close()
-            if self.current_epoch == 2:
-                exit()
+            # if self.current_epoch == 2:
+            #     exit()
 
         # sampler = GaussianSampler(self.args)
         # sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
