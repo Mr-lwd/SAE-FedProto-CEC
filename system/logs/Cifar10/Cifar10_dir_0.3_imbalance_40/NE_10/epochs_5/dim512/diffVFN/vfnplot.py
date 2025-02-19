@@ -15,7 +15,8 @@ plt.plot(vfns, FedSAE_model_acc, marker='o', markersize=8, label='FedSAE Model A
 # 绘制 FedSAE_prototype_acc 曲线，点加粗
 plt.plot(vfns, FedSAE_prototype_acc, marker='s', markersize=8, label='FedSAE Prototype Accuracy', linewidth=2)
 
-# 添加标题和标签SAE
+# 添加标题和标签SAEe
+
 plt.title('Accuracy vs. vfns (FedSAE)', fontsize=16)
 plt.xlabel('The number of virtual features generated for each class', fontsize=14)
 plt.ylabel('Accuracy(%)', fontsize=14)

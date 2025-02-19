@@ -149,7 +149,7 @@ class FedSAE(Server):
         # global_protos = self.proto_aggregation_clients()
 
         sampled_features = self.cal_meancov_and_saveglprotos()
-        if self.args.drawGMM == 1 and self.current_epoch == 0:
+        if self.args.drawGMM == 1 and self.current_epoch <= 2:
             origin_features = defaultdict(list)
             # Select a class for visualization
             label_to_vis = 0
@@ -192,7 +192,7 @@ class FedSAE(Server):
             plt.grid(False)
             plt.xticks(fontsize=14)  # 坐标轴刻度字体大小
             plt.yticks(fontsize=14)
-            plt.savefig(f'./gaussian_vs_original_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
+            plt.savefig(f'./gaussion_tsne/{self.args.dataset}_gaussian_vs_original_class_{label_to_vis}_{self.current_epoch}.png', bbox_inches='tight', dpi=300)
             plt.close()
 
             # Plot original vs sampled features
@@ -213,9 +213,10 @@ class FedSAE(Server):
             plt.grid(False)
             plt.xticks(fontsize=14)  # 坐标轴刻度字体大小
             plt.yticks(fontsize=14)
-            plt.savefig(f'./tsne_class_{label_to_vis}.png', bbox_inches='tight', dpi=300)
+            plt.savefig(f'./gaussion_tsne/{self.args.dataset}_virtual_tsne_class_{label_to_vis}_{self.current_epoch}.png', bbox_inches='tight', dpi=300)
             plt.close()
-            exit()
+            if self.current_epoch == 2:
+                exit()
 
         # sampler = GaussianSampler(self.args)
         # sampled_features = sampler.aggregate_and_sample(self.edges, self.clients)
