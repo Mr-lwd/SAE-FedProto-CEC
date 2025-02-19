@@ -95,91 +95,91 @@ class DynamicBuffer:
         print([edge.id for edge in self.buffer])
 
 
-class GaussianSampler:
-    def __init__(self, args):
-        self.args = args
+# class GaussianSampler:
+#     def __init__(self, args):
+#         self.args = args
 
-    def aggregate_and_sample(self,edges, clients):
-        """
-        对于每个类的原型向量，根据数据量加权计算均值和协方差矩阵，并进行高斯采样。
-        :param gl_all_protos: 所有的边缘服务器原型，格式为 [[features,weight],[features,weight]]。
-        :return: 采样后的特征。
-        """
-        gl_all_protos = defaultdict(list)
-        sampled_features = defaultdict(list)
-        if self.args.gl_use_clients != 1:
-            for edge in edges:
-                edge_protos = load_item(edge.role, "prev_protos", edge.save_folder_name)
-                if edge_protos is not None:
-                    for key in edge_protos.keys():
-                        gl_all_protos[key].append(
-                            [edge_protos[key], edge.N_l_prev[key]]
-                        )
-        elif self.args.gl_use_clients == 1:
-            for client in clients:
-                client_protos = load_item(
-                    client.role, "cloud_protos", client.save_folder_name
-                )
-                if client_protos is not None:
-                    for key in client_protos.keys():
-                        gl_all_protos[key].append(
-                            [client_protos[key], client.label_counts[key]]
-                        )
+    # def aggregate_and_sample(self,edges, clients):
+    #     """
+    #     对于每个类的原型向量，根据数据量加权计算均值和协方差矩阵，并进行高斯采样。
+    #     :param gl_all_protos: 所有的边缘服务器原型，格式为 [[features,weight],[features,weight]]。
+    #     :return: 采样后的特征。
+    #     """
+    #     gl_all_protos = defaultdict(list)
+    #     sampled_features = defaultdict(list)
+    #     if self.args.gl_use_clients != 1:
+    #         for edge in edges:
+    #             edge_protos = load_item(edge.role, "prev_protos", edge.save_folder_name)
+    #             if edge_protos is not None:
+    #                 for key in edge_protos.keys():
+    #                     gl_all_protos[key].append(
+    #                         [edge_protos[key], edge.N_l_prev[key]]
+    #                     )
+    #     elif self.args.gl_use_clients == 1:
+    #         for client in clients:
+    #             client_protos = load_item(
+    #                 client.role, "cloud_protos", client.save_folder_name
+    #             )
+    #             if client_protos is not None:
+    #                 for key in client_protos.keys():
+    #                     gl_all_protos[key].append(
+    #                         [client_protos[key], client.label_counts[key]]
+    #                     )
 
-        for key in range(self.args.num_classes):
-            if key in gl_all_protos.keys() and len(gl_all_protos[key]) > 0:
-                # 提取每个客户端提供的原型和对应的数据量
-                protos = gl_all_protos[key]  # List of (proto, client_data_size)
-                weights = np.array([data[1] for data in protos], dtype=np.float32)
-                features = [data[0] for data in protos]
+    #     for key in range(self.args.num_classes):
+    #         if key in gl_all_protos.keys() and len(gl_all_protos[key]) > 0:
+    #             # 提取每个客户端提供的原型和对应的数据量
+    #             protos = gl_all_protos[key]  # List of (proto, client_data_size)
+    #             weights = np.array([data[1] for data in protos], dtype=np.float32)
+    #             features = [data[0] for data in protos]
 
-                # 计算加权均值和协方差
-                mean, cov = self._cal_weighted_mean_cov(features, weights)
+    #             # 计算加权均值和协方差
+    #             mean, cov = self._cal_weighted_mean_cov(features, weights)
 
-                # 进行高斯采样
-                num_samples = 4000
-                sampled_features[key] = self._gaussian_sampling(mean, cov, num_samples)
-                sampled_features[key] = torch.tensor(
-                    sampled_features[key], dtype=torch.float32
-                )
-        return sampled_features
+    #             # 进行高斯采样
+    #             num_samples = 4000
+    #             sampled_features[key] = self._gaussian_sampling(mean, cov, num_samples)
+    #             sampled_features[key] = torch.tensor(
+    #                 sampled_features[key], dtype=torch.float32
+    #             )
+    #     return sampled_features
 
-    def _cal_weighted_mean_cov(self, features, weights):
-        """
-        计算加权均值和协方差矩阵。
-        :param features: 特征列表，形状为 (n, feature_dim)。
-        :param weights: 权重列表，形状为 (n,)。
-        :return: 加权均值和协方差矩阵。
-        """
-        features = torch.stack(features).cpu().numpy()  # 转为 NumPy 数组
-        # 按权重归一化
-        normalized_weights = weights / weights.sum()
-        mean = np.average(features, axis=0, weights=normalized_weights)  # 加权均值
+    # def _cal_weighted_mean_cov(self, features, weights):
+    #     """
+    #     计算加权均值和协方差矩阵。
+    #     :param features: 特征列表，形状为 (n, feature_dim)。
+    #     :param weights: 权重列表，形状为 (n,)。
+    #     :return: 加权均值和协方差矩阵。
+    #     """
+    #     features = torch.stack(features).cpu().numpy()  # 转为 NumPy 数组
+    #     # 按权重归一化
+    #     normalized_weights = weights / weights.sum()
+    #     mean = np.average(features, axis=0, weights=normalized_weights)  # 加权均值
 
-        # 加权协方差矩阵
-        n_c = np.sum(weights)  # 类别c的总样本量
-        cov = np.zeros((features.shape[1], features.shape[1]))
+    #     # 加权协方差矩阵
+    #     n_c = np.sum(weights)  # 类别c的总样本量
+    #     cov = np.zeros((features.shape[1], features.shape[1]))
 
-        for i in range(len(features)):
-            mean_diff = features[i] - mean  # 样本均值与全局均值的差
-            cov += weights[i] * np.outer(mean_diff, mean_diff)  # 加权外积
+    #     for i in range(len(features)):
+    #         mean_diff = features[i] - mean  # 样本均值与全局均值的差
+    #         cov += weights[i] * np.outer(mean_diff, mean_diff)  # 加权外积
 
-        # 归一化
-        assert n_c > 1
-        cov /= (n_c - 1)  # 除以 (n_c - 1),无偏，可能出现除0
+    #     # 归一化
+    #     assert n_c > 1
+    #     cov /= (n_c - 1)  # 除以 (n_c - 1),无偏，可能出现除0
 
-        return mean, cov
+    #     return mean, cov
 
-    def _gaussian_sampling(self, mean, cov, num_samples):
-        """
-        根据均值和协方差矩阵进行高斯采样。
-        :param mean: 均值向量。
-        :param cov: 协方差矩阵。
-        :param num_samples: 采样数量。
-        :return: 采样结果，形状为 (num_samples, feature_dim)。
-        """
-        sampled = np.random.multivariate_normal(mean, cov, num_samples)
-        return torch.tensor(sampled)
+    # def _gaussian_sampling(self, mean, cov, num_samples):
+    #     """
+    #     根据均值和协方差矩阵进行高斯采样。
+    #     :param mean: 均值向量。
+    #     :param cov: 协方差矩阵。
+    #     :param num_samples: 采样数量。
+    #     :return: 采样结果，形状为 (num_samples, feature_dim)。
+    #     """
+    #     sampled = np.random.multivariate_normal(mean, cov, num_samples)
+    #     return torch.tensor(sampled)
 
 
 class Trainable_prototypes(nn.Module):

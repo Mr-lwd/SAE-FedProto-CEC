@@ -481,6 +481,7 @@ if __name__ == "__main__":
     parser.add_argument("-gl_use_clients", "--gl_use_clients", type=int, default=1)
     parser.add_argument("-tugl", "--test_useglclassifier", type=int, default=1)
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
+    parser.add_argument("-vfn", "--virtual_feature_numbers", type=int, default=4000)
     parser.add_argument("-el", "--extra_loss", type=int, default=0)
     parser.add_argument("-delta", "--delta", type=float, default=1)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)

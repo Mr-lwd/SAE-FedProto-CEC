@@ -76,31 +76,31 @@ time_model_configs = [
 ]
 
 # 绘制时间成本和测试准确性图表
-for config in time_model_configs:
-    time_type = config["time_type"]
-    for model_type, save_path in config["models"]:
-        plt.figure(figsize=(10, 6))
+# for config in time_model_configs:
+#     time_type = config["time_type"]
+#     for model_type, save_path in config["models"]:
+#         plt.figure(figsize=(10, 6))
 
-        # 从每个日志文件中提取数据
-        for file in log_files:
-            # 去掉 .out 后缀
-            legend_label = file.rsplit(".", 1)[0]
+#         # 从每个日志文件中提取数据
+#         for file in log_files:
+#             # 去掉 .out 后缀
+#             legend_label = file.rsplit(".", 1)[0]
 
-            time_costs, accuracies = extract_data(file, time_type, model_type)
-            plt.plot(time_costs, accuracies, label=legend_label)
+#             time_costs, accuracies = extract_data(file, time_type, model_type)
+#             plt.plot(time_costs, accuracies, label=legend_label)
 
-        plt.xlabel("Time Cost")
-        plt.ylabel("Averaged Test Accuracy")
-        plt.title(f"Training Log Analysis ({model_type} Model)")
-        plt.legend()
-        plt.grid()
+#         plt.xlabel("Time Cost")
+#         plt.ylabel("Averaged Test Accuracy")
+#         plt.title(f"Training Log Analysis ({model_type} Model)")
+#         plt.legend()
+#         plt.grid()
 
-        # 保存图表
-        plt.savefig(save_path)
-        print(f"Chart saved to {save_path}")
+#         # 保存图表
+#         plt.savefig(save_path)
+#         print(f"Chart saved to {save_path}")
 
-        # 清除当前图形以便下一个循环可以重新绘图
-        plt.clf()
+#         # 清除当前图形以便下一个循环可以重新绘图
+#         plt.clf()
 
 # 绘制训练损失图表
 # plt.figure(figsize=(10, 6))
@@ -145,7 +145,7 @@ plt.title("Training Loss Analysis (Regular Model)")
 plt.legend()
 plt.grid()
 
-plt.savefig("./Model_loss.png")
+plt.savefig("./Model_loss.png", bbox_inches='tight')
 print("Chart saved to ./Model_loss.png")
 
 plt.clf()
