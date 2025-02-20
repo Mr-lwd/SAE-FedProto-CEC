@@ -149,6 +149,21 @@ class FedSAE(Server):
         # global_protos = self.proto_aggregation_clients()
 
         sampled_features = self.cal_meancov_and_saveglprotos()
+        
+        if self.args.use_init_features == 1:
+            print("use_init_features")
+            sampled_features = defaultdict(list)
+            for client in self.clients:
+                client_features = load_item(client.role, "features", client.save_folder_name)
+                for label in client_features.keys():
+                    features = client_features[label]
+                    if isinstance(features, torch.Tensor):
+                        features = features.detach().cpu().numpy()
+                    elif isinstance(features, list):
+                        # If it's a list of tensors, convert each tensor
+                        features = [f.detach().cpu().numpy() if isinstance(f, torch.Tensor) else f for f  in features]
+                    sampled_features[label].extend(features)
+            
         if self.args.drawGMM == 1 and self.current_epoch % 20 == 0:
             origin_features = defaultdict(list)
             # Select a class for visualization
