@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # 定义文件路径
-file_path = './JET_FedProto_fd_64_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out'
+file_path = './gr50_JET_FedSAE_DVFS_fd_64_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out'
 # file_path='./DVFS_Fedproto.out'
 
 # 初始化列表来存储提取的数据
@@ -112,7 +112,7 @@ plt.plot(global_rounds[::MARKER_INTERVAL], all_energy_pred[::MARKER_INTERVAL],
          color=color3, alpha=ALPHA_DASH, linewidth=DASH_WIDTH, marker='^', markersize=6)
 
 # 添加标题和标签
-plt.title('Time and Energy with Linear Fit')
+plt.title('Time and Energy with Linear Fit (FedSAE_DVFS)')
 plt.xlabel('Iterations')
 plt.ylabel('Time(s) / Energy(J)')
 plt.legend()
@@ -121,4 +121,4 @@ plt.legend()
 # plt.grid(True)
 plt.tight_layout()
 # plt.show()
-plt.savefig("./100rounds_with_fit_and_R2.png", dpi=300)
+plt.savefig("./100rounds_with_fit_and_R2_gr50_FedSAE_DVFS.png", dpi=300)
