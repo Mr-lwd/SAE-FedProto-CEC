@@ -345,6 +345,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("-jetson", "--jetson", type=int, default=0)
     parser.add_argument("-DVFS", "--DVFS", type=int, default=0)
+    parser.add_argument("-staticE", "--static_estimate", type=int, default=0)
     parser.add_argument("-drawGMM", "--drawGMM", type=int, default=0)
     # parser.add_argument(
     #     "-data", "--dataset", type=str, default="FashionMNIST_dir_0.3_imbalance_40"
@@ -412,7 +413,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("-t", "--times", type=int, default=1, help="Running times")
     parser.add_argument(
-        "-eg", "--eval_gap", type=int, default=4, help="Rounds gap for evaluation"
+        "-eg", "--eval_gap", type=int, default=1, help="Rounds gap for evaluation"
     )
     parser.add_argument("-sfn", "--save_folder_name", type=str, default="temp")
     # if save_folder_name == "static", not time.time() is end
@@ -480,6 +481,8 @@ if __name__ == "__main__":
     parser.add_argument("-gl_use_clients", "--gl_use_clients", type=int, default=1)
     parser.add_argument("-tugl", "--test_useglclassifier", type=int, default=1)
     parser.add_argument("-gamma", "--gamma", type=float, default=1)
+    parser.add_argument("-vfn", "--virtual_feature_numbers", type=int, default=4000)
+    parser.add_argument("-uif", "--use_init_features", type=int, default=0)
     parser.add_argument("-el", "--extra_loss", type=int, default=0)
     parser.add_argument("-delta", "--delta", type=float, default=1)
     parser.add_argument("-drawtsne", "--drawtsne", type=int, default=1)

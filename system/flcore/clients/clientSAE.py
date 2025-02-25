@@ -131,7 +131,7 @@ class clientSAE(Client):
         # print("local_model_loss", local_model_loss.item())
         # save_item(copy.deepcopy(protos), self.role, "featureSet", self.save_folder_name)
         self.cal_mean_and_covariance(protos)
-        if self.args.drawGMM == 1:
+        if self.args.drawGMM == 1 or self.args.use_init_features == 1:
             save_item(protos, self.role, "features", self.save_folder_name)
         agg_protos = self.agg_func(protos)
         save_item(agg_protos, self.role, "protos", self.save_folder_name)

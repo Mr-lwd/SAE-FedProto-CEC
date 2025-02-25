@@ -70,10 +70,10 @@ def extract_loss_data(log_file):
 
 # 定义文件路径
 log_files = [
-    "FedSAE_gam_0.2_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    "FedSAE_gam_0.5_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
-    "FedSAE_gam_0.7_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
     "FedSAE_gam_1_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_0.7_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_0.5_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
+    "FedSAE_gam_0.2_tugl_1_lr_0.06_mo_0.8_lam_1_batch_256.out",
     "Local_lr_0.06_mo_0.8_lam_1_batch_256.out",
     "FedProto_lr_0.06_mo_0.8_lam_1_batch_256.out",
     "FedTGP_fd_512_bs_10_lr_0.06_mo_0.8_lam_1_batch_256.out",
@@ -99,10 +99,10 @@ time_model_configs = [
 
 # Add a dictionary to map file names to shorter labels
 ALGORITHM_LABELS = {
-    "FedSAE_gam_0.2": "FedSAE (γ=0.2)",
-    "FedSAE_gam_0.5": "FedSAE (γ=0.5)",
-    "FedSAE_gam_0.7": "FedSAE (γ=0.7)",
     "FedSAE_gam_1": "FedSAE (γ=1)",
+    "FedSAE_gam_0.7": "FedSAE (γ=0.7)",
+    "FedSAE_gam_0.5": "FedSAE (γ=0.5)",
+    "FedSAE_gam_0.2": "FedSAE (γ=0.2)",
     "Local": "Local Train",
     "FedProto": "FedProto",
     "FedTGP": "FedTGP",
@@ -198,7 +198,7 @@ plt.ylabel("Average Train Model Loss")
 plt.legend()
 # plt.grid()
 
-plt.savefig("./Model_loss.png",bbox_inches='tight')
+plt.savefig("./Model_loss.png", bbox_inches='tight', dpi=300)
 print("Chart saved to ./Model_loss.png")
 
 plt.clf()
@@ -226,13 +226,13 @@ for idx, file in enumerate(log_files):
            label=legend_label, linestyle=LINE_STYLES[idx], color=COLORS[idx])
     
     # Plot in inset axes
-    axins.plot(range(181, 201), accuracies[180:200], 
+    axins.plot(range(180, 201), accuracies[179:200], 
               linestyle=LINE_STYLES[idx], color=COLORS[idx])
 
 # Configure main plot
 ax.set_xlabel("Iteration")
 ax.set_ylabel("Average Test Accuracy")
-ax.legend()
+ax.legend(loc='lower right')
 # ax.grid(True)
 
 # Configure inset plot
@@ -242,7 +242,7 @@ axins.set_xlim(180, 200)
 # Draw box around the zoomed region
 ax.indicate_inset_zoom(axins)
 
-plt.savefig("./Model_acc.png",bbox_inches='tight')
+plt.savefig("./Model_acc.png",bbox_inches='tight', dpi=300)
 print("Chart saved to ./Model_acc.png")
 
 plt.clf()

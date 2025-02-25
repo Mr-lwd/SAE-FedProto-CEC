@@ -25,6 +25,7 @@ class clientProto_DVFS(Client):
         self.trans_time = 0
         self.leave_frequency_set=[]
         self.leave_local_epochs = self.local_epochs - 1
+        self.static_estimate_done = False
         # self.storeoptimizer = None
         
         if self.args.jetson == 1:
@@ -62,10 +63,10 @@ class clientProto_DVFS(Client):
         model.to(self.device)
         model.train()
 
-        if firstlocaltrain is True:
-            self.leave_frequency_set=[]
+        if firstlocaltrain is True and self.static_estimate_done is False:
+            self.leave_frequency_set=[]            
 
-        if firstlocaltrain is False:
+        if firstlocaltrain is False and self.static_estimate_done is False:
             self.leave_train_time = longest_time * self.leave_local_epochs
             # print("self.first_localepoch_time", self.first_localepoch_time)
             # print("longest_time", longest_time)
@@ -77,8 +78,11 @@ class clientProto_DVFS(Client):
             else:
                 self.leave_frequency_set = []
 
+            if self.args.static_estimate == 1:
+                #固定估计的频率集合
+                self.static_estimate_done = True
 
-        if(self.leave_frequency_set==[]):
+        if firstlocaltrain is True or self.leave_frequency_set == []:
             time.sleep(1)
             self.cLib.changeCpuFreq(self.maxCPUfreq)
             time.sleep(1)  
@@ -99,7 +103,7 @@ class clientProto_DVFS(Client):
                 leave_freq_counter += 1  
         
         if self.args.jetson == 1:
-            pl = PowerLogger(interval=3.0, nodes=getNodesByName(['module/cpu']))
+            pl = PowerLogger(interval=1.5, nodes=getNodesByName(['module/cpu']))
             pl.start()
         local_train_start_time = time.perf_counter()  # 记录训练开始的时间
         for step in range(self.leave_local_epochs if firstlocaltrain is False else 1):

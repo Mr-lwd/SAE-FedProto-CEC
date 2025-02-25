@@ -715,8 +715,9 @@ class Server(object):
                     reduced_features[global_indices, 1],
                     label=f"Global Proto {label}",
                     color=color,
-                    alpha=0.7,
+                    alpha=0.8,
                     marker="o",
+                    s=100
                 )
             if np.any(local_indices):
                 plt.scatter(
@@ -724,17 +725,20 @@ class Server(object):
                     reduced_features[local_indices, 1],
                     label=f"Local Proto {label}",
                     color=color,
-                    alpha=0.5,
+                    alpha=0.6,
                     marker="x",
+                    s=60
                 )
         # 添加图例
         # plt.legend()
-        plt.title(
-            f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
-        )
-        plt.xlabel("t-SNE Dimension 1")
-        plt.ylabel("t-SNE Dimension 2")
-        plt.savefig(save_path)
+        # plt.title(
+        #     f"t-SNE Visualization with Global and Local Prototypes (Epoch {current_epoch})"
+        # )
+        plt.xticks(fontsize=16)  # 坐标轴刻度字体大小
+        plt.yticks(fontsize=16)
+        # plt.xlabel("t-SNE Dimension 1")
+        # plt.ylabel("t-SNE Dimension 2")
+        plt.savefig(save_path, bbox_inches="tight")
         plt.close()
 
     def proto_cluster(self, protos_list):
